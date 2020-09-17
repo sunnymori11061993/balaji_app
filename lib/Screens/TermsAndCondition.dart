@@ -44,7 +44,7 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
                 Navigator.of(context).pushNamed('/Whishlist');
               }),
           IconButton(
-              icon: Icon(Icons.shopping_cart),
+              icon: Icon(Icons.card_travel),
               onPressed: () {
                 Navigator.of(context).pushNamed('/CartScreen');
               }),

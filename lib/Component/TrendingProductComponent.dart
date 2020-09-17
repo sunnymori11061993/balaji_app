@@ -16,7 +16,104 @@ class TrendingProductComponent extends StatefulWidget {
 class _TrendingProductComponentState extends State<TrendingProductComponent> {
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+//    return Padding(
+//      padding: const EdgeInsets.only(bottom: 10, left: 6, right: 6),
+//      child: GestureDetector(
+//        onTap: () {
+//          Navigator.push(
+//              context,
+//              MaterialPageRoute(
+//                  builder: (BuildContext context) => new ProductDetailScreen(
+//                    productDetail: widget.trendData["ProductId"],
+//                  )));
+//        },
+//        child: Container(
+//          decoration: BoxDecoration(
+//            border: Border.all(color: Colors.grey[300]),
+//          ),
+//          child: Column(
+//            crossAxisAlignment: CrossAxisAlignment.start,
+//            children: <Widget>[
+//              Container(
+//                  width: MediaQuery.of(context).size.width,
+//                  height: 237,
+//                  child: Image.network(
+//                      Image_URL + "${widget.trendData["ProductImages"]}",
+//                      fit: BoxFit.fill)),
+//              Padding(
+//                padding: const EdgeInsets.only(
+//                  left: 4.0,
+//                  top: 2.0,
+//                ),
+//                child: Text("${widget.trendData["ProductName"]}",
+//                    overflow: TextOverflow.ellipsis,
+//                    maxLines: 1,
+//                    style: TextStyle(
+//                      color: Colors.grey[600],
+//                      fontSize: 12,
+//                      fontWeight: FontWeight.w500,
+//                    )),
+//              ),
+//              Expanded(
+//                child: Padding(
+//                  padding: const EdgeInsets.only(left: 8, bottom: 1),
+//                  child: Row(
+//                    //crossAxisAlignment: CrossAxisAlignment.start,
+//                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                    children: <Widget>[
+//                      Row(
+//                        children: <Widget>[
+//                          Row(
+//                            children: <Widget>[
+//                              Text(
+//                                "₹",
+//                                style: TextStyle(
+//                                    color: Colors.grey,
+//                                    fontSize: 14,
+//                                    fontWeight: FontWeight.w600),
+//                              ),
+//                              Text(
+//                                "${widget.trendData["ProductSrp"]}",
+//                                style: TextStyle(
+//                                  // color: Colors.grey[600],
+//                                    color: Colors.black,
+//                                    fontSize: 14,
+//                                    fontWeight: FontWeight.w600),
+//                              ),
+//                            ],
+//                          ),
+//                          Padding(
+//                            padding: const EdgeInsets.only(left: 12.0),
+//                            child: Text(
+//                              "₹" + "${widget.trendData["ProductMrp"]}",
+//                              style: TextStyle(
+//                                  fontWeight: FontWeight.w600,
+//                                  color: Colors.grey,
+//                                  fontSize: 14,
+//                                  decoration: TextDecoration.lineThrough),
+//                            ),
+//                          ),
+//                        ],
+//                      ),
+//                      IconButton(
+//                        icon: Icon(
+//                          Icons.favorite_border,
+//                          color: appPrimaryMaterialColor,
+//                        ),
+//                        onPressed: null,
+//                      ),
+//                    ],
+//                  ),
+//                ),
+//              )
+//            ],
+//          ),
+//        ),
+//      ),
+//    );
+
+
+      GestureDetector(
       onTap: () {
         Navigator.push(
             context,

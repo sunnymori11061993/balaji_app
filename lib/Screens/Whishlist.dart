@@ -48,7 +48,7 @@ class _WhishlistState extends State<Whishlist> {
         ),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.shopping_cart),
+              icon: Icon(Icons.card_travel),
               onPressed: () {
                 Navigator.of(context).pushNamed('/CartScreen');
               }),
@@ -61,17 +61,20 @@ class _WhishlistState extends State<Whishlist> {
                     new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
               ),
             )
-          : ListView.separated(
-              itemCount: wishList.length,
-              itemBuilder: (BuildContext context, int index) {
-                return WishlistComponent(
-                  wishListData: wishList[index],
-                );
-              },
-              separatorBuilder: (BuildContext context, int index) => Divider(
-                thickness: 2,
+          : Padding(
+            padding: const EdgeInsets.only(top:8.0,bottom: 10),
+            child: ListView.separated(
+                itemCount: wishList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return WishlistComponent(
+                    wishListData: wishList[index],
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) => Divider(
+                  thickness: 2,
+                ),
               ),
-            ),
+          ),
     );
   }
 

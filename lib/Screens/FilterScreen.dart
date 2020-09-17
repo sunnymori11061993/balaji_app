@@ -37,7 +37,7 @@ class _FilterScreenState extends State<FilterScreen> {
             )),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.favorite_border), onPressed: () {}),
-          IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {}),
+          IconButton(icon: Icon(Icons.card_travel), onPressed: () {}),
         ],
       ),
       body: ListView(

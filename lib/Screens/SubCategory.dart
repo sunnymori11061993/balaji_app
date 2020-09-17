@@ -83,12 +83,12 @@ class _SubCategoryState extends State<SubCategory>
                 Navigator.of(context).pushNamed('/Whishlist');
               }),
           IconButton(
-              icon: Icon(Icons.shopping_cart),
+              icon: Icon(Icons.card_travel),
               onPressed: () {
                 Navigator.of(context).pushNamed('/CartScreen');
               }),
           Padding(
-            padding: const EdgeInsets.only(right: 4.0, left: 8),
+            padding: const EdgeInsets.only(right: 10.0, left: 4),
             child: Container(
                 height: 20,
                 width: 20,

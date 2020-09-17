@@ -18,7 +18,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
             context,
             MaterialPageRoute(
                 builder: (BuildContext context) => new ProductDetailScreen(
-                      productDetail: widget.wishListData,
+                      productDetail: widget.wishListData["ProductId"],
                     )));
       },
       child: Row(
@@ -39,33 +39,41 @@ class _WishlistComponentState extends State<WishlistComponent> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: CircleAvatar(
-                          radius: 8,
-                          backgroundColor: appPrimaryMaterialColor,
-                          child: Icon(
-                            Icons.close,
-                            color: Colors.white,
-                            size: 12,
-                          ),
-                        ),
+                      Text(
+                        "${widget.wishListData["ProductName"]}",
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600),
                       ),
+//                      GestureDetector(
+//                        onTap: () {
+//                          //Navigator.of(context).pop();
+//                        },
+//                        child: CircleAvatar(
+//                          radius: 8,
+//                          backgroundColor: appPrimaryMaterialColor,
+//                          child: Icon(
+//                            Icons.close,
+//                            color: Colors.white,
+//                            size: 12,
+//                          ),
+//                        ),
+//                      ),
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 5.0),
+                    padding: const EdgeInsets.only(top:8.0,right: 4),
                     child: Text(
-                      "${widget.wishListData["ProductName"]}",
+                      "${widget.wishListData["ProductDescription"]}",
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: 14,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600),
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w400),
                     ),
                   ),
                   Padding(

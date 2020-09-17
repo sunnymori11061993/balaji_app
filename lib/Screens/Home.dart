@@ -130,9 +130,9 @@ class _HomeState extends State<Home> {
           actionIcon.icon == Icons.close
               ? Container()
               : IconButton(
-                  icon: Icon(Icons.shopping_cart),
+                  icon: Icon(Icons.card_travel),
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/CartSelectionScreen');
+                    Navigator.of(context).pushNamed('/CartScreen');
                   },
                 ),
         ],
@@ -233,6 +233,27 @@ class _HomeState extends State<Home> {
                 ),
                 title: Text(
                   "Order History",
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                //  Navigator.of(context).pushNamed('/ContactUs');
+
+//                Navigator.push(
+//                    context,
+//                    MaterialPageRoute(
+//                        builder: (BuildContext context) => new ContactUs(
+//                          contactData: contactList[0],
+//                        )));
+              },
+              child: ListTile(
+                leading: Icon(
+                  Icons.add_location,
+                  color: appPrimaryMaterialColor,
+                ),
+                title: Text(
+                  "Add Addresses",
                 ),
               ),
             ),
@@ -349,7 +370,7 @@ class _HomeState extends State<Home> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      height: MediaQuery.of(context).size.height / 2.5,
+                      height: MediaQuery.of(context).size.height / 4,
                       width: MediaQuery.of(context).size.width,
                       child: Carousel(
                         boxFit: BoxFit.cover,
@@ -415,11 +436,34 @@ class _HomeState extends State<Home> {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8, top: 10.0),
-                      child: Container(
+//                    Padding(
+//                      padding: const EdgeInsets.only(left: 8, top: 10.0),
+//                      child: GridView.builder(
+//                        scrollDirection: Axis.vertical,
+//                        shrinkWrap: true,
+//                        gridDelegate:
+//                        SliverGridDelegateWithFixedCrossAxisCount(
+//                            crossAxisCount: 2,
+//                            childAspectRatio: 0.56,
+//                            //widthScreen / heightScreen,
+//                            crossAxisSpacing: 2.0,
+//                            mainAxisSpacing: 2.0),
+//                        itemBuilder:
+//                            (BuildContext context, int index) {
+//                          return TrendingProductComponent(
+//                              trendingProductList[index]);
+//                        },
+//                        itemCount: trendingProductList.length,
+//                      )
+
+
+                      Container(
                         height: MediaQuery.of(context).size.height / 2.9,
-                        child: ListView.builder(
+                        child:
+
+
+
+                        ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: trendingProductList.length,
                             itemBuilder: (BuildContext context, int index) {
@@ -427,7 +471,6 @@ class _HomeState extends State<Home> {
                                   trendingProductList[index]);
                             }),
                       ),
-                    ),
                   ],
                 ),
               ),

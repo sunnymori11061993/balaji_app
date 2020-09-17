@@ -1,6 +1,5 @@
 import 'package:balaji/Screens/BottomCategory.dart';
 import 'package:balaji/Screens/CartScreen.dart';
-import 'package:balaji/Screens/CartSelectionScreen.dart';
 import 'package:balaji/Screens/ContactUs.dart';
 import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/FilterScreen.dart';
@@ -49,7 +48,6 @@ class _MyAppState extends State<MyApp> {
         '/ProfileScreen': (context) => ProfileScreen(),
         '/FilterScreen': (context) => FilterScreen(),
         '/BottomCategory': (context) => BottomCategory(),
-        '/CartSelectionScreen': (context) => CartSelectionScreen(),
         '/TermsAndCondition': (context) => TermsAndCondition(),
         '/ContactUs': (context) => ContactUs(),
         '/FAQScreen': (context) => FAQScreen(),
