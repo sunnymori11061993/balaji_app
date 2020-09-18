@@ -49,24 +49,24 @@ class _WishlistComponentState extends State<WishlistComponent> {
                             color: Colors.black,
                             fontWeight: FontWeight.w600),
                       ),
-//                      GestureDetector(
-//                        onTap: () {
-//                          //Navigator.of(context).pop();
-//                        },
-//                        child: CircleAvatar(
-//                          radius: 8,
-//                          backgroundColor: appPrimaryMaterialColor,
-//                          child: Icon(
-//                            Icons.close,
-//                            color: Colors.white,
-//                            size: 12,
-//                          ),
-//                        ),
-//                      ),
+                      GestureDetector(
+                        onTap: () {
+                          //Navigator.of(context).pop();
+                        },
+                        child: CircleAvatar(
+                          radius: 8,
+                          backgroundColor: appPrimaryMaterialColor,
+                          child: Icon(
+                            Icons.close,
+                            color: Colors.white,
+                            size: 12,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top:8.0,right: 4),
+                    padding: const EdgeInsets.only(top: 8.0, right: 4),
                     child: Text(
                       "${widget.wishListData["ProductDescription"]}",
                       overflow: TextOverflow.ellipsis,
@@ -124,7 +124,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
                       children: <Widget>[
                         GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed('/CartScreen');
+                            //  Navigator.of(context).pushNamed('/CartScreen');
                           },
                           child: Container(
                             decoration: BoxDecoration(

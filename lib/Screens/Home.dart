@@ -12,9 +12,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'ContactUs.dart';
-import 'FAQScreen.dart';
-
 //slider
 
 class Home extends StatefulWidget {
@@ -31,6 +28,8 @@ class _HomeState extends State<Home> {
   List catList = [];
   List trendingProductList = [];
   bool isSearching = false;
+  bool isFavLoading = false;
+
   Icon actionIcon = Icon(
     Icons.search,
     //color: Colors.white,
@@ -269,12 +268,12 @@ class _HomeState extends State<Home> {
             Divider(),
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => new FAQScreen(
-                            //  termsConData: termsConList[0],
-                            )));
+//                Navigator.push(
+//                    context,
+//                    MaterialPageRoute(
+//                        builder: (BuildContext context) => new FAQScreen(
+//                            //  termsConData: termsConList[0],
+//                            )));
               },
               child: ListTile(
                 leading: Icon(
@@ -306,12 +305,14 @@ class _HomeState extends State<Home> {
               onTap: () {
                 //  Navigator.of(context).pushNamed('/ContactUs');
 
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => new ContactUs(
-                              contactData: contactList[0],
-                            )));
+//                Navigator.push(
+//                  context,
+//                  MaterialPageRoute(
+//                    builder: (BuildContext context) => new ContactUs(
+//                      contactData: contactList[0],
+//                    ),
+//                  ),
+//                );
               },
               child: ListTile(
                 leading: Icon(
@@ -426,6 +427,13 @@ class _HomeState extends State<Home> {
                             }),
                       ),
                     ),
+//                    Padding(
+//                      padding: const EdgeInsets.only(top: 10.0),
+//                      child: Container(
+//                        color: Colors.grey[100],
+//                        height: 15,
+//                      ),
+//                    ),
                     Padding(
                       padding: const EdgeInsets.only(left: 8, top: 8.0),
                       child: Text(
@@ -436,41 +444,25 @@ class _HomeState extends State<Home> {
                             fontWeight: FontWeight.bold),
                       ),
                     ),
-//                    Padding(
-//                      padding: const EdgeInsets.only(left: 8, top: 10.0),
-//                      child: GridView.builder(
-//                        scrollDirection: Axis.vertical,
-//                        shrinkWrap: true,
-//                        gridDelegate:
-//                        SliverGridDelegateWithFixedCrossAxisCount(
-//                            crossAxisCount: 2,
-//                            childAspectRatio: 0.56,
-//                            //widthScreen / heightScreen,
-//                            crossAxisSpacing: 2.0,
-//                            mainAxisSpacing: 2.0),
-//                        itemBuilder:
-//                            (BuildContext context, int index) {
-//                          return TrendingProductComponent(
-//                              trendingProductList[index]);
-//                        },
-//                        itemCount: trendingProductList.length,
-//                      )
-
-
-                      Container(
-                        height: MediaQuery.of(context).size.height / 2.9,
-                        child:
-
-
-
-                        ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: trendingProductList.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return TrendingProductComponent(
-                                  trendingProductList[index]);
-                            }),
-                      ),
+                    Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: GridView.builder(
+                          scrollDirection: Axis.vertical,
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 0.56,
+                                  //widthScreen / heightScreen,
+                                  crossAxisSpacing: 2.0,
+                                  mainAxisSpacing: 2.0),
+                          itemBuilder: (BuildContext context, int index) {
+                            return TrendingProductComponent(
+                                trendingProductList[index]);
+                          },
+                          itemCount: trendingProductList.length,
+                        ))
                   ],
                 ),
               ),
@@ -560,6 +552,7 @@ class _HomeState extends State<Home> {
             setState(() {
               isLoading = false;
               trendingProductList = trendProductResponseList;
+              //isWishList = trendProductResponseList[0]["isFav"];
               //set "data" here to your variable
             });
           } else {
@@ -661,7 +654,9 @@ class _AlertboxLogoutState extends State<AlertboxLogout> {
       title: new Text(
         "Logout",
         style: TextStyle(
-            fontSize: 20, color: Colors.grey[700], fontWeight: FontWeight.bold),
+            fontSize: 22,
+            color: appPrimaryMaterialColor,
+            fontWeight: FontWeight.bold),
       ),
       content: new Text(
         "Are you sure want to Logout!!!",

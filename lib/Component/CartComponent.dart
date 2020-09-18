@@ -10,11 +10,9 @@ class CartComponent extends StatefulWidget {
 }
 
 class _CartComponentState extends State<CartComponent> {
-  int _m =1;
+  int _m = 1;
   int res = 0;
   // Text("${widget.getCartData["CartQuantity"]}");
-
-
 
   void add() {
     setState(() {
@@ -35,7 +33,6 @@ class _CartComponentState extends State<CartComponent> {
         Padding(
           padding: const EdgeInsets.only(left: 12.0),
           child: Container(
-
               width: 95,
               child: Image.network(
                   Image_URL + "${widget.getCartData["ProductImages"]}",
@@ -75,7 +72,7 @@ class _CartComponentState extends State<CartComponent> {
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top:8.0,right: 4),
+                  padding: const EdgeInsets.only(top: 8.0, right: 4),
                   child: Text(
                     "${widget.getCartData["ProductDescription"]}",
                     overflow: TextOverflow.ellipsis,
@@ -86,40 +83,25 @@ class _CartComponentState extends State<CartComponent> {
                   ),
                 ),
                 Padding(
-                  padding:
-                  const EdgeInsets.only(
-                      top: 8.0),
+                  padding: const EdgeInsets.only(top: 8.0),
                   child: Row(
                     children: <Widget>[
-                      Text(
-                          "₹" +"${widget.getCartData["ProductSrp"]}"
-                          ,
-                          style: TextStyle(
-                              color:
-                              Colors.black,
-                              fontSize: 16)),
+                      Text("₹" + "${widget.getCartData["ProductSrp"]}",
+                          style: TextStyle(color: Colors.black, fontSize: 16)),
                       Padding(
-                        padding:
-                        const EdgeInsets
-                            .only(
-                            left: 4.0),
-                        child: Text(
-                            "₹" +"${widget.getCartData["ProductMrp"]}",
+                        padding: const EdgeInsets.only(left: 4.0),
+                        child: Text("₹" + "${widget.getCartData["ProductMrp"]}",
 
                             //  "${widget.productDetail["ProductMrp"]}",
                             style: TextStyle(
-                                color:
-                                Colors.grey,
+                                color: Colors.grey,
                                 fontSize: 16,
-                                decoration:
-                                TextDecoration
-                                    .lineThrough)),
+                                decoration: TextDecoration.lineThrough)),
                       ),
                     ],
                   ),
                 ),
                 Row(
-
                   children: <Widget>[
                     Text(
                       "Quantity :",
@@ -128,40 +110,37 @@ class _CartComponentState extends State<CartComponent> {
                           color: Colors.black,
                           fontWeight: FontWeight.w600),
                     ),
-                IconButton(
-                            icon: Icon(
-                              Icons.remove_circle,
-                              size: 20,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                minus();
-                              });
-                            },
-                            color: appPrimaryMaterialColor,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 5.0, right: 5),
-                            child: Text("${widget.getCartData["CartQuantity"]}"),
-                            //child: Text('$_m'),
-                          ),
-                          IconButton(
-                            icon: Icon(
-                              Icons.add_circle,
-                              size: 20,
-                            ),
-                            onPressed: () {
-                              add();
-                            },
-                            color: appPrimaryMaterialColor,
-                          ),
-
+                    IconButton(
+                      icon: Icon(
+                        Icons.remove_circle,
+                        size: 20,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          minus();
+                        });
+                      },
+                      color: appPrimaryMaterialColor,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5.0, right: 5),
+                      //child: Text("${widget.getCartData["CartQuantity"]}"),
+                      child: Text('$_m'),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.add_circle,
+                        size: 20,
+                      ),
+                      onPressed: () {
+                        add();
+                      },
+                      color: appPrimaryMaterialColor,
+                    ),
                   ],
                 ),
                 Padding(
-                  padding:
-                  const EdgeInsets.only(right: 3, bottom: 2),
+                  padding: const EdgeInsets.only(right: 3, bottom: 2),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
@@ -173,8 +152,7 @@ class _CartComponentState extends State<CartComponent> {
                             borderRadius: BorderRadius.circular(5),
                             // border: Border.all(color: Colors.grey[300]),
                             color: appPrimaryMaterialColor),
-                        child:  Center(
-
+                        child: Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -194,7 +172,7 @@ class _CartComponentState extends State<CartComponent> {
                               ),
                               Flexible(
                                 child: Text(
-                                  "15,0000000",
+                                  "${widget.getCartData["ProductSrp"]}",
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.white,
@@ -205,8 +183,6 @@ class _CartComponentState extends State<CartComponent> {
                           ),
                         ),
                       ),
-
-
                     ],
                   ),
                 ),
@@ -260,15 +236,12 @@ class _CartComponentState extends State<CartComponent> {
 //                    ],
 //                  ),
 //                ),
-
               ],
             ),
           ),
         ),
       ],
     );
-
-
 
 //      Container(
 //      child: Padding(

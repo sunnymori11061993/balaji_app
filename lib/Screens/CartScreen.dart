@@ -56,59 +56,55 @@ class _CartScreenState extends State<CartScreen> {
       bottomNavigationBar: isLoading
           ? SizedBox()
           : Padding(
-        padding: const EdgeInsets.only(top: 10.0, bottom: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 8.0,
-              ),
+              padding: const EdgeInsets.only(top: 10.0, bottom: 20),
               child: Row(
-                children: [
-                  Text(
-                    // "Total:₹ " + "${res}",
-                    "Total:₹ " + "100000",
-                        //"${res}",
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 8.0,
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          // "Total:₹ " + "${res}",
+                          "Total:₹ " + "0",
+                          //"${res}",
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        width: 150,
+                        height: 40,
+                        // color: appPrimaryMaterialColor,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            // border: Border.all(color: Colors.grey[300]),
+                            color: appPrimaryMaterialColor),
+                        child: Center(
+                          child: Text(
+                            "Order Now ",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 17),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: GestureDetector(
-                onTap: () {
-
-                },
-                child: Container(
-                  width: 150,
-                  height: 40,
-                  // color: appPrimaryMaterialColor,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      // border: Border.all(color: Colors.grey[300]),
-                      color: appPrimaryMaterialColor),
-                  child:Center(
-                    child: Text(
-                "Order Now ",
-                style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 17),
-              ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-
-
 
 //      Container(
 //        child: Padding(
@@ -144,17 +140,18 @@ class _CartScreenState extends State<CartScreen> {
               ),
             )
           : Padding(
-            padding: const EdgeInsets.only(top:8.0,bottom: 10),
-            child: ListView.separated(
+              padding: const EdgeInsets.only(top: 8.0, bottom: 10),
+              child: ListView.separated(
                 itemCount: getCartList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return CartComponent(
                     getCartData: getCartList[index],
                   );
                 },
-                separatorBuilder: (BuildContext context, int index) => Divider(),
+                separatorBuilder: (BuildContext context, int index) =>
+                    Divider(),
               ),
-          ),
+            ),
     );
   }
 

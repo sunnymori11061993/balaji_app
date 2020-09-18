@@ -87,6 +87,7 @@ class _SubCategoryState extends State<SubCategory>
               onPressed: () {
                 Navigator.of(context).pushNamed('/CartScreen');
               }),
+
           Padding(
             padding: const EdgeInsets.only(right: 10.0, left: 4),
             child: Container(

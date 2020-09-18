@@ -181,7 +181,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       right: BorderSide(
                                           width: 2, color: Colors.grey))),
                               child: Icon(
-                                Icons.card_travel,
+                                Icons.work,
                                 color: appPrimaryMaterialColor,
                               ),
                             ),

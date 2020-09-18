@@ -157,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   right: BorderSide(
                                       width: 2, color: Colors.grey))),
                           child: Icon(
-                            Icons.card_travel,
+                            Icons.work,
                             color: appPrimaryMaterialColor,
                           ),
                         ),
