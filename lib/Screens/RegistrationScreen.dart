@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
+import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -354,7 +355,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Order In",
+                      "Type",
                       style: TextStyle(
                           fontSize: 15,
                           color: Colors.black,
@@ -403,9 +404,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     onPressed: () {
-                      _registration();
+                      if(isLoading==false)_registration();
                     },
-                    child: Text(
+                    child:isLoading?LoadingComponent(): Text(
                       "SIGN UP",
                       style: TextStyle(
                           color: Colors.white,

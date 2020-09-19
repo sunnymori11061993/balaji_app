@@ -20,12 +20,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  bool isLoading = false;
+  bool isLoading = true;
   bool isTermLoading = false;
   List termsConList = [];
   List contactList = [];
   List imgList = [];
   List catList = [];
+
   List trendingProductList = [];
   bool isSearching = false;
   bool isFavLoading = false;
@@ -387,12 +388,17 @@ class _HomeState extends State<Home> {
                         showIndicator: true,
                         indicatorBgPadding: 7.0,
                         images: imgList
-                            .map((item) => Container(
-                                  // margin: EdgeInsets.only(left: 10),
-                                  child: Image.network(
-                                    Image_URL + item["BannerImage"],
-                                    fit: BoxFit.fill,
-                                  ),
+                            .map((item) => Image.network(
+                                  Image_URL + item["BannerImage"],
+                                  fit: BoxFit.fill,
+                                  height: 150,
+                                  loadingBuilder:
+                                      (context, widget, loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return widget;
+                                    } else
+                                      return LoadingComponent();
+                                  },
                                 ))
                             .toList(),
                       ),

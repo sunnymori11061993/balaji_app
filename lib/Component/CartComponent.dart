@@ -21,7 +21,7 @@ class CartComponent extends StatefulWidget {
 }
 
 class _CartComponentState extends State<CartComponent> {
-  int _m = 1;
+  int _m;
   int res = 0;
   var isLoading = false;
   bool isCartLoading = false;
@@ -30,18 +30,18 @@ class _CartComponentState extends State<CartComponent> {
     setState(() {
       _m++;
     });
-    total();
     _updateCart();
     widget.onAdd(int.parse(widget.getCartData["ProductSrp"]));
   }
 
   void minus() {
-    setState(() {
-      if (_m != 1) _m--;
-    });
-    total();
-    _updateCart();
-    widget.onMinus(int.parse(widget.getCartData["ProductSrp"]));
+    if (_m != 1) {
+      setState(() {
+        _m--;
+      });
+      widget.onMinus(int.parse(widget.getCartData["ProductSrp"]));
+      _updateCart();
+    }
   }
 
   void total() {
@@ -97,7 +97,7 @@ class _CartComponentState extends State<CartComponent> {
                             radius: 8,
                             backgroundColor: appPrimaryMaterialColor,
                             child: Icon(
-                              Icons.close,
+                              Icons.delete_forever,
                               color: Colors.white,
                               size: 12,
                             ),
@@ -250,7 +250,8 @@ class _CartComponentState extends State<CartComponent> {
             isCartLoading = false;
           });
           if (responseList.IsSuccess == true && responseList.Data == "1") {
-            widget.onRemove();
+            widget.onRemove(res);
+            total();
           } else {
             Fluttertoast.showToast(msg: "Data Not Found");
             //show "data not found" in dialog

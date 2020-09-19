@@ -24,6 +24,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     _getCart();
+
   }
 
   @override
@@ -167,9 +168,10 @@ class _CartScreenState extends State<CartScreen> {
                   return CartComponent(
                     getCartData: getCartList[index],
 
-                    onRemove: () {
+                    onRemove: (total) {
                       setState(() {
                         getCartList.removeAt(index);
+                        mainTotal=mainTotal-total;
                       });
                     },
                     onAdd: (total) {
@@ -216,6 +218,7 @@ class _CartScreenState extends State<CartScreen> {
                     int.parse(responseList[i]["ProductSrp"]) *
                         int.parse(responseList[i]["CartQuantity"]);
               });
+
             }
           } else {
             setState(() {

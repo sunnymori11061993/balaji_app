@@ -1,6 +1,12 @@
+import 'dart:io';
+
 import 'package:balaji/Common/Constants.dart';
+import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Screens/ProductDetailScreen.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SubCategoriesComponent extends StatefulWidget {
   var subCat;
@@ -12,6 +18,8 @@ class SubCategoriesComponent extends StatefulWidget {
 }
 
 class _SubCategoriesComponentState extends State<SubCategoriesComponent> {
+
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -52,53 +60,54 @@ class _SubCategoriesComponentState extends State<SubCategoriesComponent> {
                       fontWeight: FontWeight.w500,
                     )),
               ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 4.0,
+                  top: 6.0,
+                ),
+                child: Text("${widget.subCat["ProductDescription"]}",
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 12,
+                    //  fontWeight: FontWeight.w500,
+                    )),
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8, bottom: 1),
                   child: Row(
-                    //crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                "₹",
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              Text(
-                                "${widget.subCat["ProductSrp"]}",
-                                style: TextStyle(
-                                    // color: Colors.grey[600],
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ],
+                          Text(
+                            "₹",
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 12.0),
-                            child: Text(
-                              "₹" + "${widget.subCat["ProductMrp"]}",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.grey,
-                                  fontSize: 14,
-                                  decoration: TextDecoration.lineThrough),
-                            ),
+                          Text(
+                            "${widget.subCat["ProductSrp"]}",
+                            style: TextStyle(
+                                // color: Colors.grey[600],
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.favorite_border,
-                          color: appPrimaryMaterialColor,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: Text(
+                          "₹" + "${widget.subCat["ProductMrp"]}",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              color: Colors.grey,
+                              fontSize: 14,
+                              decoration: TextDecoration.lineThrough),
                         ),
-                        onPressed: null,
                       ),
                     ],
                   ),
@@ -110,4 +119,6 @@ class _SubCategoriesComponentState extends State<SubCategoriesComponent> {
       ),
     );
   }
+
+
 }

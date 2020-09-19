@@ -181,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     onPressed: () {
-                      _login();
+                      if (isLoading == false) _login();
                     },
                     child: isLoading
                         ? CircularProgressIndicator(
