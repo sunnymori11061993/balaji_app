@@ -401,7 +401,7 @@ class _HomeState extends State<Home> {
                       padding: const EdgeInsets.only(top: 10.0),
                       child: Container(
                         color: Colors.grey[100],
-                        height: 15,
+                        height: 10,
                       ),
                     ),
                     Padding(
@@ -427,15 +427,15 @@ class _HomeState extends State<Home> {
                             }),
                       ),
                     ),
-//                    Padding(
-//                      padding: const EdgeInsets.only(top: 10.0),
-//                      child: Container(
-//                        color: Colors.grey[100],
-//                        height: 15,
-//                      ),
-//                    ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 8, top: 8.0),
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Container(
+                        color: Colors.grey[100],
+                        height: 10,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8, top: 20.0),
                       child: Text(
                         "Trending Products",
                         style: TextStyle(
@@ -445,7 +445,7 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
+                        padding: const EdgeInsets.only(top: 15.0),
                         child: GridView.builder(
                           scrollDirection: Axis.vertical,
                           physics: NeverScrollableScrollPhysics(),
@@ -453,7 +453,7 @@ class _HomeState extends State<Home> {
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
-                                  childAspectRatio: 0.56,
+                                  childAspectRatio: 0.60,
                                   //widthScreen / heightScreen,
                                   crossAxisSpacing: 2.0,
                                   mainAxisSpacing: 2.0),

@@ -1,171 +1,225 @@
+import 'dart:io';
+
 import 'package:balaji/Common/Constants.dart';
+import 'package:balaji/Common/Services.dart';
+import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Screens/ProductDetailScreen.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WishlistComponent extends StatefulWidget {
   var wishListData;
-  WishlistComponent({this.wishListData});
+  Function onRemove;
+
+  WishlistComponent({this.wishListData, this.onRemove});
+
   @override
   _WishlistComponentState createState() => _WishlistComponentState();
 }
 
 class _WishlistComponentState extends State<WishlistComponent> {
+  bool isFavLoading = false;
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => new ProductDetailScreen(
-                      productDetail: widget.wishListData["ProductId"],
-                    )));
-      },
-      child: Row(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 12.0),
-            child: Container(
-                height: 125,
-                width: 95,
-                child: Image.network(
-                    Image_URL + "${widget.wishListData["ProductImages"]}",
-                    fit: BoxFit.fill)),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 7.0, left: 15, right: 6.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Stack(
+      children: [
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => new ProductDetailScreen(
+                          productDetail: widget.wishListData["ProductId"],
+                        )));
+          },
+          child: Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 12.0),
+                child: Container(
+                    height: 125,
+                    width: 95,
+                    child: Image.network(
+                        Image_URL + "${widget.wishListData["ProductImages"]}",
+                        fit: BoxFit.fill)),
+              ),
+              Expanded(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(top: 7.0, left: 15, right: 6.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        "${widget.wishListData["ProductName"]}",
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          //Navigator.of(context).pop();
-                        },
-                        child: CircleAvatar(
-                          radius: 8,
-                          backgroundColor: appPrimaryMaterialColor,
-                          child: Icon(
-                            Icons.close,
-                            color: Colors.white,
-                            size: 12,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            "${widget.wishListData["ProductName"]}",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600),
                           ),
+                          GestureDetector(
+                            onTap: () {
+                              _removeFromWishlist();
+                            },
+                            child: CircleAvatar(
+                              radius: 8,
+                              backgroundColor: appPrimaryMaterialColor,
+                              child: Icon(
+                                Icons.close,
+                                color: Colors.white,
+                                size: 12,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0, right: 4),
+                        child: Text(
+                          "${widget.wishListData["ProductDescription"]}",
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              "Price :",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              "₹",
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              "${widget.wishListData["ProductSrp"]}",
+                              style: TextStyle(
+                                  // color: Colors.grey[600],
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 12.0),
+                              child: Text(
+                                "₹" + "${widget.wishListData["ProductMrp"]}",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey,
+                                    fontSize: 16,
+                                    decoration: TextDecoration.lineThrough),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 10.0, right: 3, bottom: 2),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            GestureDetector(
+                              onTap: () {
+                                //  Navigator.of(context).pushNamed('/CartScreen');
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: appPrimaryMaterialColor,
+                                  border: Border.all(
+                                    color: Colors.grey[100],
+                                  ),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                                width: 150,
+                                height: 35,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.shopping_cart,
+                                      color: Colors.white,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 3.0),
+                                      child: Text(
+                                        "Add to Cart",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 15),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0, right: 4),
-                    child: Text(
-                      "${widget.wishListData["ProductDescription"]}",
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w400),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Row(
-                      children: <Widget>[
-                        Text(
-                          "Price :",
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        Text(
-                          "₹",
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        Text(
-                          "${widget.wishListData["ProductSrp"]}",
-                          style: TextStyle(
-                              // color: Colors.grey[600],
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          child: Text(
-                            "₹" + "${widget.wishListData["ProductMrp"]}",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.grey,
-                                fontSize: 16,
-                                decoration: TextDecoration.lineThrough),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(top: 10.0, right: 3, bottom: 2),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        GestureDetector(
-                          onTap: () {
-                            //  Navigator.of(context).pushNamed('/CartScreen');
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: appPrimaryMaterialColor,
-                              border: Border.all(
-                                color: Colors.grey[100],
-                              ),
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                            width: 150,
-                            height: 35,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.shopping_cart,
-                                  color: Colors.white,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 3.0),
-                                  child: Text(
-                                    "Add to Cart",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+        isFavLoading ? LoadingComponent() : Container()
+      ],
     );
+  }
+
+  _removeFromWishlist() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        FormData body = FormData.fromMap({
+          "CustomerId": prefs.getString(Session.CustomerId),
+          "ProductId": "${widget.wishListData["ProductId"]}",
+        });
+        setState(() {
+          isFavLoading = true;
+        });
+        Services.postForSave(apiname: 'addRemoveWishlist', body: body).then(
+            (responseList) async {
+          setState(() {
+            isFavLoading = false;
+          });
+          if (responseList.IsSuccess == true && responseList.Data == "1") {
+            widget.onRemove();
+          } else {
+            Fluttertoast.showToast(msg: "Data Not Found");
+            //show "data not found" in dialog
+          }
+        }, onError: (e) {
+          setState(() {
+            isFavLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
   }
 }

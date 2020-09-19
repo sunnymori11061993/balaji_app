@@ -171,254 +171,241 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             ? LoadingComponent()
             : Stack(
                 children: [
-                  isFavLoading
-                      ? LoadingComponent()
-                      : SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Column(
+                  SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Container(
+                                child: Column(
+                                  children: <Widget>[
+                                    Container(
+                                        //slider
+                                        child: Column(
+                                      children: <Widget>[
+                                        CarouselSlider(
+                                          options: CarouselOptions(
+                                            autoPlay: true,
+                                            aspectRatio: 1.0,
+                                            enlargeCenterPage: true,
+                                          ),
+                                          items: imgList
+                                              .map((item) => Container(
+                                                    margin: EdgeInsets.all(5.0),
+                                                    child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    5.0)),
+                                                        child: Stack(
+                                                          children: <Widget>[
+                                                            Image.network(
+                                                                Image_URL +
+                                                                    item,
+                                                                fit:
+                                                                    BoxFit.fill,
+                                                                width: 1000.0),
+                                                            Positioned(
+                                                              bottom: 0.0,
+                                                              left: 0.0,
+                                                              right: 0.0,
+                                                              child: Container(
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  gradient:
+                                                                      LinearGradient(
+                                                                    colors: [
+                                                                      Color.fromARGB(
+                                                                          200,
+                                                                          0,
+                                                                          0,
+                                                                          0),
+                                                                      Color
+                                                                          .fromARGB(
+                                                                              0,
+                                                                              0,
+                                                                              0,
+                                                                              0)
+                                                                    ],
+                                                                    begin: Alignment
+                                                                        .bottomCenter,
+                                                                    end: Alignment
+                                                                        .topCenter,
+                                                                  ),
+                                                                ),
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                        vertical:
+                                                                            10.0,
+                                                                        horizontal:
+                                                                            40.0),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        )),
+                                                  ))
+                                              .toList(),
+                                        ),
+                                      ],
+                                    )),
+                                  ],
+                                ),
+                                //slider
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 10.0, left: 20, right: 8),
+                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: Container(
-                                      child: Column(
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: <Widget>[
-                                          Container(
-                                              //slider
-                                              child: Column(
-                                            children: <Widget>[
-                                              CarouselSlider(
-                                                options: CarouselOptions(
-                                                  autoPlay: true,
-                                                  aspectRatio: 1.0,
-                                                  enlargeCenterPage: true,
-                                                ),
-                                                items: imgList
-                                                    .map((item) => Container(
-                                                          margin:
-                                                              EdgeInsets.all(
-                                                                  5.0),
-                                                          child: ClipRRect(
-                                                              borderRadius: BorderRadius
-                                                                  .all(Radius
-                                                                      .circular(
-                                                                          5.0)),
-                                                              child: Stack(
-                                                                children: <
-                                                                    Widget>[
-                                                                  Image.network(
-                                                                      Image_URL +
-                                                                          item,
-                                                                      fit: BoxFit
-                                                                          .fill,
-                                                                      width:
-                                                                          1000.0),
-                                                                  Positioned(
-                                                                    bottom: 0.0,
-                                                                    left: 0.0,
-                                                                    right: 0.0,
-                                                                    child:
-                                                                        Container(
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        gradient:
-                                                                            LinearGradient(
-                                                                          colors: [
-                                                                            Color.fromARGB(
-                                                                                200,
-                                                                                0,
-                                                                                0,
-                                                                                0),
-                                                                            Color.fromARGB(
-                                                                                0,
-                                                                                0,
-                                                                                0,
-                                                                                0)
-                                                                          ],
-                                                                          begin:
-                                                                              Alignment.bottomCenter,
-                                                                          end: Alignment
-                                                                              .topCenter,
-                                                                        ),
-                                                                      ),
-                                                                      padding: EdgeInsets.symmetric(
-                                                                          vertical:
-                                                                              10.0,
-                                                                          horizontal:
-                                                                              40.0),
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              )),
-                                                        ))
-                                                    .toList(),
-                                              ),
-                                            ],
-                                          )),
-                                        ],
-                                      ),
-                                      //slider
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0, left: 20, right: 8),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: <Widget>[
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Text(
-                                                  productList["ProductName"],
-                                                  style: TextStyle(
-                                                      fontSize: 15,
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 8.0),
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      Text(
-                                                          "₹" +
-                                                              productList[
-                                                                  "ProductSrp"],
-                                                          // "${widget.productDetail["ProductSrp"]}",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: 16)),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 4.0),
-                                                        child: Text(
-                                                            "₹" +
-                                                                productList[
-                                                                    "ProductMrp"],
-
-                                                            //  "${widget.productDetail["ProductMrp"]}",
-                                                            style: TextStyle(
-                                                                color:
-                                                                    Colors.grey,
-                                                                fontSize: 16,
-                                                                decoration:
-                                                                    TextDecoration
-                                                                        .lineThrough)),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                _addToWishlist();
-                                              },
-                                              child: Container(
-                                                  child: isWishList == false
-                                                      ? Icon(
-                                                          Icons.favorite_border,
-                                                          color:
-                                                              appPrimaryMaterialColor,
-                                                        )
-                                                      : Icon(
-                                                          Icons.favorite,
-                                                          color:
-                                                              appPrimaryMaterialColor,
-                                                        )),
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 15.0),
-                                          child: Text(
-                                            "Select Quantity",
+                                          Text(
+                                            productList["ProductName"],
                                             style: TextStyle(
-                                                fontSize: 14,
+                                                fontSize: 15,
                                                 color: Colors.black,
                                                 fontWeight: FontWeight.w600),
                                           ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 8.0),
+                                            child: Row(
+                                              children: <Widget>[
+                                                Text(
+                                                    "₹" +
+                                                        productList[
+                                                            "ProductSrp"],
+                                                    // "${widget.productDetail["ProductSrp"]}",
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 16)),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 4.0),
+                                                  child: Text(
+                                                      "₹" +
+                                                          productList[
+                                                              "ProductMrp"],
+
+                                                      //  "${widget.productDetail["ProductMrp"]}",
+                                                      style: TextStyle(
+                                                          color: Colors.grey,
+                                                          fontSize: 16,
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .lineThrough)),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          _addToWishlist();
+                                        },
+                                        child: Container(
+                                            child: isWishList == false
+                                                ? Icon(
+                                                    Icons.favorite_border,
+                                                    color:
+                                                        appPrimaryMaterialColor,
+                                                  )
+                                                : Icon(
+                                                    Icons.favorite,
+                                                    color:
+                                                        appPrimaryMaterialColor,
+                                                  )),
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 15.0),
+                                    child: Text(
+                                      "Select Quantity",
+                                      style: TextStyle(
+                                          fontSize: 14,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8.0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        IconButton(
+                                          icon: Icon(Icons.remove_circle),
+                                          onPressed: () {
+                                            minus();
+                                          },
+                                          color: appPrimaryMaterialColor,
                                         ),
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 8.0),
-                                          child: Row(
-                                            children: <Widget>[
-                                              IconButton(
-                                                icon: Icon(Icons.remove_circle),
-                                                onPressed: () {
-                                                  minus();
-                                                },
-                                                color: appPrimaryMaterialColor,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 8.0, right: 8),
-                                                child: Text('$_m'),
-                                              ),
-                                              IconButton(
-                                                icon: Icon(Icons.add_circle),
-                                                onPressed: () {
-                                                  add();
-                                                },
-                                                color: appPrimaryMaterialColor,
-                                              ),
-                                            ],
-                                          ),
+                                          padding: const EdgeInsets.only(
+                                              left: 8.0, right: 8),
+                                          child: Text('$_m'),
+                                        ),
+                                        IconButton(
+                                          icon: Icon(Icons.add_circle),
+                                          onPressed: () {
+                                            add();
+                                          },
+                                          color: appPrimaryMaterialColor,
                                         ),
                                       ],
                                     ),
                                   ),
                                 ],
                               ),
-                              Container(
-                                height: 20,
-                                color: Colors.grey[200],
+                            ),
+                          ],
+                        ),
+                        Container(
+                          height: 20,
+                          color: Colors.grey[200],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10.0, left: 20, right: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "Product Description",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(
-                                    top: 10.0, left: 20, right: 8),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      "Product Description",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 15.0, bottom: 10),
-                                      child: Text(
-                                        productList["ProductDescription"],
-                                        //  "${widget.productDetail["ProductDescription"]}",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w400),
-                                      ),
-                                    ),
-                                    Divider()
-                                  ],
+                                    top: 15.0, bottom: 10),
+                                child: Text(
+                                  productList["ProductDescription"],
+                                  //  "${widget.productDetail["ProductDescription"]}",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w400),
                                 ),
                               ),
+                              Divider()
+                            ],
+                          ),
+                        ),
 //            Container(
 //              height: 20,
 //              color: Colors.grey[200],
@@ -504,9 +491,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 //                ],
 //              ),
 //            ),
-                            ],
-                          ),
-                        ),
+                      ],
+                    ),
+                  ),
+                  isFavLoading ? LoadingComponent() : Container()
                 ],
               ));
   }

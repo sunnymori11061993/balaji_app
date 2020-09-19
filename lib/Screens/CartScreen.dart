@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/CartComponent.dart';
+import 'package:balaji/Screens/PlaceOrderScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,6 +17,9 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   var isLoading = true;
   List getCartList = [];
+  List updateCartList = [];
+
+  int mainTotal = 0;
 
   @override
   void initState() {
@@ -55,55 +59,71 @@ class _CartScreenState extends State<CartScreen> {
       ),
       bottomNavigationBar: isLoading
           ? SizedBox()
-          : Padding(
-              padding: const EdgeInsets.only(top: 10.0, bottom: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 8.0,
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          // "Total:₹ " + "${res}",
-                          "Total:₹ " + "0",
-                          //"${res}",
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600),
+          : Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Divider(
+                  height: 3,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0, bottom: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 8.0,
                         ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        width: 150,
-                        height: 40,
-                        // color: appPrimaryMaterialColor,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            // border: Border.all(color: Colors.grey[300]),
-                            color: appPrimaryMaterialColor),
-                        child: Center(
-                          child: Text(
-                            "Order Now ",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 17),
+                        child: Row(
+                          children: [
+                            Text(
+                              // "Total:₹ " + "${res}",
+                              "Total:₹ " + "$mainTotal",
+                              //"${res}",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        new PlaceOrderScreen(
+                                            // productDetail: widget.wishListData["ProductId"],
+                                            )));
+                          },
+                          child: Container(
+                            width: 150,
+                            height: 40,
+                            // color: appPrimaryMaterialColor,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                // border: Border.all(color: Colors.grey[300]),
+                                color: appPrimaryMaterialColor),
+                            child: Center(
+                              child: Text(
+                                "Order Now ",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 17),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
 
 //      Container(
@@ -146,6 +166,23 @@ class _CartScreenState extends State<CartScreen> {
                 itemBuilder: (BuildContext context, int index) {
                   return CartComponent(
                     getCartData: getCartList[index],
+
+                    onRemove: () {
+                      setState(() {
+                        getCartList.removeAt(index);
+                      });
+                    },
+                    onAdd: (total) {
+                      setState(() {
+                        mainTotal = mainTotal + total;
+                      });
+                    },
+                    onMinus: (total) {
+                      setState(() {
+                        mainTotal = mainTotal - total;
+                      });
+                    },
+                    // updateCartData: ,
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) =>
@@ -173,6 +210,13 @@ class _CartScreenState extends State<CartScreen> {
               getCartList = responseList;
               //set "data" here to your variable
             });
+            for (int i = 0; i < responseList.length; i++) {
+              setState(() {
+                mainTotal = mainTotal +
+                    int.parse(responseList[i]["ProductSrp"]) *
+                        int.parse(responseList[i]["CartQuantity"]);
+              });
+            }
           } else {
             setState(() {
               isLoading = false;

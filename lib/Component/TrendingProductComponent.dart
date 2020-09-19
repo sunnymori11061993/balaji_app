@@ -106,17 +106,23 @@ class _TrendingProductComponentState extends State<TrendingProductComponent> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          _addToWishlist();
+                          //_addToWishlist();
                         },
                         child: Container(
                             child: isWishList == false
-                                ? Icon(
-                                    Icons.favorite_border,
-                                    color: appPrimaryMaterialColor,
+                                ? Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Icon(
+                                      Icons.favorite_border,
+                                      color: appPrimaryMaterialColor,
+                                    ),
                                   )
-                                : Icon(
-                                    Icons.favorite,
-                                    color: appPrimaryMaterialColor,
+                                : Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Icon(
+                                      Icons.favorite,
+                                      color: appPrimaryMaterialColor,
+                                    ),
                                   )),
                       ),
                     ],

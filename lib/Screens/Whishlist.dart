@@ -62,19 +62,24 @@ class _WhishlistState extends State<Whishlist> {
               ),
             )
           : Padding(
-            padding: const EdgeInsets.only(top:8.0,bottom: 10),
-            child: ListView.separated(
+              padding: const EdgeInsets.only(top: 8.0, bottom: 10),
+              child: ListView.separated(
                 itemCount: wishList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return WishlistComponent(
                     wishListData: wishList[index],
+                    onRemove: () {
+                      setState(() {
+                        wishList.removeAt(index);
+                      });
+                    },
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) => Divider(
                   thickness: 2,
                 ),
               ),
-          ),
+            ),
     );
   }
 
