@@ -26,6 +26,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formkey = new GlobalKey<FormState>();
   bool isLoading = false;
   List<String> userType = ['User', 'Manufacturer'];
+  String toggle = "";
 
   @override
   void initState() {
@@ -382,7 +383,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             labels: userType,
                             //icons: [FontAwesomeIcons.check, FontAwesomeIcons.times],
                             onToggle: (index) {
-                              print('switched to: ${userType[index]}');
+                              setState(() {
+                                toggle = userType[index];
+                              });
+                              print("${userType[index]}");
                             },
                           ),
                         ),
@@ -404,15 +408,22 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     onPressed: () {
-                      if(isLoading==false)_registration();
+                      if (isLoading == false) {
+                        if (toggle == "User") {
+                          _registration();
+                        }else
+                        _manufacturer();
+                      }
                     },
-                    child:isLoading?LoadingComponent(): Text(
-                      "SIGN UP",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17),
-                    ),
+                    child: isLoading
+                        ? LoadingComponent()
+                        : Text(
+                            "SIGN UP",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 17),
+                          ),
                   ),
                 ),
               ),
@@ -438,6 +449,61 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             "CustomerPhoneNo": txtMobileNumber.text.toString(),
           }); //"key":"value"
           Services.PostForList(api_name: 'insert_data_api/customer', body: body)
+              .then((responseList) async {
+            setState(() {
+              isLoading = false;
+            });
+            if (responseList.length > 0) {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.setString(
+                  Session.CustomerId, responseList[0]["CustomerId"]);
+              await prefs.setString(
+                  Session.CustomerName, responseList[0]["CustomerName"]);
+              await prefs.setString(Session.CustomerCompanyName,
+                  responseList[0]["CustomerCompanyName"]);
+              await prefs.setString(
+                  Session.CustomerEmailId, responseList[0]["CustomerEmailId"]);
+
+              await prefs.setString(
+                  Session.CustomerPhoneNo, responseList[0]["CustomerPhoneNo"]);
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/Home', (route) => false);
+            } else {
+              Fluttertoast.showToast(msg: "Registration Fail!!!!");
+              //showMsg(data.Message); //show "data not found" in dialog
+            }
+          }, onError: (e) {
+            setState(() {
+              isLoading = false;
+            });
+            print("error on call -> ${e.message}");
+            Fluttertoast.showToast(msg: "Something Went Wrong");
+            //showMsg("something went wrong");
+          });
+        }
+      } on SocketException catch (_) {
+        Fluttertoast.showToast(msg: "No Internet Connection.");
+      }
+    } else {
+      Fluttertoast.showToast(msg: "Please fill all the fields...");
+    }
+  }
+
+  _manufacturer() async {
+    if (_formkey.currentState.validate()) {
+      try {
+        final result = await InternetAddress.lookup('google.com');
+        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+          setState(() {
+            isLoading = true;
+          });
+          FormData body = FormData.fromMap({
+            "ManufacturerName": txtName.text,
+            "ManufacturerAddress": txtEmail.text,
+            "ManufacturerCompanyName": txtCName.text,
+            "ManufacturerPhoneNo": txtMobileNumber.text.toString(),
+          }); //"key":"value"
+          Services.PostForList(api_name: 'addManufacturer', body: body)
               .then((responseList) async {
             setState(() {
               isLoading = false;

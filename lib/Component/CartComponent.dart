@@ -6,7 +6,9 @@ import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CartComponent extends StatefulWidget {
   var getCartData;
@@ -50,6 +52,53 @@ class _CartComponentState extends State<CartComponent> {
     });
   }
 
+  _showDialog(BuildContext context) {
+    //show alert dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text(
+            "Remove",
+            style: TextStyle(
+                fontSize: 22,
+                color: appPrimaryMaterialColor,
+                fontWeight: FontWeight.bold),
+          ),
+          content: new Text(
+            "Are you sure want to remove from cart!!!",
+            style: TextStyle(
+                fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600),
+          ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            FlatButton(
+              child: new Text(
+                "Cancel",
+                style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            new FlatButton(
+              child: new Text(
+                "Ok",
+                style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
+              ),
+              onPressed: ()  {
+                _removeFromCart();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
   @override
   void initState() {
     // TODO: implement initState
@@ -62,24 +111,26 @@ class _CartComponentState extends State<CartComponent> {
     return Stack(
       alignment: Alignment.center,
       children: [
-        Row(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(left: 12.0),
-              child: Container(
-                  width: 95,
-                  child: Image.network(
-                      Image_URL + "${widget.getCartData["ProductImages"]}",
-                      fit: BoxFit.fill)),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 7.0, left: 15, right: 6.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Column(
+          children: [
+
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: Container(
+                      width: 95,
+                      color: Colors.black,
+                      child: Image.network(
+                          Image_URL + "${widget.getCartData["ProductImages"]}",
+                          fit: BoxFit.fill)),
+                ),
+                Expanded(
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 7.0, left: 15, right: 6.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
                           "${widget.getCartData["ProductName"]}",
@@ -89,143 +140,223 @@ class _CartComponentState extends State<CartComponent> {
                               color: Colors.black,
                               fontWeight: FontWeight.w600),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            _removeFromCart();
-                          },
-                          child: CircleAvatar(
-                            radius: 8,
-                            backgroundColor: appPrimaryMaterialColor,
-                            child: Icon(
-                              Icons.delete_forever,
-                              color: Colors.white,
-                              size: 12,
-                            ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0, right: 4),
+                          child: Text(
+                            "${widget.getCartData["ProductDescription"]}",
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w400),
                           ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0, right: 4),
-                      child: Text(
-                        "${widget.getCartData["ProductDescription"]}",
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Row(
-                        children: <Widget>[
-                          Text("₹" + "${widget.getCartData["ProductSrp"]}",
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16)),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 4.0),
-                            child: Text(
-                                "₹" + "${widget.getCartData["ProductMrp"]}",
-
-                                //  "${widget.productDetail["ProductMrp"]}",
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 16,
-                                    decoration: TextDecoration.lineThrough)),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          "Quantity :",
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.remove_circle,
-                            size: 20,
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              minus();
-                            });
-                          },
-                          color: appPrimaryMaterialColor,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 5.0, right: 5),
-                          //child: Text("${widget.getCartData["CartQuantity"]}"),
-                          child: Text('$_m'),
-                        ),
-                        IconButton(
-                          icon: Icon(
-                            Icons.add_circle,
-                            size: 20,
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Row(
+                            children: <Widget>[
+                              Text("₹" + "${widget.getCartData["ProductSrp"]}",
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 16)),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 4.0),
+                                child: Text(
+                                    "₹" + "${widget.getCartData["ProductMrp"]}",
+
+                                    //  "${widget.productDetail["ProductMrp"]}",
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 16,
+                                        decoration:
+                                            TextDecoration.lineThrough)),
+                              ),
+                            ],
                           ),
-                          onPressed: () {
-                            add();
-                          },
-                          color: appPrimaryMaterialColor,
                         ),
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              "Quantity :",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.remove_circle,
+                                size: 20,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  minus();
+                                });
+                              },
+                              color: appPrimaryMaterialColor,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 5.0, right: 5),
+                              //child: Text("${widget.getCartData["CartQuantity"]}"),
+                              child: Text('$_m'),
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.add_circle,
+                                size: 20,
+                              ),
+                              onPressed: () {
+                                add();
+                              },
+                              color: appPrimaryMaterialColor,
+                            ),
+                          ],
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(right: 3, bottom: 2),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.end,
+                        //     children: <Widget>[
+                        //       Container(
+                        //         width: 150,
+                        //         height: 40,
+                        //         // color: appPrimaryMaterialColor,
+                        //         decoration: BoxDecoration(
+                        //             borderRadius: BorderRadius.circular(5),
+                        //             // border: Border.all(color: Colors.grey[300]),
+                        //             color: appPrimaryMaterialColor),
+                        //         child: Center(
+                        //           child: Row(
+                        //             mainAxisAlignment: MainAxisAlignment.center,
+                        //             children: [
+                        //               Text(
+                        //                 "Total :",
+                        //                 style: TextStyle(
+                        //                     fontSize: 16,
+                        //                     color: Colors.white,
+                        //                     fontWeight: FontWeight.w600),
+                        //               ),
+                        //               Text(
+                        //                 "₹",
+                        //                 style: TextStyle(
+                        //                     color: Colors.white,
+                        //                     fontSize: 16,
+                        //                     fontWeight: FontWeight.w600),
+                        //               ),
+                        //               Flexible(
+                        //                 child: Text(
+                        //                   "${res}",
+                        //                   style: TextStyle(
+                        //                       fontSize: 16,
+                        //                       color: Colors.white,
+                        //                       fontWeight: FontWeight.w600),
+                        //                 ),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 3, bottom: 2),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Container(
-                            width: 150,
-                            height: 40,
-                            // color: appPrimaryMaterialColor,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                // border: Border.all(color: Colors.grey[300]),
-                                color: appPrimaryMaterialColor),
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Total :",
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  Text(
-                                    "₹",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  Flexible(
-                                    child: Text(
-                                      "${res}",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                  ),
+                ),
+              ],
+            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left:20.0,right: 20),
+            //   child: Divider(),
+            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left:20.0),
+                  child: SizedBox(
+                    height: 45,
+                    width: 150,
+                    child: FlatButton(
+                     // color: appPrimaryMaterialColor,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                        side: BorderSide(color: Colors.grey[300])
+                      ),
+
+                      onPressed: () {
+                        _showDialog(context);
+                      },
+                      child:Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(Icons.delete_forever,
+                            //color: Colors.white),
+                            color: Colors.grey[700],),
+                          Text("Remove", style: TextStyle(
+                              fontSize: 16,
+                             // color: Colors.white,
+                              color: Colors.grey[700],
+                              fontWeight: FontWeight.bold),),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 1,
+                  height: 40,
+                  color: Colors.grey[300],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right:20.0),
+                  child: SizedBox(
+                    width: 150,
+                    height: 45,
+                    child: FlatButton(
+//color: appPrimaryMaterialColor,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                          side: BorderSide(color: Colors.grey[300])
+                      ),
+
+                      onPressed: () {},
+                      child:Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Total :",
+                            style: TextStyle(
+                                fontSize: 16,
+                                 //color: Colors.white,
+                                color: Colors.grey[700],
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "₹",
+                            style: TextStyle(
+                                fontSize: 16,
+                                //color: Colors.white,
+                                color: Colors.grey[700],
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            "${res}",
+                            style:TextStyle(
+                                fontSize: 16,
+                               // color: Colors.white,
+                                color: Colors.grey[700],
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
+              ],
+            )
           ],
         ),
         isLoading == true ? LoadingComponent() : Container(),
@@ -305,3 +436,4 @@ class _CartComponentState extends State<CartComponent> {
     }
   }
 }
+

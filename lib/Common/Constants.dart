@@ -36,5 +36,9 @@ class Session {
   static const String CustomerPhoneNo = "CustomerPhoneNo";
   static const String CustomerCDT = "CustomerCDT";
   static const String CustomerStatus = "CustomerStatus";
+  static const String ManufacturerName = "ManufacturerName";
+  static const String ManufacturerPhoneNo = "ManufacturerPhoneNo";
+  static const String ManufacturerAddress = "ManufacturerAddress";
+  static const String ManufacturerCompanyName = "ManufacturerCompanyName";
   static const String v = "__v";
 }

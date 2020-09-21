@@ -1,3 +1,4 @@
+import 'package:balaji/Screens/Address%20Screen.dart';
 import 'package:balaji/Screens/BottomCategory.dart';
 import 'package:balaji/Screens/CartScreen.dart';
 import 'package:balaji/Screens/ContactUs.dart';
@@ -51,6 +52,7 @@ class _MyAppState extends State<MyApp> {
         '/TermsAndCondition': (context) => TermsAndCondition(),
         '/ContactUs': (context) => ContactUs(),
         '/FAQScreen': (context) => FAQScreen(),
+        '/AddressScreen': (context) => AddressScreen(),
       },
       theme: ThemeData(
           //fontFamily: 'Montserrat',

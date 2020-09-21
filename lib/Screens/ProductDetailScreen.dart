@@ -29,8 +29,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int _m = 1;
   int res = 0;
   bool isLoading = true;
-  bool isPLoading = true;
   bool isFavLoading = false;
+  bool isCartLoading = false;
   bool isWishList = false;
   bool isCartList = false;
   var productList;
@@ -87,13 +87,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           actions: <Widget>[
             IconButton(
                 icon: Icon(Icons.favorite_border),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/Whishlist');
+                onPressed: () async {
+                  final result =
+                      await Navigator.of(context).pushNamed('/Whishlist');
+                  if (result == "pop") _getProductDetail();
                 }),
             IconButton(
                 icon: Icon(Icons.card_travel),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/CartScreen');
+                onPressed: () async {
+                  final result =
+                      await Navigator.of(context).pushNamed('/CartScreen');
+                  if (result == "pop") _getProductDetail();
                 }),
           ],
         ),
@@ -125,7 +129,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       padding: const EdgeInsets.only(right: 8.0),
                       child: GestureDetector(
                         onTap: () {
-                          if (isCartList == false) {
+                          if (isCartLoading == false && isCartList==false) {
                             _addToCart();
                           }
                         },
@@ -137,30 +141,38 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               borderRadius: BorderRadius.circular(5),
                               // border: Border.all(color: Colors.grey[300]),
                               color: appPrimaryMaterialColor),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.shopping_cart,
-                                color: Colors.white,
-                              ),
-                              isCartList == true
-                                  ? Text(
-                                      "Already in Cart",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600),
-                                    )
-                                  : Text(
-                                      "Add to Cart",
-                                      style: TextStyle(
-                                          fontSize: 15,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600),
+                          child: isCartLoading
+                              ? Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor:
+                                        new AlwaysStoppedAnimation<Color>(
+                                            Colors.white),
+                                  ),
+                                )
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.shopping_cart,
+                                      color: Colors.white,
                                     ),
-                            ],
-                          ),
+                                    isCartList == true
+                                        ? Text(
+                                            "Already in Cart",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w600),
+                                          )
+                                        : Text(
+                                            "Add to Cart",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                  ],
+                                ),
                         ),
                       ),
                     ),
@@ -508,6 +520,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           "CustomerId": prefs.getString(Session.CustomerId),
           "ProductId": "${widget.productDetail}"
         });
+        setState(() {
+          isLoading = true;
+        });
         Services.PostForList(
                 api_name: 'getProductDetailByCustomerId', body: body)
             .then((productResponseList) async {
@@ -594,11 +609,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           "ProductId": "${widget.productDetail}",
           "CartQuantity": _m
         });
+        setState(() {
+          isCartLoading = true;
+        });
         Services.postForSave(apiname: 'insert_data_api/cart', body: body).then(
             (responseList) async {
           if (responseList.IsSuccess == true && responseList.Data == "1") {
             setState(() {
-              isLoading = false;
+              isCartLoading = false;
               isCartList = !isCartList;
             });
             if (isCartList == true) {
@@ -609,14 +627,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             total();
           } else {
             setState(() {
-              isLoading = false;
+              isCartLoading = false;
             });
             Fluttertoast.showToast(msg: "Data Not Found");
             //show "data not found" in dialog
           }
         }, onError: (e) {
           setState(() {
-            isLoading = false;
+            isCartLoading = false;
           });
           print("error on call -> ${e.message}");
           Fluttertoast.showToast(msg: "Something Went Wrong");

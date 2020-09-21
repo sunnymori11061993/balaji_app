@@ -24,173 +24,154 @@ class _CartScreenState extends State<CartScreen> {
   @override
   void initState() {
     _getCart();
-
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: appPrimaryMaterialColor,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            }),
-        elevation: 1,
+    return WillPopScope(
+      onWillPop: () {
+        Navigator.of(context).pop("pop");
+      },
+      child: Scaffold(
         backgroundColor: Colors.white,
-        iconTheme: new IconThemeData(
-          color: appPrimaryMaterialColor,
-        ),
-        title: const Text("My Cart",
-            style: TextStyle(
-              color: Colors.black,
-            )),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.favorite_border),
+        appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: appPrimaryMaterialColor,
+              ),
               onPressed: () {
-                Navigator.of(context).pushNamed('/Whishlist');
+                Navigator.of(context).pop("pop");
               }),
-          // IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {}),
-        ],
-      ),
-      bottomNavigationBar: isLoading
-          ? SizedBox()
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Divider(
-                  height: 3,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.0, bottom: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 8.0,
-                        ),
-                        child: Row(
-                          children: [
-                            Text(
-                              // "Total:₹ " + "${res}",
-                              "Total:₹ " + "$mainTotal",
-                              //"${res}",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        new PlaceOrderScreen(
-                                            // productDetail: widget.wishListData["ProductId"],
-                                            )));
-                          },
-                          child: Container(
-                            width: 150,
-                            height: 40,
-                            // color: appPrimaryMaterialColor,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                // border: Border.all(color: Colors.grey[300]),
-                                color: appPrimaryMaterialColor),
-                            child: Center(
-                              child: Text(
-                                "Order Now ",
+          elevation: 1,
+          backgroundColor: Colors.white,
+          iconTheme: new IconThemeData(
+            color: appPrimaryMaterialColor,
+          ),
+          title: const Text("My Cart",
+              style: TextStyle(
+                color: Colors.black,
+              )),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.favorite_border),
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/Whishlist');
+                }),
+            // IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {}),
+          ],
+        ),
+        bottomNavigationBar: isLoading
+            ? SizedBox()
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Divider(
+                    height: 3,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0, bottom: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 8.0,
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                // "Total:₹ " + "${res}",
+                                "Total:₹ " + "$mainTotal",
+                                //"${res}",
                                 style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 17),
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          new PlaceOrderScreen(
+                                              // productDetail: widget.wishListData["ProductId"],
+                                              )));
+                            },
+                            child: Container(
+                              width: 170,
+                              height: 40,
+                              // color: appPrimaryMaterialColor,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  // border: Border.all(color: Colors.grey[300]),
+                                  color: appPrimaryMaterialColor),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Select Address ",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 17),
+                                  ),
+                                  Icon(Icons.arrow_forward,color: Colors.white,)
+                                ],
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
+                ],
+              ),
+        body: isLoading
+            ? Center(
+                child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                      appPrimaryMaterialColor),
                 ),
-              ],
-            ),
+              )
+            : Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 10),
+                child: ListView.separated(
+                  itemCount: getCartList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return CartComponent(
+                      getCartData: getCartList[index],
 
-//      Container(
-//        child: Padding(
-//          padding:
-//              const EdgeInsets.only(left: 13.0, right: 13, top: 20, bottom: 10),
-//          child: Container(
-//            width: MediaQuery.of(context).size.width,
-//            height: 45,
-//            child: RaisedButton(
-//              color: appPrimaryMaterialColor,
-//              shape: RoundedRectangleBorder(
-//                borderRadius: BorderRadius.circular(5),
-//              ),
-//              onPressed: () {
-//                Navigator.of(context).pushNamed('/PlaceOrderScreen');
-//              },
-//              child: Text(
-//                "CONTINUE TO ORDER",
-//                style: TextStyle(
-//                    color: Colors.white,
-//                    fontWeight: FontWeight.w500,
-//                    fontSize: 17),
-//              ),
-//            ),
-//          ),
-//        ),
-//      ),
-      body: isLoading
-          ? Center(
-              child: CircularProgressIndicator(
-                valueColor:
-                    new AlwaysStoppedAnimation<Color>(appPrimaryMaterialColor),
+                      onRemove: (total) {
+                        setState(() {
+                          getCartList.removeAt(index);
+                          mainTotal = mainTotal - total;
+                        });
+                      },
+                      onAdd: (total) {
+                        setState(() {
+                          mainTotal = mainTotal + total;
+                        });
+                      },
+                      onMinus: (total) {
+                        setState(() {
+                          mainTotal = mainTotal - total;
+                        });
+                      },
+                      // updateCartData: ,
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) =>
+                      Divider(),
+                ),
               ),
-            )
-          : Padding(
-              padding: const EdgeInsets.only(top: 8.0, bottom: 10),
-              child: ListView.separated(
-                itemCount: getCartList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return CartComponent(
-                    getCartData: getCartList[index],
-
-                    onRemove: (total) {
-                      setState(() {
-                        getCartList.removeAt(index);
-                        mainTotal=mainTotal-total;
-                      });
-                    },
-                    onAdd: (total) {
-                      setState(() {
-                        mainTotal = mainTotal + total;
-                      });
-                    },
-                    onMinus: (total) {
-                      setState(() {
-                        mainTotal = mainTotal - total;
-                      });
-                    },
-                    // updateCartData: ,
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) =>
-                    Divider(),
-              ),
-            ),
+      ),
     );
   }
 
@@ -218,7 +199,6 @@ class _CartScreenState extends State<CartScreen> {
                     int.parse(responseList[i]["ProductSrp"]) *
                         int.parse(responseList[i]["CartQuantity"]);
               });
-
             }
           } else {
             setState(() {

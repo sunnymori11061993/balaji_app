@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -16,6 +17,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController txtLogin = TextEditingController();
   bool isLoading = false;
+  List<String> userType = ['User', 'Manufacturer'];
+  String toggle = "";
 
   final _formkey = new GlobalKey<FormState>();
 
@@ -67,6 +70,36 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SizedBox(
               height: MediaQuery.of(context).padding.top + 50,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0),
+              child: Center(
+                child: Container(
+                  height: 35,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                        color: Colors.grey,
+                      )),
+                  child: ToggleSwitch(
+                    minWidth: 150.0,
+                    cornerRadius: 5.0,
+                    minHeight: 35,
+                    activeBgColor: appPrimaryMaterialColor,
+                    activeFgColor: Colors.white,
+                    inactiveBgColor: Colors.white,
+                    inactiveFgColor: Colors.grey,
+                    labels: userType,
+                    //icons: [FontAwesomeIcons.check, FontAwesomeIcons.times],
+                    onToggle: (index) {
+                      setState(() {
+                        toggle = userType[index];
+                      });
+                      print("${userType[index]}");
+                    },
+                  ),
+                ),
+              ),
             ),
             Container(
               child: Text(
