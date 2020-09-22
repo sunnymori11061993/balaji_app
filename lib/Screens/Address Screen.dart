@@ -1,5 +1,13 @@
+import 'dart:io';
+
 import 'package:balaji/Common/Constants.dart';
+import 'package:balaji/Common/Services.dart';
+import 'package:balaji/Component/AddressComponent.dart';
+import 'package:balaji/Component/LoadingComponent.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddressScreen extends StatefulWidget {
   @override
@@ -7,14 +15,24 @@ class AddressScreen extends StatefulWidget {
 }
 
 class _AddressScreenState extends State<AddressScreen> {
+  _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertFloating();
+      },
+    );
+  }
 
-  TextEditingController txtName = TextEditingController();
-  TextEditingController txtCName = TextEditingController();
-  TextEditingController txtEmail = TextEditingController();
-  TextEditingController txtMobileNumber = TextEditingController();
-  final _formkey = new GlobalKey<FormState>();
+  bool isDisplayLoading = true;
+  List getAddressList = [];
 
-  bool isLoading = false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    _getAddress();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,26 +56,246 @@ class _AddressScreenState extends State<AddressScreen> {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Form(
-         key: _formkey,
-          child: Padding(
-            padding: const EdgeInsets.only(
-                top: 30.0, left: 15, right: 15, bottom: 10),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: appPrimaryMaterialColor,
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          _showDialog(context);
+        },
+      ),
+      body:isDisplayLoading?LoadingComponent(): Padding(
+        padding: const EdgeInsets.only(top:8.0,bottom: 30),
+
+
+        child: ListView.builder(
+            scrollDirection: Axis.vertical,
+            itemCount: getAddressList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return AddressComponent(
+               addressData: getAddressList[index],
+              );
+            }),
+      ),
+    );
+  }
+
+  _getAddress() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        isDisplayLoading = true;
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        FormData body = FormData.fromMap({
+          "CustomerId": prefs.getString(Session.CustomerId),
+        });
+        Services.PostForList(api_name: 'getAddress', body: body).then(
+            (addResponseList) async {
+          setState(() {
+            isDisplayLoading = false;
+          });
+          if (addResponseList.length > 0) {
+            setState(() {
+              getAddressList = addResponseList;
+            });
+          } else {
+            Fluttertoast.showToast(msg: "Data Not Found");
+            //show "data not found" in dialog
+          }
+        }, onError: (e) {
+          setState(() {
+            isDisplayLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
+  }
+}
+
+class AlertFloating extends StatefulWidget {
+  @override
+  _AlertFloatingState createState() => _AlertFloatingState();
+}
+
+class _AlertFloatingState extends State<AlertFloating> {
+  TextEditingController txtHouseNo = TextEditingController();
+  TextEditingController txtFullAddress = TextEditingController();
+  TextEditingController txtCity = TextEditingController();
+  TextEditingController txtPincode = TextEditingController();
+  final _formkey = new GlobalKey<FormState>();
+
+  bool isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: new Text(
+        "Address Details",
+        style: TextStyle(
+            fontSize: 22,
+            color: appPrimaryMaterialColor,
+            fontWeight: FontWeight.bold),
+      ),
+      content: SingleChildScrollView(
+        child: Container(
+          //height: 200,
+          child: Form(
+            key: _formkey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Address Details",
-                  style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 8.0,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "House No",
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 3),
+                        child: TextFormField(
+                          controller: txtHouseNo,
+                          keyboardType: TextInputType.text,
+                          style: TextStyle(fontSize: 15),
+                          cursorColor: Colors.black,
+                          validator: (homeNo) {
+                            if (homeNo.length == 0) {
+                              return 'Please enter your house Number';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(5),
+                            hintText: ' B-405,406',
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Container(
+                                width: 43,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        right: BorderSide(
+                                            width: 2, color: Colors.grey))),
+                                child: Icon(
+                                  Icons.home,
+                                  color: appPrimaryMaterialColor,
+                                ),
+                              ),
+                            ),
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 25.0),
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Full Address",
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 3),
+                        child: TextFormField(
+                          controller: txtFullAddress,
+                          keyboardType: TextInputType.text,
+                          style: TextStyle(fontSize: 15),
+                          cursorColor: Colors.black,
+                          validator: (address) {
+                            if (address.length == 0) {
+                              return 'Please enter your full address';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(5),
+                            hintText: ' ABC Textile Market ',
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Container(
+                                width: 43,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        right: BorderSide(
+                                            width: 2, color: Colors.grey))),
+                                child: Icon(
+                                  Icons.location_on,
+                                  color: appPrimaryMaterialColor,
+                                ),
+                              ),
+                            ),
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                    "Address 1",
+                    "City",
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
@@ -66,23 +304,30 @@ class _AddressScreenState extends State<AddressScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 5.0, bottom: 3),
-                  child: TextField(
+                  child: TextFormField(
+                    controller: txtCity,
                     keyboardType: TextInputType.text,
                     style: TextStyle(fontSize: 15),
-                    maxLines: 2,
                     cursorColor: Colors.black,
+                    validator: (city) {
+                      if (city.length == 0) {
+                        return 'Please enter your city';
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.all(5),
-                      hintText: '450-451 , ABC Textile Market ',
+                      hintText: 'City',
                       prefixIcon: Padding(
                         padding: const EdgeInsets.only(right: 8.0),
                         child: Container(
                           width: 43,
                           decoration: BoxDecoration(
                               border: Border(
-                                  right: BorderSide(width: 2, color: Colors.grey))),
+                                  right: BorderSide(
+                                      width: 2, color: Colors.grey))),
                           child: Icon(
-                            Icons.location_on,
+                            Icons.location_city,
                             color: appPrimaryMaterialColor,
                           ),
                         ),
@@ -91,6 +336,14 @@ class _AddressScreenState extends State<AddressScreen> {
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.red),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(5.0)),
@@ -101,119 +354,144 @@ class _AddressScreenState extends State<AddressScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "State",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5.0),
-                            child: Container(
-                              width: 150,
-                              height: 40,
-
-                              child: TextFormField(
-                                keyboardType: TextInputType.text,
-                                style: TextStyle(fontSize: 15),
-                                decoration:InputDecoration(
-                                  contentPadding: const EdgeInsets.all(5),
-                                  hintText: 'State ',
-
-                                  fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                    borderSide: BorderSide(color: Colors.grey),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                    borderSide: BorderSide(color: Colors.grey),
-                                  ),
-                                ) ,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "City",
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 5.0),
-                            child:  Container(
-                              width: 150,
-                              height: 40,
-
-                              child: TextFormField(
-                                keyboardType: TextInputType.text,
-                                style: TextStyle(fontSize: 15),
-                                decoration:InputDecoration(
-                                  contentPadding: const EdgeInsets.all(5),
-                                  hintText: 'City ',
-
-                                  fillColor: Colors.white,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                    borderSide: BorderSide(color: Colors.grey),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                    borderSide: BorderSide(color: Colors.grey),
-                                  ),
-                                ) ,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  child: Text(
+                    "Pincode",
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600),
                   ),
                 ),
-
+                Padding(
+                  padding: const EdgeInsets.only(top: 5.0, bottom: 3),
+                  child: TextFormField(
+                    controller: txtPincode,
+                    keyboardType: TextInputType.number,
+                    style: TextStyle(fontSize: 15),
+                    cursorColor: Colors.black,
+                    validator: (pincode) {
+                      // Pattern pattern = r'(^(?:[+0]9)?[0-9]{10,}$)';
+                      // RegExp regExp = new RegExp(pattern);
+                      if (pincode.length == 0) {
+                        return 'Please enter your pincode';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.all(5),
+                      hintText: 'Pincode',
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Container(
+                          width: 43,
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  right: BorderSide(
+                                      width: 2, color: Colors.grey))),
+                          child: Icon(
+                            Icons.code,
+                            color: appPrimaryMaterialColor,
+                          ),
+                        ),
+                      ),
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding:
-        const EdgeInsets.only(left: 13.0, right: 13, top: 70, bottom: 15),
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: 45,
-          child: RaisedButton(
-            color: appPrimaryMaterialColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
-            ),
-            onPressed: () {
+      actions: <Widget>[
+        // usually buttons at the bottom of the dialog
 
-              // Navigator.of(context).pushNamed('/Home');
-            },
-            child: Text(
-              "UPDATE PROFILE",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 17),
-            ),
+        FlatButton(
+          child: new Text(
+            "Cancel",
+            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
           ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
-      ),
+        new FlatButton(
+          child: isLoading
+              ? LoadingComponent()
+              : Text(
+                  "Add",
+                  style:
+                      TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
+                ),
+          onPressed: () {
+            _addAddress();
+            //  Navigator.of(context).pop();
+          },
+        ),
+      ],
     );
+  }
+
+  _addAddress() async {
+    if (_formkey.currentState.validate()) {
+      try {
+        final result = await InternetAddress.lookup('google.com');
+        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+          setState(() {
+            isLoading = true;
+          });
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+
+          FormData body = FormData.fromMap({
+            "CustomerId": prefs.getString(Session.CustomerId),
+            "AddressCity": txtCity.text,
+            "AddressPincode": txtPincode.text,
+            "AddressName": txtFullAddress.text,
+            "AddressHouseNo": txtHouseNo.text,
+          }); //"key":"value"
+
+          Services.postForSave(apiname: 'addAddress', body: body).then(
+              (response) async {
+            if (response.IsSuccess == true && response.Data == "1") {
+              Navigator.of(context).pop();
+              Fluttertoast.showToast(
+                  msg: "Your Address Added Successfully",
+                  gravity: ToastGravity.BOTTOM);
+            }
+
+            setState(() {
+              isLoading = false;
+            });
+          }, onError: (e) {
+            setState(() {
+              isLoading = false;
+            });
+            print("error on call -> ${e.message}");
+            Fluttertoast.showToast(msg: "Something Went Wrong");
+            //showMsg("something went wrong");
+          });
+        }
+      } on SocketException catch (_) {
+        Fluttertoast.showToast(msg: "No Internet Connection.");
+      }
+    } else {
+      Fluttertoast.showToast(msg: "Please Fill the Field");
+    }
   }
 }

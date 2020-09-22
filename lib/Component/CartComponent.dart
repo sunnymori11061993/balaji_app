@@ -401,7 +401,7 @@ class _CartComponentState extends State<CartComponent> {
   }
 
   _updateCart() async {
-    try {
+      try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         setState(() {

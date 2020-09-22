@@ -11,9 +11,9 @@ import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class VerificationScreen extends StatefulWidget {
-  var mobile, loginData;
+  var mobile, loginData,loginType;
 
-  VerificationScreen({this.mobile, this.loginData});
+  VerificationScreen({this.mobile, this.loginData,this.loginType});
 
   @override
   _VerificationScreenState createState() => _VerificationScreenState();
@@ -141,6 +141,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                     MaterialPageRoute(
                                         builder: (BuildContext contex) =>
                                             RegistrationScreen(
+                                              signupType: widget.loginType,
                                               Mobile: widget.mobile,
                                             )),
                                     (route) => false)

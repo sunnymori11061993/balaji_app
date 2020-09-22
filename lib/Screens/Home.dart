@@ -5,6 +5,7 @@ import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/CategoriesComponent.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/TrendingProductComponent.dart';
+import 'package:balaji/Screens/Address%20Screen.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
@@ -240,12 +241,10 @@ class _HomeState extends State<Home> {
               onTap: () {
                 //  Navigator.of(context).pushNamed('/ContactUs');
 
-//                Navigator.push(
-//                    context,
-//                    MaterialPageRoute(
-//                        builder: (BuildContext context) => new ContactUs(
-//                          contactData: contactList[0],
-//                        )));
+               Navigator.push(
+                   context,
+                   MaterialPageRoute(
+                       builder: (BuildContext context) => new AddressScreen()));
               },
               child: ListTile(
                 leading: Icon(

@@ -6,6 +6,7 @@ import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/FilterScreen.dart';
 import 'package:balaji/Screens/Home.dart';
 import 'package:balaji/Screens/LoginScreen.dart';
+import 'package:balaji/Screens/ManuHomeScreen.dart';
 import 'package:balaji/Screens/OrderHistoryScreen.dart';
 import 'package:balaji/Screens/PlaceOrderScreen.dart';
 import 'package:balaji/Screens/ProductDetailScreen.dart';
@@ -35,7 +36,8 @@ class _MyAppState extends State<MyApp> {
       title: 'Balaji',
       initialRoute: '/',
       routes: {
-        '/': (context) => Splash(),
+        //'/': (context) => AddressScreen(),
+       '/': (context) => Splash(),
         '/LoginScreen': (context) => LoginScreen(),
         '/VerificationScreen': (context) => VerificationScreen(),
         '/RegistrationScreen': (context) => RegistrationScreen(),
@@ -53,6 +55,7 @@ class _MyAppState extends State<MyApp> {
         '/ContactUs': (context) => ContactUs(),
         '/FAQScreen': (context) => FAQScreen(),
         '/AddressScreen': (context) => AddressScreen(),
+        '/ManuHomeScreen': (context) => ManuHomeScreen(),
       },
       theme: ThemeData(
           //fontFamily: 'Montserrat',

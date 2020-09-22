@@ -4,15 +4,16 @@ import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class RegistrationScreen extends StatefulWidget {
-  var Mobile;
+  var Mobile, signupType;
 
-  RegistrationScreen({this.Mobile});
+  RegistrationScreen({this.Mobile, this.signupType});
 
   @override
   _RegistrationScreenState createState() => _RegistrationScreenState();
@@ -25,8 +26,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController txtMobileNumber = TextEditingController();
   final _formkey = new GlobalKey<FormState>();
   bool isLoading = false;
-  List<String> userType = ['User', 'Manufacturer'];
-  String toggle = "";
 
   @override
   void initState() {
@@ -56,12 +55,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      "SIGN UP",
-                      style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
+                    Row(
+                      children: [
+                        Text(
+                          "SIGN UP",
+                          style: TextStyle(
+                              fontSize: 24,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        Text(
+                          "  As " + "${widget.signupType}",
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey[600],
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 2.0),
@@ -82,6 +92,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+
                     Text(
                       "Name",
                       style: TextStyle(
@@ -351,51 +362,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 15.0, left: 12, right: 12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Type",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: Center(
-                        child: Container(
-                          height: 35,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              border: Border.all(
-                                color: Colors.grey,
-                              )),
-                          child: ToggleSwitch(
-                            minWidth: 150.0,
-                            cornerRadius: 5.0,
-                            minHeight: 35,
-                            activeBgColor: appPrimaryMaterialColor,
-                            activeFgColor: Colors.white,
-                            inactiveBgColor: Colors.white,
-                            inactiveFgColor: Colors.grey,
-                            labels: userType,
-                            //icons: [FontAwesomeIcons.check, FontAwesomeIcons.times],
-                            onToggle: (index) {
-                              setState(() {
-                                toggle = userType[index];
-                              });
-                              print("${userType[index]}");
-                            },
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
                 padding: const EdgeInsets.only(bottom: 10.0),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
@@ -409,10 +375,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                     onPressed: () {
                       if (isLoading == false) {
-                        if (toggle == "User") {
+                        if (widget.signupType == "user") {
                           _registration();
-                        }else
-                        _manufacturer();
+                        } else
+                          _manufacturer();
                       }
                     },
                     child: isLoading
@@ -499,12 +465,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           });
           FormData body = FormData.fromMap({
             "ManufacturerName": txtName.text,
-            "ManufacturerAddress": txtEmail.text,
+            "ManufacturerEmailId": txtEmail.text,
+            "ManufacturerAddress":"",
             "ManufacturerCompanyName": txtCName.text,
             "ManufacturerPhoneNo": txtMobileNumber.text.toString(),
           }); //"key":"value"
-          Services.PostForList(api_name: 'addManufacturer', body: body)
-              .then((responseList) async {
+          Services.PostForList(api_name: 'addManufacturer', body: body).then(
+              (responseList) async {
             setState(() {
               isLoading = false;
             });
@@ -522,7 +489,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               await prefs.setString(
                   Session.CustomerPhoneNo, responseList[0]["CustomerPhoneNo"]);
               Navigator.pushNamedAndRemoveUntil(
-                  context, '/Home', (route) => false);
+                  context, '/ManuHomeScreen', (route) => false);
             } else {
               Fluttertoast.showToast(msg: "Registration Fail!!!!");
               //showMsg(data.Message); //show "data not found" in dialog

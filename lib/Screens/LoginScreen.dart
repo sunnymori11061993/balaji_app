@@ -17,8 +17,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController txtLogin = TextEditingController();
   bool isLoading = false;
-  List<String> userType = ['User', 'Manufacturer'];
-  String toggle = "";
+
+  String toggle = "User";
 
   final _formkey = new GlobalKey<FormState>();
 
@@ -71,43 +71,80 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: MediaQuery.of(context).padding.top + 50,
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 5.0),
-              child: Center(
-                child: Container(
+            Center(
+              child: Container(
                   height: 35,
+                  width: MediaQuery.of(context).size.width - 100,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(
                         color: Colors.grey,
                       )),
-                  child: ToggleSwitch(
-                    minWidth: 150.0,
-                    cornerRadius: 5.0,
-                    minHeight: 35,
-                    activeBgColor: appPrimaryMaterialColor,
-                    activeFgColor: Colors.white,
-                    inactiveBgColor: Colors.white,
-                    inactiveFgColor: Colors.grey,
-                    labels: userType,
-                    //icons: [FontAwesomeIcons.check, FontAwesomeIcons.times],
-                    onToggle: (index) {
-                      setState(() {
-                        toggle = userType[index];
-                      });
-                      print("${userType[index]}");
-                    },
-                  ),
-                ),
-              ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Flexible(
+                          child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            toggle = "User";
+                          });
+                        },
+                        child: Container(
+                          color: toggle == "User"
+                              ? appPrimaryMaterialColor
+                              : Colors.white,
+                          width: MediaQuery.of(context).size.width / 2,
+                          child: Center(
+                            child: Text(
+                              "User",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: toggle == "User"
+                                      ? Colors.white
+                                      : Colors.black,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
+                      )),
+                      Flexible(
+                          child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            toggle = "Manufacturer";
+                          });
+                        },
+                        child: Container(
+                          color: toggle == "Manufacturer"
+                              ? appPrimaryMaterialColor
+                              : Colors.white,
+                          child: Center(
+                            child: Text(
+                              "Manufacturer",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: toggle == "Manufacturer"
+                                      ? Colors.white
+                                      : Colors.black,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
+                      )),
+                    ],
+                  )),
             ),
-            Container(
-              child: Text(
-                "Enter Your Mobile Number to Continue",
-                style: TextStyle(
-                    fontSize: 15,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500),
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Container(
+                child: Text(
+                  "Enter Your Mobile Number to Continue",
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500),
+                ),
               ),
             ),
             Form(
@@ -242,8 +279,10 @@ class _LoginScreenState extends State<LoginScreen> {
           setState(() {
             isLoading = true;
           });
-          FormData body = FormData.fromMap(
-              {"CustomerPhoneNo": txtLogin.text}); //"key":"value"
+          FormData body = FormData.fromMap({
+            "CustomerPhoneNo": txtLogin.text,
+            "type": toggle.toLowerCase()
+          }); //"key":"value"
           Services.PostForList(api_name: 'OTP_login_api', body: body).then(
               (responseList) async {
             setState(() {
@@ -254,6 +293,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 MaterialPageRoute(
                   builder: (BuildContext context) => new VerificationScreen(
                     mobile: txtLogin.text,
+                    loginType: toggle.toLowerCase(),
                     loginData: responseList[0],
                   ),
                 ),
@@ -262,6 +302,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context) => new VerificationScreen(
+                    loginType: toggle.toLowerCase(),
                     mobile: txtLogin.text,
                   ),
                 ),
