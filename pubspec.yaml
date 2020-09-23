@@ -41,6 +41,7 @@ dependencies:
   webview_flutter: ^0.3.22+1
   share: ^0.6.3+5
   carousel_pro: ^1.0.0
+  intro_slider: ^2.3.3
 
 
 
@@ -72,6 +73,10 @@ flutter:
     - assets/Splash.svg
     - assets/f1.png
     - assets/filter.png
+    - assets/intro1.jpeg
+    - assets/intro2.jpeg
+    - assets/intro3.jpeg
+    - assets/intro4.jpeg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

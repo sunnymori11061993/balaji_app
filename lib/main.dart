@@ -5,8 +5,10 @@ import 'package:balaji/Screens/ContactUs.dart';
 import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/FilterScreen.dart';
 import 'package:balaji/Screens/Home.dart';
+import 'package:balaji/Screens/LanguageChangeScreen.dart';
 import 'package:balaji/Screens/LoginScreen.dart';
 import 'package:balaji/Screens/ManuHomeScreen.dart';
+import 'package:balaji/Screens/ManuProfileScreen.dart';
 import 'package:balaji/Screens/OrderHistoryScreen.dart';
 import 'package:balaji/Screens/PlaceOrderScreen.dart';
 import 'package:balaji/Screens/ProductDetailScreen.dart';
@@ -16,6 +18,7 @@ import 'package:balaji/Screens/Splash.dart';
 import 'package:balaji/Screens/SubCategory.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
 import 'package:balaji/Screens/VerificationScreen.dart';
+import 'package:balaji/Screens/WalkThroughScreen.dart';
 import 'package:balaji/Screens/Whishlist.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +40,7 @@ class _MyAppState extends State<MyApp> {
       initialRoute: '/',
       routes: {
         //'/': (context) => AddressScreen(),
-       '/': (context) => Splash(),
+        '/': (context) => Splash(),
         '/LoginScreen': (context) => LoginScreen(),
         '/VerificationScreen': (context) => VerificationScreen(),
         '/RegistrationScreen': (context) => RegistrationScreen(),
@@ -56,6 +59,9 @@ class _MyAppState extends State<MyApp> {
         '/FAQScreen': (context) => FAQScreen(),
         '/AddressScreen': (context) => AddressScreen(),
         '/ManuHomeScreen': (context) => ManuHomeScreen(),
+        '/ManuProfileScreen': (context) => ManuProfileScreen(),
+        '/LanguageChangeScreen': (context) => LanguageChangeScreen(),
+        '/WalkThroughScreen': (context) => WalkThroughScreen(),
       },
       theme: ThemeData(
           //fontFamily: 'Montserrat',

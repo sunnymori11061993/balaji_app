@@ -4,7 +4,6 @@ import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/CartComponent.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
-import 'package:balaji/Screens/PlaceOrderScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,37 +23,9 @@ class _CartScreenState extends State<CartScreen> {
   int mainTotal = 0;
   String dropdownvalue = 'rinki';
 
-  var selectedAddress;
-
   @override
   void initState() {
     _getCart();
-  }
-
-  _showDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertAdd();
-      },
-    );
-  }
-
-  _showDialogSelect(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertSelectAddress(
-          onSelect: (address) {
-            setState(() {
-              selectedAddress = address;
-            });
-          },
-        );
-      },
-    );
   }
 
   @override
@@ -694,13 +665,14 @@ class _AlertSelectAddressState extends State<AlertSelectAddress> {
                               child: Row(
                                 children: [
                                   Text(
-                                      "${getAddressList[index]["AddressHouseNo"]}",
+                                      "${getAddressList[index]["AddressHouseNo"]}" +
+                                          ",",
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
                                       )),
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
+                                    padding: const EdgeInsets.only(left: 5.0),
                                     child: Text(
                                         "${getAddressList[index]["AddressName"]}",
                                         style: TextStyle(
@@ -752,19 +724,6 @@ class _AlertSelectAddressState extends State<AlertSelectAddress> {
             Navigator.of(context).pop();
           },
         ),
-        // new FlatButton(
-        //   child: isSelectLoading
-        //       ? LoadingComponent()
-        //       : Text(
-        //           "Add",
-        //           style:
-        //               TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
-        //         ),
-        //   onPressed: () {
-        //     //_addAddress();
-        //     //  Navigator.of(context).pop();
-        //   },
-        // ),
       ],
     );
   }
@@ -807,13 +766,48 @@ class _AlertSelectAddressState extends State<AlertSelectAddress> {
   }
 }
 
-
 class showBottomSheet extends StatefulWidget {
   @override
   _showBottomSheetState createState() => _showBottomSheetState();
 }
 
 class _showBottomSheetState extends State<showBottomSheet> {
+  var selectedAddress;
+  bool isOrderLoading = false;
+
+  _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+
+        return AlertAdd();
+      },
+    );
+  }
+
+  _showDialogSelect(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertSelectAddress(
+          onSelect: (address) {
+            setState(() {
+              selectedAddress = address;
+            });
+          },
+        );
+      },
+    );
+  }
+
+//  @override
+//  void initState() {
+//    // TODO: implement initState
+//    _placeOrder();
+//  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -823,8 +817,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                    top: 15.0, left: 15, bottom: 10),
+                padding: const EdgeInsets.only(top: 15.0, left: 15, bottom: 10),
                 child: Text(
                   "Select Address",
                   style: TextStyle(
@@ -874,65 +867,68 @@ class _showBottomSheetState extends State<showBottomSheet> {
               ),
               selectedAddress != null
                   ? Padding(
-                padding: const EdgeInsets.only(
-                    left: 20.0, right: 20, bottom: 5),
-                child: Container(
-                    height: 55,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.grey[300],
-                        ),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 8.0, top: 5),
-                          child: Row(
+                      padding: const EdgeInsets.only(
+                          left: 20.0, right: 20, bottom: 5),
+                      child: Container(
+                          height: 55,
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey[300],
+                              ),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Column(
                             children: [
-                              Text(
-                                  "${selectedAddress["AddressHouseNo"]}",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                  )),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 8.0),
-                                child: Text("Xyz",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                    )),
+                                padding:
+                                    const EdgeInsets.only(left: 8.0, top: 5),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                        "${selectedAddress["AddressHouseNo"]}" +
+                                            ",",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                        )),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 5.0),
+                                      child: Text(
+                                          "${selectedAddress["AddressName"]}",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                          )),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                        "${selectedAddress["AddressCity"]}" +
+                                            " -",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                        )),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 5.0),
+                                      child: Text(
+                                          "${selectedAddress["AddressPincode"]}",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                          )),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Row(
-                            children: [
-                              Text("Xyz",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                  )),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 8.0),
-                                child: Text("Xyz",
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                    )),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    )),
-              )
+                          )),
+                    )
                   : Container(),
               GestureDetector(
                 onTap: () {
@@ -950,8 +946,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
                       ),
                     ),
                     Padding(
-                      padding:
-                      const EdgeInsets.only(right: 25.0, bottom: 15),
+                      padding: const EdgeInsets.only(right: 25.0, bottom: 15),
                       child: Text(
                         "Add Address",
                         style: TextStyle(
@@ -985,8 +980,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(Icons.delete_forever,
-                                  color: Colors.white),
+                              Icon(Icons.delete_forever, color: Colors.white),
                               // color: Colors.grey[700],),
                               Text(
                                 "Cancel",
@@ -1017,6 +1011,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
                               borderRadius: BorderRadius.circular(5),
                               side: BorderSide(color: Colors.grey[300])),
                           onPressed: () {
+                            _placeOrder();
                             // Navigator.push(
                             //   context,
                             //   MaterialPageRoute(
@@ -1024,22 +1019,30 @@ class _showBottomSheetState extends State<showBottomSheet> {
                             //           PlaceOrderScreen()),
                             // );
                           },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(Icons.add_shopping_cart,
-                                  color: Colors.white),
-                              Text(
-                                "Place Order",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                    //color: Colors.grey[700],
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
+                          child: isOrderLoading
+                              ? Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor:
+                                        new AlwaysStoppedAnimation<Color>(
+                                            Colors.white),
+                                  ),
+                                )
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.add_shopping_cart,
+                                        color: Colors.white),
+                                    Text(
+                                      "Place Order",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white,
+                                          //color: Colors.grey[700],
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
                         ),
                       ),
                     ),
@@ -1051,5 +1054,42 @@ class _showBottomSheetState extends State<showBottomSheet> {
         ],
       ),
     );
+  }
+
+  _placeOrder() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        FormData body = FormData.fromMap({
+          "CustomerId": prefs.getString(Session.CustomerId),
+          "AddressId": "${selectedAddress["AddressId"]}",
+        });
+        setState(() {
+          isOrderLoading = true;
+        });
+        Services.postForSave(apiname: 'placeOrder', body: body).then(
+            (responseList) async {
+          setState(() {
+            isOrderLoading = false;
+          });
+          if (responseList.IsSuccess == true && responseList.Data == "1") {
+            Navigator.of(context).pop();
+            Fluttertoast.showToast(msg: "Order Placed Successfully!!!");
+          } else {
+            Fluttertoast.showToast(msg: "Data Not Found");
+            //show "data not found" in dialog
+          }
+        }, onError: (e) {
+          setState(() {
+            isOrderLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
   }
 }

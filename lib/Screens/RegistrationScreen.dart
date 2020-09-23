@@ -2,13 +2,11 @@ import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
-import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 
 class RegistrationScreen extends StatefulWidget {
   var Mobile, signupType;
@@ -384,7 +382,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ? Center(
                             child: CircularProgressIndicator(
                               valueColor: new AlwaysStoppedAnimation<Color>(
-                                  appPrimaryMaterialColor),
+                                  Colors.white),
                             ),
                           )
                         : Text(

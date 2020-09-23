@@ -6,6 +6,7 @@ import 'package:balaji/Component/CategoriesComponent.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/TrendingProductComponent.dart';
 import 'package:balaji/Screens/Address%20Screen.dart';
+import 'package:balaji/Screens/LanguageChangeScreen.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
@@ -211,6 +212,7 @@ class _HomeState extends State<Home> {
             ),
             GestureDetector(
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).pushNamed('/Home');
               },
               child: ListTile(
@@ -225,6 +227,22 @@ class _HomeState extends State<Home> {
             ),
             GestureDetector(
               onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushNamed('/WalkThroughScreen');
+              },
+              child: ListTile(
+                leading: Icon(
+                  Icons.home,
+                  color: appPrimaryMaterialColor,
+                ),
+                title: Text(
+                  "WalkThrough",
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
                 Navigator.of(context).pushNamed('/OrderHistoryScreen');
               },
               child: ListTile(
@@ -240,11 +258,12 @@ class _HomeState extends State<Home> {
             GestureDetector(
               onTap: () {
                 //  Navigator.of(context).pushNamed('/ContactUs');
-
-               Navigator.push(
-                   context,
-                   MaterialPageRoute(
-                       builder: (BuildContext context) => new AddressScreen()));
+                Navigator.of(context).pop();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            new AddressScreen()));
               },
               child: ListTile(
                 leading: Icon(
@@ -256,18 +275,29 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            ListTile(
-              leading: Icon(
-                Icons.language,
-                color: appPrimaryMaterialColor,
-              ),
-              title: Text(
-                "Change Language",
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            new LanguageChangeScreen()));
+              },
+              child: ListTile(
+                leading: Icon(
+                  Icons.language,
+                  color: appPrimaryMaterialColor,
+                ),
+                title: Text(
+                  "Change Language",
+                ),
               ),
             ),
             Divider(),
             GestureDetector(
               onTap: () {
+                Navigator.of(context).pop();
 //                Navigator.push(
 //                    context,
 //                    MaterialPageRoute(
@@ -287,6 +317,7 @@ class _HomeState extends State<Home> {
             ),
             GestureDetector(
               onTap: () {
+                Navigator.of(context).pop();
                 Share.share('check out my website https://balaji.com',
                     subject: 'Look what An Amazing Clothes!');
               },
@@ -327,6 +358,7 @@ class _HomeState extends State<Home> {
 
             GestureDetector(
               onTap: () {
+                Navigator.of(context).pop();
                 Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -347,6 +379,7 @@ class _HomeState extends State<Home> {
             ),
             GestureDetector(
               onTap: () {
+                Navigator.of(context).pop();
                 _showDialog(context);
               },
               child: ListTile(
