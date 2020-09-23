@@ -20,7 +20,9 @@ class _AddressScreenState extends State<AddressScreen> {
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
-        return AlertFloating();
+        return AlertFloating(onRefresh: () {
+          _getAddress();
+        });
       },
     );
   }
@@ -37,49 +39,65 @@ class _AddressScreenState extends State<AddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: appPrimaryMaterialColor,
+        appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: appPrimaryMaterialColor,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+          elevation: 1,
+          backgroundColor: Colors.white,
+          iconTheme: new IconThemeData(color: Colors.grey),
+          title: const Text(
+            "Add Address Screen",
+            style: TextStyle(
+              color: Colors.black,
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            }),
-        elevation: 1,
-        backgroundColor: Colors.white,
-        iconTheme: new IconThemeData(color: Colors.grey),
-        title: const Text(
-          "Add Address Screen",
-          style: TextStyle(
-            color: Colors.black,
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: appPrimaryMaterialColor,
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: appPrimaryMaterialColor,
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            _showDialog(context);
+          },
         ),
-        onPressed: () {
-          _showDialog(context);
-        },
-      ),
-      body:isDisplayLoading?LoadingComponent(): Padding(
-        padding: const EdgeInsets.only(top:8.0,bottom: 30),
-
-
-        child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            itemCount: getAddressList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return AddressComponent(
-               addressData: getAddressList[index],
-              );
-            }),
-      ),
-    );
+        body: isDisplayLoading
+            ? LoadingComponent()
+            : getAddressList.length > 0
+                ? Padding(
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 30),
+                    child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        itemCount: getAddressList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return AddressComponent(
+                            addressData: getAddressList[index],
+                            onRefresh: () {
+                              _getAddress();
+                            },
+                            onRemove: () {
+                              setState(() {
+                                getAddressList.removeAt(index);
+                              });
+                            },
+                          );
+                        }),
+                  )
+                : Center(
+                    child: Text(
+                    "Address Not Found!!!",
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.grey[700],
+                        fontWeight: FontWeight.w600),
+                  )));
   }
 
   _getAddress() async {
@@ -121,6 +139,9 @@ class _AddressScreenState extends State<AddressScreen> {
 }
 
 class AlertFloating extends StatefulWidget {
+  Function onRefresh;
+  AlertFloating({this.onRefresh});
+
   @override
   _AlertFloatingState createState() => _AlertFloatingState();
 }
@@ -469,7 +490,8 @@ class _AlertFloatingState extends State<AlertFloating> {
           Services.postForSave(apiname: 'addAddress', body: body).then(
               (response) async {
             if (response.IsSuccess == true && response.Data == "1") {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop("pop");
+              widget.onRefresh();
               Fluttertoast.showToast(
                   msg: "Your Address Added Successfully",
                   gravity: ToastGravity.BOTTOM);

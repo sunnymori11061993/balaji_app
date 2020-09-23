@@ -11,9 +11,9 @@ import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class VerificationScreen extends StatefulWidget {
-  var mobile, loginData,loginType;
+  var mobile, loginData, loginType;
 
-  VerificationScreen({this.mobile, this.loginData,this.loginType});
+  VerificationScreen({this.mobile, this.loginData, this.loginType});
 
   @override
   _VerificationScreenState createState() => _VerificationScreenState();
@@ -38,11 +38,16 @@ class _VerificationScreenState extends State<VerificationScreen> {
         Session.CustomerCompanyName, widget.loginData["CustomerCompanyName"]);
     await prefs.setString(
         Session.CustomerEmailId, widget.loginData["CustomerEmailId"]);
-
+    await prefs.setString(Session.type, widget.loginType);
     await prefs.setString(
         Session.CustomerPhoneNo, widget.loginData["CustomerPhoneNo"]);
     //  prefs.setString(Session.v, responseList[0]["__v"].toString());
-    Navigator.pushNamedAndRemoveUntil(context, '/Home', (route) => false);
+    if (widget.loginType == "user") {
+      Navigator.pushNamedAndRemoveUntil(context, '/Home', (route) => false);
+    } else {
+      Navigator.pushNamedAndRemoveUntil(
+          context, '/ManuHomeScreen', (route) => false);
+    }
   }
 
   @override

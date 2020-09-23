@@ -24,35 +24,6 @@ class _SplashState extends State<Splash> {
                   'assets/Splash.svg',
                   fit: BoxFit.cover,
                 )),
-            /* Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                width: 0,
-                child: Image.asset("assets/Side1.png"),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                width: 0,
-                child: Image.asset("assets/Side3.png"),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 100.0),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Container(
-                  child: Image.asset("assets/Side2.png"),
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Container(
-                child: Image.asset("assets/Side2.png"),
-              ),
-            ),*/
             Center(
               child: Container(
                 child: Image.asset("assets/balajiLogo.png"),
@@ -67,10 +38,16 @@ class _SplashState extends State<Splash> {
     Timer(Duration(seconds: 3), () async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String MobileNumber = prefs.getString(Session.CustomerPhoneNo);
+      String Type = prefs.getString(Session.type);
       if (MobileNumber == null) {
         Navigator.pushReplacementNamed(context, '/LoginScreen');
       } else {
-        Navigator.pushReplacementNamed(context, '/Home');
+        //Navigator.pushReplacementNamed(context, '/Home');
+        if (Type == "user") {
+          Navigator.pushReplacementNamed(context, '/Home');
+        } else {
+          Navigator.pushReplacementNamed(context, '/ManuHomeScreen');
+        }
       }
     });
   }

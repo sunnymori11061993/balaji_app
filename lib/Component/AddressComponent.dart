@@ -9,8 +9,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class AddressComponent extends StatefulWidget {
   var addressData;
+  Function onRemove;
+  Function onRefresh;
 
-  AddressComponent({this.addressData});
+  AddressComponent({this.addressData, this.onRemove, this.onRefresh});
 
   @override
   _AddressComponentState createState() => _AddressComponentState();
@@ -95,7 +97,8 @@ class _AddressComponentState extends State<AddressComponent> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 20.0, left: 15, right: 15),
+                  padding:
+                      const EdgeInsets.only(top: 20.0, left: 15, right: 15),
                   child: Text(
                     "Address",
                     style: TextStyle(
@@ -153,11 +156,13 @@ class _AddressComponentState extends State<AddressComponent> {
                               borderSide: BorderSide(color: Colors.grey),
                             ),
                             errorBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.red),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.red),
                             ),
                             focusedBorder: OutlineInputBorder(
@@ -220,11 +225,13 @@ class _AddressComponentState extends State<AddressComponent> {
                               borderSide: BorderSide(color: Colors.grey),
                             ),
                             errorBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.red),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.red),
                             ),
                             focusedBorder: OutlineInputBorder(
@@ -278,11 +285,13 @@ class _AddressComponentState extends State<AddressComponent> {
                                     borderSide: BorderSide(color: Colors.grey),
                                   ),
                                   errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
                                     borderSide: BorderSide(color: Colors.red),
                                   ),
                                   focusedErrorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
                                     borderSide: BorderSide(color: Colors.red),
                                   ),
                                   focusedBorder: OutlineInputBorder(
@@ -333,11 +342,13 @@ class _AddressComponentState extends State<AddressComponent> {
                                     borderSide: BorderSide(color: Colors.grey),
                                   ),
                                   errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
                                     borderSide: BorderSide(color: Colors.red),
                                   ),
                                   focusedErrorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
                                     borderSide: BorderSide(color: Colors.red),
                                   ),
                                   focusedBorder: OutlineInputBorder(
@@ -444,7 +455,7 @@ class _AddressComponentState extends State<AddressComponent> {
           ),
         ),
         isRemoveLoading ? LoadingComponent() : Container(),
-        isUpdateLoading?LoadingComponent():Container()
+        isUpdateLoading ? LoadingComponent() : Container()
       ],
     );
   }
@@ -465,6 +476,7 @@ class _AddressComponentState extends State<AddressComponent> {
             isRemoveLoading = false;
           });
           if (responseList.IsSuccess == true && responseList.Data == "1") {
+            widget.onRemove();
             Fluttertoast.showToast(
                 msg: "Your Address Removed Successfully",
                 gravity: ToastGravity.BOTTOM);
@@ -508,6 +520,7 @@ class _AddressComponentState extends State<AddressComponent> {
               isUpdateLoading = false;
             });
             if (response.IsSuccess == true && response.Data == "1") {
+              widget.onRefresh();
               Fluttertoast.showToast(
                   msg: "Address Updated Successfully",
                   gravity: ToastGravity.BOTTOM);

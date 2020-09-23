@@ -92,7 +92,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-
                     Text(
                       "Name",
                       style: TextStyle(
@@ -382,7 +381,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       }
                     },
                     child: isLoading
-                        ? LoadingComponent()
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              valueColor: new AlwaysStoppedAnimation<Color>(
+                                  appPrimaryMaterialColor),
+                            ),
+                          )
                         : Text(
                             "SIGN UP",
                             style: TextStyle(
@@ -429,7 +433,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   responseList[0]["CustomerCompanyName"]);
               await prefs.setString(
                   Session.CustomerEmailId, responseList[0]["CustomerEmailId"]);
-
+              await prefs.setString(Session.type, widget.signupType);
               await prefs.setString(
                   Session.CustomerPhoneNo, responseList[0]["CustomerPhoneNo"]);
               Navigator.pushNamedAndRemoveUntil(
@@ -466,7 +470,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           FormData body = FormData.fromMap({
             "ManufacturerName": txtName.text,
             "ManufacturerEmailId": txtEmail.text,
-            "ManufacturerAddress":"",
+            "ManufacturerAddress": "",
             "ManufacturerCompanyName": txtCName.text,
             "ManufacturerPhoneNo": txtMobileNumber.text.toString(),
           }); //"key":"value"
@@ -485,7 +489,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   responseList[0]["CustomerCompanyName"]);
               await prefs.setString(
                   Session.CustomerEmailId, responseList[0]["CustomerEmailId"]);
-
+              await prefs.setString(Session.type, widget.signupType);
               await prefs.setString(
                   Session.CustomerPhoneNo, responseList[0]["CustomerPhoneNo"]);
               Navigator.pushNamedAndRemoveUntil(

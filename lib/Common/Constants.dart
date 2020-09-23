@@ -31,6 +31,7 @@ class Session {
   static const String CustomerId = "CustomerId";
   static const String CustomerName = "CustomerName";
   static const String addressId = "addressId";
+  static const String type = "type";
   static const String CustomerCompanyName = "CustomerCompanyName";
   static const String CustomerEmailId = "CustomerEmailId";
   static const String CustomerPhoneNo = "CustomerPhoneNo";
