@@ -40,7 +40,7 @@ class _SplashState extends State<Splash> {
       String MobileNumber = prefs.getString(Session.CustomerPhoneNo);
       String Type = prefs.getString(Session.type);
       if (MobileNumber == null) {
-        Navigator.pushReplacementNamed(context, '/LoginScreen');
+        Navigator.pushReplacementNamed(context, '/WalkThroughScreen');
       } else {
         //Navigator.pushReplacementNamed(context, '/Home');
         if (Type == "user") {

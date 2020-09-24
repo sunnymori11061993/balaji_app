@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
@@ -6,12 +7,14 @@ import 'package:balaji/Component/CategoriesComponent.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/TrendingProductComponent.dart';
 import 'package:balaji/Screens/Address%20Screen.dart';
-import 'package:balaji/Screens/LanguageChangeScreen.dart';
+import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:share/share.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //slider
@@ -65,8 +68,19 @@ class _HomeState extends State<Home> {
     );
   }
 
+  _showDialogLang(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return ALertLang();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    var data = EasyLocalization.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -188,7 +202,7 @@ class _HomeState extends State<Home> {
                         child: Row(
                           children: <Widget>[
                             Text(
-                              "Edit Profile",
+                              "",
                               style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey,
@@ -225,21 +239,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pushNamed('/WalkThroughScreen');
-              },
-              child: ListTile(
-                leading: Icon(
-                  Icons.home,
-                  color: appPrimaryMaterialColor,
-                ),
-                title: Text(
-                  "WalkThrough",
-                ),
-              ),
-            ),
+
             GestureDetector(
               onTap: () {
                 Navigator.of(context).pop();
@@ -278,11 +278,12 @@ class _HomeState extends State<Home> {
             GestureDetector(
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            new LanguageChangeScreen()));
+                _showDialogLang(context);
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (BuildContext context) =>
+                //             new LanguageChangeScreen()));
               },
               child: ListTile(
                 leading: Icon(
@@ -298,12 +299,10 @@ class _HomeState extends State<Home> {
             GestureDetector(
               onTap: () {
                 Navigator.of(context).pop();
-//                Navigator.push(
-//                    context,
-//                    MaterialPageRoute(
-//                        builder: (BuildContext context) => new FAQScreen(
-//                            //  termsConData: termsConList[0],
-//                            )));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => new FAQScreen()));
               },
               child: ListTile(
                 leading: Icon(
@@ -364,7 +363,8 @@ class _HomeState extends State<Home> {
                     MaterialPageRoute(
                         builder: (BuildContext context) =>
                             new TermsAndCondition(
-                              termsConData: termsConList[0],
+                              termsConData: termsConList[0]
+                                  ["SettingTermsConditionURL"],
                             )));
               },
               child: ListTile(
@@ -403,6 +403,77 @@ class _HomeState extends State<Home> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 8.0),
+                    //   child: Container(
+                    //     child: Column(
+                    //       children: <Widget>[
+                    //         Container(
+                    //             //slider
+                    //             child: Column(
+                    //           children: <Widget>[
+                    //             CarouselSlider(
+                    //               options: CarouselOptions(
+                    //                 autoPlay: true,
+                    //                 aspectRatio: 2.0,
+                    //                 enlargeCenterPage: true,
+                    //               ),
+                    //               items: imgList
+                    //                   .map((item) => Container(
+                    //                         margin: EdgeInsets.all(5.0),
+                    //                         child: ClipRRect(
+                    //                             borderRadius: BorderRadius.all(
+                    //                                 Radius.circular(5.0)),
+                    //                             child: Stack(
+                    //                               children: <Widget>[
+                    //                                 Image.network(
+                    //                                     Image_URL +
+                    //                                         item["BannerImage"],
+                    //                                     fit: BoxFit.contain,
+                    //                                     width: MediaQuery.of(
+                    //                                             context)
+                    //                                         .size
+                    //                                         .width),
+                    //                                 // Positioned(
+                    //                                 //   bottom: 0.0,
+                    //                                 //   left: 0.0,
+                    //                                 //   right: 0.0,
+                    //                                 //   child: Container(
+                    //                                 //     decoration:
+                    //                                 //         BoxDecoration(
+                    //                                 //       gradient:
+                    //                                 //           LinearGradient(
+                    //                                 //         colors: [
+                    //                                 //           Color.fromARGB(
+                    //                                 //               50, 0, 0, 0),
+                    //                                 //           Color.fromARGB(
+                    //                                 //               0, 0, 0, 0)
+                    //                                 //         ],
+                    //                                 //         begin: Alignment
+                    //                                 //             .bottomCenter,
+                    //                                 //         end: Alignment
+                    //                                 //             .topCenter,
+                    //                                 //       ),
+                    //                                 //     ),
+                    //                                 //     padding: EdgeInsets
+                    //                                 //         .symmetric(
+                    //                                 //             vertical: 0.0,
+                    //                                 //             horizontal:
+                    //                                 //                 0.0),
+                    //                                 //   ),
+                    //                                 // ),
+                    //                               ],
+                    //                             )),
+                    //                       ))
+                    //                   .toList(),
+                    //             ),
+                    //           ],
+                    //         )),
+                    //       ],
+                    //     ),
+                    //     //slider
+                    //   ),
+                    // ),
                     Container(
                       height: MediaQuery.of(context).size.height / 4,
                       width: MediaQuery.of(context).size.width,
@@ -678,6 +749,136 @@ class _HomeState extends State<Home> {
       Fluttertoast.showToast(msg: "No Internet Connection.");
     }
   }
+}
+
+class ALertLang extends StatefulWidget {
+  @override
+  _ALertLangState createState() => _ALertLangState();
+}
+
+class _ALertLangState extends State<ALertLang> {
+  String lang = 'p1';
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: new Text(
+        "Change Language",
+        style: TextStyle(
+            fontSize: 22,
+            color: appPrimaryMaterialColor,
+            fontWeight: FontWeight.bold),
+      ),
+      content: new Wrap(
+        children: [
+          Column(
+            children: [
+              Text(
+                "Select Language",
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey[700],
+                    fontWeight: FontWeight.w600),
+              ),
+              // buildSwitchListTileMenuItem(
+              //     context: context,
+              //     title: 'عربي',
+              //     subtitle: 'عربي',
+              //     locale: context
+              //         .supportedLocales[1] //BuildContext extension method
+              //     ),
+              ListTile(
+                title: Column(
+                  children: <Widget>[
+                    Container(
+                      height: 40,
+                      child: RadioListTile(
+                        activeColor: appPrimaryMaterialColor,
+                        groupValue: lang,
+                        title: Text('English',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600)),
+                        value: 'p1',
+                        onChanged: (val) {
+                          setState(() {
+                            lang = val;
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                      height: 40,
+                      child: RadioListTile(
+                        activeColor: appPrimaryMaterialColor,
+                        groupValue: lang,
+                        title: Text('Hindi',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600)),
+                        value: 'p2',
+                        onChanged: (val) {
+                          setState(() {
+                            lang = val;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        // usually buttons at the bottom of the dialog
+        FlatButton(
+          child: new Text(
+            "Cancel",
+            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        new FlatButton(
+          child: new Text(
+            "Ok",
+            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
+          ),
+          onPressed: () async {},
+        ),
+      ],
+    );
+  }
+
+  // Container buildSwitchListTileMenuItem(
+  //     {BuildContext context, String title, String subtitle, Locale locale}) {
+  //   return Container(
+  //     margin: EdgeInsets.only(
+  //       left: 10,
+  //       right: 10,
+  //       top: 5,
+  //     ),
+  //     child: ListTile(
+  //         dense: true,
+  //         // isThreeLine: true,
+  //         title: Text(
+  //           title,
+  //         ),
+  //         subtitle: Text(
+  //           subtitle,
+  //         ),
+  //         onTap: () {
+  //           log(locale.toString(), name: toString());
+  //           context.locale = locale; //BuildContext extension method
+  //           //EasyLocalization.of(context).locale = locale;
+  //           Navigator.pop(context);
+  //         }),
+  //   );
+  // }
 }
 
 class AlertboxLogout extends StatefulWidget {

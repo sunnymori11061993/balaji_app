@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
+import 'package:balaji/Component/LoadingComponent.dart';
+import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -43,6 +45,22 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
         return AlertManuLogout();
       },
     );
+  }
+
+  _showDialogLang(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return ALertLang();
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _termsCon();
   }
 
   @override
@@ -239,24 +257,29 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                 ),
               ),
             ),
-            ListTile(
-              leading: Icon(
-                Icons.language,
-                color: appPrimaryMaterialColor,
-              ),
-              title: Text(
-                "Change Language",
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+                _showDialogLang(context);
+              },
+              child: ListTile(
+                leading: Icon(
+                  Icons.language,
+                  color: appPrimaryMaterialColor,
+                ),
+                title: Text(
+                  "Change Language",
+                ),
               ),
             ),
             Divider(),
             GestureDetector(
               onTap: () {
-//                Navigator.push(
-//                    context,
-//                    MaterialPageRoute(
-//                        builder: (BuildContext context) => new FAQScreen(
-//                            //  termsConData: termsConList[0],
-//                            )));
+                Navigator.of(context).pop();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => new FAQScreen()));
               },
               child: ListTile(
                 leading: Icon(
@@ -317,7 +340,8 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                     MaterialPageRoute(
                         builder: (BuildContext context) =>
                             new TermsAndCondition(
-                              termsConData: termsConList[0],
+                              termsConData: termsConList[0]
+                                  ["SettingTermsConditionURL"],
                             )));
               },
               child: ListTile(
@@ -347,15 +371,28 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
           ],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: WebView(
-          initialUrl: "https://webnappmaker.in/Balaji/",
-          javascriptMode: JavascriptMode.unrestricted,
-          onWebViewCreated: (WebViewController webViewController) {
-            _webView.complete(webViewController);
-          },
-        ),
+      body: Stack(
+        children: [
+          Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: WebView(
+                initialUrl: "https://webnappmaker.in/Balaji/",
+                javascriptMode: JavascriptMode.unrestricted,
+                onPageFinished: (finish) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                },
+                onWebViewCreated: (WebViewController webViewController) {
+                  _webView.complete(webViewController);
+                },
+              )),
+          isLoading
+              ? Center(
+                  child: LoadingComponent(),
+                )
+              : Stack(),
+        ],
       ),
     );
   }
@@ -437,6 +474,103 @@ class _AlertManuLogoutState extends State<AlertManuLogout> {
             Navigator.pushNamedAndRemoveUntil(
                 context, '/LoginScreen', (route) => false);
           },
+        ),
+      ],
+    );
+  }
+}
+
+class ALertLang extends StatefulWidget {
+  @override
+  _ALertLangState createState() => _ALertLangState();
+}
+
+class _ALertLangState extends State<ALertLang> {
+  String lang = 'p1';
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: new Text(
+        "Change Language",
+        style: TextStyle(
+            fontSize: 22,
+            color: appPrimaryMaterialColor,
+            fontWeight: FontWeight.bold),
+      ),
+      content: new Wrap(
+        children: [
+          Column(
+            children: [
+              Text(
+                "Select Language",
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey[700],
+                    fontWeight: FontWeight.w600),
+              ),
+              ListTile(
+                title: Column(
+                  children: <Widget>[
+                    Container(
+                      height: 40,
+                      child: RadioListTile(
+                        activeColor: appPrimaryMaterialColor,
+                        groupValue: lang,
+                        title: Text('English',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600)),
+                        value: 'p1',
+                        onChanged: (val) {
+                          setState(() {
+                            lang = val;
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                      height: 40,
+                      child: RadioListTile(
+                        activeColor: appPrimaryMaterialColor,
+                        groupValue: lang,
+                        title: Text('Hindi',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600)),
+                        value: 'p2',
+                        onChanged: (val) {
+                          setState(() {
+                            lang = val;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        // usually buttons at the bottom of the dialog
+        FlatButton(
+          child: new Text(
+            "Cancel",
+            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        new FlatButton(
+          child: new Text(
+            "Ok",
+            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
+          ),
+          onPressed: () async {},
         ),
       ],
     );

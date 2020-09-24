@@ -100,8 +100,8 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
   }
 
   void onDonePress() {
-    // Back to the first tab
-    this.goToTab(0);
+    //login Screen
+    Navigator.pushReplacementNamed(context, '/LoginScreen');
   }
 
   void onTabChangeCompleted(index) {

@@ -351,10 +351,10 @@ class _ManuProfileScreenState extends State<ManuProfileScreen> {
   _profile() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      txtName.text = prefs.getString(Session.ManufacturerName);
-      txtCName.text = prefs.getString(Session.ManufacturerCompanyName);
-      txtEmail.text = prefs.getString(Session.ManufacturerAddress);
-      txtMobileNumber.text = prefs.getString(Session.ManufacturerPhoneNo);
+      txtName.text = prefs.getString(Session.CustomerName);
+      txtCName.text = prefs.getString(Session.CustomerCompanyName);
+      txtEmail.text = prefs.getString(Session.CustomerEmailId);
+      txtMobileNumber.text = prefs.getString(Session.CustomerPhoneNo);
     });
   }
 

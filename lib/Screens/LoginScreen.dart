@@ -71,70 +71,6 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: MediaQuery.of(context).padding.top + 50,
             ),
-            Center(
-              child: Container(
-                  height: 35,
-                  width: MediaQuery.of(context).size.width - 100,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(
-                        color: Colors.grey,
-                      )),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Flexible(
-                          child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            toggle = "User";
-                          });
-                        },
-                        child: Container(
-                          color: toggle == "User"
-                              ? appPrimaryMaterialColor
-                              : Colors.white,
-                          width: MediaQuery.of(context).size.width / 2,
-                          child: Center(
-                            child: Text(
-                              "User",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: toggle == "User"
-                                      ? Colors.white
-                                      : Colors.black,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                        ),
-                      )),
-                      Flexible(
-                          child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            toggle = "Manufacturer";
-                          });
-                        },
-                        child: Container(
-                          color: toggle == "Manufacturer"
-                              ? appPrimaryMaterialColor
-                              : Colors.white,
-                          child: Center(
-                            child: Text(
-                              "Manufacturer",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: toggle == "Manufacturer"
-                                      ? Colors.white
-                                      : Colors.black,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                        ),
-                      )),
-                    ],
-                  )),
-            ),
             Padding(
               padding: const EdgeInsets.only(top: 15.0),
               child: Container(
@@ -208,7 +144,103 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).padding.top + 25,
+              height: MediaQuery.of(context).padding.top + 15,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Center(
+                child: Container(
+                    height: 35,
+                    width: MediaQuery.of(context).size.width - 100,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(
+                          color: Colors.grey,
+                        )),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                            child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              toggle = "User";
+                            });
+                          },
+                          child: Container(
+                            color: toggle == "User"
+                                ? appPrimaryMaterialColor
+                                : Colors.white,
+                            width: MediaQuery.of(context).size.width / 2,
+                            child: Center(
+                              child: Text(
+                                "User",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: toggle == "User"
+                                        ? Colors.white
+                                        : Colors.black,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                          ),
+                        )),
+                        Flexible(
+                            child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              toggle = "Manufacturer";
+                            });
+                          },
+                          child: Container(
+                            color: toggle == "Manufacturer"
+                                ? appPrimaryMaterialColor
+                                : Colors.white,
+                            child: Center(
+                              child: Text(
+                                "Manufacturer",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: toggle == "Manufacturer"
+                                        ? Colors.white
+                                        : Colors.black,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ),
+                          ),
+                        )),
+                      ],
+                    )),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 13.0, right: 13, bottom: 10, top: 50),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 45,
+                child: RaisedButton(
+                    color: appPrimaryMaterialColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    onPressed: () {
+                      if (isLoading == false) _login();
+                    },
+                    child: isLoading
+                        ? CircularProgressIndicator(
+                            valueColor:
+                                new AlwaysStoppedAnimation<Color>(Colors.white),
+                          )
+                        : Text("CONTINUE",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 17))),
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).padding.top + 15,
             ),
             Column(
               children: <Widget>[
@@ -239,32 +271,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 13.0, right: 13, bottom: 10, top: 50),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 45,
-                child: RaisedButton(
-                    color: appPrimaryMaterialColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    onPressed: () {
-                      if (isLoading == false) _login();
-                    },
-                    child: isLoading
-                        ? CircularProgressIndicator(
-                            valueColor:
-                                new AlwaysStoppedAnimation<Color>(Colors.white),
-                          )
-                        : Text("CONTINUE",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 17))),
-              ),
-            ),
           ],
         ),
       ),
@@ -280,7 +286,7 @@ class _LoginScreenState extends State<LoginScreen> {
             isLoading = true;
           });
           FormData body = FormData.fromMap({
-            "CustomerPhoneNo": txtLogin.text,
+            "PhoneNo": txtLogin.text,
             "type": toggle.toLowerCase()
           }); //"key":"value"
           Services.PostForList(api_name: 'OTP_login_api', body: body).then(

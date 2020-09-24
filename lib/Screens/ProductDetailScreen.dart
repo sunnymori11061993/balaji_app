@@ -103,81 +103,93 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ),
         bottomNavigationBar: isLoading
             ? SizedBox()
-            : Padding(
-                padding: const EdgeInsets.only(top: 10.0, bottom: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 8.0,
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            // "Total:₹ " + "${res}",
-                            "Total:₹ " + "${res}",
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600),
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Divider(
+                    height: 3,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0, bottom: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 8.0,
                           ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          if (isCartLoading == false && isCartList==false) {
-                            _addToCart();
-                          }
-                        },
-                        child: Container(
-                          width: 150,
-                          height: 40,
-                          // color: appPrimaryMaterialColor,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              // border: Border.all(color: Colors.grey[300]),
-                              color: appPrimaryMaterialColor),
-                          child: isCartLoading
-                              ? Center(
-                                  child: CircularProgressIndicator(
-                                    valueColor:
-                                        new AlwaysStoppedAnimation<Color>(
-                                            Colors.white),
-                                  ),
-                                )
-                              : Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.shopping_cart,
-                                      color: Colors.white,
-                                    ),
-                                    isCartList == true
-                                        ? Text(
-                                            "Already in Cart",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w600),
-                                          )
-                                        : Text(
-                                            "Add to Cart",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                  ],
-                                ),
+                          child: Row(
+                            children: [
+                              Text(
+                                // "Total:₹ " + "${res}",
+                                "Total:₹ " + "${res}",
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              if (isCartLoading == false &&
+                                  isCartList == false) {
+                                _addToCart();
+                              }
+                            },
+                            child: Container(
+                              width: 150,
+                              height: 40,
+                              // color: appPrimaryMaterialColor,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  // border: Border.all(color: Colors.grey[300]),
+                                  color: appPrimaryMaterialColor),
+                              child: isCartLoading
+                                  ? Center(
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            new AlwaysStoppedAnimation<Color>(
+                                                Colors.white),
+                                      ),
+                                    )
+                                  : Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Icon(
+                                          Icons.shopping_cart,
+                                          color: Colors.white,
+                                        ),
+                                        isCartList == true
+                                            ? Text(
+                                                "Already in Cart",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              )
+                                            : Text(
+                                                "Add to Cart",
+                                                style: TextStyle(
+                                                    fontSize: 15,
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                      ],
+                                    ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
         body: isLoading
             ? LoadingComponent()
@@ -212,7 +224,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                         borderRadius:
                                                             BorderRadius.all(
                                                                 Radius.circular(
-                                                                    5.0)),
+                                                                    15.0)),
                                                         child: Stack(
                                                           children: <Widget>[
                                                             Image.network(
@@ -252,9 +264,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                                 padding: EdgeInsets
                                                                     .symmetric(
                                                                         vertical:
-                                                                            10.0,
+                                                                            0.0,
                                                                         horizontal:
-                                                                            40.0),
+                                                                            0.0),
                                                               ),
                                                             ),
                                                           ],
@@ -331,15 +343,25 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                         },
                                         child: Container(
                                             child: isWishList == false
-                                                ? Icon(
-                                                    Icons.favorite_border,
-                                                    color:
-                                                        appPrimaryMaterialColor,
+                                                ? Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 8.0),
+                                                    child: Icon(
+                                                      Icons.favorite_border,
+                                                      color:
+                                                          appPrimaryMaterialColor,
+                                                    ),
                                                   )
-                                                : Icon(
-                                                    Icons.favorite,
-                                                    color:
-                                                        appPrimaryMaterialColor,
+                                                : Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            right: 8.0),
+                                                    child: Icon(
+                                                      Icons.favorite,
+                                                      color:
+                                                          appPrimaryMaterialColor,
+                                                    ),
                                                   )),
                                       ),
                                     ],
@@ -387,7 +409,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                         Container(
                           height: 20,
-                          color: Colors.grey[200],
+                          color: Colors.grey[100],
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
@@ -414,7 +436,67 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                       fontWeight: FontWeight.w400),
                                 ),
                               ),
-                              Divider()
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: Container(
+                            height: 20,
+                            color: Colors.grey[100],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10.0, left: 20, right: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "Rating & Reviews",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 25.0, left: 20, right: 8),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "4.4",
+                                        style: TextStyle(
+                                            fontSize: 30,
+                                            color: Colors.grey[700],
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      Icon(
+                                        Icons.star,
+                                        size: 15,
+                                        color: appPrimaryMaterialColor,
+                                      )
+                                    ],
+                                  ),
+                                  Text(
+                                    "3219 Verified Buyers",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),

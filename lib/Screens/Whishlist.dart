@@ -29,63 +29,62 @@ class _WhishlistState extends State<Whishlist> {
         Navigator.of(context).pop("pop");
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: appPrimaryMaterialColor,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop("pop");
-              }),
-          elevation: 1,
           backgroundColor: Colors.white,
-          iconTheme: new IconThemeData(
-            color: appPrimaryMaterialColor,
-          ),
-          title: const Text(
-            "Wishlist",
-            style: TextStyle(
-              color: Colors.black,
-            ),
-          ),
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.card_travel),
+          appBar: AppBar(
+            leading: IconButton(
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  color: appPrimaryMaterialColor,
+                ),
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/CartScreen');
+                  Navigator.of(context).pop("pop");
                 }),
-          ],
-        ),
-        body: isLoading
-            ? Center(
-                child: CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(
-                      appPrimaryMaterialColor),
-                ),
-              )
-            : Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 10),
-                child: ListView.separated(
-                  itemCount: wishList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return WishlistComponent(
-                      wishListData: wishList[index],
-                      onRemove: () {
-                        setState(() {
-                          wishList.removeAt(index);
-                        });
-                      },
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) =>
-                      Divider(
-                    thickness: 2,
-                  ),
-                ),
+            elevation: 1,
+            backgroundColor: Colors.white,
+            iconTheme: new IconThemeData(
+              color: appPrimaryMaterialColor,
+            ),
+            title: const Text(
+              "Wishlist",
+              style: TextStyle(
+                color: Colors.black,
               ),
-      ),
+            ),
+            actions: <Widget>[
+              IconButton(
+                  icon: Icon(Icons.card_travel),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/CartScreen');
+                  }),
+            ],
+          ),
+          body: isLoading
+              ? Center(
+                  child: CircularProgressIndicator(
+                    valueColor: new AlwaysStoppedAnimation<Color>(
+                        appPrimaryMaterialColor),
+                  ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 10),
+                  child: ListView.separated(
+                    itemCount: wishList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return WishlistComponent(
+                        wishListData: wishList[index],
+                        onRemove: () {
+                          setState(() {
+                            wishList.removeAt(index);
+                          });
+                        },
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) =>
+                        Divider(
+                      thickness: 2,
+                    ),
+                  ),
+                )),
     );
   }
 

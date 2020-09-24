@@ -480,16 +480,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             if (responseList.length > 0) {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               await prefs.setString(
-                  Session.CustomerId, responseList[0]["CustomerId"]);
+                  Session.CustomerId, responseList[0]["ManufacturerId"]);
               await prefs.setString(
-                  Session.CustomerName, responseList[0]["CustomerName"]);
+                  Session.CustomerName, responseList[0]["ManufacturerName"]);
               await prefs.setString(Session.CustomerCompanyName,
-                  responseList[0]["CustomerCompanyName"]);
-              await prefs.setString(
-                  Session.CustomerEmailId, responseList[0]["CustomerEmailId"]);
+                  responseList[0]["ManufacturerCompanyName"]);
+              await prefs.setString(Session.CustomerEmailId,
+                  responseList[0]["ManufacturerEmailId"]);
               await prefs.setString(Session.type, widget.signupType);
-              await prefs.setString(
-                  Session.CustomerPhoneNo, responseList[0]["CustomerPhoneNo"]);
+              await prefs.setString(Session.CustomerPhoneNo,
+                  responseList[0]["ManufacturerPhoneNo"]);
               Navigator.pushNamedAndRemoveUntil(
                   context, '/ManuHomeScreen', (route) => false);
             } else {
