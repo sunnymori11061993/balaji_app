@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
@@ -10,11 +9,10 @@ import 'package:balaji/Screens/Address%20Screen.dart';
 import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
 import 'package:carousel_pro/carousel_pro.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:share/share.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //slider
@@ -31,10 +29,13 @@ class _HomeState extends State<Home> {
   List contactList = [];
   List imgList = [];
   List catList = [];
-
   List trendingProductList = [];
+
+  List cartList = [];
+  bool isGetCartLoading = true;
   bool isSearching = false;
   bool isFavLoading = false;
+  bool isBannerLoading = true;
 
   Icon actionIcon = Icon(
     Icons.search,
@@ -56,6 +57,7 @@ class _HomeState extends State<Home> {
     _trendingProduct();
     _termsCon();
     _contactUs();
+    _getCart();
   }
 
   _showDialog(BuildContext context) {
@@ -80,7 +82,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    var data = EasyLocalization.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -145,12 +146,33 @@ class _HomeState extends State<Home> {
                 ),
           actionIcon.icon == Icons.close
               ? Container()
-              : IconButton(
-                  icon: Icon(Icons.card_travel),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/CartScreen');
-                  },
-                ),
+              : Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.card_travel),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/CartScreen');
+                      },
+                    ),
+                    if (cartList.length > 0)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 2.0),
+                        child: CircleAvatar(
+                          radius: 8.0,
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          child: Text(
+                            cartList.length.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                )
         ],
       ),
       drawer: Drawer(
@@ -202,7 +224,7 @@ class _HomeState extends State<Home> {
                         child: Row(
                           children: <Widget>[
                             Text(
-                              "",
+                              "Edit Profile",
                               style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey,
@@ -239,22 +261,37 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-
             GestureDetector(
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.of(context).pushNamed('/OrderHistoryScreen');
+                Navigator.of(context).pushNamed('/HistoryScreen');
               },
               child: ListTile(
                 leading: Icon(
-                  Icons.history,
+                  Icons.home,
                   color: appPrimaryMaterialColor,
                 ),
                 title: Text(
-                  "Order History",
+                  "Order Histoy",
                 ),
               ),
             ),
+
+//            GestureDetector(
+//              onTap: () {
+//                Navigator.of(context).pop();
+//                Navigator.of(context).pushNamed('/OrderHistoryScreen');
+//              },
+//              child: ListTile(
+//                leading: Icon(
+//                  Icons.history,
+//                  color: appPrimaryMaterialColor,
+//                ),
+//                title: Text(
+//                  "Order History",
+//                ),
+//              ),
+//            ),
             GestureDetector(
               onTap: () {
                 //  Navigator.of(context).pushNamed('/ContactUs');
@@ -474,37 +511,42 @@ class _HomeState extends State<Home> {
                     //     //slider
                     //   ),
                     // ),
-                    Container(
-                      height: MediaQuery.of(context).size.height / 4,
-                      width: MediaQuery.of(context).size.width,
-                      child: Carousel(
-                        boxFit: BoxFit.cover,
-                        autoplay: true,
-                        animationCurve: Curves.fastOutSlowIn,
-                        animationDuration: Duration(milliseconds: 1000),
-                        dotSize: 4.0,
-                        dotColor: Colors.grey,
-                        dotIncreasedColor: appPrimaryMaterialColor,
-                        dotBgColor: Colors.white,
-                        dotPosition: DotPosition.bottomCenter,
-                        dotVerticalPadding: 0.0,
-                        showIndicator: true,
-                        indicatorBgPadding: 7.0,
-                        images: imgList
-                            .map((item) => Image.network(
-                                  Image_URL + item["BannerImage"],
-                                  fit: BoxFit.fill,
-                                  height: 150,
-                                  loadingBuilder:
-                                      (context, widget, loadingProgress) {
-                                    if (loadingProgress == null) {
-                                      return widget;
-                                    } else
-                                      return LoadingComponent();
-                                  },
-                                ))
-                            .toList(),
-                      ),
+                    Stack(
+                      children: [
+                        Container(
+                          height: MediaQuery.of(context).size.height / 4,
+                          width: MediaQuery.of(context).size.width,
+                          child: Carousel(
+                            boxFit: BoxFit.cover,
+                            autoplay: true,
+                            animationCurve: Curves.fastOutSlowIn,
+                            animationDuration: Duration(milliseconds: 1000),
+                            dotSize: 4.0,
+                            dotColor: Colors.grey,
+                            dotIncreasedColor: appPrimaryMaterialColor,
+                            dotBgColor: Colors.white,
+                            dotPosition: DotPosition.bottomCenter,
+                            dotVerticalPadding: 0.0,
+                            showIndicator: true,
+                            indicatorBgPadding: 7.0,
+                            images: imgList
+                                .map((item) => Image.network(
+                                      Image_URL + item["BannerImage"],
+                                      fit: BoxFit.fill,
+                                      height: 150,
+                                      loadingBuilder:
+                                          (context, widget, loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return widget;
+                                        } else
+                                          return LoadingComponent();
+                                      },
+                                    ))
+                                .toList(),
+                          ),
+                        ),
+                        isBannerLoading ? LoadingComponent() : Container()
+                      ],
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10.0),
@@ -584,21 +626,20 @@ class _HomeState extends State<Home> {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         setState(() {
-          isLoading = true;
+          isBannerLoading = true;
         });
         var body = {};
         Services.PostForList(api_name: 'get_all_data_api/?tblName=tblbanner')
             .then((bannerresponselist) async {
+          setState(() {
+            isBannerLoading = false;
+          });
           if (bannerresponselist.length > 0) {
             setState(() {
-              isLoading = false;
               imgList = bannerresponselist;
               //set "data" here to your variable
             });
           } else {
-            setState(() {
-              isLoading = false;
-            });
             Fluttertoast.showToast(msg: "Banner Not Found");
             //show "data not found" in dialog
           }
@@ -639,6 +680,43 @@ class _HomeState extends State<Home> {
         }, onError: (e) {
           setState(() {
             isLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
+  }
+
+  _getCart() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        isGetCartLoading = true;
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        FormData body = FormData.fromMap(
+            {"customerId": pref.getString(Session.CustomerId)});
+        Services.PostForList(api_name: 'get_data_where/tblcart', body: body)
+            .then((responseList) async {
+          setState(() {
+            isGetCartLoading = false;
+          });
+          if (responseList.length > 0) {
+            setState(() {
+              cartList = responseList; //set "data" here to your variable
+            });
+          } else {
+            setState(() {
+              isGetCartLoading = false;
+            });
+            Fluttertoast.showToast(msg: "Data Not Found");
+            //show "data not found" in dialog
+          }
+        }, onError: (e) {
+          setState(() {
+            isGetCartLoading = false;
           });
           print("error on call -> ${e.message}");
           Fluttertoast.showToast(msg: "Something Went Wrong");
@@ -758,6 +836,7 @@ class ALertLang extends StatefulWidget {
 
 class _ALertLangState extends State<ALertLang> {
   String lang = 'p1';
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -854,31 +933,31 @@ class _ALertLangState extends State<ALertLang> {
     );
   }
 
-  // Container buildSwitchListTileMenuItem(
-  //     {BuildContext context, String title, String subtitle, Locale locale}) {
-  //   return Container(
-  //     margin: EdgeInsets.only(
-  //       left: 10,
-  //       right: 10,
-  //       top: 5,
-  //     ),
-  //     child: ListTile(
-  //         dense: true,
-  //         // isThreeLine: true,
-  //         title: Text(
-  //           title,
-  //         ),
-  //         subtitle: Text(
-  //           subtitle,
-  //         ),
-  //         onTap: () {
-  //           log(locale.toString(), name: toString());
-  //           context.locale = locale; //BuildContext extension method
-  //           //EasyLocalization.of(context).locale = locale;
-  //           Navigator.pop(context);
-  //         }),
-  //   );
-  // }
+// Container buildSwitchListTileMenuItem(
+//     {BuildContext context, String title, String subtitle, Locale locale}) {
+//   return Container(
+//     margin: EdgeInsets.only(
+//       left: 10,
+//       right: 10,
+//       top: 5,
+//     ),
+//     child: ListTile(
+//         dense: true,
+//         // isThreeLine: true,
+//         title: Text(
+//           title,
+//         ),
+//         subtitle: Text(
+//           subtitle,
+//         ),
+//         onTap: () {
+//           log(locale.toString(), name: toString());
+//           context.locale = locale; //BuildContext extension method
+//           //EasyLocalization.of(context).locale = locale;
+//           Navigator.pop(context);
+//         }),
+//   );
+// }
 }
 
 class AlertboxLogout extends StatefulWidget {

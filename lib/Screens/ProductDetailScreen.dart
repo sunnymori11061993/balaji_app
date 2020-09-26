@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
+import 'package:balaji/Component/RelatedProductComponent.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,12 +30,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int _m = 1;
   int res = 0;
   bool isLoading = true;
+  bool isGetCartLoading = true;
   bool isFavLoading = false;
   bool isCartLoading = false;
   bool isWishList = false;
   bool isCartList = false;
   var productList;
   List imgList = [];
+  List cartList = [];
 
   void add() {
     setState(() {
@@ -60,6 +63,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   void initState() {
     //total();
     _getProductDetail();
+    _getCart();
+  }
+
+  _showDialogView(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          // return object of type Dialog
+          return AlertViewCatalogue();
+        });
   }
 
   @override
@@ -92,13 +105,34 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       await Navigator.of(context).pushNamed('/Whishlist');
                   if (result == "pop") _getProductDetail();
                 }),
-            IconButton(
-                icon: Icon(Icons.card_travel),
-                onPressed: () async {
-                  final result =
-                      await Navigator.of(context).pushNamed('/CartScreen');
-                  if (result == "pop") _getProductDetail();
-                }),
+            Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                IconButton(
+                    icon: Icon(Icons.card_travel),
+                    onPressed: () async {
+                      final result =
+                          await Navigator.of(context).pushNamed('/CartScreen');
+                      if (result == "pop") _getProductDetail();
+                    }),
+                if (cartList.length > 0)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 2.0),
+                    child: CircleAvatar(
+                      radius: 8.0,
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
+                      child: Text(
+                        cartList.length.toString(),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.0,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            )
           ],
         ),
         bottomNavigationBar: isLoading
@@ -332,6 +366,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                               TextDecoration
                                                                   .lineThrough)),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 5.0),
+                                                  child: Text(
+                                                    // "${widget.relatedProductData["ProductSrp"]}",
+                                                    "(5% OFF)",
+                                                    style: TextStyle(
+                                                        // color: Colors.grey[600],
+                                                        color:
+                                                            appPrimaryMaterialColor,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -366,42 +416,130 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                       ),
                                     ],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 15.0),
-                                    child: Text(
-                                      "Select Quantity",
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
-                                    child: Row(
-                                      children: <Widget>[
-                                        IconButton(
-                                          icon: Icon(Icons.remove_circle),
-                                          onPressed: () {
-                                            minus();
-                                          },
-                                          color: appPrimaryMaterialColor,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 8.0, right: 8),
-                                          child: Text('$_m'),
-                                        ),
-                                        IconButton(
-                                          icon: Icon(Icons.add_circle),
-                                          onPressed: () {
-                                            add();
-                                          },
-                                          color: appPrimaryMaterialColor,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 15.0),
+                                            child: Text(
+                                              "Select Quantity",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0),
+                                            child: Row(
+                                              children: <Widget>[
+                                                IconButton(
+                                                  icon:
+                                                      Icon(Icons.remove_circle),
+                                                  onPressed: () {
+                                                    minus();
+                                                  },
+                                                  color:
+                                                      appPrimaryMaterialColor,
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0, right: 8),
+                                                  child: Text('$_m'),
+                                                ),
+                                                IconButton(
+                                                  icon: Icon(Icons.add_circle),
+                                                  onPressed: () {
+                                                    add();
+                                                  },
+                                                  color:
+                                                      appPrimaryMaterialColor,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 15.0),
+                                            child: Text(
+                                              "View Catalogue",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 5.0,
+                                                top: 5,
+                                                bottom: 8,
+                                                right: 8),
+                                            child: SizedBox(
+                                              height: 30,
+                                              width: 90,
+                                              child: FlatButton(
+                                                //color: appPrimaryMaterialColor,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    side: BorderSide(
+                                                        color:
+                                                            Colors.grey[300])),
+                                                onPressed: () {
+                                                  _showDialogView(context);
+                                                },
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              right: 2.0),
+                                                      child: Icon(
+                                                        Icons.details,
+                                                        //color: Colors.white),
+                                                        color: Colors.grey[700],
+                                                        size: 16,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "View",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        //color: Colors.white,
+                                                        color: Colors.grey[700],
+//                                                          fontWeight:
+//                                                              FontWeight.bold
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
                             ),
@@ -500,6 +638,45 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ],
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20.0),
+                          child: Container(
+                            height: 20,
+                            color: Colors.grey[100],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10.0, left: 20, right: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "Related Products",
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 15.0, bottom: 10),
+                                child: Container(
+                                  height:
+                                      MediaQuery.of(context).size.height / 2.6,
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: 10,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                        return RelatedProductComponent();
+                                      }),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
 //            Container(
 //              height: 20,
 //              color: Colors.grey[200],
@@ -638,6 +815,43 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     }
   }
 
+  _getCart() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        isGetCartLoading = true;
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        FormData body = FormData.fromMap(
+            {"customerId": pref.getString(Session.CustomerId)});
+        Services.PostForList(api_name: 'get_data_where/tblcart', body: body)
+            .then((responseList) async {
+          setState(() {
+            isGetCartLoading = false;
+          });
+          if (responseList.length > 0) {
+            setState(() {
+              cartList = responseList; //set "data" here to your variable
+            });
+          } else {
+            setState(() {
+              isGetCartLoading = false;
+            });
+            Fluttertoast.showToast(msg: "Data Not Found");
+            //show "data not found" in dialog
+          }
+        }, onError: (e) {
+          setState(() {
+            isGetCartLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
+  }
+
   _addToWishlist() async {
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -707,6 +921,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               Fluttertoast.showToast(msg: "Already in Cart");
             }
             total();
+            // _getProductDetail();
           } else {
             setState(() {
               isCartLoading = false;
@@ -726,4 +941,96 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       Fluttertoast.showToast(msg: "No Internet Connection.");
     }
   }
+}
+
+class AlertViewCatalogue extends StatefulWidget {
+  Function onSelect;
+
+  AlertViewCatalogue({this.onSelect});
+
+  @override
+  _AlertViewCatalogueState createState() => _AlertViewCatalogueState();
+}
+
+class _AlertViewCatalogueState extends State<AlertViewCatalogue> {
+  List getCatalogue = [];
+  bool isSelectLoading = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    // _getAddress();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: new Text(
+        "View Catalogue",
+        style: TextStyle(
+            fontSize: 22,
+            color: appPrimaryMaterialColor,
+            fontWeight: FontWeight.bold),
+      ),
+      content: isSelectLoading
+          ? LoadingComponent()
+          : SingleChildScrollView(
+              child: Text("View Catalogue",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                  )),
+            ),
+      actions: <Widget>[
+        // usually buttons at the bottom of the dialog
+
+        FlatButton(
+          child: new Text(
+            "Cancel",
+            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+  }
+
+//  _getAddress() async {
+//    try {
+//      final result = await InternetAddress.lookup('google.com');
+//      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+//        isSelectLoading = true;
+//
+//        SharedPreferences prefs = await SharedPreferences.getInstance();
+//
+//        FormData body = FormData.fromMap({
+//          "CustomerId": prefs.getString(Session.CustomerId),
+//        });
+//        Services.PostForList(api_name: 'getAddress', body: body).then(
+//            (addResponseList) async {
+//          setState(() {
+//            isSelectLoading = false;
+//          });
+//          if (addResponseList.length > 0) {
+//            setState(() {
+//              getAddressList = addResponseList;
+//            });
+//          } else {
+//            Fluttertoast.showToast(msg: "Data Not Found");
+//            //show "data not found" in dialog
+//          }
+//        }, onError: (e) {
+//          setState(() {
+//            isSelectLoading = false;
+//          });
+//          print("error on call -> ${e.message}");
+//          Fluttertoast.showToast(msg: "Something Went Wrong");
+//        });
+//      }
+//    } on SocketException catch (_) {
+//      Fluttertoast.showToast(msg: "No Internet Connection.");
+//    }
+//  }
 }

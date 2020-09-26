@@ -8,6 +8,7 @@ import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SubCategory extends StatefulWidget {
   var catId;
@@ -28,6 +29,7 @@ class _SubCategoryState extends State<SubCategory>
 
     _subCatTab();
     print(widget.catId);
+    _getCart();
   }
 
   _tabCon() {
@@ -48,12 +50,12 @@ class _SubCategoryState extends State<SubCategory>
   bool isLoadingCat = true;
   bool isLoadingPro = false;
   TextStyle tabStyle = TextStyle(fontSize: 16);
+  List cartList = [];
+  bool isGetCartLoading = true;
 
   @override
   Widget build(BuildContext context) {
     var mediaQueryData = MediaQuery.of(context);
-    final double appBarHeight = kToolbarHeight;
-    final double paddingBottom = mediaQueryData.padding.bottom;
 
     return Scaffold(
       key: _scaffoldKey,
@@ -82,11 +84,32 @@ class _SubCategoryState extends State<SubCategory>
               onPressed: () {
                 Navigator.of(context).pushNamed('/Whishlist');
               }),
-          IconButton(
-              icon: Icon(Icons.card_travel),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/CartScreen');
-              }),
+          Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              IconButton(
+                  icon: Icon(Icons.card_travel),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/CartScreen');
+                  }),
+              if (cartList.length > 0)
+                Padding(
+                  padding: const EdgeInsets.only(left: 2.0),
+                  child: CircleAvatar(
+                    radius: 8.0,
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
+                    child: Text(
+                      cartList.length.toString(),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12.0,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
 
           Padding(
             padding: const EdgeInsets.only(right: 10.0, left: 4),
@@ -421,6 +444,43 @@ class _SubCategoryState extends State<SubCategory>
         }, onError: (e) {
           setState(() {
             isLoadingPro = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
+  }
+
+  _getCart() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        isGetCartLoading = true;
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        FormData body = FormData.fromMap(
+            {"customerId": pref.getString(Session.CustomerId)});
+        Services.PostForList(api_name: 'get_data_where/tblcart', body: body)
+            .then((responseList) async {
+          setState(() {
+            isGetCartLoading = false;
+          });
+          if (responseList.length > 0) {
+            setState(() {
+              cartList = responseList; //set "data" here to your variable
+            });
+          } else {
+            setState(() {
+              isGetCartLoading = false;
+            });
+            Fluttertoast.showToast(msg: "Data Not Found");
+            //show "data not found" in dialog
+          }
+        }, onError: (e) {
+          setState(() {
+            isGetCartLoading = false;
           });
           print("error on call -> ${e.message}");
           Fluttertoast.showToast(msg: "Something Went Wrong");

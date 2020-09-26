@@ -237,7 +237,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
                                   color: Colors.white,
                                 ),
                                 Text(
-                                  "AddTo Cart",
+                                  "Add To Cart",
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.white,

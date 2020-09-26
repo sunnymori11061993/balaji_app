@@ -4,6 +4,7 @@ import 'package:balaji/Screens/CartScreen.dart';
 import 'package:balaji/Screens/ContactUs.dart';
 import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/FilterScreen.dart';
+import 'package:balaji/Screens/HistoryScreen.dart';
 import 'package:balaji/Screens/Home.dart';
 import 'package:balaji/Screens/LanguageChangeScreen.dart';
 import 'package:balaji/Screens/LoginScreen.dart';
@@ -62,6 +63,7 @@ class _MyAppState extends State<MyApp> {
         '/ManuProfileScreen': (context) => ManuProfileScreen(),
         '/LanguageChangeScreen': (context) => LanguageChangeScreen(),
         '/WalkThroughScreen': (context) => WalkThroughScreen(),
+        '/HistoryScreen': (context) => HistoryScreen(),
       },
       theme: ThemeData(
           //fontFamily: 'Montserrat',
