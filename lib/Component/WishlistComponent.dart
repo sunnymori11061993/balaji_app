@@ -22,6 +22,23 @@ class WishlistComponent extends StatefulWidget {
 class _WishlistComponentState extends State<WishlistComponent> {
   bool isFavLoading = false;
   bool isCartLoading = false;
+  double percentResult;
+  int value;
+
+  percent() {
+    setState(() {
+      percentResult =
+          value * 100 / int.parse(widget.wishListData["ProductMrp"]);
+    });
+    print(percentResult);
+  }
+
+  discount() {
+    setState(() {
+      value = int.parse(widget.wishListData["ProductMrp"]) -
+          int.parse(widget.wishListData["ProductSrp"]);
+    });
+  }
 
   _showDialog(BuildContext context) {
     //show alert dialog
@@ -67,6 +84,13 @@ class _WishlistComponentState extends State<WishlistComponent> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    discount();
+    percent();
   }
 
   @override
@@ -152,7 +176,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
                                         fontWeight: FontWeight.w600),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 12.0),
+                                    padding: const EdgeInsets.only(left: 4.0),
                                     child: Text(
                                       "₹" +
                                           "${widget.wishListData["ProductMrp"]}",
@@ -162,6 +186,18 @@ class _WishlistComponentState extends State<WishlistComponent> {
                                           fontSize: 16,
                                           decoration:
                                               TextDecoration.lineThrough),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 5.0),
+                                    child: Text(
+                                      // "${widget.relatedProductData["ProductSrp"]}",
+                                      "(${percentResult.toStringAsFixed(0)}% OFF)",
+                                      style: TextStyle(
+                                          // color: Colors.grey[600],
+                                          color: appPrimaryMaterialColor,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600),
                                     ),
                                   ),
                                 ],

@@ -21,11 +21,30 @@ class RelatedProductComponent extends StatefulWidget {
 class _RelatedProductComponentState extends State<RelatedProductComponent> {
   bool isWishList = false;
   bool isFavLoading = false;
+  double percentResult;
+  int value;
+
+  percent() {
+    setState(() {
+      percentResult =
+          value * 100 / int.parse(widget.relatedProductData["ProductMrp"]);
+    });
+    print(percentResult);
+  }
+
+  discount() {
+    setState(() {
+      value = int.parse(widget.relatedProductData["ProductMrp"]) -
+          int.parse(widget.relatedProductData["ProductSrp"]);
+    });
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     // isWishList=widget.trendData["isFav"];
+    discount();
+    percent();
   }
 
   @override
@@ -55,32 +74,32 @@ class _RelatedProductComponentState extends State<RelatedProductComponent> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    width: MediaQuery.of(context).size.width / 2.1,
-                    height: 237,
-                    child: Image.network(
-                      "https://images.indulgexpress.com/uploads/user/ckeditor_images/article/2019/12/3/DF0374_(2).jpg",
-                      fit: BoxFit.cover,
-                    ),
+                      width: MediaQuery.of(context).size.width / 2.1,
+                      height: 237,
+                      child:
+                          // Image.network(
+                          //   "https://images.indulgexpress.com/uploads/user/ckeditor_images/article/2019/12/3/DF0374_(2).jpg",
+                          //   fit: BoxFit.cover,
+                          // ),
 
-//                      Image.network(
-//                          Image_URL + "${widget.relatedProductData["ProductImages"][0]}",
-//                          fit: BoxFit.fill)
-                  ),
+                          Image.network(
+                              Image_URL +
+                                  "${widget.relatedProductData["ProductImages"]}",
+                              fit: BoxFit.fill)),
                   Padding(
                     padding: const EdgeInsets.only(
                       left: 4.0,
                       top: 2.0,
                     ),
-                    child:
-                        //  Text("${widget.relatedProductData["ProductName"]}",
-                        Text("Goofy",
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            )),
+                    child: Text("${widget.relatedProductData["ProductName"]}",
+                        // Text("Goofy",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        )),
                   ),
                   Expanded(
                     child: Padding(
@@ -101,8 +120,8 @@ class _RelatedProductComponentState extends State<RelatedProductComponent> {
                                         fontWeight: FontWeight.w600),
                                   ),
                                   Text(
-                                    // "${widget.relatedProductData["ProductSrp"]}",
-                                    "125",
+                                    "${widget.relatedProductData["ProductSrp"]}",
+                                    // "125",
                                     style: TextStyle(
                                         // color: Colors.grey[600],
                                         color: Colors.black,
@@ -114,8 +133,9 @@ class _RelatedProductComponentState extends State<RelatedProductComponent> {
                               Padding(
                                 padding: const EdgeInsets.only(left: 12.0),
                                 child: Text(
-                                  "₹" + "140",
-                                  //"₹" + "${widget.relatedProductData["ProductMrp"]}",
+                                  // /"₹" + "140",
+                                  "₹" +
+                                      "${widget.relatedProductData["ProductMrp"]}",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w600,
                                       color: Colors.grey,
@@ -130,7 +150,7 @@ class _RelatedProductComponentState extends State<RelatedProductComponent> {
                             padding: const EdgeInsets.only(left: 5.0),
                             child: Text(
                               // "${widget.relatedProductData["ProductSrp"]}",
-                              "(5% OFF)",
+                              "(${percentResult.toStringAsFixed(0)}% OFF)",
                               style: TextStyle(
                                   // color: Colors.grey[600],
                                   color: appPrimaryMaterialColor,

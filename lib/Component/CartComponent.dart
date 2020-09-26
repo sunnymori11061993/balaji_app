@@ -27,6 +27,22 @@ class _CartComponentState extends State<CartComponent> {
   int res = 0;
   var isLoading = false;
   bool isCartLoading = false;
+  double percentResult;
+  int value;
+
+  percent() {
+    setState(() {
+      percentResult = value * 100 / int.parse(widget.getCartData["ProductMrp"]);
+    });
+    print(percentResult);
+  }
+
+  discount() {
+    setState(() {
+      value = int.parse(widget.getCartData["ProductMrp"]) -
+          int.parse(widget.getCartData["ProductSrp"]);
+    });
+  }
 
   void add() {
     setState(() {
@@ -87,7 +103,7 @@ class _CartComponentState extends State<CartComponent> {
                 "Ok",
                 style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
               ),
-              onPressed: ()  {
+              onPressed: () {
                 _removeFromCart();
                 Navigator.of(context).pop();
               },
@@ -98,12 +114,13 @@ class _CartComponentState extends State<CartComponent> {
     );
   }
 
-
   @override
   void initState() {
     // TODO: implement initState
     _m = int.parse("${widget.getCartData["CartQuantity"]}");
     total();
+    discount();
+    percent();
   }
 
   @override
@@ -113,7 +130,6 @@ class _CartComponentState extends State<CartComponent> {
       children: [
         Column(
           children: [
-
             Row(
               children: <Widget>[
                 Padding(
@@ -169,6 +185,18 @@ class _CartComponentState extends State<CartComponent> {
                                         fontSize: 16,
                                         decoration:
                                             TextDecoration.lineThrough)),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 5.0),
+                                child: Text(
+                                  // "${widget.relatedProductData["ProductSrp"]}",
+                                  "(${percentResult.toStringAsFixed(0)}% OFF)",
+                                  style: TextStyle(
+                                      // color: Colors.grey[600],
+                                      color: appPrimaryMaterialColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600),
+                                ),
                               ),
                             ],
                           ),
@@ -273,32 +301,36 @@ class _CartComponentState extends State<CartComponent> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left:20.0),
+                  padding: const EdgeInsets.only(left: 20.0),
                   child: SizedBox(
                     height: 45,
                     width: 150,
                     child: FlatButton(
-                     // color: appPrimaryMaterialColor,
+                      // color: appPrimaryMaterialColor,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        side: BorderSide(color: Colors.grey[300])
-                      ),
+                          borderRadius: BorderRadius.circular(5),
+                          side: BorderSide(color: Colors.grey[300])),
 
                       onPressed: () {
                         _showDialog(context);
                       },
-                      child:Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.delete_forever,
+                          Icon(
+                            Icons.delete_forever,
                             //color: Colors.white),
-                            color: Colors.grey[700],),
-                          Text("Remove", style: TextStyle(
-                              fontSize: 16,
-                             // color: Colors.white,
-                              color: Colors.grey[700],
-                              fontWeight: FontWeight.bold),),
+                            color: Colors.grey[700],
+                          ),
+                          Text(
+                            "Remove",
+                            style: TextStyle(
+                                fontSize: 16,
+                                // color: Colors.white,
+                                color: Colors.grey[700],
+                                fontWeight: FontWeight.bold),
+                          ),
                         ],
                       ),
                     ),
@@ -310,7 +342,7 @@ class _CartComponentState extends State<CartComponent> {
                   color: Colors.grey[300],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right:20.0),
+                  padding: const EdgeInsets.only(right: 20.0),
                   child: SizedBox(
                     width: 150,
                     height: 45,
@@ -318,11 +350,10 @@ class _CartComponentState extends State<CartComponent> {
 //color: appPrimaryMaterialColor,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
-                          side: BorderSide(color: Colors.grey[300])
-                      ),
+                          side: BorderSide(color: Colors.grey[300])),
 
                       onPressed: () {},
-                      child:Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -330,7 +361,7 @@ class _CartComponentState extends State<CartComponent> {
                             "Total :",
                             style: TextStyle(
                                 fontSize: 16,
-                                 //color: Colors.white,
+                                //color: Colors.white,
                                 color: Colors.grey[700],
                                 fontWeight: FontWeight.bold),
                           ),
@@ -344,9 +375,9 @@ class _CartComponentState extends State<CartComponent> {
                           ),
                           Text(
                             "${res}",
-                            style:TextStyle(
+                            style: TextStyle(
                                 fontSize: 16,
-                               // color: Colors.white,
+                                // color: Colors.white,
                                 color: Colors.grey[700],
                                 fontWeight: FontWeight.bold),
                           ),
@@ -401,7 +432,7 @@ class _CartComponentState extends State<CartComponent> {
   }
 
   _updateCart() async {
-      try {
+    try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         setState(() {
@@ -436,4 +467,3 @@ class _CartComponentState extends State<CartComponent> {
     }
   }
 }
-
