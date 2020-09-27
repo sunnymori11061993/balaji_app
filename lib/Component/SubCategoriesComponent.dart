@@ -12,6 +12,31 @@ class SubCategoriesComponent extends StatefulWidget {
 }
 
 class _SubCategoriesComponentState extends State<SubCategoriesComponent> {
+  double percentResult;
+  int value;
+
+  percent() {
+    setState(() {
+      percentResult = value * 100 / int.parse(widget.subCat["ProductMrp"]);
+    });
+    print(percentResult);
+  }
+
+  discount() {
+    setState(() {
+      value = int.parse(widget.subCat["ProductMrp"]) -
+          int.parse(widget.subCat["ProductSrp"]);
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    // isWishList=widget.trendData["isFav"];
+    discount();
+    percent();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -105,7 +130,7 @@ class _SubCategoriesComponentState extends State<SubCategoriesComponent> {
                         padding: const EdgeInsets.only(left: 5.0),
                         child: Text(
                           // "${widget.relatedProductData["ProductSrp"]}",
-                          "(5% OFF)",
+                          "(${percentResult.toStringAsFixed(0)}% OFF)",
                           style: TextStyle(
                               // color: Colors.grey[600],
                               color: appPrimaryMaterialColor,

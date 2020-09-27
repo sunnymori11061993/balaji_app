@@ -23,11 +23,29 @@ class TrendingProductComponent extends StatefulWidget {
 class _TrendingProductComponentState extends State<TrendingProductComponent> {
   bool isWishList = false;
   bool isFavLoading = false;
+  double percentResult;
+  int value;
+
+  percent() {
+    setState(() {
+      percentResult = value * 100 / int.parse(widget.trendData["ProductMrp"]);
+    });
+    print(percentResult);
+  }
+
+  discount() {
+    setState(() {
+      value = int.parse(widget.trendData["ProductMrp"]) -
+          int.parse(widget.trendData["ProductSrp"]);
+    });
+  }
 
   @override
   void initState() {
     // TODO: implement initState
     isWishList = widget.trendData["isFav"];
+    discount();
+    percent();
   }
 
   @override
@@ -142,7 +160,7 @@ class _TrendingProductComponentState extends State<TrendingProductComponent> {
                                 padding: const EdgeInsets.only(left: 5.0),
                                 child: Text(
                                   // "${widget.relatedProductData["ProductSrp"]}",
-                                  "(5% OFF)",
+                                  "(${percentResult.toStringAsFixed(0)}% OFF)",
                                   style: TextStyle(
                                       // color: Colors.grey[600],
                                       color: appPrimaryMaterialColor,

@@ -33,11 +33,30 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   bool isGetCartLoading = true;
   bool isFavLoading = false;
   bool isCartLoading = false;
+  bool isRelatedProductLoading = true;
   bool isWishList = false;
   bool isCartList = false;
   var productList;
+  List relatedProductList = [];
+
   List imgList = [];
   List cartList = [];
+  double percentResult;
+  int value;
+
+  percent() {
+    setState(() {
+      percentResult = value * 100 / int.parse(productList["ProductMrp"]);
+    });
+    print(percentResult);
+  }
+
+  discount() {
+    setState(() {
+      value = int.parse(productList["ProductMrp"]) -
+          int.parse(productList["ProductSrp"]);
+    });
+  }
 
   void add() {
     setState(() {
@@ -66,12 +85,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     _getCart();
   }
 
-  _showDialogView(BuildContext context) {
+  _showDialogView(BuildContext context, var data) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
           // return object of type Dialog
-          return AlertViewCatalogue();
+          return AlertViewCatalogue(
+            viewCatData: data,
+          );
         });
   }
 
@@ -372,7 +393,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                           left: 5.0),
                                                   child: Text(
                                                     // "${widget.relatedProductData["ProductSrp"]}",
-                                                    "(5% OFF)",
+                                                    "(${percentResult.toStringAsFixed(0)}% OFF)",
                                                     style: TextStyle(
                                                         // color: Colors.grey[600],
                                                         color:
@@ -502,7 +523,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                         color:
                                                             Colors.grey[300])),
                                                 onPressed: () {
-                                                  _showDialogView(context);
+                                                  print(productList);
+                                                  _showDialogView(
+                                                      context, productList);
                                                 },
                                                 child: Row(
                                                   mainAxisAlignment:
@@ -666,10 +689,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                       MediaQuery.of(context).size.height / 2.6,
                                   child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
-                                      itemCount: 10,
+                                      itemCount: relatedProductList.length,
                                       itemBuilder:
                                           (BuildContext context, int index) {
-                                        return RelatedProductComponent();
+                                        return RelatedProductComponent(
+                                          relatedProductData:
+                                              relatedProductList[index],
+                                        );
                                       }),
                                 ),
                               ),
@@ -795,6 +821,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               //set "data" here to your variable
             });
             total();
+            _getRelatedProduct();
+            discount();
+            percent();
           } else {
             setState(() {
               isLoading = false;
@@ -805,6 +834,44 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         }, onError: (e) {
           setState(() {
             isLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
+  }
+
+  _getRelatedProduct() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        FormData body = FormData.fromMap({
+          "SubcategoryId": productList["SubcategoryId"],
+        });
+        setState(() {
+          isRelatedProductLoading = true;
+        });
+        Services.PostForList(api_name: 'relatedProduct', body: body).then(
+            (productResponseList) async {
+          setState(() {
+            isRelatedProductLoading = false;
+          });
+          if (productResponseList.length > 0) {
+            setState(() {
+              relatedProductList = productResponseList;
+              //set "data" here to your variable
+            });
+            total();
+          } else {
+            Fluttertoast.showToast(msg: "Product Not Found");
+            //show "data not found" in dialog
+          }
+        }, onError: (e) {
+          setState(() {
+            isRelatedProductLoading = false;
           });
           print("error on call -> ${e.message}");
           Fluttertoast.showToast(msg: "Something Went Wrong");
@@ -921,6 +988,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               Fluttertoast.showToast(msg: "Already in Cart");
             }
             total();
+            _getCart();
             // _getProductDetail();
           } else {
             setState(() {
@@ -944,9 +1012,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 }
 
 class AlertViewCatalogue extends StatefulWidget {
-  Function onSelect;
+  var viewCatData;
 
-  AlertViewCatalogue({this.onSelect});
+  AlertViewCatalogue({this.viewCatData});
 
   @override
   _AlertViewCatalogueState createState() => _AlertViewCatalogueState();
@@ -954,12 +1022,13 @@ class AlertViewCatalogue extends StatefulWidget {
 
 class _AlertViewCatalogueState extends State<AlertViewCatalogue> {
   List getCatalogue = [];
-  bool isSelectLoading = true;
+  //bool isSelectLoading = true;
 
   @override
   void initState() {
     // TODO: implement initState
     // _getAddress();
+    print(widget.viewCatData);
   }
 
   @override
@@ -972,15 +1041,13 @@ class _AlertViewCatalogueState extends State<AlertViewCatalogue> {
             color: appPrimaryMaterialColor,
             fontWeight: FontWeight.bold),
       ),
-      content: isSelectLoading
-          ? LoadingComponent()
-          : SingleChildScrollView(
-              child: Text("View Catalogue",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                  )),
-            ),
+      content: SingleChildScrollView(
+        child: Text("${widget.viewCatData["ProductCatlogPDF"]}",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+            )),
+      ),
       actions: <Widget>[
         // usually buttons at the bottom of the dialog
 
