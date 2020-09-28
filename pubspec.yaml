@@ -76,6 +76,7 @@ flutter:
     - assets/intro3.jpeg
     - assets/intro4.jpeg
     - assets/locale/
+    - assets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -55,11 +55,11 @@ class _CartScreenState extends State<CartScreen> {
                   color: Colors.black,
                 )),
             actions: <Widget>[
-              IconButton(
-                  icon: Icon(Icons.favorite_border),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/Whishlist');
-                  }),
+              // IconButton(
+              //     icon: Icon(Icons.favorite_border),
+              //     onPressed: () {
+              //       Navigator.of(context).pushNamed('/Whishlist');
+              //     }),
               // IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {}),
             ],
           ),

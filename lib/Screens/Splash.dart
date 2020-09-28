@@ -43,7 +43,7 @@ class _SplashState extends State<Splash> {
         Navigator.pushReplacementNamed(context, '/WalkThroughScreen');
       } else {
         //Navigator.pushReplacementNamed(context, '/Home');
-        if (Type == "user") {
+        if (Type == "retailer") {
           Navigator.pushReplacementNamed(context, '/Home');
         } else {
           Navigator.pushReplacementNamed(context, '/ManuHomeScreen');

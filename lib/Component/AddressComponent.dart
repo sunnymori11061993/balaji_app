@@ -390,6 +390,19 @@ class _AddressComponentState extends State<AddressComponent> {
                                 Icon(Icons.delete_forever, color: Colors.white),
                                 // color: Colors.grey[700],
                                 //),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 10.0, left: 4),
+                                  child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      child: GestureDetector(
+                                          onTap: () {},
+                                          child: Image.asset(
+                                            "assets/filter.png",
+                                            color: appPrimaryMaterialColor,
+                                          ))),
+                                ),
                                 Text(
                                   "Remove",
                                   style: TextStyle(
@@ -425,9 +438,17 @@ class _AddressComponentState extends State<AddressComponent> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Icon(Icons.edit, color: Colors.white),
-                                // color: Colors.grey[700],
-                                //),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 10.0, left: 4),
+                                  child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      child: Image.asset(
+                                        "assets/052-edit.png",
+                                        color: Colors.white,
+                                      )),
+                                ),
                                 Text(
                                   "Update",
                                   style: TextStyle(

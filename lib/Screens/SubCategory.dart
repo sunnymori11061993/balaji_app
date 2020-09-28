@@ -80,18 +80,35 @@ class _SubCategoryState extends State<SubCategory>
             )),
         actions: <Widget>[
           IconButton(
-              icon: Icon(Icons.favorite_border),
+              icon: Icon(
+                Icons.favorite_border,
+                size: 23,
+              ),
               onPressed: () {
                 Navigator.of(context).pushNamed('/Whishlist');
               }),
           Stack(
             alignment: Alignment.topCenter,
             children: [
-              IconButton(
-                  icon: Icon(Icons.card_travel),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/CartScreen');
-                  }),
+              Padding(
+                padding: const EdgeInsets.only(right: 10.0, left: 4, top: 18),
+                child: Container(
+                    height: 20,
+                    width: 20,
+                    child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/CartScreen');
+                        },
+                        child: Image.asset(
+                          "assets/039-shopping-cart.png",
+                          color: appPrimaryMaterialColor,
+                        ))),
+              ),
+              // IconButton(
+              //     icon: Icon(Icons.card_travel),
+              //     onPressed: () {
+              //       Navigator.of(context).pushNamed('/CartScreen');
+              //     }),
               if (cartList.length > 0)
                 Padding(
                   padding: const EdgeInsets.only(left: 2.0),

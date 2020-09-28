@@ -33,7 +33,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     //  prefs.setString(Session.v, responseList[0]["__v"].toString());
-    if (widget.loginType == "user") {
+    print(widget.loginData["Type"]);
+    if (widget.loginData["Type"] == "retailer") {
       await prefs.setString(Session.CustomerId, widget.loginData["CustomerId"]);
       await prefs.setString(
           Session.CustomerName, widget.loginData["CustomerName"]);
@@ -153,16 +154,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       ),
                       onPressed: () {
                         rndNumber == txtOTP.text
-                            ? widget.loginData == null
-                                ? Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (BuildContext contex) =>
-                                            RegistrationScreen(
-                                              signupType: widget.loginType,
-                                              Mobile: widget.mobile,
-                                            )),
-                                    (route) => false)
-                                : saveDataToSession()
+                            ? saveDataToSession()
                             : Fluttertoast.showToast(msg: "OTP is wrong");
                       },
                       child: Text(

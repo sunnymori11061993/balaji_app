@@ -51,11 +51,11 @@ class _WhishlistState extends State<Whishlist> {
               ),
             ),
             actions: <Widget>[
-              IconButton(
-                  icon: Icon(Icons.card_travel),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/CartScreen');
-                  }),
+              // IconButton(
+              //     icon: Icon(Icons.card_travel),
+              //     onPressed: () {
+              //       Navigator.of(context).pushNamed('/CartScreen');
+              //     }),
             ],
           ),
           body: isLoading

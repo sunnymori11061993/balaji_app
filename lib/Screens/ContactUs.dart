@@ -39,16 +39,16 @@ class _ContactUsState extends State<ContactUs> {
               color: Colors.black,
             )),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.favorite_border),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/Whishlist');
-              }),
-          IconButton(
-              icon: Icon(Icons.card_travel),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/CartScreen');
-              }),
+          // IconButton(
+          //     icon: Icon(Icons.favorite_border),
+          //     onPressed: () {
+          //       Navigator.of(context).pushNamed('/Whishlist');
+          //     }),
+          // IconButton(
+          //     icon: Icon(Icons.card_travel),
+          //     onPressed: () {
+          //       Navigator.of(context).pushNamed('/CartScreen');
+          //     }),
         ],
       ),
       body: WebView(

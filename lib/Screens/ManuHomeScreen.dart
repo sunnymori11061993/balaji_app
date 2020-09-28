@@ -193,12 +193,15 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                                   fontWeight: FontWeight.w600),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: Icon(
-                                Icons.edit,
-                                color: Colors.grey,
-                                size: 14,
-                              ),
+                              padding:
+                                  const EdgeInsets.only(right: 10.0, left: 5),
+                              child: Container(
+                                  height: 14,
+                                  width: 14,
+                                  child: Image.asset(
+                                    "assets/052-edit.png",
+                                    color: Colors.grey,
+                                  )),
                             ),
                           ],
                         ),
@@ -214,9 +217,15 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                 Navigator.of(context).pushNamed('/ManuHomeScreen');
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.home,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/012-house.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
                   "Home",
@@ -248,9 +257,15 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
 //                            new ()));
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.add_location,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/038-placeholder.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
                   "Add Addresses",
@@ -263,9 +278,15 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                 _showDialogLang(context);
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.language,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/044-information.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
                   "Change Language",
@@ -282,9 +303,15 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                         builder: (BuildContext context) => new FAQScreen()));
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.question_answer,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/050-world-grid.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
                   "FAQ",
@@ -298,9 +325,15 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                     subject: 'Look what An Amazing Clothes!');
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.share,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/019-share.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
                   "Share",
@@ -322,9 +355,15 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
 //                );
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.contact_phone,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/022-phone-call.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
                   "Contact Us",
@@ -345,9 +384,15 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                             )));
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.filter_none,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/042-file.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
                   "Terms & Conditions",
@@ -359,9 +404,15 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                 _showDialog(context);
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.power_settings_new,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/010-exit.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
                   "Logout",

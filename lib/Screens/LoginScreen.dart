@@ -22,6 +22,52 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final _formkey = new GlobalKey<FormState>();
 
+  _showDialog(BuildContext context) {
+    //show alert dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text(
+            "Login",
+            style: TextStyle(
+                fontSize: 22,
+                color: appPrimaryMaterialColor,
+                fontWeight: FontWeight.bold),
+          ),
+          content: new Text(
+            "You are not Register, please contact to your Admin!!!",
+            style: TextStyle(
+                fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600),
+          ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            // FlatButton(
+            //   child: new Text(
+            //     "Cancel",
+            //     style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
+            //   ),
+            //   onPressed: () {
+            //     Navigator.of(context).pop();
+            //   },
+            // ),
+            new FlatButton(
+              child: new Text(
+                "Ok",
+                style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
+              ),
+              onPressed: () {
+                // _removeFromWishlist();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,102 +192,76 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: MediaQuery.of(context).padding.top + 15,
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Center(
-                child: Container(
-                    height: 35,
-                    width: MediaQuery.of(context).size.width - 100,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(
-                          color: Colors.grey,
-                        )),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Flexible(
-                            child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              toggle = "User";
-                            });
-                          },
-                          child: Container(
-                            color: toggle == "User"
-                                ? appPrimaryMaterialColor
-                                : Colors.white,
-                            width: MediaQuery.of(context).size.width / 2,
-                            child: Center(
-                              child: Text(
-                                "User",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: toggle == "User"
-                                        ? Colors.white
-                                        : Colors.black,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                          ),
-                        )),
-                        Flexible(
-                            child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              toggle = "Manufacturer";
-                            });
-                          },
-                          child: Container(
-                            color: toggle == "Manufacturer"
-                                ? appPrimaryMaterialColor
-                                : Colors.white,
-                            child: Center(
-                              child: Text(
-                                "Manufacturer",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: toggle == "Manufacturer"
-                                        ? Colors.white
-                                        : Colors.black,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                          ),
-                        )),
-                      ],
-                    )),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 13.0, right: 13, bottom: 10, top: 50),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 45,
-                child: RaisedButton(
-                    color: appPrimaryMaterialColor,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    onPressed: () {
-                      if (isLoading == false) _login();
-                    },
-                    child: isLoading
-                        ? CircularProgressIndicator(
-                            valueColor:
-                                new AlwaysStoppedAnimation<Color>(Colors.white),
-                          )
-                        : Text("CONTINUE",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 17))),
-              ),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).padding.top + 15,
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 20.0),
+            //   child: Center(
+            //     child: Container(
+            //         height: 35,
+            //         width: MediaQuery.of(context).size.width - 100,
+            //         decoration: BoxDecoration(
+            //             borderRadius: BorderRadius.circular(5),
+            //             border: Border.all(
+            //               color: Colors.grey,
+            //             )),
+            //         child: Row(
+            //           mainAxisAlignment: MainAxisAlignment.center,
+            //           children: [
+            //             Flexible(
+            //                 child: GestureDetector(
+            //               onTap: () {
+            //                 setState(() {
+            //                   toggle = "User";
+            //                 });
+            //               },
+            //               child: Container(
+            //                 color: toggle == "User"
+            //                     ? appPrimaryMaterialColor
+            //                     : Colors.white,
+            //                 width: MediaQuery.of(context).size.width / 2,
+            //                 child: Center(
+            //                   child: Text(
+            //                     "User",
+            //                     style: TextStyle(
+            //                         fontSize: 16,
+            //                         color: toggle == "User"
+            //                             ? Colors.white
+            //                             : Colors.black,
+            //                         fontWeight: FontWeight.w600),
+            //                   ),
+            //                 ),
+            //               ),
+            //             )),
+            //             Flexible(
+            //                 child: GestureDetector(
+            //               onTap: () {
+            //                 setState(() {
+            //                   toggle = "Manufacturer";
+            //                 });
+            //               },
+            //               child: Container(
+            //                 color: toggle == "Manufacturer"
+            //                     ? appPrimaryMaterialColor
+            //                     : Colors.white,
+            //                 child: Center(
+            //                   child: Text(
+            //                     "Manufacturer",
+            //                     style: TextStyle(
+            //                         fontSize: 16,
+            //                         color: toggle == "Manufacturer"
+            //                             ? Colors.white
+            //                             : Colors.black,
+            //                         fontWeight: FontWeight.w600),
+            //                   ),
+            //                 ),
+            //               ),
+            //             )),
+            //           ],
+            //         )),
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: MediaQuery.of(context).padding.top + 15,
+            // ),
             Column(
               children: <Widget>[
                 Container(
@@ -271,6 +291,32 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ],
             ),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 13.0, right: 13, bottom: 10, top: 40),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 45,
+                child: RaisedButton(
+                    color: appPrimaryMaterialColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    onPressed: () {
+                      if (isLoading == false) _login();
+                    },
+                    child: isLoading
+                        ? CircularProgressIndicator(
+                            valueColor:
+                                new AlwaysStoppedAnimation<Color>(Colors.white),
+                          )
+                        : Text("CONTINUE",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 17))),
+              ),
+            ),
           ],
         ),
       ),
@@ -287,7 +333,7 @@ class _LoginScreenState extends State<LoginScreen> {
           });
           FormData body = FormData.fromMap({
             "PhoneNo": txtLogin.text,
-            "type": toggle.toLowerCase()
+            // "type": toggle.toLowerCase()
           }); //"key":"value"
           Services.PostForList(api_name: 'OTP_login_api', body: body).then(
               (responseList) async {
@@ -299,20 +345,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 MaterialPageRoute(
                   builder: (BuildContext context) => new VerificationScreen(
                     mobile: txtLogin.text,
-                    loginType: toggle.toLowerCase(),
+                    // loginType: toggle.toLowerCase(),
                     loginData: responseList[0],
+                    //loginType: responseList[0]["Type"],
                   ),
                 ),
               );
             } else {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (BuildContext context) => new VerificationScreen(
-                    loginType: toggle.toLowerCase(),
-                    mobile: txtLogin.text,
-                  ),
-                ),
-              );
+              _showDialog(context);
+              // Navigator.of(context).push(
+              //   MaterialPageRoute(
+              //     builder: (BuildContext context) => new VerificationScreen(
+              //       loginType: toggle.toLowerCase(),
+              //       mobile: txtLogin.text,
+              //     ),
+              //   ),
+              // );
             }
           }, onError: (e) {
             setState(() {

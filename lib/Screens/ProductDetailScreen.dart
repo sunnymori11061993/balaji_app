@@ -129,16 +129,33 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             Stack(
               alignment: Alignment.topCenter,
               children: [
-                IconButton(
-                    icon: Icon(Icons.card_travel),
-                    onPressed: () async {
-                      final result =
-                          await Navigator.of(context).pushNamed('/CartScreen');
-                      if (result == "pop") _getProductDetail();
-                    }),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15.0, left: 4, top: 18),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: GestureDetector(
+                          onTap: () async {
+                            final result = await Navigator.of(context)
+                                .pushNamed('/CartScreen');
+                            if (result == "pop") _getProductDetail();
+                          },
+                          child: Image.asset(
+                            "assets/039-shopping-cart.png",
+                            color: appPrimaryMaterialColor,
+                          ))),
+                ),
+                // IconButton(
+                //     icon: Icon(Icons.card_travel),
+                //     onPressed: () async {
+                //       final result =
+                //           await Navigator.of(context).pushNamed('/CartScreen');
+                //       if (result == "pop") _getProductDetail();
+                //     }),
                 if (cartList.length > 0)
                   Padding(
-                    padding: const EdgeInsets.only(left: 2.0),
+                    padding:
+                        const EdgeInsets.only(right: 15.0, left: 4, top: 8),
                     child: CircleAvatar(
                       radius: 8.0,
                       backgroundColor: Colors.red,
@@ -1022,6 +1039,7 @@ class AlertViewCatalogue extends StatefulWidget {
 
 class _AlertViewCatalogueState extends State<AlertViewCatalogue> {
   List getCatalogue = [];
+
   //bool isSelectLoading = true;
 
   @override

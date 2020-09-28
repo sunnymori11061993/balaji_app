@@ -7,6 +7,7 @@ import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/TrendingProductComponent.dart';
 import 'package:balaji/Screens/Address%20Screen.dart';
 import 'package:balaji/Screens/FAQScreen.dart';
+import 'package:balaji/Screens/SearchingScreen.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:dio/dio.dart';
@@ -26,6 +27,7 @@ class _HomeState extends State<Home> {
   bool isLoading = true;
   bool isTermLoading = false;
   List termsConList = [];
+  List searchList = [];
   List contactList = [];
   List imgList = [];
   List catList = [];
@@ -35,6 +37,7 @@ class _HomeState extends State<Home> {
   bool isGetCartLoading = true;
   bool isSearching = false;
   bool isFavLoading = false;
+  bool isSearchLoading = false;
   bool isBannerLoading = true;
 
   Icon actionIcon = Icon(
@@ -57,7 +60,7 @@ class _HomeState extends State<Home> {
     _trendingProduct();
     _termsCon();
     _contactUs();
-    _getCart();
+    // _getCart();
   }
 
   _showDialog(BuildContext context) {
@@ -100,8 +103,14 @@ class _HomeState extends State<Home> {
                       //color: Colors.white,
                     );
                     this.appBarTitle = Container(
-                      child: TextField(
+                      child: TextFormField(
                         controller: txtSearch,
+                        textInputAction: TextInputAction.done,
+                        onFieldSubmitted: (aa) {
+                          _getSearching();
+                          //  txtSearch.text.clear();
+                          //Navigator.pop(context, this.txtSearch.text);
+                        },
                         style: TextStyle(
                             //color: Colors.white,
                             ),
@@ -136,28 +145,60 @@ class _HomeState extends State<Home> {
               }),
           actionIcon.icon == Icons.close
               ? Container()
-              : IconButton(
-                  icon: Icon(
-                    Icons.favorite_border,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/Whishlist');
-                  },
+              : Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed('/Whishlist');
+                          },
+                          child: Icon(
+                            Icons.favorite_border,
+                            size: 23,
+                            color: appPrimaryMaterialColor,
+                          ))),
                 ),
+
+          // IconButton(
+          //         icon: Icon(
+          //           Icons.favorite_border,
+          //         ),
+          //         onPressed: () {
+          //           Navigator.of(context).pushNamed('/Whishlist');
+          //         },
+          //       ),
+
           actionIcon.icon == Icons.close
               ? Container()
               : Stack(
                   alignment: Alignment.topCenter,
                   children: [
-                    IconButton(
-                      icon: Icon(Icons.card_travel),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/CartScreen');
-                      },
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(right: 10.0, left: 8, top: 18),
+                      child: Container(
+                          height: 20,
+                          width: 20,
+                          child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed('/CartScreen');
+                              },
+                              child: Image.asset(
+                                "assets/shopping-cart.png",
+                                color: appPrimaryMaterialColor,
+                              ))),
                     ),
+                    // IconButton(
+                    //   icon: Icon(Icons.card_travel),
+                    //   onPressed: () {
+                    //     Navigator.of(context).pushNamed('/CartScreen');
+                    //   },
+                    // ),
                     if (cartList.length > 0)
                       Padding(
-                        padding: const EdgeInsets.only(left: 2.0),
+                        padding: const EdgeInsets.only(left: 0.0, top: 10),
                         child: CircleAvatar(
                           radius: 8.0,
                           backgroundColor: Colors.red,
@@ -231,13 +272,24 @@ class _HomeState extends State<Home> {
                                   fontWeight: FontWeight.w600),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 5.0),
-                              child: Icon(
-                                Icons.edit,
-                                color: Colors.grey,
-                                size: 14,
-                              ),
+                              padding:
+                                  const EdgeInsets.only(right: 10.0, left: 5),
+                              child: Container(
+                                  height: 14,
+                                  width: 14,
+                                  child: Image.asset(
+                                    "assets/052-edit.png",
+                                    color: Colors.grey,
+                                  )),
                             ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(left: 5.0),
+                            //   child: Icon(
+                            //     Icons.edit,
+                            //     color: Colors.grey,
+                            //     size: 14,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
@@ -252,10 +304,21 @@ class _HomeState extends State<Home> {
                 Navigator.of(context).pushNamed('/Home');
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.home,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/012-house.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
+
+                // Icon(
+                //   Icons.home,
+                //   color: appPrimaryMaterialColor,
+                // ),
                 title: Text(
                   "Home",
                 ),
@@ -267,12 +330,18 @@ class _HomeState extends State<Home> {
                 Navigator.of(context).pushNamed('/HistoryScreen');
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.home,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/004-refresh.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
-                  "Order Histoy",
+                  "Order History",
                 ),
               ),
             ),
@@ -303,9 +372,15 @@ class _HomeState extends State<Home> {
                             new AddressScreen()));
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.add_location,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/038-placeholder.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
                   "Add Addresses",
@@ -323,9 +398,15 @@ class _HomeState extends State<Home> {
                 //             new LanguageChangeScreen()));
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.language,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/044-information.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
                   "Change Language",
@@ -342,9 +423,15 @@ class _HomeState extends State<Home> {
                         builder: (BuildContext context) => new FAQScreen()));
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.question_answer,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/050-world-grid.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
                   "FAQ",
@@ -358,9 +445,15 @@ class _HomeState extends State<Home> {
                     subject: 'Look what An Amazing Clothes!');
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.share,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/019-share.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
                   "Share",
@@ -382,9 +475,15 @@ class _HomeState extends State<Home> {
 //                );
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.contact_phone,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/022-phone-call.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
                   "Contact Us",
@@ -405,9 +504,15 @@ class _HomeState extends State<Home> {
                             )));
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.filter_none,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/042-file.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
                   "Terms & Conditions",
@@ -420,9 +525,15 @@ class _HomeState extends State<Home> {
                 _showDialog(context);
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.power_settings_new,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/010-exit.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
                   "Logout",
@@ -727,6 +838,44 @@ class _HomeState extends State<Home> {
     }
   }
 
+  _getSearching() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        isSearchLoading = true;
+        FormData body = FormData.fromMap({"ProductName": txtSearch.text});
+        Services.PostForList(api_name: 'search', body: body).then(
+            (responseList) async {
+          setState(() {
+            isSearchLoading = false;
+          });
+          if (responseList.length > 0) {
+            setState(() {
+              searchList = responseList; //set "data" here to your variable
+            });
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (BuildContext context) => new SearchingScreen(
+                          searchData: searchList,
+                        )));
+          } else {
+            Fluttertoast.showToast(msg: "Data Not Found");
+            //show "data not found" in dialog
+          }
+        }, onError: (e) {
+          setState(() {
+            isSearchLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
+  }
+
   _trendingProduct() async {
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -742,6 +891,7 @@ class _HomeState extends State<Home> {
               //isWishList = trendProductResponseList[0]["isFav"];
               //set "data" here to your variable
             });
+            _getCart();
           } else {
             setState(() {
               isLoading = false;

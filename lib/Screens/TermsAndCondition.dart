@@ -35,21 +35,21 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
           iconTheme: new IconThemeData(
             color: appPrimaryMaterialColor,
           ),
-          title: const Text('Terms&Conditions',
+          title: const Text('Terms & Conditions',
               style: TextStyle(
                 color: Colors.black,
               )),
           actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.favorite_border),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/Whishlist');
-                }),
-            IconButton(
-                icon: Icon(Icons.card_travel),
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/CartScreen');
-                }),
+            // IconButton(
+            //     icon: Icon(Icons.favorite_border),
+            //     onPressed: () {
+            //       Navigator.of(context).pushNamed('/Whishlist');
+            //     }),
+            // IconButton(
+            //     icon: Icon(Icons.card_travel),
+            //     onPressed: () {
+            //       Navigator.of(context).pushNamed('/CartScreen');
+            //     }),
           ],
         ),
         body: Stack(
