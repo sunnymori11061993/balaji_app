@@ -99,21 +99,30 @@ class _TrendingProductComponentState extends State<TrendingProductComponent> {
                           _addToWishlist();
                         },
                         child: Container(
-                            child: isWishList == false
-                                ? Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Icon(
-                                      Icons.favorite_border,
-                                      color: appPrimaryMaterialColor,
-                                    ),
-                                  )
-                                : Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Icon(
-                                      Icons.favorite,
-                                      color: appPrimaryMaterialColor,
-                                    ),
-                                  )),
+                          child: isWishList == false
+                              ? Padding(
+                                  padding:
+                                      const EdgeInsets.only(right: 8.0, top: 5),
+                                  child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      child: Image.asset(
+                                        "assets/heart.png",
+                                        color: appPrimaryMaterialColor,
+                                      )),
+                                )
+                              : Padding(
+                                  padding:
+                                      const EdgeInsets.only(right: 8.0, top: 5),
+                                  child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      child: Image.asset(
+                                        "assets/020-heart.png",
+                                        color: appPrimaryMaterialColor,
+                                      )),
+                                ),
+                        ),
                       ),
                     ],
                   ),

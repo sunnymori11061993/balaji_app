@@ -22,6 +22,7 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
   bool isTermLoading = false;
   List termsConList = [];
   List contactList = [];
+  String txtName = "";
   Completer<WebViewController> _webView = Completer<WebViewController>();
 
   Icon actionIcon = Icon(
@@ -57,10 +58,18 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
     );
   }
 
+  userName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      txtName = prefs.getString(Session.ManufacturerName);
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     _termsCon();
+    userName();
   }
 
   @override
@@ -143,45 +152,40 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
           children: <Widget>[
 //            DrawerHeader(
 //                child:),
-            Container(
-              color: Colors.grey[200],
-              child: Padding(
-                padding: const EdgeInsets.only(left: 25.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0, bottom: 10),
-                      child: Container(
-                        width: 70,
-                        height: 70,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(55),
-                            border: Border.all(color: Colors.grey[300]),
-                            color: appPrimaryMaterialColor),
-                        child: Center(
-                          child: Text(
-                            "M",
-                            style: TextStyle(
-                                fontSize: 25,
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/ManuProfileScreen');
+              },
+              child: Container(
+                color: Colors.grey[200],
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 25.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20.0, bottom: 10),
+                        child: CircleAvatar(
+                            radius: 40.0,
+                            backgroundColor: appPrimaryMaterialColor,
+                            foregroundColor: Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 0.0),
+                              child: Image.asset(
+                                "assets/051-user.png",
                                 color: Colors.white,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
+                                height: 40,
+                              ),
+                            )),
                       ),
-                    ),
-                    Text(
-                      "MahaLaxmi Textile",
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/ManuProfileScreen');
-                      },
-                      child: Padding(
+                      Text(
+                        "${txtName}",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Padding(
                         padding: const EdgeInsets.only(top: 5.0, bottom: 20),
                         child: Row(
                           children: <Widget>[
@@ -203,11 +207,19 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                                     color: Colors.grey,
                                   )),
                             ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(left: 5.0),
+                            //   child: Icon(
+                            //     Icons.edit,
+                            //     color: Colors.grey,
+                            //     size: 14,
+                            //   ),
+                            // ),
                           ],
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -223,7 +235,7 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/012-house.png",
+                        "assets/home.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),
@@ -238,9 +250,15 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                 Navigator.of(context).pushNamed('/OrderHistoryScreen');
               },
               child: ListTile(
-                leading: Icon(
-                  Icons.history,
-                  color: appPrimaryMaterialColor,
+                leading: Padding(
+                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/history.png",
+                        color: appPrimaryMaterialColor,
+                      )),
                 ),
                 title: Text(
                   "Order History",
@@ -263,7 +281,7 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/038-placeholder.png",
+                        "assets/location.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),
@@ -284,7 +302,7 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/044-information.png",
+                        "assets/world-grid.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),
@@ -309,7 +327,7 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/050-world-grid.png",
+                        "assets/f.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),
@@ -331,7 +349,7 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/019-share.png",
+                        "assets/share.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),
@@ -361,7 +379,7 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/022-phone-call.png",
+                        "assets/phone-call.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),
@@ -390,7 +408,7 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/042-file.png",
+                        "assets/file.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),
@@ -410,7 +428,7 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/010-exit.png",
+                        "assets/logout.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),

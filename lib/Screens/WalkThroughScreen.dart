@@ -207,7 +207,8 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
       highlightColorDoneBtn: appPrimaryMaterialColor,
 
       // Dot indicator
-      colorDot: appPrimaryMaterialColor,
+      colorDot: appPrimaryMaterialColor[100],
+      colorActiveDot: appPrimaryMaterialColor,
       sizeDot: 13.0,
       //typeDotAnimation: dotSliderAnimation.SIZE_TRANSITION,
       // typeDotAnimation:

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
+import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/WishlistComponent.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -51,40 +52,94 @@ class _WhishlistState extends State<Whishlist> {
               ),
             ),
             actions: <Widget>[
-              // IconButton(
-              //     icon: Icon(Icons.card_travel),
-              //     onPressed: () {
-              //       Navigator.of(context).pushNamed('/CartScreen');
-              //     }),
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 10.0,
+                  left: 8,
+                ),
+                child: Container(
+                    height: 20,
+                    width: 20,
+                    child: GestureDetector(
+                        onTap: () {
+                          //Navigator.of(context).pushNamed('/Whishlist');
+                        },
+                        child: Image.asset(
+                          "assets/020-heart.png",
+                          color: appPrimaryMaterialColor,
+                        ))),
+              ),
+              Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+                    child: Container(
+                        height: 20,
+                        width: 20,
+                        child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed('/CartScreen');
+                            },
+                            child: Image.asset(
+                              "assets/shopping-cart.png",
+                              color: appPrimaryMaterialColor,
+                            ))),
+                  ),
+
+                  // if (cartList.length > 0)
+                  //   Padding(
+                  //     padding: const EdgeInsets.only(
+                  //         left: 0.0, top: 13, right: 10),
+                  //     child: CircleAvatar(
+                  //       radius: 6.0,
+                  //       backgroundColor: Colors.red,
+                  //       foregroundColor: Colors.white,
+                  //       child: Text(
+                  //         cartList.length.toString(),
+                  //         style: TextStyle(
+                  //           fontWeight: FontWeight.bold,
+                  //           fontSize: 10.0,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                ],
+              )
             ],
           ),
           body: isLoading
-              ? Center(
-                  child: CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(
-                        appPrimaryMaterialColor),
-                  ),
-                )
-              : Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 10),
-                  child: ListView.separated(
-                    itemCount: wishList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return WishlistComponent(
-                        wishListData: wishList[index],
-                        onRemove: () {
-                          setState(() {
-                            wishList.removeAt(index);
-                          });
+              ? LoadingComponent()
+              : wishList.length > 0
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 8.0, bottom: 10),
+                      child: ListView.separated(
+                        itemCount: wishList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return WishlistComponent(
+                            wishListData: wishList[index],
+                            onRemove: () {
+                              setState(() {
+                                wishList.removeAt(index);
+                              });
+                            },
+                          );
                         },
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) =>
-                        Divider(
-                      thickness: 2,
-                    ),
-                  ),
-                )),
+                        separatorBuilder: (BuildContext context, int index) =>
+                            Divider(
+                          thickness: 2,
+                        ),
+                      ),
+                    )
+                  : Center(
+                      child: Text(
+                      "Wishlist Data Not Found!!!",
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey[700],
+                          fontWeight: FontWeight.w600),
+                    ))),
     );
   }
 

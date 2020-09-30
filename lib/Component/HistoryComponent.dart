@@ -1,13 +1,24 @@
+import 'dart:io';
+
 import 'package:balaji/Common/Constants.dart';
+import 'package:balaji/Common/Services.dart';
+import 'package:balaji/Component/LoadingComponent.dart';
+import 'package:balaji/Screens/OrderHistoryScreen.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class HistoryComponent extends StatefulWidget {
+  var orderData;
+  Function getOrderapi;
+  HistoryComponent({this.orderData, this.getOrderapi});
   @override
   _HistoryComponentState createState() => _HistoryComponentState();
 }
 
 class _HistoryComponentState extends State<HistoryComponent> {
+  bool isCancelOrderLoading = false;
   _showDialog(BuildContext context) {
     //show alert dialog
     showDialog(
@@ -16,14 +27,14 @@ class _HistoryComponentState extends State<HistoryComponent> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text(
-            "Remove",
+            "Cancel Order",
             style: TextStyle(
                 fontSize: 22,
                 color: appPrimaryMaterialColor,
                 fontWeight: FontWeight.bold),
           ),
           content: new Text(
-            "Are you sure want to remove!!!",
+            "Are you sure want to cancel order!!!",
             style: TextStyle(
                 fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600),
           ),
@@ -39,29 +50,23 @@ class _HistoryComponentState extends State<HistoryComponent> {
               },
             ),
             new FlatButton(
-              child: new Text(
+              child: Text(
                 "Ok",
                 style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
               ),
               onPressed: () {
-                // _removeFromWishlist();
-                Navigator.of(context).pop();
+                if (widget.orderData["OrderStageDropDown"] != "Cancel") {
+                  _cancelOrder();
+                  Navigator.of(context).pop();
+                } else {
+                  Fluttertoast.showToast(
+                      msg: "Your order is already cancelled");
+                  Navigator.of(context).pop();
+                }
               },
             ),
           ],
         );
-      },
-    );
-  }
-
-  _showDialogRate(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return RatingDialog(
-            //id: '${widget.id}'
-            );
       },
     );
   }
@@ -75,60 +80,22 @@ class _HistoryComponentState extends State<HistoryComponent> {
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      "Order No   :",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(
-                        "1",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.grey[700],
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ),
-                  ],
+                Text(
+                  "Order No         :",
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w600),
                 ),
-                SizedBox(
-                  height: 25,
-                  width: 98,
-                  child: FlatButton(
-                    // color: appPrimaryMaterialColor,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        side: BorderSide(color: Colors.grey[300])),
-                    onPressed: () {
-                      _showDialogRate(context);
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.star,
-                          //color: Colors.white),
-                          size: 12,
-                          color: Colors.grey[700],
-                        ),
-                        Text(
-                          "Give Rate",
-                          style: TextStyle(
-                              fontSize: 12,
-                              //  color: Colors.white,
-                              color: Colors.grey[700],
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    "${widget.orderData["OrderId"]}",
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey[700],
+                        fontWeight: FontWeight.w400),
                   ),
                 ),
               ],
@@ -138,7 +105,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
               child: Row(
                 children: [
                   Text(
-                    "Status        :",
+                    "Status             :",
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
@@ -147,7 +114,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Text(
-                      "Processing",
+                      "${widget.orderData["OrderStageDropDown"]}",
                       style: TextStyle(
                           fontSize: 15,
                           color: Colors.grey[700],
@@ -162,7 +129,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
               child: Row(
                 children: [
                   Text(
-                    "Total           :",
+                    "Total                :",
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
@@ -171,7 +138,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Text(
-                      "₹12000",
+                      "${widget.orderData["OrderTotal"]}",
                       style: TextStyle(
                           fontSize: 15,
                           color: Colors.grey[700],
@@ -186,7 +153,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
               child: Row(
                 children: [
                   Text(
-                    "Order dt     :",
+                    "Order date      :",
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
@@ -195,7 +162,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Text(
-                      "02-09-20",
+                      "${widget.orderData["OrderDate"]}",
                       style: TextStyle(
                           fontSize: 15,
                           color: Colors.grey[700],
@@ -210,7 +177,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
               child: Row(
                 children: [
                   Text(
-                    "Delivery dt :",
+                    "Delivery date :",
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
@@ -219,7 +186,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Text(
-                      "12-09-20",
+                      "${widget.orderData["OrderDeliveryDate"]}",
                       style: TextStyle(
                           fontSize: 15,
                           color: Colors.grey[700],
@@ -254,7 +221,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
                             Icon(Icons.delete_forever, color: Colors.white),
                             // color: Colors.grey[700],),
                             Text(
-                              "Remove",
+                              "Cancel Order",
                               style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.white,
@@ -282,8 +249,13 @@ class _HistoryComponentState extends State<HistoryComponent> {
                             borderRadius: BorderRadius.circular(5),
                             side: BorderSide(color: Colors.grey[300])),
                         onPressed: () {
-                          Navigator.of(context)
-                              .pushNamed('/OrderHistoryScreen');
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      new OrderHistoryScreen(
+                                        OrderData: widget.orderData,
+                                      )));
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -314,216 +286,41 @@ class _HistoryComponentState extends State<HistoryComponent> {
       ),
     );
   }
-}
 
-class RatingDialog extends StatefulWidget {
-//  var title, author, id;
-
-  // RatingDialog({this.title, this.author, this.id});
-
-  @override
-  _RatingDialogState createState() => _RatingDialogState();
-}
-
-class _RatingDialogState extends State<RatingDialog> {
-  TextEditingController edtReviewController = new TextEditingController();
-  var _ratingController = TextEditingController();
-  double _rating;
-
-  bool isLoading = false;
-
-  //double _userRating = 3.0;
-  int _ratingBarMode = 1;
-  bool _isRTLMode = false;
-  bool _isVertical = false;
-  IconData _selectedIcon;
-
-  DateTime _fromDateTime = DateTime.now();
-
-  @override
-  void initState() {
-    //_ratingController.text;
-    _ratingController.text = "3.0";
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: new Text(
-        "Add Review & Rating",
-        style: TextStyle(
-            fontSize: 22,
-            color: appPrimaryMaterialColor,
-            fontWeight: FontWeight.bold),
-      ),
-      content: new Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width - 140,
-//
-            child: TextFormField(
-              controller: edtReviewController,
-              keyboardType: TextInputType.multiline,
-              maxLines: 3,
-              decoration: InputDecoration(
-                  contentPadding: EdgeInsets.only(left: 10, top: 18, right: 10),
-                  hintText: "Write Review",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      borderSide: BorderSide(color: Colors.grey)),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                      borderSide: BorderSide(
-                        color: Colors.grey,
-                      ))),
-            ),
-          ),
-//          Padding(
-//            padding: const EdgeInsets.only(top: 8.0),
-//            child: Text(
-//              "Avg Rating",
-//              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-//            ),
-//          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Directionality(
-              textDirection: _isRTLMode ? TextDirection.rtl : TextDirection.ltr,
-              child: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      _heading('Rating Us'),
-                      _ratingBar(_ratingBarMode),
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      _rating != null
-                          ? Text(
-                              "Rating: $_rating",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            )
-                          : Container(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-      actions: <Widget>[
-        // usually buttons at the bottom of the dialog
-        FlatButton(
-          child: new Text(
-            "Not Now",
-            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        new FlatButton(
-          child: new Text(
-            "Submit",
-            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
-          ),
-          onPressed: () {
-            // _bookReview();
-            // _bookReview(widget.id);
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _ratingBar(int mode) {
-    return RatingBar(
-      initialRating: 0,
-      minRating: 1,
-      direction: _isVertical ? Axis.vertical : Axis.horizontal,
-      allowHalfRating: true,
-      unratedColor: appPrimaryMaterialColor.withAlpha(50),
-      itemCount: 5,
-      itemSize: 30.0,
-      itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-      itemBuilder: (context, _) => Icon(
-        _selectedIcon ?? Icons.star,
-        color: appPrimaryMaterialColor,
-      ),
-      onRatingUpdate: (rating) {
-        setState(() {
-          _rating = rating;
+  _cancelOrder() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        FormData body = FormData.fromMap({
+          "OrderId": "${widget.orderData["OrderId"]}",
         });
-      },
-    );
+        setState(() {
+          isCancelOrderLoading = true;
+        });
+        Services.postForSave(apiname: 'cancelOrder', body: body).then(
+            (responseList) async {
+          setState(() {
+            isCancelOrderLoading = false;
+          });
+          if (responseList.IsSuccess == true && responseList.Data == "1") {
+            // widget.onRemove();
+            // widget.orderData;
+            widget.getOrderapi();
+            Fluttertoast.showToast(msg: "Order Cancel Successfully!!!");
+          } else {
+            Fluttertoast.showToast(msg: "Problem in Order Cancellation");
+            //show "data not found" in dialog
+          }
+        }, onError: (e) {
+          setState(() {
+            isCancelOrderLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
   }
-
-  Widget _heading(String text) => Column(
-        children: [
-          Text(
-            text,
-            style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 24.0,
-            ),
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-        ],
-      );
-
-//  _bookReview() async {
-//    try {
-//      //check Internet Connection
-//      final result = await InternetAddress.lookup('google.com');
-//      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-//        setState(() {
-//          isLoading = true;
-//        });
-//        //,edtReviewController.text
-//        Future res = Services.SaveBookReview(
-//            widget.id,
-//            _fromDateTime.toString(),
-//            edtReviewController.text,
-//            _rating.toString());
-//        res.then((data) async {
-//          if (data.IsSuccess == true) {
-//            setState(() {
-//              isLoading = false;
-//              edtReviewController.text = "";
-//            });
-//            Navigator.pop(context);
-//            Fluttertoast.showToast(msg: "Thank you for Rating!!!");
-//          } else {
-//            setState(() {
-//              isLoading = false;
-//            });
-//            //showMsg("Try Again.");
-//          }
-//        }, onError: (e) {
-//          Fluttertoast.showToast(msg: "Something Went Wrong");
-//          setState(() {
-//            isLoading = false;
-//          });
-//        });
-//      }
-//    } on SocketException catch (_) {
-//      setState(() {
-//        isLoading = false;
-//      });
-//      Fluttertoast.showToast(msg: "No Internet Connection.");
-//    }
-//  }
 }

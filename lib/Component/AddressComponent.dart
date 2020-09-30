@@ -387,22 +387,27 @@ class _AddressComponentState extends State<AddressComponent> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Icon(Icons.delete_forever, color: Colors.white),
-                                // color: Colors.grey[700],
-                                //),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      right: 10.0, left: 4),
-                                  child: Container(
-                                      height: 20,
-                                      width: 20,
-                                      child: GestureDetector(
-                                          onTap: () {},
-                                          child: Image.asset(
-                                            "assets/filter.png",
-                                            color: appPrimaryMaterialColor,
-                                          ))),
+                                      right: 5.0, left: 4),
+                                  child: Icon(Icons.delete_forever,
+                                      color: Colors.white),
                                 ),
+                                // color: Colors.grey[700],
+                                //),
+                                // Padding(
+                                //   padding: const EdgeInsets.only(
+                                //       right: 5.0, left: 4),
+                                //   child: Container(
+                                //       height: 20,
+                                //       width: 20,
+                                //       child: GestureDetector(
+                                //           onTap: () {},
+                                //           child: Image.asset(
+                                //             "assets/filter.png",
+                                //             color: Colors.white,
+                                //           ))),
+                                // ),
                                 Text(
                                   "Remove",
                                   style: TextStyle(

@@ -13,6 +13,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_slider/image_slider.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,11 +24,11 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   bool isLoading = true;
   bool isTermLoading = false;
   List termsConList = [];
-  List searchList = [];
+
   List contactList = [];
   List imgList = [];
   List catList = [];
@@ -37,13 +38,13 @@ class _HomeState extends State<Home> {
   bool isGetCartLoading = true;
   bool isSearching = false;
   bool isFavLoading = false;
-  bool isSearchLoading = false;
-  bool isBannerLoading = true;
 
-  Icon actionIcon = Icon(
-    Icons.search,
-    //color: Colors.white,
-  );
+  bool isBannerLoading = true;
+  bool searchImage = true;
+  String txtName = "";
+
+  TabController tabController;
+
   Widget appBarTitle = Text(
     "HOME",
     style: TextStyle(
@@ -60,6 +61,7 @@ class _HomeState extends State<Home> {
     _trendingProduct();
     _termsCon();
     _contactUs();
+    userName();
     // _getCart();
   }
 
@@ -83,6 +85,13 @@ class _HomeState extends State<Home> {
     );
   }
 
+  userName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      txtName = prefs.getString(Session.CustomerName);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,60 +102,94 @@ class _HomeState extends State<Home> {
         elevation: 1,
         iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
         actions: <Widget>[
-          IconButton(
-              icon: actionIcon,
-              onPressed: () {
-                setState(() {
-                  if (this.actionIcon.icon == Icons.search) {
-                    this.actionIcon = Icon(
-                      Icons.close,
-                      //color: Colors.white,
-                    );
-                    this.appBarTitle = Container(
-                      child: TextFormField(
-                        controller: txtSearch,
-                        textInputAction: TextInputAction.done,
-                        onFieldSubmitted: (aa) {
-                          _getSearching();
-                          //  txtSearch.text.clear();
-                          //Navigator.pop(context, this.txtSearch.text);
-                        },
-                        style: TextStyle(
-                            //color: Colors.white,
-                            ),
-                        cursorColor: Colors.black,
-                        decoration: InputDecoration(
-                            prefixIcon: new Icon(
-                              Icons.search,
-                              color: appPrimaryMaterialColor,
+          if (searchImage == false)
+            Row(
+              children: [
+                Container(
+                  height: 20,
+                  width: 20,
+                  child: Image.asset(
+                    "assets/search.png",
+                    color: appPrimaryMaterialColor,
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width - 120,
+                  height: 50,
+                  child: TextFormField(
+                    controller: txtSearch,
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (aa) {
+                      //  _getSearching();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  new SearchingScreen(
+                                    searchData: txtSearch.text,
+                                  )));
+                      txtSearch.clear();
+                      //Navigator.pop(context, this.txtSearch.text);
+                    },
+                    style: TextStyle(
+                        //color: Colors.white,
+                        ),
+                    cursorColor: Colors.black,
+                    decoration: InputDecoration(
+                        // prefixIcon: SizedBox(
+                        //   height: 20,
+                        //   width: 10,
+                        //   child: Image.asset(
+                        //     "assets/search.png",
+                        //     color: appPrimaryMaterialColor,
+                        //   ),
+                        // ),
 
-                              //    color: Colors.white
-                            ),
-                            hintText: "Search...",
-                            hintStyle: TextStyle(color: Colors.grey),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey),
-                            )),
+                        hintText: "    Search...",
+                        hintStyle: TextStyle(color: Colors.grey),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.grey),
+                        )),
+                  ),
+                ),
+              ],
+            ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                searchImage = !searchImage;
+              });
+            },
+            child: searchImage
+                ? Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/search.png",
+                        color: appPrimaryMaterialColor,
                       ),
-                    );
-                  } else {
-                    this.actionIcon = Icon(
-                      Icons.search,
-                      //color: Colors.white,
-                    );
-
-                    this.appBarTitle = Text(
-                      "HOME",
-                      style: TextStyle(color: Colors.black, fontSize: 17),
-                    );
-                    // txtSearch.clear();
-                  }
-                });
-              }),
-          actionIcon.icon == Icons.close
-              ? Container()
-              : Padding(
-                  padding: const EdgeInsets.only(right: 10.0, left: 4),
+                    ),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/025-cancel.png",
+                        color: appPrimaryMaterialColor,
+                      ),
+                    ),
+                  ),
+          ),
+          searchImage
+              ? Padding(
+                  padding: const EdgeInsets.only(
+                    right: 10.0,
+                    left: 8,
+                  ),
                   child: Container(
                       height: 20,
                       width: 20,
@@ -154,30 +197,19 @@ class _HomeState extends State<Home> {
                           onTap: () {
                             Navigator.of(context).pushNamed('/Whishlist');
                           },
-                          child: Icon(
-                            Icons.favorite_border,
-                            size: 23,
+                          child: Image.asset(
+                            "assets/heart.png",
                             color: appPrimaryMaterialColor,
                           ))),
-                ),
-
-          // IconButton(
-          //         icon: Icon(
-          //           Icons.favorite_border,
-          //         ),
-          //         onPressed: () {
-          //           Navigator.of(context).pushNamed('/Whishlist');
-          //         },
-          //       ),
-
-          actionIcon.icon == Icons.close
-              ? Container()
-              : Stack(
+                )
+              : Container(),
+          searchImage
+              ? Stack(
                   alignment: Alignment.topCenter,
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsets.only(right: 10.0, left: 8, top: 18),
+                          const EdgeInsets.only(right: 15.0, left: 8, top: 18),
                       child: Container(
                           height: 20,
                           width: 20,
@@ -190,30 +222,26 @@ class _HomeState extends State<Home> {
                                 color: appPrimaryMaterialColor,
                               ))),
                     ),
-                    // IconButton(
-                    //   icon: Icon(Icons.card_travel),
-                    //   onPressed: () {
-                    //     Navigator.of(context).pushNamed('/CartScreen');
-                    //   },
-                    // ),
                     if (cartList.length > 0)
                       Padding(
-                        padding: const EdgeInsets.only(left: 0.0, top: 10),
+                        padding: const EdgeInsets.only(
+                            left: 0.0, top: 13, right: 10),
                         child: CircleAvatar(
-                          radius: 8.0,
+                          radius: 6.0,
                           backgroundColor: Colors.red,
                           foregroundColor: Colors.white,
                           child: Text(
                             cartList.length.toString(),
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 12.0,
+                              fontSize: 10.0,
                             ),
                           ),
                         ),
                       ),
                   ],
                 )
+              : Container(),
         ],
       ),
       drawer: Drawer(
@@ -222,45 +250,40 @@ class _HomeState extends State<Home> {
           children: <Widget>[
 //            DrawerHeader(
 //                child:),
-            Container(
-              color: Colors.grey[200],
-              child: Padding(
-                padding: const EdgeInsets.only(left: 25.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20.0, bottom: 10),
-                      child: Container(
-                        width: 70,
-                        height: 70,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(55),
-                            border: Border.all(color: Colors.grey[300]),
-                            color: appPrimaryMaterialColor),
-                        child: Center(
-                          child: Text(
-                            "M",
-                            style: TextStyle(
-                                fontSize: 25,
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/ProfileScreen');
+              },
+              child: Container(
+                color: Colors.grey[200],
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 25.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20.0, bottom: 10),
+                        child: CircleAvatar(
+                            radius: 40.0,
+                            backgroundColor: appPrimaryMaterialColor,
+                            foregroundColor: Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 0.0),
+                              child: Image.asset(
+                                "assets/051-user.png",
                                 color: Colors.white,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
+                                height: 40,
+                              ),
+                            )),
                       ),
-                    ),
-                    Text(
-                      "MahaLaxmi Textile",
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/ProfileScreen');
-                      },
-                      child: Padding(
+                      Text(
+                        "${txtName}",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Padding(
                         padding: const EdgeInsets.only(top: 5.0, bottom: 20),
                         child: Row(
                           children: <Widget>[
@@ -292,9 +315,9 @@ class _HomeState extends State<Home> {
                             // ),
                           ],
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -310,7 +333,7 @@ class _HomeState extends State<Home> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/012-house.png",
+                        "assets/home.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),
@@ -336,7 +359,7 @@ class _HomeState extends State<Home> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/004-refresh.png",
+                        "assets/history.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),
@@ -378,7 +401,7 @@ class _HomeState extends State<Home> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/038-placeholder.png",
+                        "assets/location.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),
@@ -404,7 +427,7 @@ class _HomeState extends State<Home> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/044-information.png",
+                        "assets/world-grid.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),
@@ -429,7 +452,7 @@ class _HomeState extends State<Home> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/050-world-grid.png",
+                        "assets/f.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),
@@ -451,7 +474,7 @@ class _HomeState extends State<Home> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/019-share.png",
+                        "assets/share.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),
@@ -481,7 +504,7 @@ class _HomeState extends State<Home> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/022-phone-call.png",
+                        "assets/phone-call.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),
@@ -510,7 +533,7 @@ class _HomeState extends State<Home> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/042-file.png",
+                        "assets/file.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),
@@ -531,7 +554,7 @@ class _HomeState extends State<Home> {
                       height: 20,
                       width: 20,
                       child: Image.asset(
-                        "assets/010-exit.png",
+                        "assets/logout.png",
                         color: appPrimaryMaterialColor,
                       )),
                 ),
@@ -551,116 +574,103 @@ class _HomeState extends State<Home> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    // Padding(
-                    //   padding: const EdgeInsets.only(top: 8.0),
-                    //   child: Container(
-                    //     child: Column(
-                    //       children: <Widget>[
-                    //         Container(
-                    //             //slider
-                    //             child: Column(
-                    //           children: <Widget>[
-                    //             CarouselSlider(
-                    //               options: CarouselOptions(
-                    //                 autoPlay: true,
-                    //                 aspectRatio: 2.0,
-                    //                 enlargeCenterPage: true,
-                    //               ),
-                    //               items: imgList
-                    //                   .map((item) => Container(
-                    //                         margin: EdgeInsets.all(5.0),
-                    //                         child: ClipRRect(
-                    //                             borderRadius: BorderRadius.all(
-                    //                                 Radius.circular(5.0)),
-                    //                             child: Stack(
-                    //                               children: <Widget>[
-                    //                                 Image.network(
-                    //                                     Image_URL +
-                    //                                         item["BannerImage"],
-                    //                                     fit: BoxFit.contain,
-                    //                                     width: MediaQuery.of(
-                    //                                             context)
-                    //                                         .size
-                    //                                         .width),
-                    //                                 // Positioned(
-                    //                                 //   bottom: 0.0,
-                    //                                 //   left: 0.0,
-                    //                                 //   right: 0.0,
-                    //                                 //   child: Container(
-                    //                                 //     decoration:
-                    //                                 //         BoxDecoration(
-                    //                                 //       gradient:
-                    //                                 //           LinearGradient(
-                    //                                 //         colors: [
-                    //                                 //           Color.fromARGB(
-                    //                                 //               50, 0, 0, 0),
-                    //                                 //           Color.fromARGB(
-                    //                                 //               0, 0, 0, 0)
-                    //                                 //         ],
-                    //                                 //         begin: Alignment
-                    //                                 //             .bottomCenter,
-                    //                                 //         end: Alignment
-                    //                                 //             .topCenter,
-                    //                                 //       ),
-                    //                                 //     ),
-                    //                                 //     padding: EdgeInsets
-                    //                                 //         .symmetric(
-                    //                                 //             vertical: 0.0,
-                    //                                 //             horizontal:
-                    //                                 //                 0.0),
-                    //                                 //   ),
-                    //                                 // ),
-                    //                               ],
-                    //                             )),
-                    //                       ))
-                    //                   .toList(),
-                    //             ),
-                    //           ],
-                    //         )),
-                    //       ],
-                    //     ),
-                    //     //slider
-                    //   ),
-                    // ),
-                    Stack(
-                      children: [
-                        Container(
-                          height: MediaQuery.of(context).size.height / 4,
-                          width: MediaQuery.of(context).size.width,
-                          child: Carousel(
-                            boxFit: BoxFit.cover,
-                            autoplay: true,
-                            animationCurve: Curves.fastOutSlowIn,
-                            animationDuration: Duration(milliseconds: 1000),
-                            dotSize: 4.0,
-                            dotColor: Colors.grey,
-                            dotIncreasedColor: appPrimaryMaterialColor,
-                            dotBgColor: Colors.white,
-                            dotPosition: DotPosition.bottomCenter,
-                            dotVerticalPadding: 0.0,
-                            showIndicator: true,
-                            indicatorBgPadding: 7.0,
-                            images: imgList
-                                .map((item) => Image.network(
-                                      Image_URL + item["BannerImage"],
-                                      fit: BoxFit.fill,
-                                      height: 150,
-                                      loadingBuilder:
-                                          (context, widget, loadingProgress) {
-                                        if (loadingProgress == null) {
-                                          return widget;
-                                        } else
-                                          return LoadingComponent();
-                                      },
-                                    ))
-                                .toList(),
+                    isBannerLoading
+                        ? LoadingComponent()
+                        : Container(
+                            //margin: EdgeInsets.all(10),
+                            // decoration: BoxDecoration(
+                            //     borderRadius: BorderRadius.circular(10),
+                            //     border: Border.all(width: 2)),
+                            child: ImageSlider(
+                              /// Shows the tab indicating circles at the bottom
+                              showTabIndicator: true,
+
+                              /// Cutomize tab's colors
+                              tabIndicatorColor: appPrimaryMaterialColor[200],
+
+                              /// Customize selected tab's colors
+                              tabIndicatorSelectedColor:
+                                  appPrimaryMaterialColor,
+
+                              /// Height of the indicators from the bottom
+                              tabIndicatorHeight: 16,
+
+                              /// Size of the tab indicator circles
+                              tabIndicatorSize: 12,
+
+                              /// tabController for walkthrough or other implementations
+                              tabController: tabController,
+
+                              /// Animation curves of sliding
+                              curve: Curves.fastOutSlowIn,
+
+                              /// Width of the slider
+                              width: MediaQuery.of(context).size.width,
+
+                              /// Height of the slider
+                              height: 200,
+
+                              /// If automatic sliding is required
+                              autoSlide: true,
+
+                              /// Time for automatic sliding
+                              duration: new Duration(seconds: 2),
+
+                              /// If manual sliding is required
+                              allowManualSlide: true,
+
+                              /// Children in slideView to slide
+                              children: imgList.map((link) {
+                                return new ClipRRect(
+                                    // borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.network(
+                                  Image_URL + link["BannerImage"],
+                                  width: MediaQuery.of(context).size.width,
+                                  height: 220,
+                                  fit: BoxFit.fill,
+                                ));
+                              }).toList(),
+                            ),
                           ),
-                        ),
-                        isBannerLoading ? LoadingComponent() : Container()
-                      ],
-                    ),
+                    // Stack(
+                    //   children: [
+                    //     Container(
+                    //       height: MediaQuery.of(context).size.height / 4,
+                    //       width: MediaQuery.of(context).size.width,
+                    //       child: Carousel(
+                    //         boxFit: BoxFit.cover,
+                    //         autoplay: true,
+                    //         animationCurve: Curves.fastOutSlowIn,
+                    //         animationDuration: Duration(milliseconds: 1000),
+                    //         dotSize: 4.0,
+                    //         dotColor: Colors.grey,
+                    //         dotIncreasedColor: appPrimaryMaterialColor,
+                    //         dotBgColor: Colors.white,
+                    //         dotPosition: DotPosition.bottomCenter,
+                    //         dotVerticalPadding: 0.0,
+                    //         showIndicator: true,
+                    //         indicatorBgPadding: 7.0,
+                    //         images: imgList
+                    //             .map((item) => Image.network(
+                    //                   Image_URL + item["BannerImage"],
+                    //                   fit: BoxFit.fill,
+                    //                   height: 150,
+                    //                   loadingBuilder:
+                    //                       (context, widget, loadingProgress) {
+                    //                     if (loadingProgress == null) {
+                    //                       return widget;
+                    //                     } else
+                    //                       return LoadingComponent();
+                    //                   },
+                    //                 ))
+                    //             .toList(),
+                    //       ),
+                    //     ),
+                    //     isBannerLoading ? LoadingComponent() : Container()
+                    //   ],
+                    // ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
+                      padding: const EdgeInsets.only(top: 20.0),
                       child: Container(
                         color: Colors.grey[100],
                         height: 10,
@@ -748,6 +758,8 @@ class _HomeState extends State<Home> {
           if (bannerresponselist.length > 0) {
             setState(() {
               imgList = bannerresponselist;
+              tabController =
+                  TabController(length: imgList.length, vsync: this);
               //set "data" here to your variable
             });
           } else {
@@ -828,44 +840,6 @@ class _HomeState extends State<Home> {
         }, onError: (e) {
           setState(() {
             isGetCartLoading = false;
-          });
-          print("error on call -> ${e.message}");
-          Fluttertoast.showToast(msg: "Something Went Wrong");
-        });
-      }
-    } on SocketException catch (_) {
-      Fluttertoast.showToast(msg: "No Internet Connection.");
-    }
-  }
-
-  _getSearching() async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        isSearchLoading = true;
-        FormData body = FormData.fromMap({"ProductName": txtSearch.text});
-        Services.PostForList(api_name: 'search', body: body).then(
-            (responseList) async {
-          setState(() {
-            isSearchLoading = false;
-          });
-          if (responseList.length > 0) {
-            setState(() {
-              searchList = responseList; //set "data" here to your variable
-            });
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (BuildContext context) => new SearchingScreen(
-                          searchData: searchList,
-                        )));
-          } else {
-            Fluttertoast.showToast(msg: "Data Not Found");
-            //show "data not found" in dialog
-          }
-        }, onError: (e) {
-          setState(() {
-            isSearchLoading = false;
           });
           print("error on call -> ${e.message}");
           Fluttertoast.showToast(msg: "Something Went Wrong");

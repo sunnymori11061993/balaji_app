@@ -18,8 +18,6 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController txtLogin = TextEditingController();
   bool isLoading = false;
 
-  String toggle = "User";
-
   final _formkey = new GlobalKey<FormState>();
 
   _showDialog(BuildContext context) {
@@ -42,16 +40,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600),
           ),
           actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            // FlatButton(
-            //   child: new Text(
-            //     "Cancel",
-            //     style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
-            //   ),
-            //   onPressed: () {
-            //     Navigator.of(context).pop();
-            //   },
-            // ),
             new FlatButton(
               child: new Text(
                 "Ok",
@@ -269,9 +257,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "By continuing i accept the",
+                        "By continuing you are accepting the",
                         style: TextStyle(
-                            fontSize: 13,
+                            fontSize: 12,
                             color: Colors.grey,
                             fontWeight: FontWeight.w500),
                       ),
@@ -280,7 +268,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Text(
                           "Terms & Conditions",
                           style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 13,
                               color: Colors.grey[700],
                               fontWeight: FontWeight.w700,
                               decoration: TextDecoration.underline),

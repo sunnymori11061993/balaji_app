@@ -42,6 +42,7 @@ dependencies:
   intro_slider: ^2.3.3
   easy_localization: ^2.3.3
   flutter_rating_bar: ^3.0.1+1
+  image_slider: ^1.0.2
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +72,8 @@ flutter:
     - assets/Splash.svg
     - assets/f1.png
     - assets/filter.png
+    - assets/f.png
+    - assets/cancel.png
     - assets/intro1.jpeg
     - assets/intro2.jpeg
     - assets/intro3.jpeg

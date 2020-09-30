@@ -39,6 +39,8 @@ class _SplashState extends State<Splash> {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String MobileNumber = prefs.getString(Session.CustomerPhoneNo);
       String Type = prefs.getString(Session.type);
+      print(Type);
+      print(MobileNumber);
       if (MobileNumber == null) {
         Navigator.pushReplacementNamed(context, '/WalkThroughScreen');
       } else {

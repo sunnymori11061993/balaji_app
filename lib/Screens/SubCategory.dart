@@ -79,19 +79,28 @@ class _SubCategoryState extends State<SubCategory>
               color: Colors.black,
             )),
         actions: <Widget>[
-          IconButton(
-              icon: Icon(
-                Icons.favorite_border,
-                size: 23,
-              ),
-              onPressed: () {
-                Navigator.of(context).pushNamed('/Whishlist');
-              }),
+          Padding(
+            padding: const EdgeInsets.only(
+              right: 10.0,
+              left: 8,
+            ),
+            child: Container(
+                height: 20,
+                width: 20,
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/Whishlist');
+                    },
+                    child: Image.asset(
+                      "assets/heart.png",
+                      color: appPrimaryMaterialColor,
+                    ))),
+          ),
           Stack(
             alignment: Alignment.topCenter,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 10.0, left: 4, top: 18),
+                padding: const EdgeInsets.only(right: 10.0, left: 8, top: 18),
                 child: Container(
                     height: 20,
                     width: 20,
@@ -100,27 +109,28 @@ class _SubCategoryState extends State<SubCategory>
                           Navigator.of(context).pushNamed('/CartScreen');
                         },
                         child: Image.asset(
-                          "assets/039-shopping-cart.png",
+                          "assets/shopping-cart.png",
                           color: appPrimaryMaterialColor,
                         ))),
               ),
               // IconButton(
-              //     icon: Icon(Icons.card_travel),
-              //     onPressed: () {
-              //       Navigator.of(context).pushNamed('/CartScreen');
-              //     }),
+              //   icon: Icon(Icons.card_travel),
+              //   onPressed: () {
+              //     Navigator.of(context).pushNamed('/CartScreen');
+              //   },
+              // ),
               if (cartList.length > 0)
                 Padding(
-                  padding: const EdgeInsets.only(left: 2.0),
+                  padding: const EdgeInsets.only(left: 0.0, top: 13, right: 5),
                   child: CircleAvatar(
-                    radius: 8.0,
+                    radius: 6.0,
                     backgroundColor: Colors.red,
                     foregroundColor: Colors.white,
                     child: Text(
                       cartList.length.toString(),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 12.0,
+                        fontSize: 10.0,
                       ),
                     ),
                   ),
@@ -129,7 +139,7 @@ class _SubCategoryState extends State<SubCategory>
           ),
 
           Padding(
-            padding: const EdgeInsets.only(right: 10.0, left: 4),
+            padding: const EdgeInsets.only(right: 12.0, left: 4),
             child: Container(
                 height: 20,
                 width: 20,

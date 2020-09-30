@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
+import 'package:balaji/Screens/ProductDetailScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -55,16 +56,13 @@ class _RelatedProductComponentState extends State<RelatedProductComponent> {
           padding: const EdgeInsets.only(bottom: 10, left: 6, right: 6),
           child: GestureDetector(
             onTap: () {
-//              Navigator.push(
-//                  context,
-//                  MaterialPageRoute(
-//                      builder: (BuildContext context) =>
-//                          new ProductDetailScreen(
-//                            productDetail:
-//                                widget.relatedProductData["ProductId"],
-//                          ),
-//                  )
-//              );
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => new ProductDetailScreen(
+                      productDetail: widget.relatedProductData["ProductId"],
+                    ),
+                  ));
             },
             child: Container(
               decoration: BoxDecoration(

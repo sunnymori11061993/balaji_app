@@ -11,9 +11,9 @@ import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class VerificationScreen extends StatefulWidget {
-  var mobile, loginData, loginType;
+  var mobile, loginData;
 
-  VerificationScreen({this.mobile, this.loginData, this.loginType});
+  VerificationScreen({this.mobile, this.loginData});
 
   @override
   _VerificationScreenState createState() => _VerificationScreenState();
@@ -36,26 +36,27 @@ class _VerificationScreenState extends State<VerificationScreen> {
     print(widget.loginData["Type"]);
     if (widget.loginData["Type"] == "retailer") {
       await prefs.setString(Session.CustomerId, widget.loginData["CustomerId"]);
+      await prefs.setString(Session.type, widget.loginData["Type"]);
       await prefs.setString(
           Session.CustomerName, widget.loginData["CustomerName"]);
       await prefs.setString(
           Session.CustomerCompanyName, widget.loginData["CustomerCompanyName"]);
       await prefs.setString(
           Session.CustomerEmailId, widget.loginData["CustomerEmailId"]);
-      await prefs.setString(Session.type, widget.loginType);
+
       await prefs.setString(
           Session.CustomerPhoneNo, widget.loginData["CustomerPhoneNo"]);
       Navigator.pushNamedAndRemoveUntil(context, '/Home', (route) => false);
     } else {
       await prefs.setString(
           Session.CustomerId, widget.loginData["ManufacturerId"]);
+      await prefs.setString(Session.type, widget.loginData["Type"]);
       await prefs.setString(
           Session.CustomerName, widget.loginData["ManufacturerName"]);
       await prefs.setString(Session.CustomerCompanyName,
           widget.loginData["ManufacturerCompanyName"]);
       await prefs.setString(
           Session.CustomerEmailId, widget.loginData["ManufacturerEmailId"]);
-      await prefs.setString(Session.type, widget.loginType);
       await prefs.setString(
           Session.CustomerPhoneNo, widget.loginData["ManufacturerPhoneNo"]);
       Navigator.pushNamedAndRemoveUntil(

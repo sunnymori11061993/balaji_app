@@ -31,152 +31,190 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () {
-        Navigator.of(context).pop("pop");
-      },
-      child: Scaffold(
-          backgroundColor: Colors.white,
-          appBar: AppBar(
-            leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  color: appPrimaryMaterialColor,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop("pop");
-                }),
-            elevation: 1,
+        onWillPop: () {
+          Navigator.of(context).pop("pop");
+        },
+        child: Scaffold(
             backgroundColor: Colors.white,
-            iconTheme: new IconThemeData(
-              color: appPrimaryMaterialColor,
+            appBar: AppBar(
+              leading: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: appPrimaryMaterialColor,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop("pop");
+                  }),
+              elevation: 1,
+              backgroundColor: Colors.white,
+              iconTheme: new IconThemeData(
+                color: appPrimaryMaterialColor,
+              ),
+              title: const Text("My Cart",
+                  style: TextStyle(
+                    color: Colors.black,
+                  )),
+              actions: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 10.0,
+                    left: 8,
+                  ),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed('/Whishlist');
+                          },
+                          child: Image.asset(
+                            "assets/heart.png",
+                            color: appPrimaryMaterialColor,
+                          ))),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 15.0,
+                    left: 8,
+                  ),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: GestureDetector(
+                          onTap: () {
+                            //Navigator.of(context).pushNamed('/Whishlist');
+                          },
+                          child: Image.asset(
+                            "assets/039-shopping-cart.png",
+                            color: appPrimaryMaterialColor,
+                          ))),
+                ),
+              ],
             ),
-            title: const Text("My Cart",
-                style: TextStyle(
-                  color: Colors.black,
-                )),
-            actions: <Widget>[
-              // IconButton(
-              //     icon: Icon(Icons.favorite_border),
-              //     onPressed: () {
-              //       Navigator.of(context).pushNamed('/Whishlist');
-              //     }),
-              // IconButton(icon: Icon(Icons.shopping_cart), onPressed: () {}),
-            ],
-          ),
-          bottomNavigationBar: isLoading
-              ? SizedBox()
-              : Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Divider(
-                      height: 3,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10.0, bottom: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 8.0,
+            bottomNavigationBar: isLoading
+                ? SizedBox()
+                : Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Divider(
+                        height: 3,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10.0, bottom: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 8.0,
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    // "Total:₹ " + "${res}",
+                                    "Total:₹ " + "$mainTotal",
+                                    //"${res}",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
                             ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  // "Total:₹ " + "${res}",
-                                  "Total:₹ " + "$mainTotal",
-                                  //"${res}",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                _settingModalBottomSheet(context);
-                              },
-                              child: Container(
-                                width: 170,
-                                height: 40,
-                                // color: appPrimaryMaterialColor,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    // border: Border.all(color: Colors.grey[300]),
-                                    color: appPrimaryMaterialColor),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "Select Address ",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 17),
-                                    ),
-                                    Icon(
-                                      Icons.arrow_forward,
-                                      color: Colors.white,
-                                    )
-                                  ],
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  _settingModalBottomSheet(context);
+                                },
+                                child: Container(
+                                  width: 170,
+                                  height: 40,
+                                  // color: appPrimaryMaterialColor,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      // border: Border.all(color: Colors.grey[300]),
+                                      color: appPrimaryMaterialColor),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Select Address ",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 17),
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward,
+                                        color: Colors.white,
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-          body: isLoading
-              ? Center(
-                  child: CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(
-                        appPrimaryMaterialColor),
+                    ],
                   ),
-                )
-              : Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 10),
-                  child: ListView.separated(
-                    itemCount: getCartList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return CartComponent(
-                        getCartData: getCartList[index],
-                        onRemove: (total) {
-                          setState(() {
-                            getCartList.removeAt(index);
-                            mainTotal = mainTotal - total;
-                          });
-                        },
-                        onAdd: (total) {
-                          setState(() {
-                            mainTotal = mainTotal + total;
-                          });
-                        },
-                        onMinus: (total) {
-                          setState(() {
-                            mainTotal = mainTotal - total;
-                          });
-                        },
-                        // updateCartData: ,
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) =>
-                        Divider(),
-                  ),
-                )),
-    );
+            body: isLoading
+                ? LoadingComponent()
+                : getCartList.length > 0
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 10),
+                        child: ListView.separated(
+                          itemCount: getCartList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return CartComponent(
+                              getCartData: getCartList[index],
+                              onRemove: (total) {
+                                setState(() {
+                                  getCartList.removeAt(index);
+                                  mainTotal = mainTotal - total;
+                                });
+                              },
+                              onAdd: (total) {
+                                setState(() {
+                                  mainTotal = mainTotal + total;
+                                });
+                              },
+                              onMinus: (total) {
+                                setState(() {
+                                  mainTotal = mainTotal - total;
+                                });
+                              },
+                              // updateCartData: ,
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) =>
+                              Divider(),
+                        ),
+                      )
+                    : Center(
+                        child: Text(
+                        "Cart Data Not Found!!!",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.grey[700],
+                            fontWeight: FontWeight.w600),
+                      ))));
   }
 
   void _settingModalBottomSheet(context) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
-          return showBottomSheet();
+          return showBottomSheet(
+            onOrder: () {
+              setState(() {
+                getCartList = [];
+                mainTotal = 0;
+              });
+            },
+          );
         });
   }
 
@@ -766,6 +804,8 @@ class _AlertSelectAddressState extends State<AlertSelectAddress> {
 }
 
 class showBottomSheet extends StatefulWidget {
+  Function onOrder;
+  showBottomSheet({this.onOrder});
   @override
   _showBottomSheetState createState() => _showBottomSheetState();
 }
@@ -1073,6 +1113,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
             isOrderLoading = false;
           });
           if (responseList.IsSuccess == true && responseList.Data == "1") {
+            widget.onOrder();
             Navigator.of(context).pop();
             Fluttertoast.showToast(msg: "Order Placed Successfully!!!");
           } else {

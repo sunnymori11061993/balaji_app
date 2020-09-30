@@ -119,13 +119,25 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 color: Colors.black,
               )),
           actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.favorite_border),
-                onPressed: () async {
-                  final result =
-                      await Navigator.of(context).pushNamed('/Whishlist');
-                  if (result == "pop") _getProductDetail();
-                }),
+            Padding(
+              padding: const EdgeInsets.only(
+                right: 15.0,
+                left: 8,
+              ),
+              child: Container(
+                  height: 20,
+                  width: 20,
+                  child: GestureDetector(
+                      onTap: () async {
+                        final result =
+                            await Navigator.of(context).pushNamed('/Whishlist');
+                        if (result == "pop") _getProductDetail();
+                      },
+                      child: Image.asset(
+                        "assets/heart.png",
+                        color: appPrimaryMaterialColor,
+                      ))),
+            ),
             Stack(
               alignment: Alignment.topCenter,
               children: [
@@ -141,7 +153,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             if (result == "pop") _getProductDetail();
                           },
                           child: Image.asset(
-                            "assets/039-shopping-cart.png",
+                            "assets/shopping-cart.png",
                             color: appPrimaryMaterialColor,
                           ))),
                 ),
@@ -155,16 +167,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 if (cartList.length > 0)
                   Padding(
                     padding:
-                        const EdgeInsets.only(right: 15.0, left: 4, top: 8),
+                        const EdgeInsets.only(right: 18.0, left: 4, top: 13),
                     child: CircleAvatar(
-                      radius: 8.0,
+                      radius: 6.0,
                       backgroundColor: Colors.red,
                       foregroundColor: Colors.white,
                       child: Text(
                         cartList.length.toString(),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          fontSize: 12.0,
+                          fontSize: 10.0,
                         ),
                       ),
                     ),
@@ -426,32 +438,40 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                         ],
                                       ),
                                       GestureDetector(
-                                        onTap: () {
-                                          _addToWishlist();
-                                        },
-                                        child: Container(
+                                          onTap: () {
+                                            _addToWishlist();
+                                          },
+                                          child: Container(
                                             child: isWishList == false
                                                 ? Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            right: 8.0),
-                                                    child: Icon(
-                                                      Icons.favorite_border,
-                                                      color:
-                                                          appPrimaryMaterialColor,
+                                                      right: 12.0,
                                                     ),
+                                                    child: Container(
+                                                        height: 20,
+                                                        width: 20,
+                                                        child: Image.asset(
+                                                          "assets/heart.png",
+                                                          color:
+                                                              appPrimaryMaterialColor,
+                                                        )),
                                                   )
                                                 : Padding(
                                                     padding:
                                                         const EdgeInsets.only(
-                                                            right: 8.0),
-                                                    child: Icon(
-                                                      Icons.favorite,
-                                                      color:
-                                                          appPrimaryMaterialColor,
+                                                      right: 12.0,
                                                     ),
-                                                  )),
-                                      ),
+                                                    child: Container(
+                                                        height: 20,
+                                                        width: 20,
+                                                        child: Image.asset(
+                                                          "assets/020-heart.png",
+                                                          color:
+                                                              appPrimaryMaterialColor,
+                                                        )),
+                                                  ),
+                                          )),
                                     ],
                                   ),
                                   Row(
