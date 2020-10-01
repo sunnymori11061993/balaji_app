@@ -12,7 +12,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderHistoryScreen extends StatefulWidget {
   var OrderData;
+
   OrderHistoryScreen({this.OrderData});
+
   @override
   _OrderHistoryScreenState createState() => _OrderHistoryScreenState();
 }
@@ -44,14 +46,14 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
 //      print(_tabController.index);
 //    });
 //  }
-  _showDialogRate(BuildContext context) {
+  _showDialogRate(BuildContext context, int index) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
         return RatingDialog(
-            //id: '${widget.id}'
-            );
+          viewDetailProductId: viewOrderDetailList[index]["ProductId"],
+        );
       },
     );
   }
@@ -89,13 +91,15 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  new ProductDetailScreen(
-                                    productDetail: viewOrderDetailList[index]
-                                        ["ProductId"],
-                                  )));
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              new ProductDetailScreen(
+                            productDetail: viewOrderDetailList[index]
+                                ["ProductId"],
+                          ),
+                        ),
+                      );
                     },
                     child: Container(
                       color: Colors.white,
@@ -242,7 +246,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                           side: BorderSide(
                                               color: Colors.grey[300])),
                                       onPressed: () {
-                                        _showDialogRate(context);
+                                        _showDialogRate(context, index);
                                       },
                                       child: Row(
                                         mainAxisAlignment:
@@ -329,9 +333,9 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
 }
 
 class RatingDialog extends StatefulWidget {
-//  var title, author, id;
+  var viewDetailProductId;
 
-  // RatingDialog({this.title, this.author, this.id});
+  RatingDialog({this.viewDetailProductId});
 
   @override
   _RatingDialogState createState() => _RatingDialogState();
@@ -349,8 +353,7 @@ class _RatingDialogState extends State<RatingDialog> {
   bool _isRTLMode = false;
   bool _isVertical = false;
   IconData _selectedIcon;
-
-  DateTime _fromDateTime = DateTime.now();
+  bool isAddRatingLoading = false;
 
   @override
   void initState() {
@@ -446,17 +449,62 @@ class _RatingDialogState extends State<RatingDialog> {
           },
         ),
         new FlatButton(
-          child: new Text(
-            "Submit",
-            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
-          ),
+          child: isAddRatingLoading
+              ? LoadingComponent()
+              : Text(
+                  "Submit",
+                  style:
+                      TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
+                ),
           onPressed: () {
-            // _bookReview();
-            // _bookReview(widget.id);
+            _addRating();
           },
         ),
       ],
     );
+  }
+
+  _addRating() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        FormData body = FormData.fromMap({
+          "CustomerId": prefs.getString(Session.CustomerId),
+          "ProductId": widget.viewDetailProductId,
+          "RatingStar": _rating,
+          "RatingReview": edtReviewController.text,
+        });
+
+        setState(() {
+          isAddRatingLoading = true;
+        });
+        Services.postForSave(apiname: 'addRating', body: body).then(
+            (responseList) async {
+          setState(() {
+            isAddRatingLoading = false;
+          });
+          if (responseList.IsSuccess == true && responseList.Data == "1") {
+            Navigator.of(context).pop();
+            Fluttertoast.showToast(
+                msg: "Thank you for Rating Us!!!",
+                gravity: ToastGravity.BOTTOM);
+          } else {
+            Fluttertoast.showToast(msg: "Data Not Found");
+            //show "data not found" in dialog
+          }
+        }, onError: (e) {
+          setState(() {
+            isAddRatingLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
   }
 
   Widget _ratingBar(int mode) {
@@ -495,49 +543,6 @@ class _RatingDialogState extends State<RatingDialog> {
           ),
         ],
       );
-
-//  _bookReview() async {
-//    try {
-//      //check Internet Connection
-//      final result = await InternetAddress.lookup('google.com');
-//      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-//        setState(() {
-//          isLoading = true;
-//        });
-//        //,edtReviewController.text
-//        Future res = Services.SaveBookReview(
-//            widget.id,
-//            _fromDateTime.toString(),
-//            edtReviewController.text,
-//            _rating.toString());
-//        res.then((data) async {
-//          if (data.IsSuccess == true) {
-//            setState(() {
-//              isLoading = false;
-//              edtReviewController.text = "";
-//            });
-//            Navigator.pop(context);
-//            Fluttertoast.showToast(msg: "Thank you for Rating!!!");
-//          } else {
-//            setState(() {
-//              isLoading = false;
-//            });
-//            //showMsg("Try Again.");
-//          }
-//        }, onError: (e) {
-//          Fluttertoast.showToast(msg: "Something Went Wrong");
-//          setState(() {
-//            isLoading = false;
-//          });
-//        });
-//      }
-//    } on SocketException catch (_) {
-//      setState(() {
-//        isLoading = false;
-//      });
-//      Fluttertoast.showToast(msg: "No Internet Connection.");
-//    }
-//  }
 }
 
 //Row(

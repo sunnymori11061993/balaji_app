@@ -36,11 +36,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   bool isRelatedProductLoading = true;
   bool isWishList = false;
   bool isCartList = false;
+  bool isRateLoading = true;
   var productList;
   List relatedProductList = [];
 
   List imgList = [];
   List cartList = [];
+  List rateList = [];
   double percentResult;
   int value;
 
@@ -83,6 +85,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     //total();
     _getProductDetail();
     _getCart();
+    _getRating();
   }
 
   _showDialogView(BuildContext context, var data) {
@@ -660,44 +663,96 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 25.0, left: 20, right: 8),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "4.4",
-                                        style: TextStyle(
-                                            fontSize: 30,
-                                            color: Colors.grey[700],
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      Icon(
-                                        Icons.star,
-                                        size: 15,
-                                        color: appPrimaryMaterialColor,
-                                      )
-                                    ],
+                        isRateLoading
+                            ? LoadingComponent()
+                            : rateList.length > 0
+                                ? Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 25.0, left: 20, right: 8),
+                                    child: Container(
+                                      height: 120,
+                                      child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: rateList.length,
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 8.0),
+                                              child: Container(
+                                                height: 100,
+                                                width: 100,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5),
+                                                    border: Border.all(
+                                                      color: Colors.grey[300],
+                                                    )),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          "${rateList[index]["RatingStar"]}",
+                                                          style: TextStyle(
+                                                              fontSize: 30,
+                                                              color: Colors
+                                                                  .grey[700],
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w600),
+                                                        ),
+                                                        Icon(
+                                                          Icons.star,
+                                                          size: 15,
+                                                          color:
+                                                              appPrimaryMaterialColor,
+                                                        )
+                                                      ],
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 4.0,
+                                                              right: 4),
+                                                      child: Text(
+                                                        "${rateList[index]["RatingReview"]}",
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        maxLines: 5,
+                                                        style: TextStyle(
+                                                            fontSize: 14,
+                                                            color: Colors.grey,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w400),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                          }),
+                                    ))
+                                : Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Center(
+                                        child: Text(
+                                      "If you like than Rate Us!!!",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.grey[700],
+                                          fontWeight: FontWeight.w600),
+                                    )),
                                   ),
-                                  Text(
-                                    "3219 Verified Buyers",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: Container(
@@ -739,92 +794,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ],
                           ),
                         ),
-
-//            Container(
-//              height: 20,
-//              color: Colors.grey[200],
-//            ),
-//            Padding(
-//              padding: const EdgeInsets.only(top: 10.0, left: 20, right: 8),
-//              child: Column(
-//                crossAxisAlignment: CrossAxisAlignment.start,
-//                children: <Widget>[
-//                  Text(
-//                    "About Product",
-//                    style: TextStyle(
-//                        fontSize: 15,
-//                        color: Colors.black,
-//                        fontWeight: FontWeight.w600),
-//                  ),
-//                  Padding(
-//                    padding: const EdgeInsets.only(top: 15.0),
-//                    child: Text(
-//                      "Product Id",
-//                      style: TextStyle(
-//                          fontSize: 13,
-//                          color: Colors.black,
-//                          fontWeight: FontWeight.w600),
-//                    ),
-//                  ),
-//                  Text(
-//                    "PD005820",
-//                    style: TextStyle(
-//                        fontSize: 15,
-//                        color: Colors.grey,
-//                        fontWeight: FontWeight.w400),
-//                  ),
-//                  Padding(
-//                    padding: const EdgeInsets.only(top: 15.0),
-//                    child: Row(
-//                      children: <Widget>[
-//                        Column(
-//                          crossAxisAlignment: CrossAxisAlignment.start,
-//                          children: <Widget>[
-//                            Text(
-//                              "Saree Colour",
-//                              style: TextStyle(
-//                                  fontSize: 13,
-//                                  color: Colors.black,
-//                                  fontWeight: FontWeight.w600),
-//                            ),
-//                            Text(
-//                              "Red",
-//                              style: TextStyle(
-//                                  fontSize: 15,
-//                                  color: Colors.grey,
-//                                  fontWeight: FontWeight.w400),
-//                            ),
-//                          ],
-//                        ),
-//                        Padding(
-//                          padding: const EdgeInsets.only(left: 70.0),
-//                          child: Column(
-//                            crossAxisAlignment: CrossAxisAlignment.start,
-//                            children: <Widget>[
-//                              Text(
-//                                "Fabric of Saree",
-//                                style: TextStyle(
-//                                    fontSize: 13,
-//                                    color: Colors.black,
-//                                    fontWeight: FontWeight.w600),
-//                              ),
-//                              Text(
-//                                "Cotton",
-//                                style: TextStyle(
-//                                    fontSize: 15,
-//                                    color: Colors.grey,
-//                                    fontWeight: FontWeight.w400),
-//                              ),
-//                            ],
-//                          ),
-//                        ),
-//                      ],
-//                    ),
-//                  ),
-//                  Divider()
-//                ],
-//              ),
-//            ),
                       ],
                     ),
                   ),
@@ -871,6 +840,42 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         }, onError: (e) {
           setState(() {
             isLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
+  }
+
+  _getRating() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        FormData body =
+            FormData.fromMap({"ProductId": "${widget.productDetail}"});
+        setState(() {
+          isRateLoading = true;
+        });
+        Services.PostForList(api_name: 'getRating', body: body).then(
+            (responseList) async {
+          if (responseList.length > 0) {
+            setState(() {
+              isRateLoading = false;
+              rateList = responseList;
+            });
+          } else {
+            setState(() {
+              isRateLoading = false;
+            });
+            Fluttertoast.showToast(msg: "Data Not Found");
+            //show "data not found" in dialog
+          }
+        }, onError: (e) {
+          setState(() {
+            isRateLoading = false;
           });
           print("error on call -> ${e.message}");
           Fluttertoast.showToast(msg: "Something Went Wrong");

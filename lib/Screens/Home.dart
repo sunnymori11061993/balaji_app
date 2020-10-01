@@ -6,6 +6,7 @@ import 'package:balaji/Component/CategoriesComponent.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/TrendingProductComponent.dart';
 import 'package:balaji/Screens/Address%20Screen.dart';
+import 'package:balaji/Screens/ContactUs.dart';
 import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/SearchingScreen.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
@@ -16,6 +17,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_slider/image_slider.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 //slider
 
@@ -38,6 +40,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   bool isGetCartLoading = true;
   bool isSearching = false;
   bool isFavLoading = false;
+  String msg, whatsapp;
 
   bool isBannerLoading = true;
   bool searchImage = true;
@@ -59,8 +62,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     _bannerImage();
     _categoryImage();
     _trendingProduct();
-    _termsCon();
-    _contactUs();
+    _settingApi();
     userName();
     // _getCart();
   }
@@ -83,6 +85,25 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         return ALertLang();
       },
     );
+  }
+
+  void launchwhatsapp({
+    @required String whatsappNumber,
+    @required String message,
+  }) async {
+    String url() {
+      if (Platform.isIOS) {
+        return "whatsapp://wa.me/$whatsappNumber/?text=${Uri.parse(message)}";
+      } else {
+        return "whatsapp://send?phone=$whatsappNumber&text=${Uri.parse(message)}";
+      }
+    }
+
+    if (await canLaunch(url())) {
+      await launch(url());
+    } else {
+      throw 'Could not launch ${url()}';
+    }
   }
 
   userName() async {
@@ -486,16 +507,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
             GestureDetector(
               onTap: () {
-                //  Navigator.of(context).pushNamed('/ContactUs');
-
-//                Navigator.push(
-//                  context,
-//                  MaterialPageRoute(
-//                    builder: (BuildContext context) => new ContactUs(
-//                      contactData: contactList[0],
-//                    ),
-//                  ),
-//                );
+                launchwhatsapp(whatsappNumber: whatsapp, message: msg);
               },
               child: ListTile(
                 leading: Padding(
@@ -886,40 +898,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     }
   }
 
-  _contactUs() async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        isTermLoading = true;
-        Services.PostForList(api_name: 'get_all_data_api/?tblName=tblsetting')
-            .then((responseList) async {
-          if (responseList.length > 0) {
-            setState(() {
-              isTermLoading = false;
-              contactList = responseList;
-              //set "data" here to your variable
-            });
-          } else {
-            setState(() {
-              isTermLoading = false;
-            });
-            Fluttertoast.showToast(msg: "Data Not Found");
-            //show "data not found" in dialog
-          }
-        }, onError: (e) {
-          setState(() {
-            isTermLoading = false;
-          });
-          print("error on call -> ${e.message}");
-          Fluttertoast.showToast(msg: "Something Went Wrong");
-        });
-      }
-    } on SocketException catch (_) {
-      Fluttertoast.showToast(msg: "No Internet Connection.");
-    }
-  }
-
-  _termsCon() async {
+  _settingApi() async {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -930,6 +909,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             setState(() {
               isTermLoading = false;
               termsConList = responseList;
+              msg = responseList[0]["SettingWhatsAppMessage"];
+              whatsapp = "+91" + responseList[0]["SettingWhatsAppNumber"];
+
               //set "data" here to your variable
             });
           } else {
