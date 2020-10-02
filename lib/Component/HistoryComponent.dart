@@ -58,11 +58,13 @@ class _HistoryComponentState extends State<HistoryComponent> {
                 if (widget.orderData["OrderStageDropDown"] != "Cancel") {
                   _cancelOrder();
                   Navigator.of(context).pop();
-                } else {
-                  Fluttertoast.showToast(
-                      msg: "Your order is already cancelled");
-                  Navigator.of(context).pop();
                 }
+
+                // else {
+                //   Fluttertoast.showToast(
+                //       msg: "Your order is already cancelled");
+                //   Navigator.of(context).pop();
+                // }
               },
             ),
           ],
@@ -212,7 +214,10 @@ class _HistoryComponentState extends State<HistoryComponent> {
                             borderRadius: BorderRadius.circular(5),
                             side: BorderSide(color: Colors.grey[300])),
                         onPressed: () {
-                          _showDialog(context);
+                          if (widget.orderData["OrderStageDropDown"] !=
+                              "Cancel") {
+                            _showDialog(context);
+                          }
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -220,14 +225,23 @@ class _HistoryComponentState extends State<HistoryComponent> {
                           children: [
                             Icon(Icons.delete_forever, color: Colors.white),
                             // color: Colors.grey[700],),
-                            Text(
-                              "Cancel Order",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                  // color: Colors.grey[700],
-                                  fontWeight: FontWeight.bold),
-                            ),
+                            widget.orderData["OrderStageDropDown"] != "Cancel"
+                                ? Text(
+                                    "Cancel Order",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                        // color: Colors.grey[700],
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                : Text(
+                                    "Cancelled",
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                        // color: Colors.grey[700],
+                                        fontWeight: FontWeight.bold),
+                                  ),
                           ],
                         ),
                       ),

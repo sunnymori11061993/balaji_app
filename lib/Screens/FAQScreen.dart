@@ -37,7 +37,7 @@ class _FAQScreenState extends State<FAQScreen> {
           backgroundColor: Colors.white,
           iconTheme: new IconThemeData(color: Colors.grey),
           title: const Text(
-            "FAQ Screen",
+            "FAQ",
             style: TextStyle(
               color: Colors.black,
             ),

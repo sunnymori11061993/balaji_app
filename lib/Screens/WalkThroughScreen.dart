@@ -19,82 +19,97 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
 
     slides.add(
       new Slide(
-        title: "Online Shopping",
+        title: "",
         styleTitle: TextStyle(
           color: appPrimaryMaterialColor,
           fontSize: 25.0,
           fontWeight: FontWeight.bold,
           //fontFamily: 'RobotoMono'
         ),
-        description:
-            "If you would like to experience the best of online shopping for men, women and kids in India, you are at the right place.Online Shopping Site for Fashion & Lifestyle in India.",
+        description: "",
         styleDescription: TextStyle(
           color: Colors.grey[700],
           fontSize: 16.0,
           //fontStyle: FontStyle.italic,
           // fontFamily: 'Raleway'
         ),
-        pathImage: "assets/intro1.jpeg",
+        pathImage: "assets/1.png",
       ),
     );
     slides.add(
       new Slide(
-        title: "Buy Products",
+        title: "",
         styleTitle: TextStyle(
           color: appPrimaryMaterialColor,
           fontSize: 25.0,
           fontWeight: FontWeight.bold,
           //fontFamily: 'RobotoMono'
         ),
-        description:
-            "  Buy Dresses, Clothing, Kurta and lifestyle products for women & men.Our online store brings you the latest in designer products straight out of fashion houses.",
+        description: " ",
         styleDescription: TextStyle(
           color: Colors.grey[700],
           fontSize: 16.0,
           //fontStyle: FontStyle.italic,
           // fontFamily: 'Raleway'
         ),
-        pathImage: "assets/intro2.jpeg",
+        pathImage: "assets/2.png",
       ),
     );
     slides.add(
       new Slide(
-        title: "Online Payment",
+        title: "",
         styleTitle: TextStyle(
           color: appPrimaryMaterialColor,
           fontSize: 25.0,
           fontWeight: FontWeight.bold,
           //fontFamily: 'RobotoMono'
         ),
-        description:
-            "Online payment refers to money that is exchanged electronically.You can shop online at Balaji from the comfort of your Home ",
+        description: "",
         styleDescription: TextStyle(
           color: Colors.grey[700],
           fontSize: 16.0,
           //fontStyle: FontStyle.italic,
           // fontFamily: 'Raleway'
         ),
-        pathImage: "assets/intro3.jpeg",
+        pathImage: "assets/3.png",
       ),
     );
     slides.add(
       new Slide(
-        title: "Delivering Products",
+        title: "",
         styleTitle: TextStyle(
           color: appPrimaryMaterialColor,
           fontSize: 25.0,
           fontWeight: FontWeight.bold,
           //fontFamily: 'RobotoMono'
         ),
-        description:
-            "You can shop online at Balaji from the comfort of your Home and get your favourites delivered right to your doorstep.",
+        description: "",
         styleDescription: TextStyle(
           color: Colors.grey[700],
           fontSize: 16.0,
           //fontStyle: FontStyle.italic,
           // fontFamily: 'Raleway'
         ),
-        pathImage: "assets/intro4.jpeg",
+        pathImage: "assets/4.png",
+      ),
+    );
+    slides.add(
+      new Slide(
+        title: "",
+        styleTitle: TextStyle(
+          color: appPrimaryMaterialColor,
+          fontSize: 25.0,
+          fontWeight: FontWeight.bold,
+          //fontFamily: 'RobotoMono'
+        ),
+        description: "",
+        styleDescription: TextStyle(
+          color: Colors.grey[700],
+          fontSize: 16.0,
+          //fontStyle: FontStyle.italic,
+          // fontFamily: 'Raleway'
+        ),
+        pathImage: "assets/5.png",
       ),
     );
   }

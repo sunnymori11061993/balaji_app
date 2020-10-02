@@ -1,3 +1,4 @@
+import 'package:balaji/Common/Constants.dart';
 import 'package:flutter/material.dart';
 
 class FAQComponent extends StatefulWidget {
@@ -25,8 +26,8 @@ class _FAQComponentState extends State<FAQComponent> {
             Row(
               children: [
                 Icon(
-                  Icons.crop_square,
-                  color: Colors.grey,
+                  Icons.radio_button_checked,
+                  color: appPrimaryMaterialColor,
                   size: 15,
                 ),
                 Expanded(
@@ -35,10 +36,9 @@ class _FAQComponentState extends State<FAQComponent> {
                     child: Text(
                       "${widget.faqdata["FaqQuestion"]}",
                       style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 17,
-                        color: Colors.black,
-                      ),
+                          fontSize: 15,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600),
                     ),
                   ),
                 ),
@@ -60,7 +60,10 @@ class _FAQComponentState extends State<FAQComponent> {
           padding: const EdgeInsets.only(bottom: 12, top: 7, right: 5),
           child: Text(
             "-   " + "${widget.faqdata["FaqAnswer"]}",
-            style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+            style: TextStyle(
+                fontSize: 15,
+                color: Colors.grey[700],
+                fontWeight: FontWeight.w400),
           ),
         ),
       ],

@@ -236,7 +236,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
                                 Text(
                                   "Remove",
                                   style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 15,
                                       color: Colors.white,
                                       // color: Colors.grey[700],
                                       fontWeight: FontWeight.bold),
@@ -273,9 +273,9 @@ class _WishlistComponentState extends State<WishlistComponent> {
                                   color: Colors.white,
                                 ),
                                 Text(
-                                  "Add To Cart",
+                                  "Move To Cart",
                                   style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 15,
                                       color: Colors.white,
                                       //  color: Colors.grey[700],
                                       fontWeight: FontWeight.bold),
@@ -318,6 +318,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
           });
           if (responseList.IsSuccess == true && responseList.Data == "1") {
             Fluttertoast.showToast(msg: "Added in Cart");
+            _removeFromWishlist();
           } else {
             Fluttertoast.showToast(msg: "Already added in Cart");
           }

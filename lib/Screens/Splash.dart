@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:balaji/Common/Constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Splash extends StatefulWidget {
@@ -16,21 +16,13 @@ class _SplashState extends State<Splash> {
     return Scaffold(
         backgroundColor: Colors.white,
         // backgroundColor: appPrimaryMaterialColor,
-        body: Stack(
-          children: <Widget>[
-            SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: SvgPicture.asset(
-                  'assets/Splash.svg',
-                  fit: BoxFit.cover,
-                )),
-            Center(
-              child: Container(
-                child: Image.asset("assets/balajiLogo.png"),
-              ),
-            ),
-          ],
-        ));
+        body: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Image.asset(
+              'assets/Splash_Screen-01.png',
+              fit: BoxFit.cover,
+            )));
   }
 
   @override

@@ -45,7 +45,7 @@ class _SearchingScreenState extends State<SearchingScreen> {
         backgroundColor: Colors.white,
         iconTheme: new IconThemeData(color: Colors.grey),
         title: const Text(
-          "Product Screen",
+          "Searched Products",
           style: TextStyle(
             color: Colors.black,
           ),

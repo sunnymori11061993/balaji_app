@@ -23,6 +23,36 @@ class _SubCategoryState extends State<SubCategory>
     with TickerProviderStateMixin {
   TabController _tabController;
 
+  List filterList = [
+    {
+      "title": "Prices",
+      "type": "radio",
+      "values": [
+        "100",
+        "200",
+        "300",
+      ],
+    },
+    {
+      "title": "Fabrics",
+      "type": "checkbox",
+      "values": [
+        "cotton",
+        "silk",
+        "other",
+      ],
+    },
+    {
+      "title": "Offers",
+      "type": "radio",
+      "values": [
+        "5%",
+        "20%",
+        "30%",
+      ],
+    },
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -196,7 +226,6 @@ class _SubCategoryState extends State<SubCategory>
                 style: TextStyle(color: Colors.black, fontSize: 16),
               ),
             ),
-
             ListTile(
               title: Column(
                 children: <Widget>[
@@ -266,7 +295,6 @@ class _SubCategoryState extends State<SubCategory>
                 style: TextStyle(color: Colors.black, fontSize: 16),
               ),
             ),
-
             ListTile(
               title: Column(
                 children: <Widget>[
@@ -345,7 +373,6 @@ class _SubCategoryState extends State<SubCategory>
                 ],
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.only(left: 8.0, right: 8, top: 90),
               child: Container(

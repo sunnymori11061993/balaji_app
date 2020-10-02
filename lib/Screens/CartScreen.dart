@@ -1116,6 +1116,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
             widget.onOrder();
             Navigator.of(context).pop();
             Fluttertoast.showToast(msg: "Order Placed Successfully!!!");
+            Navigator.of(context).pushNamed('/HistoryScreen');
           } else {
             Fluttertoast.showToast(msg: "Data Not Found");
             //show "data not found" in dialog

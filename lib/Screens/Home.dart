@@ -427,7 +427,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       )),
                 ),
                 title: Text(
-                  "Add Addresses",
+                  "Manage Addresses",
                 ),
               ),
             ),
@@ -507,6 +507,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
             GestureDetector(
               onTap: () {
+                Navigator.of(context).pop();
                 launchwhatsapp(whatsappNumber: whatsapp, message: msg);
               },
               child: ListTile(
@@ -626,7 +627,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               autoSlide: true,
 
                               /// Time for automatic sliding
-                              duration: new Duration(seconds: 2),
+                              duration: new Duration(seconds: 3),
 
                               /// If manual sliding is required
                               allowManualSlide: true,
@@ -644,43 +645,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               }).toList(),
                             ),
                           ),
-                    // Stack(
-                    //   children: [
-                    //     Container(
-                    //       height: MediaQuery.of(context).size.height / 4,
-                    //       width: MediaQuery.of(context).size.width,
-                    //       child: Carousel(
-                    //         boxFit: BoxFit.cover,
-                    //         autoplay: true,
-                    //         animationCurve: Curves.fastOutSlowIn,
-                    //         animationDuration: Duration(milliseconds: 1000),
-                    //         dotSize: 4.0,
-                    //         dotColor: Colors.grey,
-                    //         dotIncreasedColor: appPrimaryMaterialColor,
-                    //         dotBgColor: Colors.white,
-                    //         dotPosition: DotPosition.bottomCenter,
-                    //         dotVerticalPadding: 0.0,
-                    //         showIndicator: true,
-                    //         indicatorBgPadding: 7.0,
-                    //         images: imgList
-                    //             .map((item) => Image.network(
-                    //                   Image_URL + item["BannerImage"],
-                    //                   fit: BoxFit.fill,
-                    //                   height: 150,
-                    //                   loadingBuilder:
-                    //                       (context, widget, loadingProgress) {
-                    //                     if (loadingProgress == null) {
-                    //                       return widget;
-                    //                     } else
-                    //                       return LoadingComponent();
-                    //                   },
-                    //                 ))
-                    //             .toList(),
-                    //       ),
-                    //     ),
-                    //     isBannerLoading ? LoadingComponent() : Container()
-                    //   ],
-                    // ),
                     Padding(
                       padding: const EdgeInsets.only(top: 20.0),
                       child: Container(
@@ -947,7 +911,7 @@ class _ALertLangState extends State<ALertLang> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: new Text(
-        "Change Language",
+        "Select Language",
         style: TextStyle(
             fontSize: 22,
             color: appPrimaryMaterialColor,
@@ -955,65 +919,47 @@ class _ALertLangState extends State<ALertLang> {
       ),
       content: new Wrap(
         children: [
-          Column(
-            children: [
-              Text(
-                "Select Language",
-                style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.grey[700],
-                    fontWeight: FontWeight.w600),
-              ),
-              // buildSwitchListTileMenuItem(
-              //     context: context,
-              //     title: 'عربي',
-              //     subtitle: 'عربي',
-              //     locale: context
-              //         .supportedLocales[1] //BuildContext extension method
-              //     ),
-              ListTile(
-                title: Column(
-                  children: <Widget>[
-                    Container(
-                      height: 40,
-                      child: RadioListTile(
-                        activeColor: appPrimaryMaterialColor,
-                        groupValue: lang,
-                        title: Text('English',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600)),
-                        value: 'p1',
-                        onChanged: (val) {
-                          setState(() {
-                            lang = val;
-                          });
-                        },
-                      ),
-                    ),
-                    Container(
-                      height: 40,
-                      child: RadioListTile(
-                        activeColor: appPrimaryMaterialColor,
-                        groupValue: lang,
-                        title: Text('Hindi',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600)),
-                        value: 'p2',
-                        onChanged: (val) {
-                          setState(() {
-                            lang = val;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
+          ListTile(
+            title: Column(
+              children: <Widget>[
+                Container(
+                  height: 40,
+                  child: RadioListTile(
+                    activeColor: appPrimaryMaterialColor,
+                    groupValue: lang,
+                    title: Text('English',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600)),
+                    value: 'p1',
+                    onChanged: (val) {
+                      setState(() {
+                        lang = val;
+                      });
+                    },
+                  ),
                 ),
-              ),
-            ],
+                Container(
+                  height: 40,
+                  child: RadioListTile(
+                    activeColor: appPrimaryMaterialColor,
+                    groupValue: lang,
+                    title: Text('Hindi',
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600)),
+                    value: 'p2',
+                    onChanged: (val) {
+                      setState(() {
+                        lang = val;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

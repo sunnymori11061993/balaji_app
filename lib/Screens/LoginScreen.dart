@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:toggle_switch/toggle_switch.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -17,6 +18,29 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController txtLogin = TextEditingController();
   bool isLoading = false;
+  String msg, whatsapp;
+
+  bool isTermLoading = false;
+  List termsConList = [];
+
+  void launchwhatsapp({
+    @required String whatsappNumber,
+    @required String message,
+  }) async {
+    String url() {
+      if (Platform.isIOS) {
+        return "whatsapp://wa.me/$whatsappNumber/?text=${Uri.parse(message)}";
+      } else {
+        return "whatsapp://send?phone=$whatsappNumber&text=${Uri.parse(message)}";
+      }
+    }
+
+    if (await canLaunch(url())) {
+      await launch(url());
+    } else {
+      throw 'Could not launch ${url()}';
+    }
+  }
 
   final _formkey = new GlobalKey<FormState>();
 
@@ -40,20 +64,35 @@ class _LoginScreenState extends State<LoginScreen> {
                 fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600),
           ),
           actions: <Widget>[
+            FlatButton(
+              child: new Text(
+                "Cancel",
+                style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
             new FlatButton(
               child: new Text(
                 "Ok",
                 style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
               ),
               onPressed: () {
-                // _removeFromWishlist();
                 Navigator.of(context).pop();
+                launchwhatsapp(whatsappNumber: whatsapp, message: msg);
               },
             ),
           ],
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _settingApi();
   }
 
   @override
@@ -309,6 +348,41 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  _settingApi() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        isTermLoading = true;
+        Services.PostForList(api_name: 'get_all_data_api/?tblName=tblsetting')
+            .then((responseList) async {
+          if (responseList.length > 0) {
+            setState(() {
+              isTermLoading = false;
+              msg = responseList[0]["SettingWhatsAppMessage"];
+              whatsapp = "+91" + responseList[0]["SettingWhatsAppNumber"];
+
+              //set "data" here to your variable
+            });
+          } else {
+            setState(() {
+              isTermLoading = false;
+            });
+            Fluttertoast.showToast(msg: "Data Not Found");
+            //show "data not found" in dialog
+          }
+        }, onError: (e) {
+          setState(() {
+            isTermLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
   }
 
   _login() async {

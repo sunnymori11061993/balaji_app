@@ -52,7 +52,7 @@ class _AddressScreenState extends State<AddressScreen> {
           backgroundColor: Colors.white,
           iconTheme: new IconThemeData(color: Colors.grey),
           title: const Text(
-            "Address Screen",
+            "Manage Address ",
             style: TextStyle(
               color: Colors.black,
             ),

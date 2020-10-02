@@ -263,7 +263,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                             padding: const EdgeInsets.only(
                                                 left: 3.0),
                                             child: Text(
-                                              "Rate Us",
+                                              "Rating",
                                               style: TextStyle(
                                                   fontSize: 16,
                                                   color: Colors.white,
@@ -366,7 +366,7 @@ class _RatingDialogState extends State<RatingDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: new Text(
-        "Add Review & Rating",
+        "Add Rating & Review",
         style: TextStyle(
             fontSize: 22,
             color: appPrimaryMaterialColor,
@@ -376,35 +376,6 @@ class _RatingDialogState extends State<RatingDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Container(
-            width: MediaQuery.of(context).size.width - 140,
-//
-            child: TextFormField(
-              controller: edtReviewController,
-              keyboardType: TextInputType.multiline,
-              maxLines: 3,
-              decoration: InputDecoration(
-                  contentPadding: EdgeInsets.only(left: 10, top: 18, right: 10),
-                  hintText: "Write Review",
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      borderSide: BorderSide(color: Colors.grey)),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(5),
-                      ),
-                      borderSide: BorderSide(
-                        color: Colors.grey,
-                      ))),
-            ),
-          ),
-//          Padding(
-//            padding: const EdgeInsets.only(top: 8.0),
-//            child: Text(
-//              "Avg Rating",
-//              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-//            ),
-//          ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: Directionality(
@@ -418,7 +389,6 @@ class _RatingDialogState extends State<RatingDialog> {
                       SizedBox(
                         height: 10.0,
                       ),
-                      _heading('Rating Us'),
                       _ratingBar(_ratingBarMode),
                       SizedBox(
                         height: 20.0,
@@ -432,6 +402,32 @@ class _RatingDialogState extends State<RatingDialog> {
                     ],
                   ),
                 ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Container(
+              width: MediaQuery.of(context).size.width - 140,
+//
+              child: TextFormField(
+                controller: edtReviewController,
+                keyboardType: TextInputType.multiline,
+                maxLines: 3,
+                decoration: InputDecoration(
+                    contentPadding:
+                        EdgeInsets.only(left: 10, top: 18, right: 10),
+                    hintText: "Write Review",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                        borderSide: BorderSide(color: Colors.grey)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                        ))),
               ),
             ),
           ),

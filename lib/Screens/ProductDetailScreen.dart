@@ -1,14 +1,19 @@
+import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/RelatedProductComponent.dart';
+import 'package:balaji/Screens/ViewCatalougeScreen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Component/LoadingComponent.dart';
@@ -97,6 +102,29 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             viewCatData: data,
           );
         });
+  }
+
+  Future<File> createFileOfPdfUrl(url) async {
+    Completer<File> completer = Completer();
+    print("Start download file from internet!");
+    try {
+      //final url = "http://www.pdf995.com/samples/pdf.pdf";
+      final filename = url.substring(url.lastIndexOf("/") + 1);
+      var request = await HttpClient().getUrl(Uri.parse(url));
+      var response = await request.close();
+      var bytes = await consolidateHttpClientResponseBytes(response);
+      var dir = await getApplicationDocumentsDirectory();
+      print("Download files");
+      print("${dir.path}/$filename");
+      File file = File("${dir.path}/$filename");
+
+      await file.writeAsBytes(bytes, flush: true);
+      completer.complete(file);
+    } catch (e) {
+      throw Exception('Error parsing asset file!');
+    }
+
+    return completer.future;
   }
 
   @override
@@ -562,10 +590,33 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                     side: BorderSide(
                                                         color:
                                                             Colors.grey[300])),
-                                                onPressed: () {
-                                                  print(productList);
-                                                  _showDialogView(
-                                                      context, productList);
+                                                onPressed: () async {
+                                                  // print(productList);
+                                                  log(productList[
+                                                      "ProductCatlogPDF"]);
+                                                  if (productList[
+                                                          "ProductCatlogPDF"] !=
+                                                      "") {
+                                                    await createFileOfPdfUrl(
+                                                            Image_URL +
+                                                                productList[
+                                                                    "ProductCatlogPDF"])
+                                                        .then((f) {
+                                                      log(f.path);
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (BuildContext
+                                                                  context) =>
+                                                              new ViewCatalougeScreen(
+                                                            path: f.path,
+                                                          ),
+                                                        ),
+                                                      );
+                                                    });
+                                                  } else
+                                                    Fluttertoast.showToast(
+                                                        msg: "file not found");
                                                 },
                                                 child: Row(
                                                   mainAxisAlignment:
@@ -746,7 +797,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: Center(
                                         child: Text(
-                                      "If you like than Rate Us!!!",
+                                      "No Rating &  Review Found!!!",
                                       style: TextStyle(
                                           fontSize: 18,
                                           color: Colors.grey[700],
