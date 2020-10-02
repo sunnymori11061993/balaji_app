@@ -829,7 +829,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     top: 15.0, bottom: 10),
                                 child: Container(
                                   height:
-                                      MediaQuery.of(context).size.height / 2.6,
+                                      MediaQuery.of(context).size.height / 2.4,
                                   child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       itemCount: relatedProductList.length,
