@@ -6,6 +6,7 @@ import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/SubCategoriesComponent.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -104,7 +105,7 @@ class _SubCategoryState extends State<SubCategory>
         iconTheme: new IconThemeData(
           color: appPrimaryMaterialColor,
         ),
-        title: const Text('Sub Category',
+        title: Text('Sub_Category'.tr().toString(),
             style: TextStyle(
               color: Colors.black,
             )),

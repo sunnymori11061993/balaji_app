@@ -10,6 +10,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+//import 'package:easy_localization/easy_localization.dart';
+
 class OrderHistoryScreen extends StatefulWidget {
   var OrderData;
 
@@ -76,7 +78,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
         iconTheme: new IconThemeData(
           color: appPrimaryMaterialColor,
         ),
-        title: const Text("View Details",
+        title: Text("View Details",
+            //'drw_order_history'.tr().toString(),
             style: TextStyle(
               color: Colors.black,
             )),

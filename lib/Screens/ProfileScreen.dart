@@ -4,6 +4,7 @@ import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,314 +31,327 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: appPrimaryMaterialColor,
+        appBar: AppBar(
+          leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: appPrimaryMaterialColor,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+          elevation: 1,
+          backgroundColor: Colors.white,
+          iconTheme: new IconThemeData(color: Colors.grey),
+          title: Text(
+            'Profile'.tr().toString(),
+            style: TextStyle(
+              color: Colors.black,
             ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            }),
-        elevation: 1,
-        backgroundColor: Colors.white,
-        iconTheme: new IconThemeData(color: Colors.grey),
-        title: const Text(
-          "Profile Screen",
-          style: TextStyle(
-            color: Colors.black,
           ),
         ),
-      ),
-      body: Stack(
-        //alignment: Alignment.center,
-        children: [
-          SingleChildScrollView(
-            child: Form(
-              key: _formkey,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    top: 30.0, left: 15, right: 15, bottom: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Contact Details",
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: Text(
-                        "Name",
+        body: Stack(
+          //alignment: Alignment.center,
+          children: [
+            SingleChildScrollView(
+              child: Form(
+                key: _formkey,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 30.0, left: 15, right: 15, bottom: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        "Contact Details",
                         style: TextStyle(
-                            fontSize: 15,
+                            fontSize: 18,
                             color: Colors.black,
                             fontWeight: FontWeight.w600),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: TextFormField(
-                        controller: txtName,
-                        keyboardType: TextInputType.text,
-                        style: TextStyle(fontSize: 15),
-                        cursorColor: Colors.black,
-                        validator: (name) {
-                          if (name.length == 0) {
-                            return 'Please enter name';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.all(15),
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Container(
-                              width: 43,
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      right: BorderSide(
-                                          width: 2, color: Colors.grey))),
-                              child: Icon(
-                                Icons.perm_identity,
-                                color: appPrimaryMaterialColor,
-                              ),
-                            ),
-                          ),
-                          fillColor: Colors.white,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(color: Colors.red),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(color: Colors.red),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15.0),
+                        child: Text(
+                          "Name",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: Text(
-                        "Company Name",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: TextFormField(
-                        controller: txtCName,
-                        keyboardType: TextInputType.text,
-                        style: TextStyle(fontSize: 15),
-                        cursorColor: Colors.black,
-                        validator: (name) {
-                          if (name.length == 0) {
-                            return 'Please company name';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.all(15),
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Container(
-                              width: 43,
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      right: BorderSide(
-                                          width: 2, color: Colors.grey))),
-                              child: Icon(
-                                Icons.work,
-                                color: appPrimaryMaterialColor,
-                              ),
-                            ),
-                          ),
-                          fillColor: Colors.white,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(color: Colors.red),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(color: Colors.red),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: Text(
-                        "Email",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: TextFormField(
-                        controller: txtEmail,
-                        keyboardType: TextInputType.emailAddress,
-                        style: TextStyle(fontSize: 15),
-                        cursorColor: Colors.black,
-                        validator: (email) {
-                          Pattern pattern =
-                              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                          RegExp regex = new RegExp(pattern);
-                          print(email);
-                          if (email.isEmpty) {
-                            return 'Please enter email';
-                          } else {
-                            if (!regex.hasMatch(email))
-                              return 'Enter valid Email Address';
-                            else
-                              return null;
-                          }
-                        },
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.all(15),
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Container(
-                              width: 43,
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      right: BorderSide(
-                                          width: 2, color: Colors.grey))),
-                              child: Icon(
-                                Icons.email,
-                                color: appPrimaryMaterialColor,
-                              ),
-                            ),
-                          ),
-                          fillColor: Colors.white,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(color: Colors.red),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(color: Colors.red),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: Text(
-                        "Mobile Number",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: TextFormField(
-                        controller: txtMobileNumber,
-                        keyboardType: TextInputType.phone,
-                        style: TextStyle(fontSize: 15),
-                        cursorColor: Colors.black,
-                        enabled: false,
-                        maxLength: 10,
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.all(15),
-                          prefixIcon: Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Container(
-                              width: 43,
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      right: BorderSide(
-                                          width: 2, color: Colors.grey))),
-                              child: Icon(
-                                Icons.call,
-                                color: appPrimaryMaterialColor,
-                              ),
-                            ),
-                          ),
-                          fillColor: Colors.white,
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(color: Colors.grey),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                      const EdgeInsets.only( top: 50, bottom: 15),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 45,
-                        child: RaisedButton(
-                          color: appPrimaryMaterialColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          onPressed: () {
-                            _updateProfile();
-                            // Navigator.of(context).pushNamed('/Home');
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: TextFormField(
+                          controller: txtName,
+                          keyboardType: TextInputType.text,
+                          style: TextStyle(fontSize: 15),
+                          cursorColor: Colors.black,
+                          validator: (name) {
+                            if (name.length == 0) {
+                              return 'Please enter name';
+                            }
+                            return null;
                           },
-                          child: Text(
-                            "UPDATE PROFILE",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 17),
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(15),
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Container(
+                                width: 43,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        right: BorderSide(
+                                            width: 2, color: Colors.grey))),
+                                child: Icon(
+                                  Icons.perm_identity,
+                                  color: appPrimaryMaterialColor,
+                                ),
+                              ),
+                            ),
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15.0),
+                        child: Text(
+                          "Company Name",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: TextFormField(
+                          controller: txtCName,
+                          keyboardType: TextInputType.text,
+                          style: TextStyle(fontSize: 15),
+                          cursorColor: Colors.black,
+                          validator: (name) {
+                            if (name.length == 0) {
+                              return 'Please company name';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(15),
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Container(
+                                width: 43,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        right: BorderSide(
+                                            width: 2, color: Colors.grey))),
+                                child: Icon(
+                                  Icons.work,
+                                  color: appPrimaryMaterialColor,
+                                ),
+                              ),
+                            ),
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15.0),
+                        child: Text(
+                          "Email",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: TextFormField(
+                          controller: txtEmail,
+                          keyboardType: TextInputType.emailAddress,
+                          style: TextStyle(fontSize: 15),
+                          cursorColor: Colors.black,
+                          validator: (email) {
+                            Pattern pattern =
+                                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                            RegExp regex = new RegExp(pattern);
+                            print(email);
+                            if (email.isEmpty) {
+                              return 'Please enter email';
+                            } else {
+                              if (!regex.hasMatch(email))
+                                return 'Enter valid Email Address';
+                              else
+                                return null;
+                            }
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(15),
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Container(
+                                width: 43,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        right: BorderSide(
+                                            width: 2, color: Colors.grey))),
+                                child: Icon(
+                                  Icons.email,
+                                  color: appPrimaryMaterialColor,
+                                ),
+                              ),
+                            ),
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15.0),
+                        child: Text(
+                          "Mobile Number",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: TextFormField(
+                          controller: txtMobileNumber,
+                          keyboardType: TextInputType.phone,
+                          style: TextStyle(fontSize: 15),
+                          cursorColor: Colors.black,
+                          enabled: false,
+                          maxLength: 10,
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(15),
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Container(
+                                width: 43,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        right: BorderSide(
+                                            width: 2, color: Colors.grey))),
+                                child: Icon(
+                                  Icons.call,
+                                  color: appPrimaryMaterialColor,
+                                ),
+                              ),
+                            ),
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 50, bottom: 15),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 45,
+                          child: RaisedButton(
+                            color: appPrimaryMaterialColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            onPressed: () {
+                              _updateProfile();
+                              // Navigator.of(context).pushNamed('/Home');
+                            },
+                            child: Text(
+                              "UPDATE PROFILE",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 17),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          isLoading?LoadingComponent():Container()
-        ],
-      )
-    );
+            isLoading ? LoadingComponent() : Container()
+          ],
+        ));
   }
 
   _profile() async {

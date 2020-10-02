@@ -23,10 +23,16 @@ import 'package:balaji/Screens/VerificationScreen.dart';
 import 'package:balaji/Screens/ViewCatalougeScreen.dart';
 import 'package:balaji/Screens/WalkThroughScreen.dart';
 import 'package:balaji/Screens/Whishlist.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(EasyLocalization(
+    child: MyApp(),
+    path: "assets/locale",
+    saveLocale: true,
+    supportedLocales: [Locale('hi', 'HI'), Locale('en', 'US')],
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -40,6 +46,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Balaji',
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       initialRoute: '/',
       routes: {
         //'/': (context) => AddressScreen(),

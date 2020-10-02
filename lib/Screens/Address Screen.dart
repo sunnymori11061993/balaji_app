@@ -5,6 +5,7 @@ import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/AddressComponent.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -51,8 +52,8 @@ class _AddressScreenState extends State<AddressScreen> {
           elevation: 1,
           backgroundColor: Colors.white,
           iconTheme: new IconThemeData(color: Colors.grey),
-          title: const Text(
-            "Manage Address ",
+          title: Text(
+            'drw_manage_address'.tr().toString(),
             style: TextStyle(
               color: Colors.black,
             ),

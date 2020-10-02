@@ -6,12 +6,11 @@ import 'package:balaji/Component/CategoriesComponent.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/TrendingProductComponent.dart';
 import 'package:balaji/Screens/Address%20Screen.dart';
-import 'package:balaji/Screens/ContactUs.dart';
 import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/SearchingScreen.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
-import 'package:carousel_pro/carousel_pro.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_slider/image_slider.dart';
@@ -49,7 +48,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   TabController tabController;
 
   Widget appBarTitle = Text(
-    "HOME",
+    'home1'.tr().toString(),
     style: TextStyle(
         // color: appPrimaryMaterialColor,
         color: Colors.black,
@@ -309,7 +308,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         child: Row(
                           children: <Widget>[
                             Text(
-                              "Edit Profile",
+                              'drw_edit_profile'.tr().toString(),
                               style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey,
@@ -364,7 +363,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 //   color: appPrimaryMaterialColor,
                 // ),
                 title: Text(
-                  "Home",
+                  'drw_home'.tr().toString(),
                 ),
               ),
             ),
@@ -385,7 +384,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       )),
                 ),
                 title: Text(
-                  "Order History",
+                  'drw_order_history'.tr().toString(),
                 ),
               ),
             ),
@@ -427,7 +426,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       )),
                 ),
                 title: Text(
-                  "Manage Addresses",
+                  'drw_manage_address'.tr().toString(),
                 ),
               ),
             ),
@@ -453,7 +452,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       )),
                 ),
                 title: Text(
-                  "Change Language",
+                  'drw_change_Lang'.tr().toString(),
                 ),
               ),
             ),
@@ -478,7 +477,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       )),
                 ),
                 title: Text(
-                  "FAQ",
+                  'drw_faq'.tr().toString(),
                 ),
               ),
             ),
@@ -500,7 +499,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       )),
                 ),
                 title: Text(
-                  "Share",
+                  'drw_share'.tr().toString(),
                 ),
               ),
             ),
@@ -522,7 +521,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       )),
                 ),
                 title: Text(
-                  "Contact Us",
+                  'drw_Contact'.tr().toString(),
                 ),
               ),
             ),
@@ -551,7 +550,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       )),
                 ),
                 title: Text(
-                  "Terms & Conditions",
+                  'drw_Terms'.tr().toString(),
                 ),
               ),
             ),
@@ -572,7 +571,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       )),
                 ),
                 title: Text(
-                  "Logout",
+                  'drw_logout'.tr().toString(),
                 ),
               ),
             ),
@@ -655,7 +654,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     Padding(
                       padding: const EdgeInsets.only(left: 8, top: 20.0),
                       child: Text(
-                        "Categories",
+                        'Categories'.tr().toString(),
                         style: TextStyle(
                             fontSize: 14,
                             // color: Colors.black54,
@@ -685,7 +684,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     Padding(
                       padding: const EdgeInsets.only(left: 8, top: 20.0),
                       child: Text(
-                        "Trending Products",
+                        'Trending_Products'.tr().toString(),
                         style: TextStyle(
                             fontSize: 14,
                             color: Colors.grey[700],
@@ -911,7 +910,7 @@ class _ALertLangState extends State<ALertLang> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: new Text(
-        "Select Language",
+        'Select_Language'.tr().toString(),
         style: TextStyle(
             fontSize: 22,
             color: appPrimaryMaterialColor,
@@ -927,7 +926,7 @@ class _ALertLangState extends State<ALertLang> {
                   child: RadioListTile(
                     activeColor: appPrimaryMaterialColor,
                     groupValue: lang,
-                    title: Text('English',
+                    title: Text('English'.tr().toString(),
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 14,
@@ -945,7 +944,7 @@ class _ALertLangState extends State<ALertLang> {
                   child: RadioListTile(
                     activeColor: appPrimaryMaterialColor,
                     groupValue: lang,
-                    title: Text('Hindi',
+                    title: Text('Hindi'.tr().toString(),
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 14,
@@ -979,7 +978,14 @@ class _ALertLangState extends State<ALertLang> {
             "Ok",
             style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
           ),
-          onPressed: () async {},
+          onPressed: () async {
+            Navigator.of(context).pop();
+            if (lang == 'p1') {
+              EasyLocalization.of(context).locale = Locale('en', 'US');
+            } else {
+              EasyLocalization.of(context).locale = Locale('hi', 'HI');
+            }
+          },
         ),
       ],
     );
@@ -1022,7 +1028,7 @@ class _AlertboxLogoutState extends State<AlertboxLogout> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: new Text(
-        "Logout",
+        'drw_logout'.tr().toString(),
         style: TextStyle(
             fontSize: 22,
             color: appPrimaryMaterialColor,

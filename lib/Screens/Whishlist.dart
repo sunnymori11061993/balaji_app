@@ -5,6 +5,7 @@ import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/WishlistComponent.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -45,8 +46,8 @@ class _WhishlistState extends State<Whishlist> {
             iconTheme: new IconThemeData(
               color: appPrimaryMaterialColor,
             ),
-            title: const Text(
-              "Wishlist",
+            title: Text(
+              'Wishlist'.tr().toString(),
               style: TextStyle(
                 color: Colors.black,
               ),

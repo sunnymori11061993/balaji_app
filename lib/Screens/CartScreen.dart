@@ -5,6 +5,7 @@ import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/CartComponent.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -50,7 +51,7 @@ class _CartScreenState extends State<CartScreen> {
               iconTheme: new IconThemeData(
                 color: appPrimaryMaterialColor,
               ),
-              title: const Text("My Cart",
+              title: Text('My_Cart'.tr().toString(),
                   style: TextStyle(
                     color: Colors.black,
                   )),
@@ -212,6 +213,7 @@ class _CartScreenState extends State<CartScreen> {
               setState(() {
                 getCartList = [];
                 mainTotal = 0;
+                //
               });
             },
           );
@@ -282,7 +284,7 @@ class _AlertAddState extends State<AlertAdd> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: new Text(
-        "Address Details",
+        'Address_Details'.tr().toString(),
         style: TextStyle(
             fontSize: 22,
             color: appPrimaryMaterialColor,
@@ -304,7 +306,7 @@ class _AlertAddState extends State<AlertAdd> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "House No",
+                        'House_No'.tr().toString(),
                         style: TextStyle(
                             fontSize: 15,
                             color: Colors.black,
@@ -373,7 +375,7 @@ class _AlertAddState extends State<AlertAdd> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Full Address",
+                        'Full_Address'.tr().toString(),
                         style: TextStyle(
                             fontSize: 15,
                             color: Colors.black,
@@ -439,7 +441,7 @@ class _AlertAddState extends State<AlertAdd> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                    "City",
+                    'City'.tr().toString(),
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
@@ -499,7 +501,7 @@ class _AlertAddState extends State<AlertAdd> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                    "Pincode",
+                    'Pincode'.tr().toString(),
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
@@ -667,7 +669,7 @@ class _AlertSelectAddressState extends State<AlertSelectAddress> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: new Text(
-        "Select Address",
+        'Select_Address'.tr().toString(),
         style: TextStyle(
             fontSize: 22,
             color: appPrimaryMaterialColor,
@@ -858,7 +860,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
               Padding(
                 padding: const EdgeInsets.only(top: 15.0, left: 15, bottom: 10),
                 child: Text(
-                  "Select Address",
+                  'Select_Address'.tr().toString(),
                   style: TextStyle(
                       fontSize: 22,
                       color: appPrimaryMaterialColor,
@@ -891,7 +893,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
                         Padding(
                           padding: const EdgeInsets.only(left: 3.0),
                           child: Text(
-                            "Select",
+                            'Select'.tr().toString(),
                             style: TextStyle(
                                 fontSize: 16,
                                 //color: Colors.white,
@@ -987,7 +989,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
                     Padding(
                       padding: const EdgeInsets.only(right: 25.0, bottom: 15),
                       child: Text(
-                        "Add Address",
+                        'Add_Address'.tr().toString(),
                         style: TextStyle(
                             fontSize: 13,
                             color: Colors.grey[700],

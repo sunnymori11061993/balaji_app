@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/FAQComponent.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -36,8 +37,8 @@ class _FAQScreenState extends State<FAQScreen> {
           elevation: 1,
           backgroundColor: Colors.white,
           iconTheme: new IconThemeData(color: Colors.grey),
-          title: const Text(
-            "FAQ",
+          title: Text(
+            'drw_faq'.tr().toString(),
             style: TextStyle(
               color: Colors.black,
             ),

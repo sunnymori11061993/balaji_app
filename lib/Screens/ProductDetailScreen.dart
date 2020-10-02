@@ -9,6 +9,7 @@ import 'package:balaji/Component/RelatedProductComponent.dart';
 import 'package:balaji/Screens/ViewCatalougeScreen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -145,7 +146,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           iconTheme: new IconThemeData(
             color: appPrimaryMaterialColor,
           ),
-          title: const Text('Product Detail',
+          title: Text('Product_Detail'.tr().toString(),
               style: TextStyle(
                 color: Colors.black,
               )),
@@ -517,7 +518,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                             padding: const EdgeInsets.only(
                                                 top: 15.0),
                                             child: Text(
-                                              "Select Quantity",
+                                              'Select_Quantity'.tr().toString(),
                                               style: TextStyle(
                                                   fontSize: 14,
                                                   color: Colors.black,
@@ -565,7 +566,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                             padding: const EdgeInsets.only(
                                                 top: 15.0),
                                             child: Text(
-                                              "View Catalogue",
+                                              'View_Catalogue'.tr().toString(),
                                               style: TextStyle(
                                                   fontSize: 14,
                                                   color: Colors.black,
@@ -670,7 +671,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "Product Description",
+                                'Product_Description'.tr().toString(),
                                 style: TextStyle(
                                     fontSize: 15,
                                     color: Colors.black,
@@ -705,7 +706,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "Rating & Reviews",
+                                'Rating_&_Reviews'.tr().toString(),
                                 style: TextStyle(
                                     fontSize: 15,
                                     color: Colors.black,
@@ -818,7 +819,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "Related Products",
+                                'Related_Products'.tr().toString(),
                                 style: TextStyle(
                                     fontSize: 15,
                                     color: Colors.black,

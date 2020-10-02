@@ -5,6 +5,7 @@ import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/HistoryComponent.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,7 +43,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           iconTheme: new IconThemeData(
             color: appPrimaryMaterialColor,
           ),
-          title: const Text("Order History",
+          title: Text('drw_order_history'.tr().toString(),
               style: TextStyle(
                 color: Colors.black,
               )),
