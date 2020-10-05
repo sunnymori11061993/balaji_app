@@ -51,6 +51,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   List rateList = [];
   double percentResult;
   int value;
+  int i;
 
   percent() {
     setState(() {
@@ -693,119 +694,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 10.0),
-                          child: Container(
-                            height: 20,
-                            color: Colors.grey[100],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10.0, left: 20, right: 8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Rating_&_Reviews'.tr().toString(),
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ],
-                          ),
-                        ),
-                        isRateLoading
-                            ? LoadingComponent()
-                            : rateList.length > 0
-                                ? Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 25.0, left: 20, right: 8),
-                                    child: Container(
-                                      height: 120,
-                                      child: ListView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: rateList.length,
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 8.0),
-                                              child: Container(
-                                                height: 100,
-                                                width: 100,
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    border: Border.all(
-                                                      color: Colors.grey[300],
-                                                    )),
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text(
-                                                          "${rateList[index]["RatingStar"]}",
-                                                          style: TextStyle(
-                                                              fontSize: 30,
-                                                              color: Colors
-                                                                  .grey[700],
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
-                                                        ),
-                                                        Icon(
-                                                          Icons.star,
-                                                          size: 15,
-                                                          color:
-                                                              appPrimaryMaterialColor,
-                                                        )
-                                                      ],
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 4.0,
-                                                              right: 4),
-                                                      child: Text(
-                                                        "${rateList[index]["RatingReview"]}",
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        maxLines: 5,
-                                                        style: TextStyle(
-                                                            fontSize: 14,
-                                                            color: Colors.grey,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w400),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                          }),
-                                    ))
-                                : Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: Center(
-                                        child: Text(
-                                      "No Rating &  Review Found!!!",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.grey[700],
-                                          fontWeight: FontWeight.w600),
-                                    )),
-                                  ),
-                        Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: Container(
                             height: 20,
@@ -846,6 +734,137 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ],
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: Container(
+                            height: 20,
+                            color: Colors.grey[100],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10.0, left: 20, right: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                'Rating_&_Reviews'.tr().toString(),
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                        ),
+                        isRateLoading
+                            ? LoadingComponent()
+                            : rateList.length > 0
+                                ? Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 25.0,
+                                        left: 20,
+                                        right: 20,
+                                        bottom: 3),
+                                    child: ListView.builder(
+                                        //scrollDirection: Axis.horizontal,
+                                        // itemCount: 5,
+                                        itemCount: rateList.length,
+                                        physics: NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemBuilder:
+                                            (BuildContext context, int index) {
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 8.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  // "4.5",
+                                                  "${rateList[index]["RatingStar"]}",
+                                                  style: TextStyle(
+                                                      fontSize: 30,
+                                                      color: Colors.grey[700],
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  size: 15,
+                                                  color:
+                                                      appPrimaryMaterialColor,
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 4.0, right: 4),
+                                                  child: Text(
+                                                    // "First, to be 100% clear about what type of service we will be talking about, let's define what we mean under the reviews. A review is manual writing under the description of the application users can place at Google Play to evaluate the product they tried. This is a well-composed statement, of 2 or more sentences that show their experience with the application, attitude and plans (whether they will use it in the future or not).",
+                                                    "${rateList[index]["RatingReview"]}",
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 25,
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Colors.grey,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                ),
+                                                Divider()
+                                              ],
+                                            ),
+                                          );
+                                        }))
+                                : Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Center(
+                                        child: Text(
+                                      "No Rating &  Review Found!!!",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.grey[700],
+                                          fontWeight: FontWeight.w600),
+                                    )),
+                                  ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Center(
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                height: 25,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(
+                                      color: Colors.grey[300],
+                                    )),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 4.0),
+                                      child: Text(
+                                        "See more",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                    Icon(Icons.arrow_drop_down)
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),

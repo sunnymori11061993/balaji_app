@@ -47,13 +47,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   TabController tabController;
 
-  Widget appBarTitle = Text(
-    'home1'.tr().toString(),
-    style: TextStyle(
-        // color: appPrimaryMaterialColor,
-        color: Colors.black,
-        fontSize: 17),
-  );
   TextEditingController txtSearch = TextEditingController();
 
   @override
@@ -114,6 +107,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    Widget appBarTitle = Text(
+      'home1'.tr().toString(),
+      style: TextStyle(
+          // color: appPrimaryMaterialColor,
+          color: Colors.black,
+          fontSize: 17),
+    );
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

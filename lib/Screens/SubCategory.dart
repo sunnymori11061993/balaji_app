@@ -558,10 +558,12 @@ class _SubCategoryState extends State<SubCategory>
             isLoadingCat = false;
           });
           if (tabResponseList.length > 0) {
+            print("anirudh");
             setState(() {
               subCategoriesTab = tabResponseList;
               //set "data" here to your variable
             });
+
             _subCategory(tabResponseList[0]["SubcategoryId"]);
             _tabCon();
           } else {
