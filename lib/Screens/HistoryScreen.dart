@@ -30,14 +30,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: appPrimaryMaterialColor,
-              ),
-              onPressed: () {
+          leading: GestureDetector(
+              onTap: () {
                 Navigator.of(context).pop();
-              }),
+              },
+              child: Image.asset(
+                "assets/backarrow.png",
+                //color: appPrimaryMaterialColor,
+              )),
           elevation: 1,
           backgroundColor: Colors.white,
           iconTheme: new IconThemeData(
@@ -45,7 +45,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           ),
           title: Text('drw_order_history'.tr().toString(),
               style: TextStyle(
-                color: Colors.black,
+                color: appPrimaryMaterialColor,
               )),
         ),
         body: isHistoryLoading

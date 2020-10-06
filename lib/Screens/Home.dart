@@ -47,6 +47,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   TabController tabController;
 
+  Widget appBarTitle = Text(
+    'home1'.tr().toString(),
+    style: TextStyle(
+        color: appPrimaryMaterialColor,
+        //fontFamily: 'RobotoSlab',
+        // color: Colors.black,
+        fontSize: 17),
+  );
   TextEditingController txtSearch = TextEditingController();
 
   @override
@@ -107,13 +115,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Widget appBarTitle = Text(
-      'home1'.tr().toString(),
-      style: TextStyle(
-          // color: appPrimaryMaterialColor,
-          color: Colors.black,
-          fontSize: 17),
-    );
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -154,7 +155,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     style: TextStyle(
                         //color: Colors.white,
                         ),
-                    cursorColor: Colors.black,
+                    cursorColor: appPrimaryMaterialColor,
                     decoration: InputDecoration(
                         // prefixIcon: SizedBox(
                         //   height: 20,
@@ -389,21 +390,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               ),
             ),
 
-//            GestureDetector(
-//              onTap: () {
-//                Navigator.of(context).pop();
-//                Navigator.of(context).pushNamed('/OrderHistoryScreen');
-//              },
-//              child: ListTile(
-//                leading: Icon(
-//                  Icons.history,
-//                  color: appPrimaryMaterialColor,
-//                ),
-//                title: Text(
-//                  "Order History",
-//                ),
-//              ),
-//            ),
+//
             GestureDetector(
               onTap: () {
                 //  Navigator.of(context).pushNamed('/ContactUs');
@@ -434,11 +421,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               onTap: () {
                 Navigator.of(context).pop();
                 _showDialogLang(context);
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (BuildContext context) =>
-                //             new LanguageChangeScreen()));
               },
               child: ListTile(
                 leading: Padding(
@@ -658,7 +640,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         style: TextStyle(
                             fontSize: 14,
                             // color: Colors.black54,
-                            color: Colors.grey[700],
+                            color: appPrimaryMaterialColor,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -687,7 +669,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         'Trending_Products'.tr().toString(),
                         style: TextStyle(
                             fontSize: 14,
-                            color: Colors.grey[700],
+                            //fontFamily: 'RobotoSlab',
+                            color: appPrimaryMaterialColor,
                             fontWeight: FontWeight.bold),
                       ),
                     ),

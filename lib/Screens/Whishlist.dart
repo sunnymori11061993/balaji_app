@@ -33,14 +33,14 @@ class _WhishlistState extends State<Whishlist> {
       child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  color: appPrimaryMaterialColor,
-                ),
-                onPressed: () {
+            leading: GestureDetector(
+                onTap: () {
                   Navigator.of(context).pop("pop");
-                }),
+                },
+                child: Image.asset(
+                  "assets/backarrow.png",
+                  //color: appPrimaryMaterialColor,
+                )),
             elevation: 1,
             backgroundColor: Colors.white,
             iconTheme: new IconThemeData(
@@ -49,7 +49,7 @@ class _WhishlistState extends State<Whishlist> {
             title: Text(
               'Wishlist'.tr().toString(),
               style: TextStyle(
-                color: Colors.black,
+                color: appPrimaryMaterialColor,
               ),
             ),
             actions: <Widget>[

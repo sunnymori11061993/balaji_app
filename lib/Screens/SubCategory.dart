@@ -92,14 +92,23 @@ class _SubCategoryState extends State<SubCategory>
       key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: appPrimaryMaterialColor,
-            ),
-            onPressed: () {
+        leading: GestureDetector(
+            onTap: () {
               Navigator.of(context).pop();
-            }),
+            },
+            child: Image.asset(
+              "assets/backarrow.png",
+              //color: appPrimaryMaterialColor,
+            )),
+
+//        IconButton(
+//            icon: Icon(
+//              Icons.arrow_back_ios,
+//              color: appPrimaryMaterialColor,
+//            ),
+//            onPressed: () {
+//              Navigator.of(context).pop();
+//            }),
         elevation: 0,
         backgroundColor: Colors.white,
         iconTheme: new IconThemeData(
@@ -107,7 +116,7 @@ class _SubCategoryState extends State<SubCategory>
         ),
         title: Text('Sub_Category'.tr().toString(),
             style: TextStyle(
-              color: Colors.black,
+              color: appPrimaryMaterialColor,
             )),
         actions: <Widget>[
           Padding(
@@ -200,19 +209,27 @@ class _SubCategoryState extends State<SubCategory>
 //            DrawerHeader(
 //              child:
 //            ),
+
             ListTile(
               leading: Padding(
                 padding: const EdgeInsets.only(top: 40.0),
-                child: Icon(
-                  Icons.cancel,
-                  color: appPrimaryMaterialColor,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Icon(
+                    Icons.cancel,
+                    size: 20,
+                    color: appPrimaryMaterialColor,
+                  ),
                 ),
               ),
               title: Padding(
                 padding: const EdgeInsets.only(top: 40.0),
                 child: Center(
                   child: Text("Filter Products",
-                      style: TextStyle(color: Colors.black, fontSize: 18)),
+                      style: TextStyle(
+                          color: appPrimaryMaterialColor, fontSize: 18)),
                 ),
               ),
             ),
@@ -406,7 +423,7 @@ class _SubCategoryState extends State<SubCategory>
                           child: TabBar(
                             isScrollable: true,
                             controller: _tabController,
-                            unselectedLabelColor: Colors.grey,
+                            unselectedLabelColor: appPrimaryMaterialColor[700],
                             labelColor: Colors.white,
                             indicatorColor: appPrimaryMaterialColor,
                             indicator: new BubbleTabIndicator(

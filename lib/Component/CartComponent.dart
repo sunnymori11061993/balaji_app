@@ -8,7 +8,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CartComponent extends StatefulWidget {
   var getCartData;
@@ -204,7 +203,7 @@ class _CartComponentState extends State<CartComponent> {
                         Row(
                           children: <Widget>[
                             Text(
-                              "Quantity :",
+                              "Set :",
                               style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.black,
@@ -240,53 +239,6 @@ class _CartComponentState extends State<CartComponent> {
                             ),
                           ],
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(right: 3, bottom: 2),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.end,
-                        //     children: <Widget>[
-                        //       Container(
-                        //         width: 150,
-                        //         height: 40,
-                        //         // color: appPrimaryMaterialColor,
-                        //         decoration: BoxDecoration(
-                        //             borderRadius: BorderRadius.circular(5),
-                        //             // border: Border.all(color: Colors.grey[300]),
-                        //             color: appPrimaryMaterialColor),
-                        //         child: Center(
-                        //           child: Row(
-                        //             mainAxisAlignment: MainAxisAlignment.center,
-                        //             children: [
-                        //               Text(
-                        //                 "Total :",
-                        //                 style: TextStyle(
-                        //                     fontSize: 16,
-                        //                     color: Colors.white,
-                        //                     fontWeight: FontWeight.w600),
-                        //               ),
-                        //               Text(
-                        //                 "₹",
-                        //                 style: TextStyle(
-                        //                     color: Colors.white,
-                        //                     fontSize: 16,
-                        //                     fontWeight: FontWeight.w600),
-                        //               ),
-                        //               Flexible(
-                        //                 child: Text(
-                        //                   "${res}",
-                        //                   style: TextStyle(
-                        //                       fontSize: 16,
-                        //                       color: Colors.white,
-                        //                       fontWeight: FontWeight.w600),
-                        //                 ),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
@@ -318,11 +270,11 @@ class _CartComponentState extends State<CartComponent> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.delete_forever,
-                            //color: Colors.white),
-                            color: Colors.grey[700],
-                          ),
+//                          Icon(
+//                            Icons.delete_forever,
+//                            //color: Colors.white),
+//                            color: Colors.grey[700],
+//                          ),
                           Text(
                             "Remove",
                             style: TextStyle(

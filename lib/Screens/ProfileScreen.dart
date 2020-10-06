@@ -32,21 +32,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: appPrimaryMaterialColor,
-              ),
-              onPressed: () {
+          leading: GestureDetector(
+              onTap: () {
                 Navigator.of(context).pop();
-              }),
+              },
+              child: Image.asset(
+                "assets/backarrow.png",
+                //color: appPrimaryMaterialColor,
+              )),
           elevation: 1,
           backgroundColor: Colors.white,
           iconTheme: new IconThemeData(color: Colors.grey),
           title: Text(
             'Profile'.tr().toString(),
             style: TextStyle(
-              color: Colors.black,
+              color: appPrimaryMaterialColor,
             ),
           ),
         ),
@@ -66,7 +66,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         "Contact Details",
                         style: TextStyle(
                             fontSize: 18,
-                            color: Colors.black,
+                            color: appPrimaryMaterialColor,
                             fontWeight: FontWeight.w600),
                       ),
                       Padding(
@@ -135,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Padding(
                         padding: const EdgeInsets.only(top: 15.0),
                         child: Text(
-                          "Company Name",
+                          "Shop Name",
                           style: TextStyle(
                               fontSize: 15,
                               color: Colors.black,
@@ -197,12 +197,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 15.0),
-                        child: Text(
-                          "Email",
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600),
+                        child: Row(
+                          children: [
+                            Text(
+                              "Email",
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              " (Optional)",
+                              style: TextStyle(
+                                  fontSize: 11,
+                                  color: appPrimaryMaterialColor,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
                         ),
                       ),
                       Padding(
@@ -212,20 +223,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           keyboardType: TextInputType.emailAddress,
                           style: TextStyle(fontSize: 15),
                           cursorColor: Colors.black,
-                          validator: (email) {
-                            Pattern pattern =
-                                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                            RegExp regex = new RegExp(pattern);
-                            print(email);
-                            if (email.isEmpty) {
-                              return 'Please enter email';
-                            } else {
-                              if (!regex.hasMatch(email))
-                                return 'Enter valid Email Address';
-                              else
-                                return null;
-                            }
-                          },
+//                          validator: (email) {
+//                            Pattern pattern =
+//                                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+//                            RegExp regex = new RegExp(pattern);
+//                            print(email);
+//                            if (email.isEmpty) {
+//                              return 'Please enter email';
+//                            } else {
+//                              if (!regex.hasMatch(email))
+//                                return 'Enter valid Email Address';
+//                              else
+//                                return null;
+//                            }
+//                          },
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.all(15),
                             prefixIcon: Padding(

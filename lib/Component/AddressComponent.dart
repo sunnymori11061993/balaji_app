@@ -387,12 +387,12 @@ class _AddressComponentState extends State<AddressComponent> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 5.0, left: 4),
-                                  child: Icon(Icons.delete_forever,
-                                      color: Colors.white),
-                                ),
+//                                Padding(
+//                                  padding: const EdgeInsets.only(
+//                                      right: 5.0, left: 4),
+//                                  child: Icon(Icons.delete_forever,
+//                                      color: Colors.white),
+//                                ),
                                 // color: Colors.grey[700],
                                 //),
                                 // Padding(
@@ -443,17 +443,17 @@ class _AddressComponentState extends State<AddressComponent> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 10.0, left: 4),
-                                  child: Container(
-                                      height: 20,
-                                      width: 20,
-                                      child: Image.asset(
-                                        "assets/052-edit.png",
-                                        color: Colors.white,
-                                      )),
-                                ),
+//                                Padding(
+//                                  padding: const EdgeInsets.only(
+//                                      right: 10.0, left: 4),
+//                                  child: Container(
+//                                      height: 20,
+//                                      width: 20,
+//                                      child: Image.asset(
+//                                        "assets/052-edit.png",
+//                                        color: Colors.white,
+//                                      )),
+//                                ),
                                 Text(
                                   "Update",
                                   style: TextStyle(

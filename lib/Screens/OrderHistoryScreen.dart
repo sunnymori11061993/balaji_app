@@ -65,14 +65,14 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: appPrimaryMaterialColor,
-            ),
-            onPressed: () {
+        leading: GestureDetector(
+            onTap: () {
               Navigator.of(context).pop();
-            }),
+            },
+            child: Image.asset(
+              "assets/backarrow.png",
+              //color: appPrimaryMaterialColor,
+            )),
         elevation: 1,
         backgroundColor: Colors.white,
         iconTheme: new IconThemeData(
@@ -81,7 +81,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
         title: Text("View Details",
             //'drw_order_history'.tr().toString(),
             style: TextStyle(
-              color: Colors.black,
+              color: appPrimaryMaterialColor,
             )),
       ),
       body: isViewDetailLoading
@@ -257,11 +257,11 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                         crossAxisAlignment:
                                             CrossAxisAlignment.center,
                                         children: [
-                                          Icon(
-                                            Icons.star,
-                                            size: 20,
-                                            color: Colors.white,
-                                          ),
+//                                          Icon(
+//                                            Icons.star,
+//                                            size: 20,
+//                                            color: Colors.white,
+//                                          ),
                                           Padding(
                                             padding: const EdgeInsets.only(
                                                 left: 3.0),

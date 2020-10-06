@@ -86,7 +86,7 @@ class _SubCategoriesComponentState extends State<SubCategoriesComponent> {
                         ),
                         child: Text("${widget.subCat["ProductName"]}",
                             overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
+                            maxLines: 2,
                             style: TextStyle(
                               color: Colors.grey[600],
                               fontSize: 12,

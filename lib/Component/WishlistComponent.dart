@@ -231,7 +231,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Icon(Icons.delete_forever, color: Colors.white),
+//                                Icon(Icons.delete_forever, color: Colors.white),
                                 // color: Colors.grey[700],),
                                 Text(
                                   "Remove",
@@ -268,10 +268,10 @@ class _WishlistComponentState extends State<WishlistComponent> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Icon(
-                                  Icons.shopping_cart,
-                                  color: Colors.white,
-                                ),
+//                                Icon(
+//                                  Icons.shopping_cart,
+//                                  color: Colors.white,
+//                                ),
                                 Text(
                                   "Move To Cart",
                                   style: TextStyle(

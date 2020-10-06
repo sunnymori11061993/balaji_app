@@ -38,14 +38,14 @@ class _CartScreenState extends State<CartScreen> {
         child: Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
-              leading: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back_ios,
-                    color: appPrimaryMaterialColor,
-                  ),
-                  onPressed: () {
+              leading: GestureDetector(
+                  onTap: () {
                     Navigator.of(context).pop("pop");
-                  }),
+                  },
+                  child: Image.asset(
+                    "assets/backarrow.png",
+                    //color: appPrimaryMaterialColor,
+                  )),
               elevation: 1,
               backgroundColor: Colors.white,
               iconTheme: new IconThemeData(
@@ -53,7 +53,7 @@ class _CartScreenState extends State<CartScreen> {
               ),
               title: Text('My_Cart'.tr().toString(),
                   style: TextStyle(
-                    color: Colors.black,
+                    color: appPrimaryMaterialColor,
                   )),
               actions: <Widget>[
                 Padding(
@@ -336,10 +336,13 @@ class _AlertAddState extends State<AlertAdd> {
                                     border: Border(
                                         right: BorderSide(
                                             width: 2, color: Colors.grey))),
-                                child: Icon(
-                                  Icons.home,
-                                  color: appPrimaryMaterialColor,
-                                ),
+                                child: Container(
+                                    height: 20,
+                                    width: 20,
+                                    child: Image.asset(
+                                      "assets/012-house.png",
+                                      color: appPrimaryMaterialColor,
+                                    )),
                               ),
                             ),
                             fillColor: Colors.white,
@@ -1021,7 +1024,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Icon(Icons.delete_forever, color: Colors.white),
+//                              Icon(Icons.delete_forever, color: Colors.white),
                               // color: Colors.grey[700],),
                               Text(
                                 "Cancel",
@@ -1072,8 +1075,8 @@ class _showBottomSheetState extends State<showBottomSheet> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.add_shopping_cart,
-                                        color: Colors.white),
+//                                    Icon(Icons.add_shopping_cart,
+//                                        color: Colors.white),
                                     Text(
                                       "Place Order",
                                       style: TextStyle(

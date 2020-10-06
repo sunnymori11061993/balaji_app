@@ -22,22 +22,22 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: appPrimaryMaterialColor,
-              ),
-              onPressed: () {
+          leading: GestureDetector(
+              onTap: () {
                 Navigator.of(context).pop();
-              }),
+              },
+              child: Image.asset(
+                "assets/backarrow.png",
+                //color: appPrimaryMaterialColor,
+              )),
           elevation: 1,
           backgroundColor: Colors.white,
           iconTheme: new IconThemeData(
             color: appPrimaryMaterialColor,
           ),
-          title: const Text('Terms & Conditions',
+          title: Text('Terms & Conditions',
               style: TextStyle(
-                color: Colors.black,
+                color: appPrimaryMaterialColor,
               )),
           actions: <Widget>[
             // IconButton(

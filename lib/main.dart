@@ -80,11 +80,11 @@ class _MyAppState extends State<MyApp> {
         '/ViewCatalougeScreen': (context) => ViewCatalougeScreen(),
       },
       theme: ThemeData(
-          //fontFamily: 'Montserrat',
-          // primarySwatch: cnst.appPrimaryMaterialColor,
+        fontFamily: 'RobotoSlab',
+        // primarySwatch: cnst.appPrimaryMaterialColor,
 //        accentColor: Colors.black,
 //        buttonColor: Colors.deepPurple,
-          ),
+      ),
     );
   }
 }

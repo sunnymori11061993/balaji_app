@@ -2,11 +2,9 @@ import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
-import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Screens/OrderHistoryScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class HistoryComponent extends StatefulWidget {
@@ -223,7 +221,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(Icons.delete_forever, color: Colors.white),
+//                            Icon(Icons.delete_forever, color: Colors.white),
                             // color: Colors.grey[700],),
                             widget.orderData["OrderStageDropDown"] != "Cancel"
                                 ? Text(
@@ -275,10 +273,10 @@ class _HistoryComponentState extends State<HistoryComponent> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Icon(
-                              Icons.details,
-                              color: Colors.white,
-                            ),
+//                            Icon(
+//                              Icons.details,
+//                              color: Colors.white,
+//                            ),
                             Text(
                               "View Details",
                               style: TextStyle(

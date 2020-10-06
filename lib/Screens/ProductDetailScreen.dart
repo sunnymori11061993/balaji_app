@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 import '../Component/LoadingComponent.dart';
 
@@ -52,6 +53,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   double percentResult;
   int value;
   int i;
+  int j;
+
+  counter(int index) {
+    for (j = 3; j <= rateList.length; j++) {
+      setState(() {
+        j = rateList[index + 3];
+      });
+    }
+  }
 
   percent() {
     setState(() {
@@ -93,6 +103,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     _getProductDetail();
     _getCart();
     _getRating();
+    counter(3);
   }
 
   _showDialogView(BuildContext context, var data) {
@@ -134,14 +145,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          leading: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: appPrimaryMaterialColor,
-              ),
-              onPressed: () {
+          leading: GestureDetector(
+              onTap: () {
                 Navigator.of(context).pop();
-              }),
+              },
+              child: Image.asset(
+                "assets/backarrow.png",
+                //color: appPrimaryMaterialColor,
+              )),
           elevation: 1,
           backgroundColor: Colors.white,
           iconTheme: new IconThemeData(
@@ -149,7 +160,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ),
           title: Text('Product_Detail'.tr().toString(),
               style: TextStyle(
-                color: Colors.black,
+                color: appPrimaryMaterialColor,
               )),
           actions: <Widget>[
             Padding(
@@ -277,10 +288,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: <Widget>[
-                                        Icon(
-                                          Icons.shopping_cart,
-                                          color: Colors.white,
-                                        ),
+//                                        Icon(
+//                                          Icons.shopping_cart,
+//                                          color: Colors.white,
+//                                        ),
                                         isCartList == true
                                             ? Text(
                                                 "Already in Cart",
@@ -507,72 +518,49 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                           )),
                                     ],
                                   ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 15.0),
-                                            child: Text(
-                                              'Select_Quantity'.tr().toString(),
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 8.0),
-                                            child: Row(
-                                              children: <Widget>[
-                                                IconButton(
-                                                  icon:
-                                                      Icon(Icons.remove_circle),
-                                                  onPressed: () {
-                                                    minus();
-                                                  },
-                                                  color:
-                                                      appPrimaryMaterialColor,
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0, right: 8),
-                                                  child: Text('$_m'),
-                                                ),
-                                                IconButton(
-                                                  icon: Icon(Icons.add_circle),
-                                                  onPressed: () {
-                                                    add();
-                                                  },
-                                                  color:
-                                                      appPrimaryMaterialColor,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 15.0),
+                                        child: Text(
+                                          'Select_Quantity'.tr().toString(),
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w600),
+                                        ),
                                       ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 15.0),
-                                            child: Text(
-                                              'View_Catalogue'.tr().toString(),
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: <Widget>[
+                                              IconButton(
+                                                icon: Icon(Icons.remove_circle),
+                                                onPressed: () {
+                                                  minus();
+                                                },
+                                                color: appPrimaryMaterialColor,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 8.0, right: 8),
+                                                child: Text('$_m'),
+                                              ),
+                                              IconButton(
+                                                icon: Icon(Icons.add_circle),
+                                                onPressed: () {
+                                                  add();
+                                                },
+                                                color: appPrimaryMaterialColor,
+                                              ),
+                                            ],
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.only(
@@ -582,7 +570,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                 right: 8),
                                             child: SizedBox(
                                               height: 30,
-                                              width: 90,
+                                              width: 150,
                                               child: FlatButton(
                                                 //color: appPrimaryMaterialColor,
                                                 shape: RoundedRectangleBorder(
@@ -620,42 +608,23 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                     Fluttertoast.showToast(
                                                         msg: "file not found");
                                                 },
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              right: 2.0),
-                                                      child: Icon(
-                                                        Icons.details,
-                                                        //color: Colors.white),
-                                                        color: Colors.grey[700],
-                                                        size: 16,
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      "View",
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        //color: Colors.white,
-                                                        color: Colors.grey[700],
+                                                child: Text(
+                                                  "View Catalogue",
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    //color: Colors.white,
+                                                    color: Colors.grey[700],
 //                                                          fontWeight:
 //                                                              FontWeight.bold
-                                                      ),
-                                                    ),
-                                                  ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
+                                          )
                                         ],
                                       ),
                                     ],
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
@@ -685,7 +654,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   productList["ProductDescription"],
                                   //  "${widget.productDetail["ProductDescription"]}",
                                   style: TextStyle(
-                                      fontSize: 15,
+                                      fontSize: 13,
                                       color: Colors.grey,
                                       fontWeight: FontWeight.w400),
                                 ),
@@ -768,8 +737,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                         bottom: 3),
                                     child: ListView.builder(
                                         //scrollDirection: Axis.horizontal,
-                                        // itemCount: 5,
                                         itemCount: rateList.length,
+                                        //itemCount: j,
                                         physics: NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
                                         itemBuilder:
@@ -787,17 +756,28 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                   // "4.5",
                                                   "${rateList[index]["RatingStar"]}",
                                                   style: TextStyle(
-                                                      fontSize: 30,
+                                                      fontSize: 25,
                                                       color: Colors.grey[700],
                                                       fontWeight:
                                                           FontWeight.w600),
                                                 ),
-                                                Icon(
-                                                  Icons.star,
-                                                  size: 15,
-                                                  color:
-                                                      appPrimaryMaterialColor,
-                                                ),
+                                                SmoothStarRating(
+                                                    allowHalfRating: false,
+                                                    isReadOnly: true,
+                                                    starCount: 5,
+                                                    rating: rateList[index][
+                                                                "RatingStar"] ==
+                                                            ""
+                                                        ? 0
+                                                        : double.parse(
+                                                            "${rateList[index]["RatingStar"]}",
+                                                          ),
+                                                    size: 25.0,
+                                                    color:
+                                                        appPrimaryMaterialColor,
+                                                    borderColor:
+                                                        appPrimaryMaterialColor,
+                                                    spacing: 0.0),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.only(
@@ -809,10 +789,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                         TextOverflow.ellipsis,
                                                     maxLines: 25,
                                                     style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.grey,
-                                                        fontWeight:
-                                                            FontWeight.w400),
+                                                      fontSize: 14,
+                                                      color: Colors.grey,
+//                                                        fontWeight:
+//                                                            FontWeight.w200
+                                                    ),
                                                   ),
                                                 ),
                                                 Divider()
@@ -835,7 +816,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Center(
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                setState(() {
+                                  //ssssss counter(j);
+                                });
+                              },
                               child: Container(
                                 height: 25,
                                 width: 100,
