@@ -92,14 +92,17 @@ class _SubCategoryState extends State<SubCategory>
       key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
-            child: Image.asset(
-              "assets/backarrow.png",
-              //color: appPrimaryMaterialColor,
-            )),
+        leading: Padding(
+          padding: const EdgeInsets.only(top: 8.0, left: 5, bottom: 8),
+          child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Image.asset(
+                "assets/backarrow.png",
+                //color: appPrimaryMaterialColor,
+              )),
+        ),
 
 //        IconButton(
 //            icon: Icon(
@@ -181,8 +184,8 @@ class _SubCategoryState extends State<SubCategory>
           Padding(
             padding: const EdgeInsets.only(right: 12.0, left: 4),
             child: Container(
-                height: 20,
-                width: 20,
+                height: 30,
+                width: 25,
                 child: GestureDetector(
                     onTap: () {
                       setState(() {
@@ -190,8 +193,8 @@ class _SubCategoryState extends State<SubCategory>
                       });
                     },
                     child: Image.asset(
-                      "assets/filter.png",
-                      color: appPrimaryMaterialColor,
+                      "assets/filtericon.png",
+                      //  color: appPrimaryMaterialColor,
                     ))),
           ),
 //          IconButton(

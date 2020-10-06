@@ -236,7 +236,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen> {
       },
 
       // Show or hide status bar
-      shouldHideStatusBar: true,
+      shouldHideStatusBar: false,
 
       // On tab change completed
       onTabChangeCompleted: this.onTabChangeCompleted,

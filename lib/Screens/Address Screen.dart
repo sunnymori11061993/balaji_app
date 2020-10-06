@@ -41,14 +41,17 @@ class _AddressScreenState extends State<AddressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Image.asset(
-                "assets/backarrow.png",
-                //color: appPrimaryMaterialColor,
-              )),
+          leading: Padding(
+            padding: const EdgeInsets.only(top: 8.0, left: 5, bottom: 8),
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: Image.asset(
+                  "assets/backarrow.png",
+                  //color: appPrimaryMaterialColor,
+                )),
+          ),
           elevation: 1,
           backgroundColor: Colors.white,
           iconTheme: new IconThemeData(color: Colors.grey),

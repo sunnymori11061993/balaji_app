@@ -69,14 +69,17 @@ class _VerificationScreenState extends State<VerificationScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: appPrimaryMaterialColor,
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            }),
+        leading: Padding(
+          padding: const EdgeInsets.only(top: 8.0, left: 5, bottom: 8),
+          child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: Image.asset(
+                "assets/backarrow.png",
+                //color: appPrimaryMaterialColor,
+              )),
+        ),
         elevation: 0,
         backgroundColor: Colors.white,
       ),

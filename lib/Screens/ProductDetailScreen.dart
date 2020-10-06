@@ -52,13 +52,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   List rateList = [];
   double percentResult;
   int value;
-  int i;
-  int j;
+  int a = 0;
 
-  counter(int index) {
-    for (j = 3; j <= rateList.length; j++) {
+  counter() {
+    int b;
+    b = a + 3;
+    if (b <= rateList.length) {
       setState(() {
-        j = rateList[index + 3];
+        a = b;
+      });
+      print(a);
+    } else {
+      setState(() {
+        a = rateList.length;
       });
     }
   }
@@ -103,7 +109,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     _getProductDetail();
     _getCart();
     _getRating();
-    counter(3);
   }
 
   _showDialogView(BuildContext context, var data) {
@@ -145,14 +150,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          leading: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Image.asset(
-                "assets/backarrow.png",
-                //color: appPrimaryMaterialColor,
-              )),
+          leading: Padding(
+            padding: const EdgeInsets.only(top: 8.0, left: 5, bottom: 8),
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pop();
+                },
+                child: Image.asset(
+                  "assets/backarrow.png",
+                  //color: appPrimaryMaterialColor,
+                )),
+          ),
           elevation: 1,
           backgroundColor: Colors.white,
           iconTheme: new IconThemeData(
@@ -343,6 +351,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                           options: CarouselOptions(
                                             autoPlay: true,
                                             aspectRatio: 1.0,
+                                            enableInfiniteScroll: false,
                                             enlargeCenterPage: true,
                                           ),
                                           items: imgList
@@ -355,12 +364,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                                     15.0)),
                                                         child: Stack(
                                                           children: <Widget>[
-                                                            Image.network(
-                                                                Image_URL +
-                                                                    item,
-                                                                fit:
-                                                                    BoxFit.fill,
-                                                                width: 1000.0),
+                                                            FadeInImage
+                                                                .assetNetwork(
+                                                              image: Image_URL +
+                                                                  item,
+                                                              fit: BoxFit.fill,
+                                                              width: 1000.0,
+                                                              placeholder:
+                                                                  'assets/balajiLogo.png',
+                                                            ),
                                                             Positioned(
                                                               bottom: 0.0,
                                                               left: 0.0,
@@ -419,67 +431,71 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: <Widget>[
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Text(
-                                            productList["ProductName"],
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 8.0),
-                                            child: Row(
-                                              children: <Widget>[
-                                                Text(
-                                                    "₹" +
-                                                        productList[
-                                                            "ProductSrp"],
-                                                    // "${widget.productDetail["ProductSrp"]}",
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 16)),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 4.0),
-                                                  child: Text(
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              productList["ProductName"],
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: 8.0),
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Text(
                                                       "₹" +
                                                           productList[
-                                                              "ProductMrp"],
-
-                                                      //  "${widget.productDetail["ProductMrp"]}",
+                                                              "ProductSrp"],
+                                                      // "${widget.productDetail["ProductSrp"]}",
                                                       style: TextStyle(
-                                                          color: Colors.grey,
-                                                          fontSize: 16,
-                                                          decoration:
-                                                              TextDecoration
-                                                                  .lineThrough)),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 5.0),
-                                                  child: Text(
-                                                    // "${widget.relatedProductData["ProductSrp"]}",
-                                                    "(${percentResult.toStringAsFixed(0)}% OFF)",
-                                                    style: TextStyle(
-                                                        // color: Colors.grey[600],
-                                                        color:
-                                                            appPrimaryMaterialColor,
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w600),
+                                                          color: Colors.black,
+                                                          fontSize: 16)),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 4.0),
+                                                    child: Text(
+                                                        "₹" +
+                                                            productList[
+                                                                "ProductMrp"],
+
+                                                        //  "${widget.productDetail["ProductMrp"]}",
+                                                        style: TextStyle(
+                                                            color: Colors.grey,
+                                                            fontSize: 16,
+                                                            decoration:
+                                                                TextDecoration
+                                                                    .lineThrough)),
                                                   ),
-                                                ),
-                                              ],
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 5.0),
+                                                    child: Text(
+                                                      // "${widget.relatedProductData["ProductSrp"]}",
+                                                      "(${percentResult.toStringAsFixed(0)}% OFF)",
+                                                      style: TextStyle(
+                                                          // color: Colors.grey[600],
+                                                          color:
+                                                              appPrimaryMaterialColor,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                       GestureDetector(
                                           onTap: () {
@@ -737,8 +753,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                         bottom: 3),
                                     child: ListView.builder(
                                         //scrollDirection: Axis.horizontal,
-                                        itemCount: rateList.length,
-                                        //itemCount: j,
+                                        //  itemCount: rateList.length,
+                                        itemCount: a,
                                         physics: NeverScrollableScrollPhysics(),
                                         shrinkWrap: true,
                                         itemBuilder:
@@ -812,44 +828,48 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                           fontWeight: FontWeight.w600),
                                     )),
                                   ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Center(
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  //ssssss counter(j);
-                                });
-                              },
-                              child: Container(
-                                height: 25,
-                                width: 100,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(
-                                      color: Colors.grey[300],
-                                    )),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 4.0),
-                                      child: Text(
-                                        "See more",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600),
+                        a < rateList.length
+                            ? Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Center(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      counter();
+                                    },
+                                    child: Container(
+                                      height: 25,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          border: Border.all(
+                                            color: Colors.grey[300],
+                                          )),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 4.0),
+                                            child: Text(
+                                              "See more",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          ),
+                                          Icon(Icons.arrow_drop_down)
+                                        ],
                                       ),
                                     ),
-                                    Icon(Icons.arrow_drop_down)
-                                  ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        )
+                              )
+                            : Container()
                       ],
                     ),
                   ),
@@ -882,6 +902,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               isWishList = productResponseList[0]["isFav"];
               //set "data" here to your variable
             });
+            log(productResponseList[0]["ProductImages"].toString());
             total();
             _getRelatedProduct();
             discount();
@@ -922,6 +943,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               isRateLoading = false;
               rateList = responseList;
             });
+            if (responseList.length >= 3) {
+              setState(() {
+                a = 3;
+              });
+            } else {
+              setState(() {
+                a = responseList.length;
+              });
+            }
           } else {
             setState(() {
               isRateLoading = false;

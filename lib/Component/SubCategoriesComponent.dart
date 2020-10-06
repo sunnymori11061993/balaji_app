@@ -79,19 +79,21 @@ class _SubCategoriesComponentState extends State<SubCategoriesComponent> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 4.0,
-                          top: 2.0,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            left: 4.0,
+                            top: 2.0,
+                          ),
+                          child: Text("${widget.subCat["ProductName"]}",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              )),
                         ),
-                        child: Text("${widget.subCat["ProductName"]}",
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            )),
                       ),
                       GestureDetector(
                         onTap: () {

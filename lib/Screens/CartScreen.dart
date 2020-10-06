@@ -38,14 +38,17 @@ class _CartScreenState extends State<CartScreen> {
         child: Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
-              leading: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop("pop");
-                  },
-                  child: Image.asset(
-                    "assets/backarrow.png",
-                    //color: appPrimaryMaterialColor,
-                  )),
+              leading: Padding(
+                padding: const EdgeInsets.only(top: 8.0, left: 5, bottom: 8),
+                child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop("pop");
+                    },
+                    child: Image.asset(
+                      "assets/backarrow.png",
+                      //color: appPrimaryMaterialColor,
+                    )),
+              ),
               elevation: 1,
               backgroundColor: Colors.white,
               iconTheme: new IconThemeData(
@@ -339,6 +342,7 @@ class _AlertAddState extends State<AlertAdd> {
                                 child: Container(
                                     height: 20,
                                     width: 20,
+                                    padding: EdgeInsets.all(10),
                                     child: Image.asset(
                                       "assets/012-house.png",
                                       color: appPrimaryMaterialColor,
@@ -408,10 +412,14 @@ class _AlertAddState extends State<AlertAdd> {
                                     border: Border(
                                         right: BorderSide(
                                             width: 2, color: Colors.grey))),
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: appPrimaryMaterialColor,
-                                ),
+                                child: Container(
+                                    height: 20,
+                                    width: 20,
+                                    padding: EdgeInsets.all(10),
+                                    child: Image.asset(
+                                      "assets/038-placeholder.png",
+                                      color: appPrimaryMaterialColor,
+                                    )),
                               ),
                             ),
                             fillColor: Colors.white,

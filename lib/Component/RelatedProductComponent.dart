@@ -84,66 +84,61 @@ class _RelatedProductComponentState extends State<RelatedProductComponent> {
                               Image_URL +
                                   "${widget.relatedProductData["ProductImages"]}",
                               fit: BoxFit.fill)),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 4.0,
-                      top: 2.0,
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 4.0,
+                        top: 2.0,
+                      ),
+                      child: Text("${widget.relatedProductData["ProductName"]}",
+                          // Text("Goofy",
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          )),
                     ),
-                    child: Text("${widget.relatedProductData["ProductName"]}",
-                        // Text("Goofy",
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                        )),
                   ),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8, bottom: 1),
                       child: Row(
-                        //crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Text(
-                                    "₹",
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  Text(
-                                    "${widget.relatedProductData["ProductSrp"]}",
-                                    // "125",
-                                    style: TextStyle(
-                                        // color: Colors.grey[600],
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ],
+                              Text(
+                                "₹",
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 12.0),
-                                child: Text(
-                                  // /"₹" + "140",
-                                  "₹" +
-                                      "${widget.relatedProductData["ProductMrp"]}",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.grey,
-                                      fontSize: 14,
-                                      decoration: TextDecoration.lineThrough),
-                                ),
+                              Text(
+                                "${widget.relatedProductData["ProductSrp"]}",
+                                // "125",
+                                style: TextStyle(
+                                    // color: Colors.grey[600],
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600),
                               ),
                             ],
                           ),
-
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Text(
+                              // /"₹" + "140",
+                              "₹" +
+                                  "${widget.relatedProductData["ProductMrp"]}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey,
+                                  fontSize: 14,
+                                  decoration: TextDecoration.lineThrough),
+                            ),
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(left: 5.0),
                             child: Text(
@@ -156,30 +151,6 @@ class _RelatedProductComponentState extends State<RelatedProductComponent> {
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
-
-//                          GestureDetector(
-//                            onTap: () {
-//                              _addToWishlist();
-//                            },
-//                            child: Container(
-//                                child: isWishList == false
-//                                    ? Padding(
-//                                        padding:
-//                                            const EdgeInsets.only(right: 8.0),
-//                                        child: Icon(
-//                                          Icons.favorite_border,
-//                                          color: appPrimaryMaterialColor,
-//                                        ),
-//                                      )
-//                                    : Padding(
-//                                        padding:
-//                                            const EdgeInsets.only(right: 8.0),
-//                                        child: Icon(
-//                                          Icons.favorite,
-//                                          color: appPrimaryMaterialColor,
-//                                        ),
-//                                      )),
-//                          ),
                         ],
                       ),
                     ),
