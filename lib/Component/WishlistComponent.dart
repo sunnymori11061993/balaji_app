@@ -52,12 +52,15 @@ class _WishlistComponentState extends State<WishlistComponent> {
             style: TextStyle(
                 fontSize: 22,
                 color: appPrimaryMaterialColor,
-                fontWeight: FontWeight.bold),
+                fontWeight: FontWeight.w400
+            ),
           ),
           content: new Text(
             "Are you sure want to remove from cart!!!",
             style: TextStyle(
-                fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600),
+                fontSize: 14, color: Colors.black,
+                //fontWeight: FontWeight.w400
+            ),
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
@@ -144,7 +147,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
                                 "${widget.wishListData["ProductDescription"]}",
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                    fontSize: 14,
+                                    fontSize: 13,
                                     color: Colors.grey,
                                     fontWeight: FontWeight.w400),
                               ),
@@ -156,15 +159,15 @@ class _WishlistComponentState extends State<WishlistComponent> {
                                   Text(
                                     "Price :",
                                     style: TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 15,
                                         color: Colors.black,
                                         fontWeight: FontWeight.w600),
                                   ),
                                   Text(
                                     "₹",
                                     style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 16,
+                                        color: Colors.black,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.w600),
                                   ),
                                   Text(
@@ -172,7 +175,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
                                     style: TextStyle(
                                         // color: Colors.grey[600],
                                         color: Colors.black,
-                                        fontSize: 16,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.w600),
                                   ),
                                   Padding(
@@ -183,7 +186,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
                                       style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                           color: Colors.grey,
-                                          fontSize: 16,
+                                          fontSize: 15,
                                           decoration:
                                               TextDecoration.lineThrough),
                                     ),
@@ -196,7 +199,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
                                       style: TextStyle(
                                           // color: Colors.grey[600],
                                           color: appPrimaryMaterialColor,
-                                          fontSize: 12,
+                                          fontSize: 11,
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ),
@@ -239,7 +242,8 @@ class _WishlistComponentState extends State<WishlistComponent> {
                                       fontSize: 15,
                                       color: Colors.white,
                                       // color: Colors.grey[700],
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.w400
+                                  ),
                                 ),
                               ],
                             ),
@@ -278,7 +282,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
                                       fontSize: 15,
                                       color: Colors.white,
                                       //  color: Colors.grey[700],
-                                      fontWeight: FontWeight.bold),
+                                      fontWeight: FontWeight.w400),
                                 ),
                               ],
                             ),

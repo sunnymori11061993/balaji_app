@@ -393,6 +393,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             "CustomerName": txtName.text,
             "CustomerCompanyName": txtCName.text,
             "CustomerEmailId": txtEmail.text,
+            "CustomerPhoneNo": txtMobileNumber.text,
           }); //"key":"value"
 
           Services.postForSave(apiname: 'update_profile', body: body).then(
@@ -403,6 +404,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 prefs.setString(Session.CustomerName, txtName.text);
                 prefs.setString(Session.CustomerCompanyName, txtCName.text);
                 prefs.setString(Session.CustomerEmailId, txtEmail.text);
+                prefs.setString(Session.CustomerPhoneNo, txtMobileNumber.text);
               });
 
               Fluttertoast.showToast(

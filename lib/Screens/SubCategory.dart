@@ -444,7 +444,7 @@ class _SubCategoryState extends State<SubCategory>
                                 child: Text(
                                   subCategoriesTab[index]["SubcategoryName"],
                                   style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                     // fontWeight: FontWeight.bold,
                                       fontSize: 14.0),
                                 ),
                               );

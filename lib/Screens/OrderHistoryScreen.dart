@@ -146,7 +146,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                           "${viewOrderDetailList[index]["ProductDescription"]}",
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
-                                              fontSize: 14,
+                                              fontSize: 13,
                                               color: Colors.grey,
                                               fontWeight: FontWeight.w400),
                                         ),
@@ -159,7 +159,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                             Text(
                                               "Qty :",
                                               style: TextStyle(
-                                                  fontSize: 16,
+                                                  fontSize: 15,
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.w600),
                                             ),
@@ -167,7 +167,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                               " ${viewOrderDetailList[index]["ProductQty"]}",
                                               style: TextStyle(
                                                   color: Colors.grey,
-                                                  fontSize: 16,
+                                                  fontSize: 15,
                                                   fontWeight: FontWeight.w600),
                                             ),
                                           ],
@@ -211,7 +211,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                 fontSize: 16,
                                                 //color: Colors.white,
                                                 color: Colors.white,
-                                                fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.w400),
                                           ),
                                           Text(
                                             "₹",
@@ -219,7 +219,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                 fontSize: 16,
                                                 //color: Colors.white,
                                                 color: Colors.white,
-                                                fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.w400),
                                           ),
                                           Text(
                                             "${widget.OrderData["OrderTotal"]}",
@@ -227,7 +227,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                 fontSize: 16,
                                                 // color: Colors.white,
                                                 color: Colors.white,
-                                                fontWeight: FontWeight.bold),
+                                                fontWeight: FontWeight.w400),
                                           ),
                                         ],
                                       ),
@@ -274,7 +274,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                                   fontSize: 16,
                                                   color: Colors.white,
                                                   //  color: Colors.grey[700],
-                                                  fontWeight: FontWeight.bold),
+                                                  fontWeight: FontWeight.w400),
                                             ),
                                           ),
                                         ],
@@ -376,7 +376,8 @@ class _RatingDialogState extends State<RatingDialog> {
         style: TextStyle(
             fontSize: 22,
             color: appPrimaryMaterialColor,
-            fontWeight: FontWeight.bold),
+            //fontWeight: FontWeight.bold
+        ),
       ),
       content: new Column(
         crossAxisAlignment: CrossAxisAlignment.start,

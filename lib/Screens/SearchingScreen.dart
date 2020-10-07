@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
@@ -46,11 +45,11 @@ class _SearchingScreenState extends State<SearchingScreen> {
         ),
         elevation: 1,
         backgroundColor: Colors.white,
-        iconTheme: new IconThemeData(color: Colors.grey),
-        title: const Text(
+        iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
+        title:  Text(
           "Searched Products",
           style: TextStyle(
-            color: Colors.black,
+            color: appPrimaryMaterialColor,
           ),
         ),
       ),

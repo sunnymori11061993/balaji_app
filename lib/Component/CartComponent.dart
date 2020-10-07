@@ -79,12 +79,14 @@ class _CartComponentState extends State<CartComponent> {
             style: TextStyle(
                 fontSize: 22,
                 color: appPrimaryMaterialColor,
-                fontWeight: FontWeight.bold),
+                fontWeight: FontWeight.w400),
           ),
           content: new Text(
             "Are you sure want to remove from cart!!!",
             style: TextStyle(
-                fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600),
+                fontSize: 14, color: Colors.black,
+                //fontWeight: FontWeight.w600
+            ),
           ),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
@@ -161,7 +163,7 @@ class _CartComponentState extends State<CartComponent> {
                             "${widget.getCartData["ProductDescription"]}",
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 13,
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -172,7 +174,7 @@ class _CartComponentState extends State<CartComponent> {
                             children: <Widget>[
                               Text("₹" + "${widget.getCartData["ProductSrp"]}",
                                   style: TextStyle(
-                                      color: Colors.black, fontSize: 16)),
+                                      color: Colors.black, fontSize: 15)),
                               Padding(
                                 padding: const EdgeInsets.only(left: 4.0),
                                 child: Text(
@@ -181,7 +183,7 @@ class _CartComponentState extends State<CartComponent> {
                                     //  "${widget.productDetail["ProductMrp"]}",
                                     style: TextStyle(
                                         color: Colors.grey,
-                                        fontSize: 16,
+                                        fontSize: 15,
                                         decoration:
                                             TextDecoration.lineThrough)),
                               ),
@@ -193,7 +195,7 @@ class _CartComponentState extends State<CartComponent> {
                                   style: TextStyle(
                                       // color: Colors.grey[600],
                                       color: appPrimaryMaterialColor,
-                                      fontSize: 12,
+                                      fontSize: 11,
                                       fontWeight: FontWeight.w600),
                                 ),
                               ),
@@ -205,9 +207,9 @@ class _CartComponentState extends State<CartComponent> {
                             Text(
                               "Set :",
                               style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 15,
                                   color: Colors.black,
-                                  fontWeight: FontWeight.w600),
+                                  fontWeight: FontWeight.w400),
                             ),
                             IconButton(
                               icon: Icon(
@@ -281,7 +283,8 @@ class _CartComponentState extends State<CartComponent> {
                                 fontSize: 16,
                                 // color: Colors.white,
                                 color: Colors.grey[700],
-                                fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.w400
+                            ),
                           ),
                         ],
                       ),
@@ -315,7 +318,8 @@ class _CartComponentState extends State<CartComponent> {
                                 fontSize: 16,
                                 //color: Colors.white,
                                 color: Colors.grey[700],
-                                fontWeight: FontWeight.bold),
+                               fontWeight: FontWeight.w400
+                            ),
                           ),
                           Text(
                             "₹",
@@ -323,7 +327,8 @@ class _CartComponentState extends State<CartComponent> {
                                 fontSize: 16,
                                 //color: Colors.white,
                                 color: Colors.grey[700],
-                                fontWeight: FontWeight.bold),
+                               fontWeight: FontWeight.w400
+                            ),
                           ),
                           Text(
                             "${res}",
@@ -331,7 +336,8 @@ class _CartComponentState extends State<CartComponent> {
                                 fontSize: 16,
                                 // color: Colors.white,
                                 color: Colors.grey[700],
-                                fontWeight: FontWeight.bold),
+                                fontWeight: FontWeight.w400
+                            ),
                           ),
                         ],
                       ),

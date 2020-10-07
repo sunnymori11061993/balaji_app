@@ -772,7 +772,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                   // "4.5",
                                                   "${rateList[index]["RatingStar"]}",
                                                   style: TextStyle(
-                                                      fontSize: 25,
+                                                      fontSize: 20,
                                                       color: Colors.grey[700],
                                                       fontWeight:
                                                           FontWeight.w600),
@@ -788,7 +788,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                         : double.parse(
                                                             "${rateList[index]["RatingStar"]}",
                                                           ),
-                                                    size: 25.0,
+                                                    size: 20.0,
                                                     color:
                                                         appPrimaryMaterialColor,
                                                     borderColor:
@@ -805,7 +805,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                         TextOverflow.ellipsis,
                                                     maxLines: 25,
                                                     style: TextStyle(
-                                                      fontSize: 14,
+                                                      fontSize: 13,
                                                       color: Colors.grey,
 //                                                        fontWeight:
 //                                                            FontWeight.w200

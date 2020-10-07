@@ -4,6 +4,7 @@ import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/WishlistComponent.dart';
+import 'package:balaji/Screens/SearchingScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ class Whishlist extends StatefulWidget {
 class _WhishlistState extends State<Whishlist> {
   bool isLoading = true;
   List wishList = [];
+  TextEditingController txtSearch = TextEditingController();
+  bool searchImage = true;
 
   @override
   void initState() {
@@ -26,6 +29,14 @@ class _WhishlistState extends State<Whishlist> {
 
   @override
   Widget build(BuildContext context) {
+    Widget appBarTitle = Text(
+      'Wishlist'.tr().toString(),
+      style: TextStyle(
+          color: appPrimaryMaterialColor,
+          //fontFamily: 'RobotoSlab',
+          // color: Colors.black,
+          fontSize: 17),
+    );
     return WillPopScope(
       onWillPop: () {
         Navigator.of(context).pop("pop");
@@ -49,36 +60,116 @@ class _WhishlistState extends State<Whishlist> {
             iconTheme: new IconThemeData(
               color: appPrimaryMaterialColor,
             ),
-            title: Text(
-              'Wishlist'.tr().toString(),
-              style: TextStyle(
-                color: appPrimaryMaterialColor,
-              ),
-            ),
+            title: appBarTitle,
             actions: <Widget>[
-              Padding(
+              if (searchImage == false)
+                Row(
+                  children: [
+                    Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/search.png",
+                        color: appPrimaryMaterialColor,
+                      ),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width - 120,
+                      height: 50,
+                      child: TextFormField(
+                        controller: txtSearch,
+                        textInputAction: TextInputAction.done,
+                        onFieldSubmitted: (aa) {
+                          //  _getSearching();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                  new SearchingScreen(
+                                    searchData: txtSearch.text,
+                                  )));
+                          txtSearch.clear();
+                          //Navigator.pop(context, this.txtSearch.text);
+                        },
+                        style: TextStyle(
+                          //color: Colors.white,
+                        ),
+                        cursorColor: appPrimaryMaterialColor,
+                        decoration: InputDecoration(
+                          // prefixIcon: SizedBox(
+                          //   height: 20,
+                          //   width: 10,
+                          //   child: Image.asset(
+                          //     "assets/search.png",
+                          //     color: appPrimaryMaterialColor,
+                          //   ),
+                          // ),
+
+                            hintText: "    Search...",
+                            hintStyle: TextStyle(color: Colors.grey),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            )),
+                      ),
+                    ),
+                  ],
+                ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    searchImage = !searchImage;
+                  });
+                },
+                child: searchImage
+                    ? Padding(
+                  padding: const EdgeInsets.only(right: 15.0),
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    child: Image.asset(
+                      "assets/search.png",
+                      color: appPrimaryMaterialColor,
+                    ),
+                  ),
+                )
+                    : Padding(
+                  padding: const EdgeInsets.only(right: 15.0),
+                  child: Container(
+                    height: 20,
+                    width: 20,
+                    child: Image.asset(
+                      "assets/025-cancel.png",
+                      color: appPrimaryMaterialColor,
+                    ),
+                  ),
+                ),
+              ),
+              searchImage
+                  ? Padding(
                 padding: const EdgeInsets.only(
                   right: 10.0,
                   left: 8,
                 ),
-                child: Container(
-                    height: 20,
-                    width: 20,
-                    child: GestureDetector(
-                        onTap: () {
-                          //Navigator.of(context).pushNamed('/Whishlist');
-                        },
-                        child: Image.asset(
-                          "assets/020-heart.png",
-                          color: appPrimaryMaterialColor,
-                        ))),
-              ),
-              Stack(
+                child:Container(
+                        height: 20,
+                        width: 20,
+                        child: GestureDetector(
+                            onTap: () {
+                              //Navigator.of(context).pushNamed('/Whishlist');
+                            },
+                            child: Image.asset(
+                              "assets/020-heart.png",
+                              color: appPrimaryMaterialColor,
+                            ))),
+              )
+                  : Container(),
+              searchImage
+                  ? Stack(
                 alignment: Alignment.topCenter,
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+                    const EdgeInsets.only(right: 15.0, left: 8, top: 18),
                     child: Container(
                         height: 20,
                         width: 20,
@@ -91,7 +182,6 @@ class _WhishlistState extends State<Whishlist> {
                               color: appPrimaryMaterialColor,
                             ))),
                   ),
-
                   // if (cartList.length > 0)
                   //   Padding(
                   //     padding: const EdgeInsets.only(
@@ -111,6 +201,62 @@ class _WhishlistState extends State<Whishlist> {
                   //   ),
                 ],
               )
+                  : Container(),
+              // Padding(
+              //   padding: const EdgeInsets.only(
+              //     right: 10.0,
+              //     left: 8,
+              //   ),
+              //   child: Container(
+              //       height: 20,
+              //       width: 20,
+              //       child: GestureDetector(
+              //           onTap: () {
+              //             //Navigator.of(context).pushNamed('/Whishlist');
+              //           },
+              //           child: Image.asset(
+              //             "assets/020-heart.png",
+              //             color: appPrimaryMaterialColor,
+              //           ))),
+              // ),
+              // Stack(
+              //   alignment: Alignment.topCenter,
+              //   children: [
+              //     Padding(
+              //       padding:
+              //           const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+              //       child: Container(
+              //           height: 20,
+              //           width: 20,
+              //           child: GestureDetector(
+              //               onTap: () {
+              //                 Navigator.of(context).pushNamed('/CartScreen');
+              //               },
+              //               child: Image.asset(
+              //                 "assets/shopping-cart.png",
+              //                 color: appPrimaryMaterialColor,
+              //               ))),
+              //     ),
+              //
+              //     // if (cartList.length > 0)
+              //     //   Padding(
+              //     //     padding: const EdgeInsets.only(
+              //     //         left: 0.0, top: 13, right: 10),
+              //     //     child: CircleAvatar(
+              //     //       radius: 6.0,
+              //     //       backgroundColor: Colors.red,
+              //     //       foregroundColor: Colors.white,
+              //     //       child: Text(
+              //     //         cartList.length.toString(),
+              //     //         style: TextStyle(
+              //     //           fontWeight: FontWeight.bold,
+              //     //           fontSize: 10.0,
+              //     //         ),
+              //     //       ),
+              //     //     ),
+              //     //   ),
+              //   ],
+              // )
             ],
           ),
           body: isLoading

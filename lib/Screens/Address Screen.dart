@@ -155,6 +155,9 @@ class _AlertFloatingState extends State<AlertFloating> {
   TextEditingController txtFullAddress = TextEditingController();
   TextEditingController txtCity = TextEditingController();
   TextEditingController txtPincode = TextEditingController();
+  TextEditingController txtLandmark = TextEditingController();
+  String dropdownvalue = 'Gujarat';
+  String dropdownvaluecity = 'Surat';
   final _formkey = new GlobalKey<FormState>();
 
   bool isLoading = false;
@@ -167,7 +170,8 @@ class _AlertFloatingState extends State<AlertFloating> {
         style: TextStyle(
             fontSize: 22,
             color: appPrimaryMaterialColor,
-            fontWeight: FontWeight.bold),
+           // fontWeight: FontWeight.bold
+        ),
       ),
       content: SingleChildScrollView(
         child: Container(
@@ -185,7 +189,7 @@ class _AlertFloatingState extends State<AlertFloating> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "House No",
+                        'House_No'.tr().toString(),
                         style: TextStyle(
                             fontSize: 15,
                             color: Colors.black,
@@ -215,10 +219,14 @@ class _AlertFloatingState extends State<AlertFloating> {
                                     border: Border(
                                         right: BorderSide(
                                             width: 2, color: Colors.grey))),
-                                child: Icon(
-                                  Icons.home,
-                                  color: appPrimaryMaterialColor,
-                                ),
+                                child: Container(
+                                    height: 20,
+                                    width: 20,
+                                    padding: EdgeInsets.all(10),
+                                    child: Image.asset(
+                                      "assets/012-house.png",
+                                      color: appPrimaryMaterialColor,
+                                    )),
                               ),
                             ),
                             fillColor: Colors.white,
@@ -254,7 +262,7 @@ class _AlertFloatingState extends State<AlertFloating> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Full Address",
+                        'Full_Address'.tr().toString(),
                         style: TextStyle(
                             fontSize: 15,
                             color: Colors.black,
@@ -284,10 +292,14 @@ class _AlertFloatingState extends State<AlertFloating> {
                                     border: Border(
                                         right: BorderSide(
                                             width: 2, color: Colors.grey))),
-                                child: Icon(
-                                  Icons.location_on,
-                                  color: appPrimaryMaterialColor,
-                                ),
+                                child: Container(
+                                    height: 20,
+                                    width: 20,
+                                    padding: EdgeInsets.all(10),
+                                    child: Image.asset(
+                                      "assets/050-world-grid.png",
+                                      color: appPrimaryMaterialColor,
+                                    )),
                               ),
                             ),
                             fillColor: Colors.white,
@@ -319,62 +331,76 @@ class _AlertFloatingState extends State<AlertFloating> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    "City",
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5.0, bottom: 3),
-                  child: TextFormField(
-                    controller: txtCity,
-                    keyboardType: TextInputType.text,
-                    style: TextStyle(fontSize: 15),
-                    cursorColor: Colors.black,
-                    validator: (city) {
-                      if (city.length == 0) {
-                        return 'Please enter your city';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(5),
-                      hintText: 'City',
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Container(
-                          width: 43,
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  right: BorderSide(
-                                      width: 2, color: Colors.grey))),
-                          child: Icon(
-                            Icons.location_city,
-                            color: appPrimaryMaterialColor,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        //'Full_Address'.tr().toString(),
+                        "Landmark",
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 3),
+                        child: TextFormField(
+                          controller: txtLandmark,
+                          keyboardType: TextInputType.text,
+                          style: TextStyle(fontSize: 15),
+                          cursorColor: Colors.black,
+                          validator: (address) {
+                            if (address.length == 0) {
+                              return 'Please enter your full address';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(5),
+                            hintText: ' near abc hospital ',
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Container(
+                                width: 43,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        right: BorderSide(
+                                            width: 2, color: Colors.grey))),
+                                child: Container(
+                                    height: 20,
+                                    width: 20,
+                                    padding: EdgeInsets.all(10),
+                                    child: Image.asset(
+                                      "assets/038-placeholder.png",
+                                      color: appPrimaryMaterialColor,
+                                    )),
+                              ),
+                            ),
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
                           ),
                         ),
                       ),
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                        borderSide: BorderSide(color: Colors.red),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                        borderSide: BorderSide(color: Colors.red),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                    ),
+                    ],
                   ),
                 ),
                 Padding(
@@ -439,6 +465,149 @@ class _AlertFloatingState extends State<AlertFloating> {
                     ),
                   ),
                 ),
+
+                // Padding(
+                //   padding: const EdgeInsets.only(top: 5.0, bottom: 3),
+                //   child: TextFormField(
+                //     controller: txtCity,
+                //     keyboardType: TextInputType.text,
+                //     style: TextStyle(fontSize: 15),
+                //     cursorColor: Colors.black,
+                //     validator: (city) {
+                //       if (city.length == 0) {
+                //         return 'Please enter your city';
+                //       }
+                //       return null;
+                //     },
+                //     decoration: InputDecoration(
+                //       contentPadding: const EdgeInsets.all(5),
+                //       hintText: 'City',
+                //       prefixIcon: Padding(
+                //         padding: const EdgeInsets.only(right: 8.0),
+                //         child: Container(
+                //           width: 43,
+                //           decoration: BoxDecoration(
+                //               border: Border(
+                //                   right: BorderSide(
+                //                       width: 2, color: Colors.grey))),
+                //           child: Icon(
+                //             Icons.location_city,
+                //             color: appPrimaryMaterialColor,
+                //           ),
+                //         ),
+                //       ),
+                //       fillColor: Colors.white,
+                //       enabledBorder: OutlineInputBorder(
+                //         borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                //         borderSide: BorderSide(color: Colors.grey),
+                //       ),
+                //       errorBorder: OutlineInputBorder(
+                //         borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                //         borderSide: BorderSide(color: Colors.red),
+                //       ),
+                //       focusedErrorBorder: OutlineInputBorder(
+                //         borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                //         borderSide: BorderSide(color: Colors.red),
+                //       ),
+                //       focusedBorder: OutlineInputBorder(
+                //         borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                //         borderSide: BorderSide(color: Colors.grey),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0,bottom: 5),
+                  child: Text(
+                    //'Pincode'.tr().toString(),
+                    "State",
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                      )
+                      ,
+                      borderRadius: BorderRadius.circular(5)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:8.0),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: dropdownvalue,
+                        icon: Icon(Icons.arrow_drop_down,size: 25,color: appPrimaryMaterialColor),
+                        underline: Container(
+                          height: 2,
+                          color:appPrimaryMaterialColor,
+                        ),
+                        items: <String> ['Gujarat','Maharashtra','Kerala','Manipur'] .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String newvalue){
+                          setState(() {
+                            dropdownvalue = newvalue;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0,bottom: 5),
+                  child: Text(
+                    'City'.tr().toString(),
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                      )
+                      ,
+                      borderRadius: BorderRadius.circular(5)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:8.0),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: dropdownvaluecity,
+                        icon: Icon(Icons.arrow_drop_down,size: 25,color: appPrimaryMaterialColor),
+                        underline: Container(
+                          height: 2,
+                          color:appPrimaryMaterialColor,
+                        ),
+                        items: <String> ['Surat','Baroda','Kerala','Manipur'] .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String newvalue){
+                          setState(() {
+                            dropdownvaluecity = newvalue;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+
               ],
             ),
           ),

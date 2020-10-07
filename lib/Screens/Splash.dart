@@ -13,16 +13,19 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        // backgroundColor: appPrimaryMaterialColor,
-        body: SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: Image.asset(
-              'assets/Splash_Screen-01.png',
-              fit: BoxFit.cover,
-            )));
+    return SafeArea(
+
+      child: Scaffold(
+          backgroundColor: Colors.white,
+          // backgroundColor: appPrimaryMaterialColor,
+          body: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Image.asset(
+                'assets/Splash_Screen-01.png',
+                fit: BoxFit.cover,
+              ))),
+    );
   }
 
   @override

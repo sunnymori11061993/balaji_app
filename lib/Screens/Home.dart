@@ -47,14 +47,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   TabController tabController;
 
-  Widget appBarTitle = Text(
-    'home1'.tr().toString(),
-    style: TextStyle(
-        color: appPrimaryMaterialColor,
-        //fontFamily: 'RobotoSlab',
-        // color: Colors.black,
-        fontSize: 17),
-  );
+
   TextEditingController txtSearch = TextEditingController();
 
   @override
@@ -115,8 +108,66 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    Widget appBarTitle = Text(
+      'home1'.tr().toString(),
+      style: TextStyle(
+          color: appPrimaryMaterialColor,
+          //fontFamily: 'RobotoSlab',
+          // color: Colors.black,
+          fontSize: 17),
+    );
     return Scaffold(
       backgroundColor: Colors.white,
+      bottomNavigationBar: BottomNavigationBar(
+        selectedIconTheme: IconThemeData(color: appPrimaryMaterialColor),
+        unselectedIconTheme: IconThemeData(color: Colors.grey),
+        items:  <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+
+              icon:Container(
+                height: 20,
+                width: 20,
+                child: Image.asset(
+                  "assets/012-house.png",
+                  color: appPrimaryMaterialColor,
+                ),
+              ),
+              title: Text("Home")),
+          BottomNavigationBarItem(
+              icon: Container(
+                height: 20,
+                width: 20,
+                child: Image.asset(
+                  "assets/020-heart.png",
+                  color: appPrimaryMaterialColor,
+                ),
+              ),
+              title: Text("Wishlist")),
+          BottomNavigationBarItem(
+              icon: Container(
+                height: 20,
+                width: 20,
+                child: Image.asset(
+                  "assets/051-user.png",
+                  color: appPrimaryMaterialColor,
+                ),
+              ),
+              title: Text("Profile")),
+          BottomNavigationBarItem(
+              icon: Container(
+                height: 20,
+                width: 20,
+                child: Image.asset(
+                  "assets/018-settings.png",
+                  color: appPrimaryMaterialColor,
+                ),
+              ),
+              title: Text("Setting")),
+        ],
+        //currentIndex: _selectedIndex,
+        selectedItemColor: appPrimaryMaterialColor,
+       // onTap: _onItemTapped,
+      ),
       appBar: AppBar(
         title: appBarTitle,
         backgroundColor: Colors.white,
@@ -243,23 +294,23 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                 color: appPrimaryMaterialColor,
                               ))),
                     ),
-                    if (cartList.length > 0)
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 0.0, top: 13, right: 10),
-                        child: CircleAvatar(
-                          radius: 6.0,
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white,
-                          child: Text(
-                            cartList.length.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10.0,
-                            ),
-                          ),
-                        ),
-                      ),
+                    // if (cartList.length > 0)
+                    //   Padding(
+                    //     padding: const EdgeInsets.only(
+                    //         left: 0.0, top: 13, right: 10),
+                    //     child: CircleAvatar(
+                    //       radius: 6.0,
+                    //       backgroundColor: Colors.red,
+                    //       foregroundColor: Colors.white,
+                    //       child: Text(
+                    //         cartList.length.toString(),
+                    //         style: TextStyle(
+                    //           fontWeight: FontWeight.bold,
+                    //           fontSize: 10.0,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
                   ],
                 )
               : Container(),
@@ -641,7 +692,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             fontSize: 14,
                             // color: Colors.black54,
                             color: appPrimaryMaterialColor,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.w400
+                        ),
                       ),
                     ),
                     Padding(
@@ -671,7 +723,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             fontSize: 14,
                             //fontFamily: 'RobotoSlab',
                             color: appPrimaryMaterialColor,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.w400
+                        ),
                       ),
                     ),
                     Padding(
@@ -897,7 +950,8 @@ class _ALertLangState extends State<ALertLang> {
         style: TextStyle(
             fontSize: 22,
             color: appPrimaryMaterialColor,
-            fontWeight: FontWeight.bold),
+            //fontWeight: FontWeight.bold
+        ),
       ),
       content: new Wrap(
         children: [
@@ -1015,7 +1069,8 @@ class _AlertboxLogoutState extends State<AlertboxLogout> {
         style: TextStyle(
             fontSize: 22,
             color: appPrimaryMaterialColor,
-            fontWeight: FontWeight.bold),
+           // fontWeight: FontWeight.bold
+        ),
       ),
       content: new Text(
         "Are you sure want to Logout!!!",
@@ -1048,4 +1103,5 @@ class _AlertboxLogoutState extends State<AlertboxLogout> {
       ],
     );
   }
+
 }

@@ -29,7 +29,8 @@ class _HistoryComponentState extends State<HistoryComponent> {
             style: TextStyle(
                 fontSize: 22,
                 color: appPrimaryMaterialColor,
-                fontWeight: FontWeight.bold),
+                //fontWeight: FontWeight.bold
+            ),
           ),
           content: new Text(
             "Are you sure want to cancel order!!!",
@@ -95,7 +96,8 @@ class _HistoryComponentState extends State<HistoryComponent> {
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.grey[700],
-                        fontWeight: FontWeight.w400),
+                        //fontWeight: FontWeight.w400
+                    ),
                   ),
                 ),
               ],
@@ -118,7 +120,8 @@ class _HistoryComponentState extends State<HistoryComponent> {
                       style: TextStyle(
                           fontSize: 15,
                           color: Colors.grey[700],
-                          fontWeight: FontWeight.w400),
+                          //fontWeight: FontWeight.w400
+                      ),
                     ),
                   ),
                 ],
@@ -142,7 +145,8 @@ class _HistoryComponentState extends State<HistoryComponent> {
                       style: TextStyle(
                           fontSize: 15,
                           color: Colors.grey[700],
-                          fontWeight: FontWeight.w400),
+                         // fontWeight: FontWeight.w400
+                      ),
                     ),
                   ),
                 ],
@@ -166,7 +170,8 @@ class _HistoryComponentState extends State<HistoryComponent> {
                       style: TextStyle(
                           fontSize: 15,
                           color: Colors.grey[700],
-                          fontWeight: FontWeight.w400),
+                          //fontWeight: FontWeight.w400
+                      ),
                     ),
                   ),
                 ],
@@ -190,7 +195,8 @@ class _HistoryComponentState extends State<HistoryComponent> {
                       style: TextStyle(
                           fontSize: 15,
                           color: Colors.grey[700],
-                          fontWeight: FontWeight.w400),
+                        //  fontWeight: FontWeight.w400
+                      ),
                     ),
                   ),
                 ],
@@ -230,7 +236,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
                                         fontSize: 16,
                                         color: Colors.white,
                                         // color: Colors.grey[700],
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.w400),
                                   )
                                 : Text(
                                     "Cancelled",
@@ -238,7 +244,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
                                         fontSize: 16,
                                         color: Colors.white,
                                         // color: Colors.grey[700],
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.w400),
                                   ),
                           ],
                         ),
@@ -283,7 +289,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
                                   fontSize: 16,
                                   color: Colors.white,
                                   //  color: Colors.grey[700],
-                                  fontWeight: FontWeight.bold),
+                                  fontWeight: FontWeight.w400),
                             ),
                           ],
                         ),

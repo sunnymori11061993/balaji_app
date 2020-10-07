@@ -4,6 +4,7 @@ import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/CartComponent.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
+import 'package:balaji/Screens/SearchingScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,6 +21,9 @@ class _CartScreenState extends State<CartScreen> {
   var isLoading = true;
   List getCartList = [];
   List updateCartList = [];
+  TextEditingController txtSearch = TextEditingController();
+  bool searchImage = true;
+
 
   int mainTotal = 0;
   String dropdownvalue = 'rinki';
@@ -31,6 +35,14 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Widget appBarTitle = Text(
+      'My_Cart'.tr().toString(),
+      style: TextStyle(
+          color: appPrimaryMaterialColor,
+          //fontFamily: 'RobotoSlab',
+          // color: Colors.black,
+          fontSize: 17),
+    );
     return WillPopScope(
         onWillPop: () {
           Navigator.of(context).pop("pop");
@@ -54,45 +66,183 @@ class _CartScreenState extends State<CartScreen> {
               iconTheme: new IconThemeData(
                 color: appPrimaryMaterialColor,
               ),
-              title: Text('My_Cart'.tr().toString(),
-                  style: TextStyle(
-                    color: appPrimaryMaterialColor,
-                  )),
+              title: appBarTitle,
               actions: <Widget>[
-                Padding(
+                if (searchImage == false)
+                  Row(
+                    children: [
+                      Container(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset(
+                          "assets/search.png",
+                          color: appPrimaryMaterialColor,
+                        ),
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width - 120,
+                        height: 50,
+                        child: TextFormField(
+                          controller: txtSearch,
+                          textInputAction: TextInputAction.done,
+                          onFieldSubmitted: (aa) {
+                            //  _getSearching();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                    new SearchingScreen(
+                                      searchData: txtSearch.text,
+                                    )));
+                            txtSearch.clear();
+                            //Navigator.pop(context, this.txtSearch.text);
+                          },
+                          style: TextStyle(
+                            //color: Colors.white,
+                          ),
+                          cursorColor: appPrimaryMaterialColor,
+                          decoration: InputDecoration(
+                            // prefixIcon: SizedBox(
+                            //   height: 20,
+                            //   width: 10,
+                            //   child: Image.asset(
+                            //     "assets/search.png",
+                            //     color: appPrimaryMaterialColor,
+                            //   ),
+                            // ),
+
+                              hintText: "    Search...",
+                              hintStyle: TextStyle(color: Colors.grey),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                              )),
+                        ),
+                      ),
+                    ],
+                  ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      searchImage = !searchImage;
+                    });
+                  },
+                  child: searchImage
+                      ? Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/search.png",
+                        color: appPrimaryMaterialColor,
+                      ),
+                    ),
+                  )
+                      : Padding(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/025-cancel.png",
+                        color: appPrimaryMaterialColor,
+                      ),
+                    ),
+                  ),
+                ),
+                searchImage
+                    ? Padding(
                   padding: const EdgeInsets.only(
                     right: 10.0,
                     left: 8,
                   ),
                   child: Container(
-                      height: 20,
-                      width: 20,
-                      child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed('/Whishlist');
-                          },
-                          child: Image.asset(
-                            "assets/heart.png",
-                            color: appPrimaryMaterialColor,
-                          ))),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    right: 15.0,
-                    left: 8,
-                  ),
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: GestureDetector(
-                          onTap: () {
-                            //Navigator.of(context).pushNamed('/Whishlist');
-                          },
-                          child: Image.asset(
-                            "assets/039-shopping-cart.png",
-                            color: appPrimaryMaterialColor,
-                          ))),
-                ),
+                          height: 20,
+                          width: 20,
+                          child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed('/Whishlist');
+                              },
+                              child: Image.asset(
+                                "assets/heart.png",
+                                color: appPrimaryMaterialColor,
+                              ))),
+                )
+                    : Container(),
+                searchImage
+                    ? Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Padding(
+                      padding:
+                      const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+                      child:  Container(
+                            height: 20,
+                            width: 20,
+                            child: GestureDetector(
+                                onTap: () {
+                                  //Navigator.of(context).pushNamed('/Whishlist');
+                                },
+                                child: Image.asset(
+                                  "assets/039-shopping-cart.png",
+                                  color: appPrimaryMaterialColor,
+                                ))),
+                    ),
+                    // if (cartList.length > 0)
+                    //   Padding(
+                    //     padding: const EdgeInsets.only(
+                    //         left: 0.0, top: 13, right: 10),
+                    //     child: CircleAvatar(
+                    //       radius: 6.0,
+                    //       backgroundColor: Colors.red,
+                    //       foregroundColor: Colors.white,
+                    //       child: Text(
+                    //         cartList.length.toString(),
+                    //         style: TextStyle(
+                    //           fontWeight: FontWeight.bold,
+                    //           fontSize: 10.0,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ),
+                  ],
+                )
+                    : Container(),
+
+                // Padding(
+                //   padding: const EdgeInsets.only(
+                //     right: 10.0,
+                //     left: 8,
+                //   ),
+                //   child: Container(
+                //       height: 20,
+                //       width: 20,
+                //       child: GestureDetector(
+                //           onTap: () {
+                //             Navigator.of(context).pushNamed('/Whishlist');
+                //           },
+                //           child: Image.asset(
+                //             "assets/heart.png",
+                //             color: appPrimaryMaterialColor,
+                //           ))),
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.only(
+                //     right: 15.0,
+                //     left: 8,
+                //   ),
+                //   child: Container(
+                //       height: 20,
+                //       width: 20,
+                //       child: GestureDetector(
+                //           onTap: () {
+                //             //Navigator.of(context).pushNamed('/Whishlist');
+                //           },
+                //           child: Image.asset(
+                //             "assets/039-shopping-cart.png",
+                //             color: appPrimaryMaterialColor,
+                //           ))),
+                // ),
               ],
             ),
             bottomNavigationBar: isLoading
@@ -121,7 +271,7 @@ class _CartScreenState extends State<CartScreen> {
                                     style: TextStyle(
                                         fontSize: 18,
                                         color: Colors.black,
-                                        fontWeight: FontWeight.w600),
+                                        fontWeight: FontWeight.w400),
                                   ),
                                 ],
                               ),
@@ -147,8 +297,8 @@ class _CartScreenState extends State<CartScreen> {
                                         "Select Address ",
                                         style: TextStyle(
                                             color: Colors.white,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 17),
+                                            //fontWeight: FontWeight.w400,
+                                            fontSize: 16),
                                       ),
                                       Icon(
                                         Icons.arrow_forward,
@@ -279,6 +429,10 @@ class _AlertAddState extends State<AlertAdd> {
   TextEditingController txtFullAddress = TextEditingController();
   TextEditingController txtCity = TextEditingController();
   TextEditingController txtPincode = TextEditingController();
+  TextEditingController txtLandmark = TextEditingController();
+  TextEditingController txtState = TextEditingController();
+  String dropdownvalue = 'Gujarat';
+  String dropdownvaluecity = 'Surat';
   final _formkey = new GlobalKey<FormState>();
 
   bool isAddLoading = false;
@@ -291,7 +445,8 @@ class _AlertAddState extends State<AlertAdd> {
         style: TextStyle(
             fontSize: 22,
             color: appPrimaryMaterialColor,
-            fontWeight: FontWeight.bold),
+           // fontWeight: FontWeight.bold
+        ),
       ),
       content: SingleChildScrollView(
         child: Container(
@@ -301,7 +456,8 @@ class _AlertAddState extends State<AlertAdd> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Padding(
+
+              Padding(
                   padding: const EdgeInsets.only(
                     top: 8.0,
                   ),
@@ -417,7 +573,7 @@ class _AlertAddState extends State<AlertAdd> {
                                     width: 20,
                                     padding: EdgeInsets.all(10),
                                     child: Image.asset(
-                                      "assets/038-placeholder.png",
+                                      "assets/050-world-grid.png",
                                       color: appPrimaryMaterialColor,
                                     )),
                               ),
@@ -451,62 +607,76 @@ class _AlertAddState extends State<AlertAdd> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    'City'.tr().toString(),
-                    style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 5.0, bottom: 3),
-                  child: TextFormField(
-                    controller: txtCity,
-                    keyboardType: TextInputType.text,
-                    style: TextStyle(fontSize: 15),
-                    cursorColor: Colors.black,
-                    validator: (city) {
-                      if (city.length == 0) {
-                        return 'Please enter your city';
-                      }
-                      return null;
-                    },
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(5),
-                      hintText: 'City',
-                      prefixIcon: Padding(
-                        padding: const EdgeInsets.only(right: 8.0),
-                        child: Container(
-                          width: 43,
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  right: BorderSide(
-                                      width: 2, color: Colors.grey))),
-                          child: Icon(
-                            Icons.location_city,
-                            color: appPrimaryMaterialColor,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        //'Full_Address'.tr().toString(),
+                        "Landmark",
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0, bottom: 3),
+                        child: TextFormField(
+                          controller: txtLandmark,
+                          keyboardType: TextInputType.text,
+                          style: TextStyle(fontSize: 15),
+                          cursorColor: Colors.black,
+                          validator: (address) {
+                            if (address.length == 0) {
+                              return 'Please enter your full address';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(5),
+                            hintText: ' near abc hospital ',
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Container(
+                                width: 43,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        right: BorderSide(
+                                            width: 2, color: Colors.grey))),
+                                child: Container(
+                                    height: 20,
+                                    width: 20,
+                                    padding: EdgeInsets.all(10),
+                                    child: Image.asset(
+                                      "assets/038-placeholder.png",
+                                      color: appPrimaryMaterialColor,
+                                    )),
+                              ),
+                            ),
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
                           ),
                         ),
                       ),
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                        borderSide: BorderSide(color: Colors.red),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                        borderSide: BorderSide(color: Colors.red),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                        borderSide: BorderSide(color: Colors.grey),
-                      ),
-                    ),
+                    ],
                   ),
                 ),
                 Padding(
@@ -571,6 +741,99 @@ class _AlertAddState extends State<AlertAdd> {
                     ),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0,bottom: 5),
+                  child: Text(
+                    //'Pincode'.tr().toString(),
+                    "State",
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                      )
+                      ,
+                      borderRadius: BorderRadius.circular(5)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:8.0),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: dropdownvalue,
+                        icon: Icon(Icons.arrow_drop_down,size: 25,color: appPrimaryMaterialColor),
+                        underline: Container(
+                          height: 2,
+                          color:appPrimaryMaterialColor,
+                        ),
+                        items: <String> ['Gujarat','Maharashtra','Kerala','Manipur'] .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String newvalue){
+                          setState(() {
+                            dropdownvalue = newvalue;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0,bottom: 5),
+                  child: Text(
+                    'City'.tr().toString(),
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width,
+
+                  decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.grey,
+                      )
+                      ,
+                      borderRadius: BorderRadius.circular(5)
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left:8.0),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        value: dropdownvaluecity,
+                        icon: Icon(Icons.arrow_drop_down,size: 25,color: appPrimaryMaterialColor),
+                        underline: Container(
+                          height: 2,
+                          color:appPrimaryMaterialColor,
+                        ),
+                        items: <String> ['Surat','Baroda','Kerala','Manipur'] .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (String newvalue){
+                          setState(() {
+                            dropdownvaluecity = newvalue;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+
+
               ],
             ),
           ),
@@ -684,7 +947,8 @@ class _AlertSelectAddressState extends State<AlertSelectAddress> {
         style: TextStyle(
             fontSize: 22,
             color: appPrimaryMaterialColor,
-            fontWeight: FontWeight.bold),
+           // fontWeight: FontWeight.bold
+        ),
       ),
       content: isSelectLoading
           ? LoadingComponent()
@@ -875,7 +1139,9 @@ class _showBottomSheetState extends State<showBottomSheet> {
                   style: TextStyle(
                       fontSize: 22,
                       color: appPrimaryMaterialColor,
-                      fontWeight: FontWeight.bold),
+                      //fontWeight: FontWeight.bold
+                  )
+                  ,
                 ),
               ),
               Padding(
@@ -909,7 +1175,8 @@ class _showBottomSheetState extends State<showBottomSheet> {
                                 fontSize: 16,
                                 //color: Colors.white,
                                 color: Colors.grey[700],
-                                fontWeight: FontWeight.bold),
+                                //fontWeight: FontWeight.bold
+                            ),
                           ),
                         ),
                       ],
@@ -1040,7 +1307,8 @@ class _showBottomSheetState extends State<showBottomSheet> {
                                     fontSize: 16,
                                     color: Colors.white,
                                     //  color: Colors.grey[700],
-                                    fontWeight: FontWeight.bold),
+                                    fontWeight: FontWeight.w400
+                                ),
                               ),
                             ],
                           ),
@@ -1091,7 +1359,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
                                           fontSize: 16,
                                           color: Colors.white,
                                           //color: Colors.grey[700],
-                                          fontWeight: FontWeight.bold),
+                                          fontWeight: FontWeight.w400),
                                     ),
                                   ],
                                 ),

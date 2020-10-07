@@ -44,7 +44,7 @@ class _FAQComponentState extends State<FAQComponent> {
                 ),
               ],
             ),
-            Divider(),
+          //  Divider(),
             // Padding(
             //   padding: const EdgeInsets.only(top: 15.0),
             //   child: Container(
@@ -57,13 +57,14 @@ class _FAQComponentState extends State<FAQComponent> {
       ),
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(bottom: 12, top: 7, right: 5),
+          padding: const EdgeInsets.only(bottom: 12, top: 7, right: 10,left: 15),
           child: Text(
             "-   " + "${widget.faqdata["FaqAnswer"]}",
             style: TextStyle(
                 fontSize: 15,
                 color: Colors.grey[700],
-                fontWeight: FontWeight.w400),
+                //fontWeight: FontWeight.w400
+            ),
           ),
         ),
       ],
