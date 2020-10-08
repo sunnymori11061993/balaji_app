@@ -1,9 +1,14 @@
 import 'dart:io';
 
+import 'package:balaji/Common/ClassList.dart';
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/AddressComponent.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
+import 'package:balaji/Screens/Home.dart';
+import 'package:balaji/Screens/SettingScreen.dart';
+import 'package:balaji/Screens/UserProfileScreen.dart';
+import 'package:balaji/Screens/Whishlist.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +31,20 @@ class _AddressScreenState extends State<AddressScreen> {
         });
       },
     );
+  }
+
+  int _selectedIndex = 0;
+  List<Widget> _widgetOptions = <Widget>[
+    Home(),
+    Whishlist(),
+    UserProfileScreen(),
+    SettingScreen()
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   bool isDisplayLoading = true;
@@ -156,11 +175,83 @@ class _AlertFloatingState extends State<AlertFloating> {
   TextEditingController txtCity = TextEditingController();
   TextEditingController txtPincode = TextEditingController();
   TextEditingController txtLandmark = TextEditingController();
-  String dropdownvalue = 'Gujarat';
-  String dropdownvaluecity = 'Surat';
+
   final _formkey = new GlobalKey<FormState>();
 
   bool isLoading = false;
+  bool isStateLoading = true, isCityLoading = false;
+
+  List<StateClass> stateList = [];
+  StateClass selectedState;
+
+  List<CityClass> cityList = [];
+  CityClass selectedCity;
+
+  @override
+  void initState() {
+    _getState();
+  }
+
+  _getState() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        Services.getState().then((responseList) async {
+          setState(() {
+            isStateLoading = false;
+          });
+          if (responseList.length > 0) {
+            setState(() {
+              stateList = responseList;
+              selectedState = responseList[0];
+            });
+            //_getCity(selectedState.stateId);
+            _getCity(responseList[0].stateId);
+          } else {
+            Fluttertoast.showToast(msg: "States Not Found");
+          }
+        }, onError: (e) {
+          setState(() {
+            isStateLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
+  }
+
+  _getCity(stateId) async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        FormData body = FormData.fromMap({"StateId": stateId});
+        Services.getCity(body: body).then((responseList) async {
+          setState(() {
+            isCityLoading = false;
+          });
+          if (responseList.length > 0) {
+            setState(() {
+              cityList = responseList;
+              selectedCity = responseList[0];
+            });
+          } else {
+            Fluttertoast.showToast(msg: "City Not Found");
+          }
+        }, onError: (e) {
+          setState(() {
+            isCityLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -168,9 +259,9 @@ class _AlertFloatingState extends State<AlertFloating> {
       title: new Text(
         "Address Details",
         style: TextStyle(
-            fontSize: 22,
-            color: appPrimaryMaterialColor,
-           // fontWeight: FontWeight.bold
+          fontSize: 22,
+          color: appPrimaryMaterialColor,
+          // fontWeight: FontWeight.bold
         ),
       ),
       content: SingleChildScrollView(
@@ -379,22 +470,22 @@ class _AlertFloatingState extends State<AlertFloating> {
                             fillColor: Colors.white,
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(5.0)),
+                                  BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.grey),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(5.0)),
+                                  BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.red),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(5.0)),
+                                  BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.red),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(5.0)),
+                                  BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.grey),
                             ),
                           ),
@@ -465,59 +556,8 @@ class _AlertFloatingState extends State<AlertFloating> {
                     ),
                   ),
                 ),
-
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 5.0, bottom: 3),
-                //   child: TextFormField(
-                //     controller: txtCity,
-                //     keyboardType: TextInputType.text,
-                //     style: TextStyle(fontSize: 15),
-                //     cursorColor: Colors.black,
-                //     validator: (city) {
-                //       if (city.length == 0) {
-                //         return 'Please enter your city';
-                //       }
-                //       return null;
-                //     },
-                //     decoration: InputDecoration(
-                //       contentPadding: const EdgeInsets.all(5),
-                //       hintText: 'City',
-                //       prefixIcon: Padding(
-                //         padding: const EdgeInsets.only(right: 8.0),
-                //         child: Container(
-                //           width: 43,
-                //           decoration: BoxDecoration(
-                //               border: Border(
-                //                   right: BorderSide(
-                //                       width: 2, color: Colors.grey))),
-                //           child: Icon(
-                //             Icons.location_city,
-                //             color: appPrimaryMaterialColor,
-                //           ),
-                //         ),
-                //       ),
-                //       fillColor: Colors.white,
-                //       enabledBorder: OutlineInputBorder(
-                //         borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                //         borderSide: BorderSide(color: Colors.grey),
-                //       ),
-                //       errorBorder: OutlineInputBorder(
-                //         borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                //         borderSide: BorderSide(color: Colors.red),
-                //       ),
-                //       focusedErrorBorder: OutlineInputBorder(
-                //         borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                //         borderSide: BorderSide(color: Colors.red),
-                //       ),
-                //       focusedBorder: OutlineInputBorder(
-                //         borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                //         borderSide: BorderSide(color: Colors.grey),
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0,bottom: 5),
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 5),
                   child: Text(
                     //'Pincode'.tr().toString(),
                     "State",
@@ -529,41 +569,39 @@ class _AlertFloatingState extends State<AlertFloating> {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
-
+                  height: 45,
                   decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.grey,
-                      )
-                      ,
-                      borderRadius: BorderRadius.circular(5)
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left:8.0),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: dropdownvalue,
-                        icon: Icon(Icons.arrow_drop_down,size: 25,color: appPrimaryMaterialColor),
-                        underline: Container(
-                          height: 2,
-                          color:appPrimaryMaterialColor,
-                        ),
-                        items: <String> ['Gujarat','Maharashtra','Kerala','Manipur'] .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String newvalue){
-                          setState(() {
-                            dropdownvalue = newvalue;
-                          });
-                        },
                       ),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: DropdownButtonHideUnderline(
+                      child: isStateLoading
+                          ? LoadingComponent()
+                          : DropdownButton<StateClass>(
+                              value: selectedState,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedState = value;
+                                  _getCity(selectedState.stateId);
+                                });
+                              },
+                              items: stateList.map(
+                                (StateClass state) {
+                                  return DropdownMenuItem<StateClass>(
+                                    child: Text(state.stateName),
+                                    value: state,
+                                  );
+                                },
+                              ).toList(),
+                            ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0,bottom: 5),
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 5),
                   child: Text(
                     'City'.tr().toString(),
                     style: TextStyle(
@@ -574,40 +612,36 @@ class _AlertFloatingState extends State<AlertFloating> {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
-
+                  height: 45,
                   decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.grey,
-                      )
-                      ,
-                      borderRadius: BorderRadius.circular(5)
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left:8.0),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: dropdownvaluecity,
-                        icon: Icon(Icons.arrow_drop_down,size: 25,color: appPrimaryMaterialColor),
-                        underline: Container(
-                          height: 2,
-                          color:appPrimaryMaterialColor,
-                        ),
-                        items: <String> ['Surat','Baroda','Kerala','Manipur'] .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String newvalue){
-                          setState(() {
-                            dropdownvaluecity = newvalue;
-                          });
-                        },
                       ),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: DropdownButtonHideUnderline(
+                      child: isCityLoading
+                          ? LoadingComponent()
+                          : DropdownButton<CityClass>(
+                              value: selectedCity,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedCity = value;
+                                });
+                              },
+                              items: cityList.map(
+                                (CityClass city) {
+                                  return DropdownMenuItem<CityClass>(
+                                    child: Text(city.cityName),
+                                    value: city,
+                                  );
+                                },
+                              ).toList(),
+                            ),
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -654,10 +688,13 @@ class _AlertFloatingState extends State<AlertFloating> {
 
           FormData body = FormData.fromMap({
             "CustomerId": prefs.getString(Session.CustomerId),
-            "AddressCity": txtCity.text,
+            "AddressCity": "",
             "AddressPincode": txtPincode.text,
             "AddressName": txtFullAddress.text,
             "AddressHouseNo": txtHouseNo.text,
+            "StateId": selectedState.stateId,
+            "CityId": selectedCity.cityId,
+            "AddressLandmark": txtLandmark.text,
           }); //"key":"value"
 
           Services.postForSave(apiname: 'addAddress', body: body).then(

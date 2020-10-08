@@ -9,7 +9,7 @@ class Services {
   static Future<List> PostForList({api_name, body}) async {
     String url = API_URL + '$api_name';
     print("$api_name url : " + url);
-    var response;
+    Response response;
     try {
       if (body == null) {
         response = await dio.post(url);
@@ -57,6 +57,49 @@ class Services {
         savedata.Data = responseData["Data"].toString();
 
         return savedata;
+      } else {
+        print("error ->" + response.data.toString());
+        throw Exception(response.data.toString());
+      }
+    } catch (e) {
+      print("error -> ${e.toString()}");
+      throw Exception(e.toString());
+    }
+  }
+
+  static Future<List<StateClass>> getState() async {
+    String url = API_URL + 'getState';
+    try {
+      Response response = await dio.post(url);
+      if (response.statusCode == 200) {
+        StateClassData stateClassData =
+            new StateClassData.fromJson(response.data);
+        return stateClassData.Data;
+      } else {
+        print("error ->" + response.data.toString());
+        throw Exception(response.data.toString());
+      }
+    } catch (e) {
+      print("error -> ${e.toString()}");
+      throw Exception(e.toString());
+    }
+  }
+
+  static Future<List<CityClass>> getCity({body}) async {
+    print(body.toString());
+    String url = API_URL + 'getCity';
+
+    Response response;
+    try {
+      if (body == null) {
+        response = await dio.post(url);
+      } else {
+        response = await dio.post(url, data: body);
+      }
+      // Response response = await dio.post(url);
+      if (response.statusCode == 200) {
+        CityClassData cityClassData = new CityClassData.fromJson(response.data);
+        return cityClassData.Data;
       } else {
         print("error ->" + response.data.toString());
         throw Exception(response.data.toString());

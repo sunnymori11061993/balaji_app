@@ -6,6 +6,7 @@ import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/FilterScreen.dart';
 import 'package:balaji/Screens/HistoryScreen.dart';
 import 'package:balaji/Screens/Home.dart';
+import 'package:balaji/Screens/HomePage.dart';
 import 'package:balaji/Screens/LanguageChangeScreen.dart';
 import 'package:balaji/Screens/LoginScreen.dart';
 import 'package:balaji/Screens/ManuHomeScreen.dart';
@@ -16,9 +17,11 @@ import 'package:balaji/Screens/ProductDetailScreen.dart';
 import 'package:balaji/Screens/ProfileScreen.dart';
 import 'package:balaji/Screens/RegistrationScreen.dart';
 import 'package:balaji/Screens/SearchingScreen.dart';
+import 'package:balaji/Screens/SettingScreen.dart';
 import 'package:balaji/Screens/Splash.dart';
 import 'package:balaji/Screens/SubCategory.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
+import 'package:balaji/Screens/UserProfileScreen.dart';
 import 'package:balaji/Screens/VerificationScreen.dart';
 import 'package:balaji/Screens/ViewCatalougeScreen.dart';
 import 'package:balaji/Screens/WalkThroughScreen.dart';
@@ -53,7 +56,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         //'/': (context) => AddressScreen(),
         '/': (context) => Splash(),
-        //'/': (context) => Home(),
+        //'/': (context) => HomePage(),
         '/LoginScreen': (context) => LoginScreen(),
         '/VerificationScreen': (context) => VerificationScreen(),
         '/RegistrationScreen': (context) => RegistrationScreen(),
@@ -78,6 +81,9 @@ class _MyAppState extends State<MyApp> {
         '/HistoryScreen': (context) => HistoryScreen(),
         '/SearchingScreen': (context) => SearchingScreen(),
         '/ViewCatalougeScreen': (context) => ViewCatalougeScreen(),
+        '/HomePage': (context) => HomePage(),
+        '/SettingScreen': (context) => SettingScreen(),
+        '/UserProfileScreen': (context) => UserProfileScreen(),
       },
       theme: ThemeData(
         fontFamily: 'RobotoSlab',

@@ -47,7 +47,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   TabController tabController;
 
-
   TextEditingController txtSearch = TextEditingController();
 
   @override
@@ -118,58 +117,61 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: BottomNavigationBar(
-        selectedIconTheme: IconThemeData(color: appPrimaryMaterialColor),
-        unselectedIconTheme: IconThemeData(color: Colors.grey),
-        items:  <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-
-              icon:Container(
-                height: 20,
-                width: 20,
-                child: Image.asset(
-                  "assets/012-house.png",
-                  color: appPrimaryMaterialColor,
-                ),
-              ),
-              title: Text("Home")),
-          BottomNavigationBarItem(
-              icon: Container(
-                height: 20,
-                width: 20,
-                child: Image.asset(
-                  "assets/020-heart.png",
-                  color: appPrimaryMaterialColor,
-                ),
-              ),
-              title: Text("Wishlist")),
-          BottomNavigationBarItem(
-              icon: Container(
-                height: 20,
-                width: 20,
-                child: Image.asset(
-                  "assets/051-user.png",
-                  color: appPrimaryMaterialColor,
-                ),
-              ),
-              title: Text("Profile")),
-          BottomNavigationBarItem(
-              icon: Container(
-                height: 20,
-                width: 20,
-                child: Image.asset(
-                  "assets/018-settings.png",
-                  color: appPrimaryMaterialColor,
-                ),
-              ),
-              title: Text("Setting")),
-        ],
-        //currentIndex: _selectedIndex,
-        selectedItemColor: appPrimaryMaterialColor,
-       // onTap: _onItemTapped,
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   selectedIconTheme: IconThemeData(color: appPrimaryMaterialColor),
+      //   unselectedIconTheme: IconThemeData(color: Colors.grey),
+      //   items:  <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //
+      //         icon:Container(
+      //           height: 20,
+      //           width: 20,
+      //           child: Image.asset(
+      //             "assets/012-house.png",
+      //             color: appPrimaryMaterialColor,
+      //           ),
+      //         ),
+      //         title: Text("Home")),
+      //     BottomNavigationBarItem(
+      //         icon: Container(
+      //           height: 20,
+      //           width: 20,
+      //           child: Image.asset(
+      //             "assets/020-heart.png",
+      //             color: appPrimaryMaterialColor,
+      //           ),
+      //         ),
+      //         title: Text("Wishlist")),
+      //     BottomNavigationBarItem(
+      //         icon: Container(
+      //           height: 20,
+      //           width: 20,
+      //           child: Image.asset(
+      //             "assets/051-user.png",
+      //             color: appPrimaryMaterialColor,
+      //           ),
+      //         ),
+      //         title: Text("Profile")),
+      //     BottomNavigationBarItem(
+      //         icon: Container(
+      //           height: 20,
+      //           width: 20,
+      //           child: Image.asset(
+      //             "assets/018-settings.png",
+      //             color: appPrimaryMaterialColor,
+      //           ),
+      //         ),
+      //         title: Text("Setting")),
+      //   ],
+      //   //currentIndex: _selectedIndex,
+      //   selectedItemColor: appPrimaryMaterialColor,
+      //  // onTap: _onItemTapped,
+      // ),
       appBar: AppBar(
-        title: appBarTitle,
+        title: Padding(
+          padding: const EdgeInsets.only(left: 15.0),
+          child: appBarTitle,
+        ),
         backgroundColor: Colors.white,
         elevation: 1,
         iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
@@ -186,7 +188,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width - 120,
+                  width: MediaQuery.of(context).size.width - 80,
                   height: 50,
                   child: TextFormField(
                     controller: txtSearch,
@@ -256,25 +258,25 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     ),
                   ),
           ),
-          searchImage
-              ? Padding(
-                  padding: const EdgeInsets.only(
-                    right: 10.0,
-                    left: 8,
-                  ),
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed('/Whishlist');
-                          },
-                          child: Image.asset(
-                            "assets/heart.png",
-                            color: appPrimaryMaterialColor,
-                          ))),
-                )
-              : Container(),
+          // searchImage
+          //     ? Padding(
+          //         padding: const EdgeInsets.only(
+          //           right: 10.0,
+          //           left: 8,
+          //         ),
+          //         child: Container(
+          //             height: 20,
+          //             width: 20,
+          //             child: GestureDetector(
+          //                 onTap: () {
+          //                   Navigator.of(context).pushNamed('/Whishlist');
+          //                 },
+          //                 child: Image.asset(
+          //                   "assets/heart.png",
+          //                   color: appPrimaryMaterialColor,
+          //                 ))),
+          //       )
+          //     : Container(),
           searchImage
               ? Stack(
                   alignment: Alignment.topCenter,
@@ -316,301 +318,301 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               : Container(),
         ],
       ),
-      drawer: Drawer(
-        child: ListView(
-//          padding: EdgeInsets.zero,
-          children: <Widget>[
-//            DrawerHeader(
-//                child:),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed('/ProfileScreen');
-              },
-              child: Container(
-                color: Colors.grey[200],
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 25.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20.0, bottom: 10),
-                        child: CircleAvatar(
-                            radius: 40.0,
-                            backgroundColor: appPrimaryMaterialColor,
-                            foregroundColor: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 0.0),
-                              child: Image.asset(
-                                "assets/051-user.png",
-                                color: Colors.white,
-                                height: 40,
-                              ),
-                            )),
-                      ),
-                      Text(
-                        "${txtName}",
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5.0, bottom: 20),
-                        child: Row(
-                          children: <Widget>[
-                            Text(
-                              'drw_edit_profile'.tr().toString(),
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(right: 10.0, left: 5),
-                              child: Container(
-                                  height: 14,
-                                  width: 14,
-                                  child: Image.asset(
-                                    "assets/052-edit.png",
-                                    color: Colors.grey,
-                                  )),
-                            ),
-                            // Padding(
-                            //   padding: const EdgeInsets.only(left: 5.0),
-                            //   child: Icon(
-                            //     Icons.edit,
-                            //     color: Colors.grey,
-                            //     size: 14,
-                            //   ),
-                            // ),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pushNamed('/Home');
-              },
-              child: ListTile(
-                leading: Padding(
-                  padding: const EdgeInsets.only(right: 10.0, left: 4),
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/home.png",
-                        color: appPrimaryMaterialColor,
-                      )),
-                ),
-
-                // Icon(
-                //   Icons.home,
-                //   color: appPrimaryMaterialColor,
-                // ),
-                title: Text(
-                  'drw_home'.tr().toString(),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pushNamed('/HistoryScreen');
-              },
-              child: ListTile(
-                leading: Padding(
-                  padding: const EdgeInsets.only(right: 10.0, left: 4),
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/history.png",
-                        color: appPrimaryMaterialColor,
-                      )),
-                ),
-                title: Text(
-                  'drw_order_history'.tr().toString(),
-                ),
-              ),
-            ),
-
+//       drawer: Drawer(
+//         child: ListView(
+// //          padding: EdgeInsets.zero,
+//           children: <Widget>[
+// //            DrawerHeader(
+// //                child:),
+//             GestureDetector(
+//               onTap: () {
+//                 Navigator.of(context).pushNamed('/ProfileScreen');
+//               },
+//               child: Container(
+//                 color: Colors.grey[200],
+//                 child: Padding(
+//                   padding: const EdgeInsets.only(left: 25.0),
+//                   child: Column(
+//                     crossAxisAlignment: CrossAxisAlignment.start,
+//                     children: <Widget>[
+//                       Padding(
+//                         padding: const EdgeInsets.only(top: 20.0, bottom: 10),
+//                         child: CircleAvatar(
+//                             radius: 40.0,
+//                             backgroundColor: appPrimaryMaterialColor,
+//                             foregroundColor: Colors.white,
+//                             child: Padding(
+//                               padding: const EdgeInsets.only(top: 0.0),
+//                               child: Image.asset(
+//                                 "assets/051-user.png",
+//                                 color: Colors.white,
+//                                 height: 40,
+//                               ),
+//                             )),
+//                       ),
+//                       Text(
+//                         "${txtName}",
+//                         style: TextStyle(
+//                             fontSize: 18,
+//                             color: Colors.black,
+//                             fontWeight: FontWeight.w600),
+//                       ),
+//                       Padding(
+//                         padding: const EdgeInsets.only(top: 5.0, bottom: 20),
+//                         child: Row(
+//                           children: <Widget>[
+//                             Text(
+//                               'drw_edit_profile'.tr().toString(),
+//                               style: TextStyle(
+//                                   fontSize: 14,
+//                                   color: Colors.grey,
+//                                   fontWeight: FontWeight.w600),
+//                             ),
+//                             Padding(
+//                               padding:
+//                                   const EdgeInsets.only(right: 10.0, left: 5),
+//                               child: Container(
+//                                   height: 14,
+//                                   width: 14,
+//                                   child: Image.asset(
+//                                     "assets/052-edit.png",
+//                                     color: Colors.grey,
+//                                   )),
+//                             ),
+//                             // Padding(
+//                             //   padding: const EdgeInsets.only(left: 5.0),
+//                             //   child: Icon(
+//                             //     Icons.edit,
+//                             //     color: Colors.grey,
+//                             //     size: 14,
+//                             //   ),
+//                             // ),
+//                           ],
+//                         ),
+//                       )
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ),
+//             GestureDetector(
+//               onTap: () {
+//                 Navigator.of(context).pop();
+//                 Navigator.of(context).pushNamed('/HomePage');
+//               },
+//               child: ListTile(
+//                 leading: Padding(
+//                   padding: const EdgeInsets.only(right: 10.0, left: 4),
+//                   child: Container(
+//                       height: 20,
+//                       width: 20,
+//                       child: Image.asset(
+//                         "assets/home.png",
+//                         color: appPrimaryMaterialColor,
+//                       )),
+//                 ),
 //
-            GestureDetector(
-              onTap: () {
-                //  Navigator.of(context).pushNamed('/ContactUs');
-                Navigator.of(context).pop();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            new AddressScreen()));
-              },
-              child: ListTile(
-                leading: Padding(
-                  padding: const EdgeInsets.only(right: 10.0, left: 4),
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/location.png",
-                        color: appPrimaryMaterialColor,
-                      )),
-                ),
-                title: Text(
-                  'drw_manage_address'.tr().toString(),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-                _showDialogLang(context);
-              },
-              child: ListTile(
-                leading: Padding(
-                  padding: const EdgeInsets.only(right: 10.0, left: 4),
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/world-grid.png",
-                        color: appPrimaryMaterialColor,
-                      )),
-                ),
-                title: Text(
-                  'drw_change_Lang'.tr().toString(),
-                ),
-              ),
-            ),
-            Divider(),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) => new FAQScreen()));
-              },
-              child: ListTile(
-                leading: Padding(
-                  padding: const EdgeInsets.only(right: 10.0, left: 4),
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/f.png",
-                        color: appPrimaryMaterialColor,
-                      )),
-                ),
-                title: Text(
-                  'drw_faq'.tr().toString(),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-                Share.share('check out my website https://balaji.com',
-                    subject: 'Look what An Amazing Clothes!');
-              },
-              child: ListTile(
-                leading: Padding(
-                  padding: const EdgeInsets.only(right: 10.0, left: 4),
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/share.png",
-                        color: appPrimaryMaterialColor,
-                      )),
-                ),
-                title: Text(
-                  'drw_share'.tr().toString(),
-                ),
-              ),
-            ),
-
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-                launchwhatsapp(whatsappNumber: whatsapp, message: msg);
-              },
-              child: ListTile(
-                leading: Padding(
-                  padding: const EdgeInsets.only(right: 10.0, left: 4),
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/phone-call.png",
-                        color: appPrimaryMaterialColor,
-                      )),
-                ),
-                title: Text(
-                  'drw_Contact'.tr().toString(),
-                ),
-              ),
-            ),
-
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            new TermsAndCondition(
-                              termsConData: termsConList[0]
-                                  ["SettingTermsConditionURL"],
-                            )));
-              },
-              child: ListTile(
-                leading: Padding(
-                  padding: const EdgeInsets.only(right: 10.0, left: 4),
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/file.png",
-                        color: appPrimaryMaterialColor,
-                      )),
-                ),
-                title: Text(
-                  'drw_Terms'.tr().toString(),
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-                _showDialog(context);
-              },
-              child: ListTile(
-                leading: Padding(
-                  padding: const EdgeInsets.only(right: 10.0, left: 4),
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/logout.png",
-                        color: appPrimaryMaterialColor,
-                      )),
-                ),
-                title: Text(
-                  'drw_logout'.tr().toString(),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+//                 // Icon(
+//                 //   Icons.home,
+//                 //   color: appPrimaryMaterialColor,
+//                 // ),
+//                 title: Text(
+//                   'drw_home'.tr().toString(),
+//                 ),
+//               ),
+//             ),
+//             GestureDetector(
+//               onTap: () {
+//                 Navigator.of(context).pop();
+//                 Navigator.of(context).pushNamed('/HistoryScreen');
+//               },
+//               child: ListTile(
+//                 leading: Padding(
+//                   padding: const EdgeInsets.only(right: 10.0, left: 4),
+//                   child: Container(
+//                       height: 20,
+//                       width: 20,
+//                       child: Image.asset(
+//                         "assets/history.png",
+//                         color: appPrimaryMaterialColor,
+//                       )),
+//                 ),
+//                 title: Text(
+//                   'drw_order_history'.tr().toString(),
+//                 ),
+//               ),
+//             ),
+//
+// //
+//             GestureDetector(
+//               onTap: () {
+//                 //  Navigator.of(context).pushNamed('/ContactUs');
+//                 Navigator.of(context).pop();
+//                 Navigator.push(
+//                     context,
+//                     MaterialPageRoute(
+//                         builder: (BuildContext context) =>
+//                             new AddressScreen()));
+//               },
+//               child: ListTile(
+//                 leading: Padding(
+//                   padding: const EdgeInsets.only(right: 10.0, left: 4),
+//                   child: Container(
+//                       height: 20,
+//                       width: 20,
+//                       child: Image.asset(
+//                         "assets/location.png",
+//                         color: appPrimaryMaterialColor,
+//                       )),
+//                 ),
+//                 title: Text(
+//                   'drw_manage_address'.tr().toString(),
+//                 ),
+//               ),
+//             ),
+//             GestureDetector(
+//               onTap: () {
+//                 Navigator.of(context).pop();
+//                 _showDialogLang(context);
+//               },
+//               child: ListTile(
+//                 leading: Padding(
+//                   padding: const EdgeInsets.only(right: 10.0, left: 4),
+//                   child: Container(
+//                       height: 20,
+//                       width: 20,
+//                       child: Image.asset(
+//                         "assets/world-grid.png",
+//                         color: appPrimaryMaterialColor,
+//                       )),
+//                 ),
+//                 title: Text(
+//                   'drw_change_Lang'.tr().toString(),
+//                 ),
+//               ),
+//             ),
+//             Divider(),
+//             GestureDetector(
+//               onTap: () {
+//                 Navigator.of(context).pop();
+//                 Navigator.push(
+//                     context,
+//                     MaterialPageRoute(
+//                         builder: (BuildContext context) => new FAQScreen()));
+//               },
+//               child: ListTile(
+//                 leading: Padding(
+//                   padding: const EdgeInsets.only(right: 10.0, left: 4),
+//                   child: Container(
+//                       height: 20,
+//                       width: 20,
+//                       child: Image.asset(
+//                         "assets/f.png",
+//                         color: appPrimaryMaterialColor,
+//                       )),
+//                 ),
+//                 title: Text(
+//                   'drw_faq'.tr().toString(),
+//                 ),
+//               ),
+//             ),
+//             GestureDetector(
+//               onTap: () {
+//                 Navigator.of(context).pop();
+//                 Share.share('check out my website https://balaji.com',
+//                     subject: 'Look what An Amazing Clothes!');
+//               },
+//               child: ListTile(
+//                 leading: Padding(
+//                   padding: const EdgeInsets.only(right: 10.0, left: 4),
+//                   child: Container(
+//                       height: 20,
+//                       width: 20,
+//                       child: Image.asset(
+//                         "assets/share.png",
+//                         color: appPrimaryMaterialColor,
+//                       )),
+//                 ),
+//                 title: Text(
+//                   'drw_share'.tr().toString(),
+//                 ),
+//               ),
+//             ),
+//
+//             GestureDetector(
+//               onTap: () {
+//                 Navigator.of(context).pop();
+//                 launchwhatsapp(whatsappNumber: whatsapp, message: msg);
+//               },
+//               child: ListTile(
+//                 leading: Padding(
+//                   padding: const EdgeInsets.only(right: 10.0, left: 4),
+//                   child: Container(
+//                       height: 20,
+//                       width: 20,
+//                       child: Image.asset(
+//                         "assets/phone-call.png",
+//                         color: appPrimaryMaterialColor,
+//                       )),
+//                 ),
+//                 title: Text(
+//                   'drw_Contact'.tr().toString(),
+//                 ),
+//               ),
+//             ),
+//
+//             GestureDetector(
+//               onTap: () {
+//                 Navigator.of(context).pop();
+//                 Navigator.push(
+//                     context,
+//                     MaterialPageRoute(
+//                         builder: (BuildContext context) =>
+//                             new TermsAndCondition(
+//                               termsConData: termsConList[0]
+//                                   ["SettingTermsConditionURL"],
+//                             )));
+//               },
+//               child: ListTile(
+//                 leading: Padding(
+//                   padding: const EdgeInsets.only(right: 10.0, left: 4),
+//                   child: Container(
+//                       height: 20,
+//                       width: 20,
+//                       child: Image.asset(
+//                         "assets/file.png",
+//                         color: appPrimaryMaterialColor,
+//                       )),
+//                 ),
+//                 title: Text(
+//                   'drw_Terms'.tr().toString(),
+//                 ),
+//               ),
+//             ),
+//             GestureDetector(
+//               onTap: () {
+//                 Navigator.of(context).pop();
+//                 _showDialog(context);
+//               },
+//               child: ListTile(
+//                 leading: Padding(
+//                   padding: const EdgeInsets.only(right: 10.0, left: 4),
+//                   child: Container(
+//                       height: 20,
+//                       width: 20,
+//                       child: Image.asset(
+//                         "assets/logout.png",
+//                         color: appPrimaryMaterialColor,
+//                       )),
+//                 ),
+//                 title: Text(
+//                   'drw_logout'.tr().toString(),
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
       body: isLoading
           ? LoadingComponent()
           : SingleChildScrollView(
@@ -692,8 +694,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             fontSize: 14,
                             // color: Colors.black54,
                             color: appPrimaryMaterialColor,
-                            fontWeight: FontWeight.w400
-                        ),
+                            fontWeight: FontWeight.w400),
                       ),
                     ),
                     Padding(
@@ -723,8 +724,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             fontSize: 14,
                             //fontFamily: 'RobotoSlab',
                             color: appPrimaryMaterialColor,
-                            fontWeight: FontWeight.w400
-                        ),
+                            fontWeight: FontWeight.w400),
                       ),
                     ),
                     Padding(
@@ -948,9 +948,9 @@ class _ALertLangState extends State<ALertLang> {
       title: new Text(
         'Select_Language'.tr().toString(),
         style: TextStyle(
-            fontSize: 22,
-            color: appPrimaryMaterialColor,
-            //fontWeight: FontWeight.bold
+          fontSize: 22,
+          color: appPrimaryMaterialColor,
+          //fontWeight: FontWeight.bold
         ),
       ),
       content: new Wrap(
@@ -1067,9 +1067,9 @@ class _AlertboxLogoutState extends State<AlertboxLogout> {
       title: new Text(
         'drw_logout'.tr().toString(),
         style: TextStyle(
-            fontSize: 22,
-            color: appPrimaryMaterialColor,
-           // fontWeight: FontWeight.bold
+          fontSize: 22,
+          color: appPrimaryMaterialColor,
+          // fontWeight: FontWeight.bold
         ),
       ),
       content: new Text(
@@ -1103,5 +1103,4 @@ class _AlertboxLogoutState extends State<AlertboxLogout> {
       ],
     );
   }
-
 }

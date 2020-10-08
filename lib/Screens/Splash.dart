@@ -14,7 +14,6 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-
       child: Scaffold(
           backgroundColor: Colors.white,
           // backgroundColor: appPrimaryMaterialColor,
@@ -41,7 +40,7 @@ class _SplashState extends State<Splash> {
       } else {
         //Navigator.pushReplacementNamed(context, '/Home');
         if (Type == "retailer") {
-          Navigator.pushReplacementNamed(context, '/Home');
+          Navigator.pushReplacementNamed(context, '/HomePage');
         } else {
           Navigator.pushReplacementNamed(context, '/ManuHomeScreen');
         }

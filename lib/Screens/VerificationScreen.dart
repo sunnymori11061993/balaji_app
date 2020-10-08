@@ -46,7 +46,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
       await prefs.setString(
           Session.CustomerPhoneNo, widget.loginData["CustomerPhoneNo"]);
-      Navigator.pushNamedAndRemoveUntil(context, '/Home', (route) => false);
+      Navigator.pushNamedAndRemoveUntil(context, '/HomePage', (route) => false);
     } else {
       await prefs.setString(
           Session.CustomerId, widget.loginData["ManufacturerId"]);

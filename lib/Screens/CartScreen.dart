@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:balaji/Common/ClassList.dart';
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/CartComponent.dart';
@@ -23,7 +25,6 @@ class _CartScreenState extends State<CartScreen> {
   List updateCartList = [];
   TextEditingController txtSearch = TextEditingController();
   bool searchImage = true;
-
 
   int mainTotal = 0;
   String dropdownvalue = 'rinki';
@@ -91,25 +92,25 @@ class _CartScreenState extends State<CartScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                    new SearchingScreen(
-                                      searchData: txtSearch.text,
-                                    )));
+                                        new SearchingScreen(
+                                          searchData: txtSearch.text,
+                                        )));
                             txtSearch.clear();
                             //Navigator.pop(context, this.txtSearch.text);
                           },
                           style: TextStyle(
-                            //color: Colors.white,
-                          ),
+                              //color: Colors.white,
+                              ),
                           cursorColor: appPrimaryMaterialColor,
                           decoration: InputDecoration(
-                            // prefixIcon: SizedBox(
-                            //   height: 20,
-                            //   width: 10,
-                            //   child: Image.asset(
-                            //     "assets/search.png",
-                            //     color: appPrimaryMaterialColor,
-                            //   ),
-                            // ),
+                              // prefixIcon: SizedBox(
+                              //   height: 20,
+                              //   width: 10,
+                              //   child: Image.asset(
+                              //     "assets/search.png",
+                              //     color: appPrimaryMaterialColor,
+                              //   ),
+                              // ),
 
                               hintText: "    Search...",
                               hintStyle: TextStyle(color: Colors.grey),
@@ -128,85 +129,85 @@ class _CartScreenState extends State<CartScreen> {
                   },
                   child: searchImage
                       ? Padding(
-                    padding: const EdgeInsets.only(right: 15.0),
-                    child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/search.png",
-                        color: appPrimaryMaterialColor,
-                      ),
-                    ),
-                  )
-                      : Padding(
-                    padding: const EdgeInsets.only(right: 15.0),
-                    child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/025-cancel.png",
-                        color: appPrimaryMaterialColor,
-                      ),
-                    ),
-                  ),
-                ),
-                searchImage
-                    ? Padding(
-                  padding: const EdgeInsets.only(
-                    right: 10.0,
-                    left: 8,
-                  ),
-                  child: Container(
-                          height: 20,
-                          width: 20,
-                          child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushNamed('/Whishlist');
-                              },
-                              child: Image.asset(
-                                "assets/heart.png",
-                                color: appPrimaryMaterialColor,
-                              ))),
-                )
-                    : Container(),
-                searchImage
-                    ? Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    Padding(
-                      padding:
-                      const EdgeInsets.only(right: 15.0, left: 8, top: 18),
-                      child:  Container(
+                          padding: const EdgeInsets.only(right: 15.0),
+                          child: Container(
                             height: 20,
                             width: 20,
-                            child: GestureDetector(
-                                onTap: () {
-                                  //Navigator.of(context).pushNamed('/Whishlist');
-                                },
-                                child: Image.asset(
-                                  "assets/039-shopping-cart.png",
-                                  color: appPrimaryMaterialColor,
-                                ))),
-                    ),
-                    // if (cartList.length > 0)
-                    //   Padding(
-                    //     padding: const EdgeInsets.only(
-                    //         left: 0.0, top: 13, right: 10),
-                    //     child: CircleAvatar(
-                    //       radius: 6.0,
-                    //       backgroundColor: Colors.red,
-                    //       foregroundColor: Colors.white,
-                    //       child: Text(
-                    //         cartList.length.toString(),
-                    //         style: TextStyle(
-                    //           fontWeight: FontWeight.bold,
-                    //           fontSize: 10.0,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                  ],
-                )
+                            child: Image.asset(
+                              "assets/search.png",
+                              color: appPrimaryMaterialColor,
+                            ),
+                          ),
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.only(right: 15.0),
+                          child: Container(
+                            height: 20,
+                            width: 20,
+                            child: Image.asset(
+                              "assets/025-cancel.png",
+                              color: appPrimaryMaterialColor,
+                            ),
+                          ),
+                        ),
+                ),
+                // searchImage
+                //     ? Padding(
+                //         padding: const EdgeInsets.only(
+                //           right: 10.0,
+                //           left: 8,
+                //         ),
+                //         child: Container(
+                //             height: 20,
+                //             width: 20,
+                //             child: GestureDetector(
+                //                 onTap: () {
+                //                   Navigator.of(context).pushNamed('/Whishlist');
+                //                 },
+                //                 child: Image.asset(
+                //                   "assets/heart.png",
+                //                   color: appPrimaryMaterialColor,
+                //                 ))),
+                //       )
+                //     : Container(),
+                searchImage
+                    ? Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                right: 15.0, left: 8, top: 18),
+                            child: Container(
+                                height: 20,
+                                width: 20,
+                                child: GestureDetector(
+                                    onTap: () {
+                                      //Navigator.of(context).pushNamed('/Whishlist');
+                                    },
+                                    child: Image.asset(
+                                      "assets/039-shopping-cart.png",
+                                      color: appPrimaryMaterialColor,
+                                    ))),
+                          ),
+                          // if (cartList.length > 0)
+                          //   Padding(
+                          //     padding: const EdgeInsets.only(
+                          //         left: 0.0, top: 13, right: 10),
+                          //     child: CircleAvatar(
+                          //       radius: 6.0,
+                          //       backgroundColor: Colors.red,
+                          //       foregroundColor: Colors.white,
+                          //       child: Text(
+                          //         cartList.length.toString(),
+                          //         style: TextStyle(
+                          //           fontWeight: FontWeight.bold,
+                          //           fontSize: 10.0,
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   ),
+                        ],
+                      )
                     : Container(),
 
                 // Padding(
@@ -377,7 +378,9 @@ class _CartScreenState extends State<CartScreen> {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        isLoading = true;
+        setState(() {
+          isLoading = true;
+        });
         SharedPreferences pref = await SharedPreferences.getInstance();
         FormData body = FormData.fromMap(
             {"customerId": pref.getString(Session.CustomerId)});
@@ -431,11 +434,83 @@ class _AlertAddState extends State<AlertAdd> {
   TextEditingController txtPincode = TextEditingController();
   TextEditingController txtLandmark = TextEditingController();
   TextEditingController txtState = TextEditingController();
-  String dropdownvalue = 'Gujarat';
-  String dropdownvaluecity = 'Surat';
   final _formkey = new GlobalKey<FormState>();
 
   bool isAddLoading = false;
+
+  bool isStateLoading = true, isCityLoading = false;
+
+  List<StateClass> stateList = [];
+  StateClass selectedState;
+
+  List<CityClass> cityList = [];
+  CityClass selectedCity;
+
+  @override
+  void initState() {
+    _getState();
+  }
+
+  _getState() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        Services.getState().then((responseList) async {
+          setState(() {
+            isStateLoading = false;
+          });
+          if (responseList.length > 0) {
+            setState(() {
+              stateList = responseList;
+              selectedState = responseList[0];
+            });
+            //_getCity(selectedState.stateId);
+            _getCity(responseList[0].stateId);
+          } else {
+            Fluttertoast.showToast(msg: "States Not Found");
+          }
+        }, onError: (e) {
+          setState(() {
+            isStateLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
+  }
+
+  _getCity(stateId) async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        FormData body = FormData.fromMap({"StateId": stateId});
+        Services.getCity(body: body).then((responseList) async {
+          setState(() {
+            isCityLoading = false;
+          });
+          if (responseList.length > 0) {
+            setState(() {
+              cityList = responseList;
+              selectedCity = responseList[0];
+            });
+          } else {
+            Fluttertoast.showToast(msg: "City Not Found");
+          }
+        }, onError: (e) {
+          setState(() {
+            isCityLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -443,9 +518,9 @@ class _AlertAddState extends State<AlertAdd> {
       title: new Text(
         'Address_Details'.tr().toString(),
         style: TextStyle(
-            fontSize: 22,
-            color: appPrimaryMaterialColor,
-           // fontWeight: FontWeight.bold
+          fontSize: 22,
+          color: appPrimaryMaterialColor,
+          // fontWeight: FontWeight.bold
         ),
       ),
       content: SingleChildScrollView(
@@ -456,8 +531,7 @@ class _AlertAddState extends State<AlertAdd> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-              Padding(
+                Padding(
                   padding: const EdgeInsets.only(
                     top: 8.0,
                   ),
@@ -655,22 +729,22 @@ class _AlertAddState extends State<AlertAdd> {
                             fillColor: Colors.white,
                             enabledBorder: OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(5.0)),
+                                  BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.grey),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(5.0)),
+                                  BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.red),
                             ),
                             focusedErrorBorder: OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(5.0)),
+                                  BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.red),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius:
-                              BorderRadius.all(Radius.circular(5.0)),
+                                  BorderRadius.all(Radius.circular(5.0)),
                               borderSide: BorderSide(color: Colors.grey),
                             ),
                           ),
@@ -742,7 +816,7 @@ class _AlertAddState extends State<AlertAdd> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0,bottom: 5),
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 5),
                   child: Text(
                     //'Pincode'.tr().toString(),
                     "State",
@@ -754,41 +828,40 @@ class _AlertAddState extends State<AlertAdd> {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
-
+                  height: 45,
                   decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.grey,
-                      )
-                      ,
-                      borderRadius: BorderRadius.circular(5)
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left:8.0),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: dropdownvalue,
-                        icon: Icon(Icons.arrow_drop_down,size: 25,color: appPrimaryMaterialColor),
-                        underline: Container(
-                          height: 2,
-                          color:appPrimaryMaterialColor,
-                        ),
-                        items: <String> ['Gujarat','Maharashtra','Kerala','Manipur'] .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String newvalue){
-                          setState(() {
-                            dropdownvalue = newvalue;
-                          });
-                        },
                       ),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: DropdownButtonHideUnderline(
+                      child: isStateLoading
+                          ? LoadingComponent()
+                          : DropdownButton<StateClass>(
+                              value: selectedState,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedState = value;
+                                  _getCity(selectedState.stateId);
+                                });
+                              },
+                              items: stateList.map(
+                                (StateClass state) {
+                                  log(state.stateName);
+                                  return DropdownMenuItem<StateClass>(
+                                    child: Text(state.stateName),
+                                    value: state,
+                                  );
+                                },
+                              ).toList(),
+                            ),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0,bottom: 5),
+                  padding: const EdgeInsets.only(top: 8.0, bottom: 5),
                   child: Text(
                     'City'.tr().toString(),
                     style: TextStyle(
@@ -799,41 +872,37 @@ class _AlertAddState extends State<AlertAdd> {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width,
-
+                  height: 45,
                   decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.grey,
-                      )
-                      ,
-                      borderRadius: BorderRadius.circular(5)
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left:8.0),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: dropdownvaluecity,
-                        icon: Icon(Icons.arrow_drop_down,size: 25,color: appPrimaryMaterialColor),
-                        underline: Container(
-                          height: 2,
-                          color:appPrimaryMaterialColor,
-                        ),
-                        items: <String> ['Surat','Baroda','Kerala','Manipur'] .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String newvalue){
-                          setState(() {
-                            dropdownvaluecity = newvalue;
-                          });
-                        },
                       ),
+                      borderRadius: BorderRadius.circular(5)),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: DropdownButtonHideUnderline(
+                      child: isCityLoading
+                          ? LoadingComponent()
+                          : DropdownButton<CityClass>(
+                              value: selectedCity,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedCity = value;
+                                });
+                              },
+                              items: cityList.map(
+                                (CityClass city) {
+                                  log(city.cityName);
+                                  return DropdownMenuItem<CityClass>(
+                                    child: Text(city.cityName),
+                                    value: city,
+                                  );
+                                },
+                              ).toList(),
+                            ),
                     ),
                   ),
                 ),
-
-
               ],
             ),
           ),
@@ -880,10 +949,13 @@ class _AlertAddState extends State<AlertAdd> {
 
           FormData body = FormData.fromMap({
             "CustomerId": prefs.getString(Session.CustomerId),
-            "AddressCity": txtCity.text,
+            "AddressCity": "",
             "AddressPincode": txtPincode.text,
             "AddressName": txtFullAddress.text,
             "AddressHouseNo": txtHouseNo.text,
+            "StateId": selectedState.stateId,
+            "CityId": selectedCity.cityId,
+            "AddressLandmark": txtLandmark.text,
           }); //"key":"value"
 
           Services.postForSave(apiname: 'addAddress', body: body).then(
@@ -945,15 +1017,16 @@ class _AlertSelectAddressState extends State<AlertSelectAddress> {
       title: new Text(
         'Select_Address'.tr().toString(),
         style: TextStyle(
-            fontSize: 22,
-            color: appPrimaryMaterialColor,
-           // fontWeight: FontWeight.bold
+          fontSize: 22,
+          color: appPrimaryMaterialColor,
+          // fontWeight: FontWeight.bold
         ),
       ),
       content: isSelectLoading
           ? LoadingComponent()
           : ListView.builder(
               shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
@@ -963,7 +1036,6 @@ class _AlertSelectAddressState extends State<AlertSelectAddress> {
                       widget.onSelect(getAddressList[index]);
                     },
                     child: Container(
-                      height: 55,
                       width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
                           border: Border.all(
@@ -971,7 +1043,7 @@ class _AlertSelectAddressState extends State<AlertSelectAddress> {
                           ),
                           borderRadius: BorderRadius.circular(5)),
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
+                        padding: const EdgeInsets.only(left: 8.0, bottom: 8),
                         child: Column(
                           children: [
                             Padding(
@@ -1000,8 +1072,28 @@ class _AlertSelectAddressState extends State<AlertSelectAddress> {
                             Row(
                               children: [
                                 Text(
-                                    "${getAddressList[index]["AddressCity"]}" +
-                                        "  -",
+                                    "${getAddressList[index]["AddressLandmark"]}" +
+                                        " -",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                    )),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5.0),
+                                  child: Text(
+                                      "${getAddressList[index]["AddressPincode"]}",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                      )),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                    "${getAddressList[index]["CityName"]}" +
+                                        "  ,",
                                     style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
@@ -1009,7 +1101,7 @@ class _AlertSelectAddressState extends State<AlertSelectAddress> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: Text(
-                                      "${getAddressList[index]["AddressPincode"]}",
+                                      "${getAddressList[index]["StateName"]}",
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 16,
@@ -1082,7 +1174,9 @@ class _AlertSelectAddressState extends State<AlertSelectAddress> {
 
 class showBottomSheet extends StatefulWidget {
   Function onOrder;
+
   showBottomSheet({this.onOrder});
+
   @override
   _showBottomSheetState createState() => _showBottomSheetState();
 }
@@ -1137,11 +1231,10 @@ class _showBottomSheetState extends State<showBottomSheet> {
                 child: Text(
                   'Select_Address'.tr().toString(),
                   style: TextStyle(
-                      fontSize: 22,
-                      color: appPrimaryMaterialColor,
-                      //fontWeight: FontWeight.bold
-                  )
-                  ,
+                    fontSize: 22,
+                    color: appPrimaryMaterialColor,
+                    //fontWeight: FontWeight.bold
+                  ),
                 ),
               ),
               Padding(
@@ -1172,10 +1265,10 @@ class _showBottomSheetState extends State<showBottomSheet> {
                           child: Text(
                             'Select'.tr().toString(),
                             style: TextStyle(
-                                fontSize: 16,
-                                //color: Colors.white,
-                                color: Colors.grey[700],
-                                //fontWeight: FontWeight.bold
+                              fontSize: 16,
+                              //color: Colors.white,
+                              color: Colors.grey[700],
+                              //fontWeight: FontWeight.bold
                             ),
                           ),
                         ),
@@ -1189,7 +1282,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
                       padding: const EdgeInsets.only(
                           left: 20.0, right: 20, bottom: 5),
                       child: Container(
-                          height: 55,
+                          height: 75,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                               border: Border.all(
@@ -1227,7 +1320,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
                                 child: Row(
                                   children: [
                                     Text(
-                                        "${selectedAddress["AddressCity"]}" +
+                                        "${selectedAddress["AddressLandmark"]}" +
                                             " -",
                                         style: TextStyle(
                                           color: Colors.black,
@@ -1237,6 +1330,28 @@ class _showBottomSheetState extends State<showBottomSheet> {
                                       padding: const EdgeInsets.only(left: 5.0),
                                       child: Text(
                                           "${selectedAddress["AddressPincode"]}",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                          )),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                        "${selectedAddress["CityName"]}" + " ,",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                        )),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 5.0),
+                                      child: Text(
+                                          "${selectedAddress["StateName"]}",
                                           style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 16,
@@ -1307,8 +1422,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
                                     fontSize: 16,
                                     color: Colors.white,
                                     //  color: Colors.grey[700],
-                                    fontWeight: FontWeight.w400
-                                ),
+                                    fontWeight: FontWeight.w400),
                               ),
                             ],
                           ),

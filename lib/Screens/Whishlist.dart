@@ -85,25 +85,25 @@ class _WhishlistState extends State<Whishlist> {
                               context,
                               MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                  new SearchingScreen(
-                                    searchData: txtSearch.text,
-                                  )));
+                                      new SearchingScreen(
+                                        searchData: txtSearch.text,
+                                      )));
                           txtSearch.clear();
                           //Navigator.pop(context, this.txtSearch.text);
                         },
                         style: TextStyle(
-                          //color: Colors.white,
-                        ),
+                            //color: Colors.white,
+                            ),
                         cursorColor: appPrimaryMaterialColor,
                         decoration: InputDecoration(
-                          // prefixIcon: SizedBox(
-                          //   height: 20,
-                          //   width: 10,
-                          //   child: Image.asset(
-                          //     "assets/search.png",
-                          //     color: appPrimaryMaterialColor,
-                          //   ),
-                          // ),
+                            // prefixIcon: SizedBox(
+                            //   height: 20,
+                            //   width: 10,
+                            //   child: Image.asset(
+                            //     "assets/search.png",
+                            //     color: appPrimaryMaterialColor,
+                            //   ),
+                            // ),
 
                             hintText: "    Search...",
                             hintStyle: TextStyle(color: Colors.grey),
@@ -122,85 +122,86 @@ class _WhishlistState extends State<Whishlist> {
                 },
                 child: searchImage
                     ? Padding(
-                  padding: const EdgeInsets.only(right: 15.0),
-                  child: Container(
-                    height: 20,
-                    width: 20,
-                    child: Image.asset(
-                      "assets/search.png",
-                      color: appPrimaryMaterialColor,
-                    ),
-                  ),
-                )
+                        padding: const EdgeInsets.only(right: 15.0),
+                        child: Container(
+                          height: 20,
+                          width: 20,
+                          child: Image.asset(
+                            "assets/search.png",
+                            color: appPrimaryMaterialColor,
+                          ),
+                        ),
+                      )
                     : Padding(
-                  padding: const EdgeInsets.only(right: 15.0),
-                  child: Container(
-                    height: 20,
-                    width: 20,
-                    child: Image.asset(
-                      "assets/025-cancel.png",
-                      color: appPrimaryMaterialColor,
-                    ),
-                  ),
-                ),
+                        padding: const EdgeInsets.only(right: 15.0),
+                        child: Container(
+                          height: 20,
+                          width: 20,
+                          child: Image.asset(
+                            "assets/025-cancel.png",
+                            color: appPrimaryMaterialColor,
+                          ),
+                        ),
+                      ),
               ),
-              searchImage
-                  ? Padding(
-                padding: const EdgeInsets.only(
-                  right: 10.0,
-                  left: 8,
-                ),
-                child:Container(
-                        height: 20,
-                        width: 20,
-                        child: GestureDetector(
-                            onTap: () {
-                              //Navigator.of(context).pushNamed('/Whishlist');
-                            },
-                            child: Image.asset(
-                              "assets/020-heart.png",
-                              color: appPrimaryMaterialColor,
-                            ))),
-              )
-                  : Container(),
+              // searchImage
+              //     ? Padding(
+              //   padding: const EdgeInsets.only(
+              //     right: 10.0,
+              //     left: 8,
+              //   ),
+              //   child:Container(
+              //           height: 20,
+              //           width: 20,
+              //           child: GestureDetector(
+              //               onTap: () {
+              //                 //Navigator.of(context).pushNamed('/Whishlist');
+              //               },
+              //               child: Image.asset(
+              //                 "assets/020-heart.png",
+              //                 color: appPrimaryMaterialColor,
+              //               ))),
+              // )
+              //     : Container(),
               searchImage
                   ? Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  Padding(
-                    padding:
-                    const EdgeInsets.only(right: 15.0, left: 8, top: 18),
-                    child: Container(
-                        height: 20,
-                        width: 20,
-                        child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushNamed('/CartScreen');
-                            },
-                            child: Image.asset(
-                              "assets/shopping-cart.png",
-                              color: appPrimaryMaterialColor,
-                            ))),
-                  ),
-                  // if (cartList.length > 0)
-                  //   Padding(
-                  //     padding: const EdgeInsets.only(
-                  //         left: 0.0, top: 13, right: 10),
-                  //     child: CircleAvatar(
-                  //       radius: 6.0,
-                  //       backgroundColor: Colors.red,
-                  //       foregroundColor: Colors.white,
-                  //       child: Text(
-                  //         cartList.length.toString(),
-                  //         style: TextStyle(
-                  //           fontWeight: FontWeight.bold,
-                  //           fontSize: 10.0,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                ],
-              )
+                      alignment: Alignment.topCenter,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              right: 15.0, left: 8, top: 18),
+                          child: Container(
+                              height: 20,
+                              width: 20,
+                              child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context)
+                                        .pushNamed('/CartScreen');
+                                  },
+                                  child: Image.asset(
+                                    "assets/shopping-cart.png",
+                                    color: appPrimaryMaterialColor,
+                                  ))),
+                        ),
+                        // if (cartList.length > 0)
+                        //   Padding(
+                        //     padding: const EdgeInsets.only(
+                        //         left: 0.0, top: 13, right: 10),
+                        //     child: CircleAvatar(
+                        //       radius: 6.0,
+                        //       backgroundColor: Colors.red,
+                        //       foregroundColor: Colors.white,
+                        //       child: Text(
+                        //         cartList.length.toString(),
+                        //         style: TextStyle(
+                        //           fontWeight: FontWeight.bold,
+                        //           fontSize: 10.0,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                      ],
+                    )
                   : Container(),
               // Padding(
               //   padding: const EdgeInsets.only(

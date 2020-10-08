@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:balaji/Common/ClassList.dart';
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
@@ -31,6 +32,88 @@ class _AddressComponentState extends State<AddressComponent> {
 
   bool isRemoveLoading = false;
   bool isUpdateLoading = false;
+  bool isStateLoading = true, isCityLoading = false;
+
+  List<StateClass> stateList = [];
+  StateClass selectedState;
+
+  List<CityClass> cityList = [];
+  CityClass selectedCity;
+
+  _getState() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        Services.getState().then((responseList) async {
+          setState(() {
+            isStateLoading = false;
+          });
+          if (responseList.length > 0) {
+            setState(() {
+              stateList = responseList;
+            });
+
+            for (int i = 0; i < responseList.length; i++) {
+              if (responseList[i].stateId == widget.addressData["StateId"]) {
+                setState(() {
+                  selectedState = responseList[i];
+                });
+              }
+            }
+
+            //_getCity(selectedState.stateId);
+            _getCity(selectedState.stateId);
+          } else {
+            Fluttertoast.showToast(msg: "States Not Found");
+          }
+        }, onError: (e) {
+          setState(() {
+            isStateLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
+  }
+
+  _getCity(stateId) async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        FormData body = FormData.fromMap({"StateId": stateId});
+        Services.getCity(body: body).then((responseList) async {
+          setState(() {
+            isCityLoading = false;
+          });
+          if (responseList.length > 0) {
+            setState(() {
+              cityList = responseList;
+              for (int i = 0; i < responseList.length; i++) {
+                if (responseList[i].cityId == widget.addressData["CityId"]) {
+                  setState(() {
+                    selectedCity = responseList[i];
+                  });
+                }
+              }
+            });
+          } else {
+            Fluttertoast.showToast(msg: "City Not Found");
+          }
+        }, onError: (e) {
+          setState(() {
+            isCityLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
+  }
 
   _showDialog(BuildContext context) {
     //show alert dialog
@@ -42,11 +125,10 @@ class _AddressComponentState extends State<AddressComponent> {
           title: new Text(
             "Remove",
             style: TextStyle(
-                fontSize: 22,
-                color: appPrimaryMaterialColor,
-               // fontWeight: FontWeight.bold
-            )
-            ,
+              fontSize: 22,
+              color: appPrimaryMaterialColor,
+              // fontWeight: FontWeight.bold
+            ),
           ),
           content: new Text(
             "Are you sure want to remove the address!!!",
@@ -83,10 +165,11 @@ class _AddressComponentState extends State<AddressComponent> {
   @override
   void initState() {
     // TODO: implement initState
+    _getState();
     setState(() {
       txtHouseNo.text = widget.addressData["AddressHouseNo"];
       txtFullAddress.text = widget.addressData["AddressName"];
-      txtCity.text = widget.addressData["AddressCity"];
+      txtLandmark.text = widget.addressData["AddressLandmark"];
       txtPincode.text = widget.addressData["AddressPincode"];
     });
   }
@@ -119,7 +202,7 @@ class _AddressComponentState extends State<AddressComponent> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Padding(
-                        padding: const EdgeInsets.only(right:25.0),
+                        padding: const EdgeInsets.only(right: 25.0),
                         child: Text(
                           'House_No'.tr().toString(),
                           style: TextStyle(
@@ -191,7 +274,7 @@ class _AddressComponentState extends State<AddressComponent> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(right:25.0),
+                        padding: const EdgeInsets.only(right: 25.0),
                         child: Text(
                           'Full_Address'.tr().toString(),
                           style: TextStyle(
@@ -275,7 +358,7 @@ class _AddressComponentState extends State<AddressComponent> {
                           Padding(
                             padding: const EdgeInsets.only(top: 5.0),
                             child: Container(
-                              width: MediaQuery.of(context).size.width/2.3,
+                              width: MediaQuery.of(context).size.width / 2.3,
                               height: 40,
                               child: TextFormField(
                                 keyboardType: TextInputType.text,
@@ -293,22 +376,22 @@ class _AddressComponentState extends State<AddressComponent> {
                                   fillColor: Colors.white,
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
+                                        BorderRadius.all(Radius.circular(5.0)),
                                     borderSide: BorderSide(color: Colors.grey),
                                   ),
                                   errorBorder: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
+                                        BorderRadius.all(Radius.circular(5.0)),
                                     borderSide: BorderSide(color: Colors.red),
                                   ),
                                   focusedErrorBorder: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
+                                        BorderRadius.all(Radius.circular(5.0)),
                                     borderSide: BorderSide(color: Colors.red),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
+                                        BorderRadius.all(Radius.circular(5.0)),
                                     borderSide: BorderSide(color: Colors.grey),
                                   ),
                                 ),
@@ -330,7 +413,7 @@ class _AddressComponentState extends State<AddressComponent> {
                           Padding(
                             padding: const EdgeInsets.only(top: 5.0),
                             child: Container(
-                              width: MediaQuery.of(context).size.width/2.3,
+                              width: MediaQuery.of(context).size.width / 2.3,
                               height: 40,
                               child: TextFormField(
                                 keyboardType: TextInputType.number,
@@ -350,22 +433,22 @@ class _AddressComponentState extends State<AddressComponent> {
                                   fillColor: Colors.white,
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
+                                        BorderRadius.all(Radius.circular(5.0)),
                                     borderSide: BorderSide(color: Colors.grey),
                                   ),
                                   errorBorder: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
+                                        BorderRadius.all(Radius.circular(5.0)),
                                     borderSide: BorderSide(color: Colors.red),
                                   ),
                                   focusedErrorBorder: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
+                                        BorderRadius.all(Radius.circular(5.0)),
                                     borderSide: BorderSide(color: Colors.red),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius:
-                                    BorderRadius.all(Radius.circular(5.0)),
+                                        BorderRadius.all(Radius.circular(5.0)),
                                     borderSide: BorderSide(color: Colors.grey),
                                   ),
                                 ),
@@ -393,39 +476,39 @@ class _AddressComponentState extends State<AddressComponent> {
                                 fontWeight: FontWeight.w600),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top:5.0),
+                            padding: const EdgeInsets.only(top: 5.0),
                             child: Container(
-                              width: MediaQuery.of(context).size.width/2.3,
-
+                              width: MediaQuery.of(context).size.width / 2.3,
+                              height: 45,
                               decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.grey,
-                                  )
-                                  ,
-                                  borderRadius: BorderRadius.circular(5)
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(left:8.0),
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
-                                    value: dropdownvalue,
-                                    icon: Icon(Icons.arrow_drop_down,size: 25,color: appPrimaryMaterialColor),
-                                    underline: Container(
-                                      height: 2,
-                                      color:appPrimaryMaterialColor,
-                                    ),
-                                    items: <String> ['Gujarat','Maharashtra','Kerala','Manipur'] .map<DropdownMenuItem<String>>((String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String newvalue){
-                                      setState(() {
-                                        dropdownvalue = newvalue;
-                                      });
-                                    },
                                   ),
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: DropdownButtonHideUnderline(
+                                  child: isStateLoading
+                                      ? LoadingComponent()
+                                      : DropdownButton<StateClass>(
+                                          value: selectedState,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              selectedState = value;
+                                              selectedCity = null;
+                                              _getCity(selectedState.stateId);
+                                            });
+                                          },
+                                          items: stateList.map(
+                                            (StateClass state) {
+                                              return DropdownMenuItem<
+                                                  StateClass>(
+                                                child: Text(state.stateName),
+                                                value: state,
+                                              );
+                                            },
+                                          ).toList(),
+                                        ),
                                 ),
                               ),
                             ),
@@ -443,39 +526,39 @@ class _AddressComponentState extends State<AddressComponent> {
                                 fontWeight: FontWeight.w600),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top:5.0),
+                            padding: const EdgeInsets.only(top: 5.0),
                             child: Container(
-                              width: MediaQuery.of(context).size.width/2.3,
-
+                              width: MediaQuery.of(context).size.width / 2.3,
+                              height: 45,
                               decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.grey,
-                                  )
-                                  ,
-                                  borderRadius: BorderRadius.circular(5)
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(left:8.0),
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<String>(
-                                    value: dropdownvaluecity,
-                                    icon: Icon(Icons.arrow_drop_down,size: 25,color: appPrimaryMaterialColor),
-                                    underline: Container(
-                                      height: 2,
-                                      color:appPrimaryMaterialColor,
-                                    ),
-                                    items: <String> ['Surat','Baroda','Kerala','Manipur'] .map<DropdownMenuItem<String>>((String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String newvalue){
-                                      setState(() {
-                                        dropdownvaluecity = newvalue;
-                                      });
-                                    },
                                   ),
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: DropdownButtonHideUnderline(
+                                  child: isCityLoading
+                                      ? LoadingComponent()
+                                      : DropdownButton<CityClass>(
+                                          value: selectedCity,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              selectedCity = value;
+                                            });
+                                          },
+                                          hint: Text("Select City"
+                                              ""),
+                                          items: cityList.map(
+                                            (CityClass city) {
+                                              return DropdownMenuItem<
+                                                  CityClass>(
+                                                child: Text(city.cityName),
+                                                value: city,
+                                              );
+                                            },
+                                          ).toList(),
+                                        ),
                                 ),
                               ),
                             ),
@@ -485,7 +568,6 @@ class _AddressComponentState extends State<AddressComponent> {
                     ],
                   ),
                 ),
-
                 Padding(
                   padding: const EdgeInsets.only(top: 15.0),
                   child: Row(
@@ -655,10 +737,12 @@ class _AddressComponentState extends State<AddressComponent> {
 
           FormData body = FormData.fromMap({
             "AddressId": "${widget.addressData["AddressId"]}",
-            "AddressCity": txtCity.text,
             "AddressPincode": txtPincode.text,
             "AddressName": txtFullAddress.text,
             "AddressHouseNo": txtHouseNo.text,
+            "AddressLandmark": txtLandmark.text,
+            "StateId": selectedState.stateId,
+            "CityId": selectedCity.cityId,
           }); //"key":"value"
 
           Services.postForSave(apiname: 'updateAddress', body: body).then(
