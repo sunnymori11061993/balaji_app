@@ -28,6 +28,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _profile();
   }
 
+  void _settingModalBottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return showBottomSheet();
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,16 +69,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 key: _formkey,
                 child: Padding(
                   padding: const EdgeInsets.only(
-                      top: 30.0, left: 15, right: 15, bottom: 10),
+                      top: 15.0, left: 15, right: 15, bottom: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        "Contact Details",
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: appPrimaryMaterialColor,
-                            fontWeight: FontWeight.w600),
+                      Column(
+                        children: [
+                          Align(
+                            alignment: AlignmentDirectional.topCenter,
+                            child: GestureDetector(
+                              onTap: () {
+                                _settingModalBottomSheet();
+                              },
+                              child: Container(
+                                height: 130.0,
+                                width: 150.0,
+                                decoration: BoxDecoration(
+                                    // borderRadius: BorderRadius.circular(30),
+                                    color: appPrimaryMaterialColor,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                        color: appPrimaryMaterialColor[600]),
+                                    image: DecorationImage(
+                                        image: NetworkImage(
+                                            "https://static1.bigstockphoto.com/8/2/3/large1500/328918366.jpg"),
+                                        fit: BoxFit.cover)),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              "Rinki Sharma",
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: appPrimaryMaterialColor,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ],
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 15.0),
@@ -430,5 +468,106 @@ class _ProfileScreenState extends State<ProfileScreen> {
     } else {
       Fluttertoast.showToast(msg: "Please Fill the Field");
     }
+  }
+}
+
+class showBottomSheet extends StatefulWidget {
+  Function onOrder;
+
+  @override
+  _showBottomSheetState createState() => _showBottomSheetState();
+}
+
+class _showBottomSheetState extends State<showBottomSheet> {
+  var selectedAddress;
+  bool isOrderLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: new Wrap(
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0, left: 15, bottom: 10),
+                child: Text(
+                  "Add Photo",
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: appPrimaryMaterialColor,
+                    //fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed('/ProfileScreen');
+                },
+                child: ListTile(
+                  leading: Padding(
+                    padding: const EdgeInsets.only(right: 10.0, left: 15),
+                    child: Container(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset(
+                          "assets/camera.png",
+                          color: appPrimaryMaterialColor,
+                        )),
+                  ),
+                  title: Text(
+                    "Take Photo",
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: Divider(),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed('/ProfileScreen');
+                },
+                child: ListTile(
+                  leading: Padding(
+                    padding: const EdgeInsets.only(right: 10.0, left: 15),
+                    child: Container(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset(
+                          "assets/gallery.png",
+                          color: appPrimaryMaterialColor,
+                        )),
+                  ),
+                  title: Text(
+                    "Choose from Gallery",
+                  ),
+                ),
+              ),
+              Align(
+                alignment: AlignmentDirectional.bottomEnd,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 25.0, bottom: 5),
+                  child: FlatButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: appPrimaryMaterialColor,
+                        //fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }

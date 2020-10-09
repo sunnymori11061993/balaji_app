@@ -9,7 +9,7 @@ class Services {
   static Future<List> PostForList({api_name, body}) async {
     String url = API_URL + '$api_name';
     print("$api_name url : " + url);
-    Response response;
+    var response;
     try {
       if (body == null) {
         response = await dio.post(url);

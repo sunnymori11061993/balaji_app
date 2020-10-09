@@ -168,122 +168,153 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       //  // onTap: _onItemTapped,
       // ),
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 15.0),
-          child: appBarTitle,
-        ),
+        // title: Padding(
+        //   padding: const EdgeInsets.only(left: 15.0),
+        //   child: appBarTitle,
+        // ),
         backgroundColor: Colors.white,
-        elevation: 1,
+        elevation: 0,
         iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
         actions: <Widget>[
-          if (searchImage == false)
-            Row(
-              children: [
-                Container(
-                  height: 20,
-                  width: 20,
-                  child: Image.asset(
-                    "assets/search.png",
-                    color: appPrimaryMaterialColor,
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width - 80,
-                  height: 50,
-                  child: TextFormField(
-                    controller: txtSearch,
-                    textInputAction: TextInputAction.done,
-                    onFieldSubmitted: (aa) {
-                      //  _getSearching();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  new SearchingScreen(
-                                    searchData: txtSearch.text,
-                                  )));
-                      txtSearch.clear();
-                      //Navigator.pop(context, this.txtSearch.text);
-                    },
-                    style: TextStyle(
-                        //color: Colors.white,
-                        ),
-                    cursorColor: appPrimaryMaterialColor,
-                    decoration: InputDecoration(
-                        // prefixIcon: SizedBox(
-                        //   height: 20,
-                        //   width: 10,
-                        //   child: Image.asset(
-                        //     "assets/search.png",
-                        //     color: appPrimaryMaterialColor,
-                        //   ),
-                        // ),
-
-                        hintText: "    Search...",
-                        hintStyle: TextStyle(color: Colors.grey),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey),
+          Padding(
+            padding: const EdgeInsets.only(top: 13.0, bottom: 13),
+            child: Container(
+              width: MediaQuery.of(context).size.width - 57,
+              //height: 10,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(3),
+                color: Colors.grey[100],
+              ),
+              child: TextFormField(
+                controller: txtSearch,
+                maxLines: 1,
+                cursorColor: Colors.black,
+                keyboardType: TextInputType.text,
+                textInputAction: TextInputAction.done,
+                onFieldSubmitted: (aa) {
+                  //  _getSearching();
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              new SearchingScreen(
+                                searchData: txtSearch.text,
+                              )));
+                  txtSearch.clear();
+                  //Navigator.pop(context, this.txtSearch.text);
+                },
+                decoration: new InputDecoration(
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                    errorBorder: InputBorder.none,
+                    disabledBorder: InputBorder.none,
+                    prefixIcon: Container(
+                        height: 35,
+                        width: 35,
+                        padding: EdgeInsets.only(
+                            left: 7, right: 0, top: 7, bottom: 7),
+                        child: Image.asset(
+                          "assets/search.png",
+                          color: Colors.grey,
                         )),
-                  ),
-                ),
-              ],
+                    hintStyle: TextStyle(fontSize: 15.0, color: Colors.grey),
+                    contentPadding: EdgeInsets.only(
+                        left: 10, bottom: 12, top: 7, right: 15),
+                    hintText: "Search..."),
+              ),
             ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                searchImage = !searchImage;
-              });
-            },
-            child: searchImage
-                ? Padding(
-                    padding: const EdgeInsets.only(right: 15.0),
-                    child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/search.png",
-                        color: appPrimaryMaterialColor,
-                      ),
-                    ),
-                  )
-                : Padding(
-                    padding: const EdgeInsets.only(right: 15.0),
-                    child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/025-cancel.png",
-                        color: appPrimaryMaterialColor,
-                      ),
-                    ),
-                  ),
           ),
-          // searchImage
-          //     ? Padding(
-          //         padding: const EdgeInsets.only(
-          //           right: 10.0,
-          //           left: 8,
+          // if (searchImage == false)
+          //   Row(
+          //     children: [
+          //       Container(
+          //         height: 20,
+          //         width: 20,
+          //         child: Image.asset(
+          //           "assets/search.png",
+          //           color: appPrimaryMaterialColor,
           //         ),
-          //         child: Container(
+          //       ),
+          //       Container(
+          //         width: MediaQuery.of(context).size.width - 80,
+          //         height: 50,
+          //         child: TextFormField(
+          //           controller: txtSearch,
+          //           textInputAction: TextInputAction.done,
+          //           onFieldSubmitted: (aa) {
+          //             //  _getSearching();
+          //             Navigator.push(
+          //                 context,
+          //                 MaterialPageRoute(
+          //                     builder: (BuildContext context) =>
+          //                         new SearchingScreen(
+          //                           searchData: txtSearch.text,
+          //                         )));
+          //             txtSearch.clear();
+          //             //Navigator.pop(context, this.txtSearch.text);
+          //           },
+          //           style: TextStyle(
+          //               //color: Colors.white,
+          //               ),
+          //           cursorColor: appPrimaryMaterialColor,
+          //           decoration: InputDecoration(
+          //               // prefixIcon: SizedBox(
+          //               //   height: 20,
+          //               //   width: 10,
+          //               //   child: Image.asset(
+          //               //     "assets/search.png",
+          //               //     color: appPrimaryMaterialColor,
+          //               //   ),
+          //               // ),
+          //
+          //               hintText: "    Search...",
+          //               hintStyle: TextStyle(color: Colors.grey),
+          //               focusedBorder: UnderlineInputBorder(
+          //                 borderSide: BorderSide(color: Colors.grey),
+          //               )),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // GestureDetector(
+          //   onTap: () {
+          //     setState(() {
+          //       searchImage = !searchImage;
+          //     });
+          //   },
+          //   child: searchImage
+          //       ? Padding(
+          //           padding: const EdgeInsets.only(right: 15.0),
+          //           child: Container(
           //             height: 20,
           //             width: 20,
-          //             child: GestureDetector(
-          //                 onTap: () {
-          //                   Navigator.of(context).pushNamed('/Whishlist');
-          //                 },
-          //                 child: Image.asset(
-          //                   "assets/heart.png",
-          //                   color: appPrimaryMaterialColor,
-          //                 ))),
-          //       )
-          //     : Container(),
+          //             child: Image.asset(
+          //               "assets/search.png",
+          //               color: appPrimaryMaterialColor,
+          //             ),
+          //           ),
+          //         )
+          //       : Padding(
+          //           padding: const EdgeInsets.only(right: 15.0),
+          //           child: Container(
+          //             height: 20,
+          //             width: 20,
+          //             child: Image.asset(
+          //               "assets/025-cancel.png",
+          //               color: appPrimaryMaterialColor,
+          //             ),
+          //           ),
+          //         ),
+          // ),
+          //
           searchImage
               ? Stack(
                   alignment: Alignment.topCenter,
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+                          const EdgeInsets.only(right: 15.0, left: 13, top: 18),
                       child: Container(
                           height: 20,
                           width: 20,

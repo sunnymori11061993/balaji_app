@@ -32,64 +32,81 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.grey[100],
-        type: BottomNavigationBarType.fixed,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Container(
-              height: 20,
-              width: 20,
-              child: Image.asset(
-                _selectedIndex == 0
-                    ? "assets/012-house.png"
-                    : "assets/home.png",
-                color: appPrimaryMaterialColor,
+      bottomNavigationBar: SizedBox(
+        height: 70,
+        child: BottomNavigationBar(
+          backgroundColor: appPrimaryMaterialColor,
+          type: BottomNavigationBarType.fixed,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Container(
+                  height: 20,
+                  width: 20,
+                  child: Image.asset(
+                    _selectedIndex == 0
+                        ? "assets/012-house.png"
+                        : "assets/home.png",
+                    color: Colors.white,
+                  ),
+                ),
               ),
+              label: '',
             ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Container(
-              height: 20,
-              width: 20,
-              child: Image.asset(
-                _selectedIndex == 1
-                    ? "assets/020-heart.png"
-                    : "assets/heart.png",
-                color: appPrimaryMaterialColor,
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Container(
+                  height: 20,
+                  width: 20,
+                  child: Image.asset(
+                    _selectedIndex == 1
+                        ? "assets/020-heart.png"
+                        : "assets/heart.png",
+                    color: Colors.white,
+                  ),
+                ),
               ),
+              label: '',
             ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Container(
-              height: 20,
-              width: 20,
-              child: Image.asset(
-                _selectedIndex == 2 ? "assets/051-user.png" : "assets/user.png",
-                color: appPrimaryMaterialColor,
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Container(
+                  height: 20,
+                  width: 20,
+                  child: Image.asset(
+                    _selectedIndex == 2
+                        ? "assets/051-user.png"
+                        : "assets/user.png",
+                    color: Colors.white,
+                  ),
+                ),
               ),
+              label: '',
             ),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Container(
-              height: 20,
-              width: 20,
-              child: Image.asset(
-                _selectedIndex == 3
-                    ? "assets/018-settings.png"
-                    : "assets/settings.png",
-                color: appPrimaryMaterialColor,
+            BottomNavigationBarItem(
+              icon: Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Container(
+                  height: 20,
+                  width: 20,
+                  child: Image.asset(
+                    _selectedIndex == 3
+                        ? "assets/018-settings.png"
+                        : "assets/settings.png",
+                    color: Colors.white,
+                  ),
+                ),
               ),
+              label: '',
             ),
-            label: '',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.amber[800],
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }

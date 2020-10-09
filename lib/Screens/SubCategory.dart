@@ -122,28 +122,44 @@ class _SubCategoryState extends State<SubCategory>
               color: appPrimaryMaterialColor,
             )),
         actions: <Widget>[
+          // Padding(
+          //   padding: const EdgeInsets.only(
+          //     right: 10.0,
+          //     left: 8,
+          //   ),
+          //   child: Container(
+          //       height: 20,
+          //       width: 20,
+          //       child: GestureDetector(
+          //           onTap: () {
+          //             Navigator.of(context).pushNamed('/Whishlist');
+          //           },
+          //           child: Image.asset(
+          //             "assets/heart.png",
+          //             color: appPrimaryMaterialColor,
+          //           ))),
+          // ),
           Padding(
-            padding: const EdgeInsets.only(
-              right: 10.0,
-              left: 8,
-            ),
+            padding: const EdgeInsets.only(right: 12.0, left: 4),
             child: Container(
                 height: 20,
-                width: 20,
+                width: 22,
                 child: GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed('/Whishlist');
+                      setState(() {
+                        _scaffoldKey.currentState.openEndDrawer();
+                      });
                     },
                     child: Image.asset(
-                      "assets/heart.png",
-                      color: appPrimaryMaterialColor,
+                      "assets/fil.png",
+                      //  color: appPrimaryMaterialColor,
                     ))),
           ),
           Stack(
             alignment: Alignment.topCenter,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 10.0, left: 8, top: 18),
+                padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),
                 child: Container(
                     height: 20,
                     width: 20,
@@ -181,22 +197,6 @@ class _SubCategoryState extends State<SubCategory>
             ],
           ),
 
-          Padding(
-            padding: const EdgeInsets.only(right: 12.0, left: 4),
-            child: Container(
-                height: 30,
-                width: 25,
-                child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _scaffoldKey.currentState.openEndDrawer();
-                      });
-                    },
-                    child: Image.asset(
-                      "assets/filtericon.png",
-                      //  color: appPrimaryMaterialColor,
-                    ))),
-          ),
 //          IconButton(
 //            icon: Icon(Icons.filter),
 //            onPressed: () {
@@ -444,7 +444,7 @@ class _SubCategoryState extends State<SubCategory>
                                 child: Text(
                                   subCategoriesTab[index]["SubcategoryName"],
                                   style: TextStyle(
-                                     // fontWeight: FontWeight.bold,
+                                      // fontWeight: FontWeight.bold,
                                       fontSize: 14.0),
                                 ),
                               );

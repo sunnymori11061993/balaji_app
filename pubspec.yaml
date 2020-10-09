@@ -74,6 +74,9 @@ flutter:
     - assets/back.png
     - assets/user.png
     - assets/settings.png
+    - assets/fil.png
+    - assets/gallery.png
+    - assets/camera.png
     - assets/balajiLogo.png
     - assets/Splash.svg
     - assets/f1.png
