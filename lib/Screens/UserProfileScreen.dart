@@ -1,9 +1,11 @@
 import 'package:balaji/Common/Constants.dart';
+import 'package:balaji/Providers/CartProvider.dart';
 import 'package:balaji/Screens/Address%20Screen.dart';
 import 'package:balaji/Screens/SearchingScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart';
 
 class UserProfileScreen extends StatefulWidget {
   @override
@@ -17,6 +19,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    CartProvider provider = Provider.of<CartProvider>(context);
     Widget appBarTitle = Text(
       //'home1'.tr().toString(),
       "Profile",
@@ -87,88 +90,88 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           elevation: 1,
           iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
           actions: <Widget>[
-            if (searchImage == false)
-              Row(
-                children: [
-                  Container(
-                    height: 20,
-                    width: 20,
-                    child: Image.asset(
-                      "assets/search.png",
-                      color: appPrimaryMaterialColor,
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width - 80,
-                    height: 50,
-                    child: TextFormField(
-                      controller: txtSearch,
-                      textInputAction: TextInputAction.done,
-                      onFieldSubmitted: (aa) {
-                        //  _getSearching();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    new SearchingScreen(
-                                      searchData: txtSearch.text,
-                                    )));
-                        txtSearch.clear();
-                        //Navigator.pop(context, this.txtSearch.text);
-                      },
-                      style: TextStyle(
-                          //color: Colors.white,
-                          ),
-                      cursorColor: appPrimaryMaterialColor,
-                      decoration: InputDecoration(
-                          // prefixIcon: SizedBox(
-                          //   height: 20,
-                          //   width: 10,
-                          //   child: Image.asset(
-                          //     "assets/search.png",
-                          //     color: appPrimaryMaterialColor,
-                          //   ),
-                          // ),
-
-                          hintText: "    Search...",
-                          hintStyle: TextStyle(color: Colors.grey),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.grey),
-                          )),
-                    ),
-                  ),
-                ],
-              ),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  searchImage = !searchImage;
-                });
-              },
-              child: searchImage
-                  ? Padding(
-                      padding: const EdgeInsets.only(right: 15.0),
-                      child: Container(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset(
-                          "assets/search.png",
-                          color: appPrimaryMaterialColor,
-                        ),
-                      ),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.only(right: 15.0),
-                      child: Container(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset(
-                          "assets/025-cancel.png",
-                          color: appPrimaryMaterialColor,
-                        ),
-                      ),
-                    ),
-            ),
+            // if (searchImage == false)
+            //   Row(
+            //     children: [
+            //       Container(
+            //         height: 20,
+            //         width: 20,
+            //         child: Image.asset(
+            //           "assets/search.png",
+            //           color: appPrimaryMaterialColor,
+            //         ),
+            //       ),
+            //       Container(
+            //         width: MediaQuery.of(context).size.width - 80,
+            //         height: 50,
+            //         child: TextFormField(
+            //           controller: txtSearch,
+            //           textInputAction: TextInputAction.done,
+            //           onFieldSubmitted: (aa) {
+            //             //  _getSearching();
+            //             Navigator.push(
+            //                 context,
+            //                 MaterialPageRoute(
+            //                     builder: (BuildContext context) =>
+            //                         new SearchingScreen(
+            //                           searchData: txtSearch.text,
+            //                         )));
+            //             txtSearch.clear();
+            //             //Navigator.pop(context, this.txtSearch.text);
+            //           },
+            //           style: TextStyle(
+            //               //color: Colors.white,
+            //               ),
+            //           cursorColor: appPrimaryMaterialColor,
+            //           decoration: InputDecoration(
+            //               // prefixIcon: SizedBox(
+            //               //   height: 20,
+            //               //   width: 10,
+            //               //   child: Image.asset(
+            //               //     "assets/search.png",
+            //               //     color: appPrimaryMaterialColor,
+            //               //   ),
+            //               // ),
+            //
+            //               hintText: "    Search...",
+            //               hintStyle: TextStyle(color: Colors.grey),
+            //               focusedBorder: UnderlineInputBorder(
+            //                 borderSide: BorderSide(color: Colors.grey),
+            //               )),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // GestureDetector(
+            //   onTap: () {
+            //     setState(() {
+            //       searchImage = !searchImage;
+            //     });
+            //   },
+            //   child: searchImage
+            //       ? Padding(
+            //           padding: const EdgeInsets.only(right: 15.0),
+            //           child: Container(
+            //             height: 20,
+            //             width: 20,
+            //             child: Image.asset(
+            //               "assets/search.png",
+            //               color: appPrimaryMaterialColor,
+            //             ),
+            //           ),
+            //         )
+            //       : Padding(
+            //           padding: const EdgeInsets.only(right: 15.0),
+            //           child: Container(
+            //             height: 20,
+            //             width: 20,
+            //             child: Image.asset(
+            //               "assets/025-cancel.png",
+            //               color: appPrimaryMaterialColor,
+            //             ),
+            //           ),
+            //         ),
+            // ),
             // searchImage
             //     ? Padding(
             //         padding: const EdgeInsets.only(
@@ -188,46 +191,43 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             //                 ))),
             //       )
             //     : Container(),
-            searchImage
-                ? Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      Padding(
+            Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed('/CartScreen');
+                          },
+                          child: Image.asset(
+                            "assets/shopping-cart.png",
+                            color: appPrimaryMaterialColor,
+                          ))),
+                ),
+                provider.cartCount > 0
+                    ? Padding(
                         padding: const EdgeInsets.only(
-                            right: 15.0, left: 8, top: 18),
-                        child: Container(
-                            height: 20,
-                            width: 20,
-                            child: GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context)
-                                      .pushNamed('/CartScreen');
-                                },
-                                child: Image.asset(
-                                  "assets/shopping-cart.png",
-                                  color: appPrimaryMaterialColor,
-                                ))),
-                      ),
-                      // if (cartList.length > 0)
-                      //   Padding(
-                      //     padding: const EdgeInsets.only(
-                      //         left: 0.0, top: 13, right: 10),
-                      //     child: CircleAvatar(
-                      //       radius: 6.0,
-                      //       backgroundColor: Colors.red,
-                      //       foregroundColor: Colors.white,
-                      //       child: Text(
-                      //         cartList.length.toString(),
-                      //         style: TextStyle(
-                      //           fontWeight: FontWeight.bold,
-                      //           fontSize: 10.0,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                    ],
-                  )
-                : Container(),
+                            left: 1.0, top: 13, right: 10),
+                        child: CircleAvatar(
+                          radius: 7.0,
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          child: Text(
+                            provider.cartCount.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 9.0,
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container()
+              ],
+            )
           ],
         ),
         body: Stack(

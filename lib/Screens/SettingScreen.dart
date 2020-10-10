@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
+import 'package:balaji/Providers/CartProvider.dart';
 import 'package:balaji/Screens/Address%20Screen.dart';
 import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/SearchingScreen.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -73,6 +75,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    CartProvider provider = Provider.of<CartProvider>(context);
     Widget appBarTitle = Text(
       //'home1'.tr().toString(),
       "Settings",
@@ -175,46 +178,43 @@ class _SettingScreenState extends State<SettingScreen> {
                         ),
                       ),
               ),
-            searchImage
-                ? Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      Padding(
+            Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed('/CartScreen');
+                          },
+                          child: Image.asset(
+                            "assets/shopping-cart.png",
+                            color: appPrimaryMaterialColor,
+                          ))),
+                ),
+                provider.cartCount > 0
+                    ? Padding(
                         padding: const EdgeInsets.only(
-                            right: 15.0, left: 8, top: 18),
-                        child: Container(
-                            height: 20,
-                            width: 20,
-                            child: GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context)
-                                      .pushNamed('/CartScreen');
-                                },
-                                child: Image.asset(
-                                  "assets/shopping-cart.png",
-                                  color: appPrimaryMaterialColor,
-                                ))),
-                      ),
-                      // if (cartList.length > 0)
-                      //   Padding(
-                      //     padding: const EdgeInsets.only(
-                      //         left: 0.0, top: 13, right: 10),
-                      //     child: CircleAvatar(
-                      //       radius: 6.0,
-                      //       backgroundColor: Colors.red,
-                      //       foregroundColor: Colors.white,
-                      //       child: Text(
-                      //         cartList.length.toString(),
-                      //         style: TextStyle(
-                      //           fontWeight: FontWeight.bold,
-                      //           fontSize: 10.0,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                    ],
-                  )
-                : Container(),
+                            left: 1.0, top: 13, right: 10),
+                        child: CircleAvatar(
+                          radius: 7.0,
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          child: Text(
+                            provider.cartCount.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 9.0,
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container()
+              ],
+            )
           ],
         ),
         body: Stack(children: [
@@ -279,7 +279,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     Divider(),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pop();
+                        // Navigator.of(context).pop();
                         _showDialogLang(context);
                       },
                       child: ListTile(
@@ -359,7 +359,8 @@ class _SettingScreenState extends State<SettingScreen> {
                     GestureDetector(
                       onTap: () {
                         // Navigator.of(context).pop();
-                        launchwhatsapp(whatsappNumber: whatsapp, message: msg);
+                        //launchwhatsapp(whatsappNumber: whatsapp, message: msg);
+                        Navigator.of(context).pushNamed('/ContactUs');
                       },
                       child: ListTile(
                         leading: Padding(
@@ -498,7 +499,7 @@ class _ALertLangState extends State<ALertLang> {
           //fontWeight: FontWeight.bold
         ),
       ),
-      content: new Wrap(
+      content: Wrap(
         children: [
           ListTile(
             title: Column(
@@ -561,12 +562,13 @@ class _ALertLangState extends State<ALertLang> {
             style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
           ),
           onPressed: () async {
-            Navigator.of(context).pop();
             if (lang == 'p1') {
               EasyLocalization.of(context).locale = Locale('en', 'US');
             } else {
               EasyLocalization.of(context).locale = Locale('hi', 'HI');
             }
+
+            Navigator.of(context).pop();
           },
         ),
       ],

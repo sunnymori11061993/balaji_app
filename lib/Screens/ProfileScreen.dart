@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:io' as Io;
 import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
@@ -5,8 +7,11 @@ import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -19,6 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController txtCName = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtMobileNumber = TextEditingController();
+  var img;
   final _formkey = new GlobalKey<FormState>();
 
   bool isLoading = false;
@@ -28,11 +34,118 @@ class _ProfileScreenState extends State<ProfileScreen> {
     _profile();
   }
 
+  File _Image;
+
+  Future getFromCamera() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+    if (image != null) {
+      setState(() {
+        _Image = image;
+      });
+    }
+  }
+
+  Future getFromGallery() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        _Image = image;
+      });
+    }
+  }
+
   void _settingModalBottomSheet() {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
-          return showBottomSheet();
+          return Container(
+            child: new Wrap(
+              children: <Widget>[
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 15.0, left: 15, bottom: 10),
+                      child: Text(
+                        "Add Photo",
+                        style: TextStyle(
+                          fontSize: 22,
+                          color: appPrimaryMaterialColor,
+                          //fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        getFromCamera();
+                        Navigator.of(context).pop();
+                      },
+                      child: ListTile(
+                        leading: Padding(
+                          padding: const EdgeInsets.only(right: 10.0, left: 15),
+                          child: Container(
+                              height: 20,
+                              width: 20,
+                              child: Image.asset(
+                                "assets/camera.png",
+                                color: appPrimaryMaterialColor,
+                              )),
+                        ),
+                        title: Text(
+                          "Take Photo",
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15, right: 15),
+                      child: Divider(),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        getFromGallery();
+                        Navigator.of(context).pop();
+                      },
+                      child: ListTile(
+                        leading: Padding(
+                          padding: const EdgeInsets.only(right: 10.0, left: 15),
+                          child: Container(
+                              height: 20,
+                              width: 20,
+                              child: Image.asset(
+                                "assets/gallery.png",
+                                color: appPrimaryMaterialColor,
+                              )),
+                        ),
+                        title: Text(
+                          "Choose from Gallery",
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: AlignmentDirectional.bottomEnd,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 25.0, bottom: 5),
+                        child: FlatButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            "Cancel",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: appPrimaryMaterialColor,
+                              //fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          );
         });
   }
 
@@ -82,20 +195,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               onTap: () {
                                 _settingModalBottomSheet();
                               },
-                              child: Container(
-                                height: 130.0,
-                                width: 150.0,
-                                decoration: BoxDecoration(
-                                    // borderRadius: BorderRadius.circular(30),
-                                    color: appPrimaryMaterialColor,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                        color: appPrimaryMaterialColor[600]),
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                            "https://static1.bigstockphoto.com/8/2/3/large1500/328918366.jpg"),
-                                        fit: BoxFit.cover)),
-                              ),
+                              child: _Image != null
+                                  ? Container(
+                                      height: 130.0,
+                                      width: 150.0,
+                                      decoration: BoxDecoration(
+                                        // borderRadius: BorderRadius.circular(30),
+
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            color:
+                                                appPrimaryMaterialColor[600]),
+                                        image: DecorationImage(
+                                            image: FileImage(
+                                              _Image,
+                                            ),
+                                            fit: BoxFit.cover),
+                                      ),
+                                    )
+                                  : Container(
+                                      height: 130.0,
+                                      width: 150.0,
+                                      decoration: BoxDecoration(
+                                        // borderRadius: BorderRadius.circular(30),
+                                        color: appPrimaryMaterialColor,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            color:
+                                                appPrimaryMaterialColor[600]),
+                                      ),
+                                      child: Center(
+                                        widthFactor: 40.0,
+                                        heightFactor: 40.0,
+                                        child: Image.asset(
+                                            "assets/051-user.png",
+                                            color: Colors.white,
+                                            width: 80.0,
+                                            height: 80.0),
+                                      ),
+                                    ),
                             ),
                           ),
                           Padding(
@@ -413,6 +551,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       txtCName.text = prefs.getString(Session.CustomerCompanyName);
       txtEmail.text = prefs.getString(Session.CustomerEmailId);
       txtMobileNumber.text = prefs.getString(Session.CustomerPhoneNo);
+      img = Image_URL + prefs.getString(Session.CustomerImage);
     });
   }
 
@@ -424,6 +563,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
           setState(() {
             isLoading = true;
           });
+
+          String filename = "";
+          String filePath = "";
+          File compressedFile;
+          if (_Image != null) {
+            ImageProperties properties =
+                await FlutterNativeImage.getImageProperties(_Image.path);
+
+            compressedFile = await FlutterNativeImage.compressImage(
+              _Image.path,
+              quality: 80,
+              targetWidth: 600,
+              targetHeight:
+                  (properties.height * 600 / properties.width).round(),
+            );
+
+            filename = _Image.path.split('/').last;
+            filePath = compressedFile.path;
+          }
           SharedPreferences prefs = await SharedPreferences.getInstance();
 
           FormData body = FormData.fromMap({
@@ -432,17 +590,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
             "CustomerCompanyName": txtCName.text,
             "CustomerEmailId": txtEmail.text,
             "CustomerPhoneNo": txtMobileNumber.text,
+            "CustomerImage": (filePath != null && filePath != '')
+                ? await MultipartFile.fromFile(filePath,
+                    filename: filename.toString())
+                : null,
           }); //"key":"value"
 
           Services.postForSave(apiname: 'update_profile', body: body).then(
               (response) async {
             if (response.IsSuccess == true && response.Data == "1") {
               SharedPreferences prefs = await SharedPreferences.getInstance();
+
               setState(() {
                 prefs.setString(Session.CustomerName, txtName.text);
                 prefs.setString(Session.CustomerCompanyName, txtCName.text);
                 prefs.setString(Session.CustomerEmailId, txtEmail.text);
                 prefs.setString(Session.CustomerPhoneNo, txtMobileNumber.text);
+                prefs.setString(Session.CustomerImage, filename);
               });
 
               Fluttertoast.showToast(
@@ -468,106 +632,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
     } else {
       Fluttertoast.showToast(msg: "Please Fill the Field");
     }
-  }
-}
-
-class showBottomSheet extends StatefulWidget {
-  Function onOrder;
-
-  @override
-  _showBottomSheetState createState() => _showBottomSheetState();
-}
-
-class _showBottomSheetState extends State<showBottomSheet> {
-  var selectedAddress;
-  bool isOrderLoading = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: new Wrap(
-        children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 15.0, left: 15, bottom: 10),
-                child: Text(
-                  "Add Photo",
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: appPrimaryMaterialColor,
-                    //fontWeight: FontWeight.bold
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushNamed('/ProfileScreen');
-                },
-                child: ListTile(
-                  leading: Padding(
-                    padding: const EdgeInsets.only(right: 10.0, left: 15),
-                    child: Container(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset(
-                          "assets/camera.png",
-                          color: appPrimaryMaterialColor,
-                        )),
-                  ),
-                  title: Text(
-                    "Take Photo",
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                child: Divider(),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushNamed('/ProfileScreen');
-                },
-                child: ListTile(
-                  leading: Padding(
-                    padding: const EdgeInsets.only(right: 10.0, left: 15),
-                    child: Container(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset(
-                          "assets/gallery.png",
-                          color: appPrimaryMaterialColor,
-                        )),
-                  ),
-                  title: Text(
-                    "Choose from Gallery",
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional.bottomEnd,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 25.0, bottom: 5),
-                  child: FlatButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      "Cancel",
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: appPrimaryMaterialColor,
-                        //fontWeight: FontWeight.bold
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
   }
 }

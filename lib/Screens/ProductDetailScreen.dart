@@ -6,6 +6,7 @@ import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/RelatedProductComponent.dart';
+import 'package:balaji/Providers/CartProvider.dart';
 import 'package:balaji/Screens/ViewCatalougeScreen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
@@ -15,6 +16,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
@@ -147,6 +149,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    CartProvider provider = Provider.of<CartProvider>(context);
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -171,25 +174,25 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 color: appPrimaryMaterialColor,
               )),
           actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(
-                right: 15.0,
-                left: 8,
-              ),
-              child: Container(
-                  height: 20,
-                  width: 20,
-                  child: GestureDetector(
-                      onTap: () async {
-                        final result =
-                            await Navigator.of(context).pushNamed('/Whishlist');
-                        if (result == "pop") _getProductDetail();
-                      },
-                      child: Image.asset(
-                        "assets/heart.png",
-                        color: appPrimaryMaterialColor,
-                      ))),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(
+            //     right: 15.0,
+            //     left: 8,
+            //   ),
+            //   child: Container(
+            //       height: 20,
+            //       width: 20,
+            //       child: GestureDetector(
+            //           onTap: () async {
+            //             final result =
+            //                 await Navigator.of(context).pushNamed('/Whishlist');
+            //             if (result == "pop") _getProductDetail();
+            //           },
+            //           child: Image.asset(
+            //             "assets/heart.png",
+            //             color: appPrimaryMaterialColor,
+            //           ))),
+            // ),
             Stack(
               alignment: Alignment.topCenter,
               children: [
@@ -216,23 +219,24 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 //           await Navigator.of(context).pushNamed('/CartScreen');
                 //       if (result == "pop") _getProductDetail();
                 //     }),
-                if (cartList.length > 0)
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(right: 18.0, left: 4, top: 13),
-                    child: CircleAvatar(
-                      radius: 6.0,
-                      backgroundColor: Colors.red,
-                      foregroundColor: Colors.white,
-                      child: Text(
-                        cartList.length.toString(),
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10.0,
+                provider.cartCount > 0
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                            left: 1.0, top: 13, right: 15),
+                        child: CircleAvatar(
+                          radius: 7.0,
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          child: Text(
+                            provider.cartCount.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 9.0,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
+                      )
+                    : Container()
               ],
             )
           ],
@@ -1110,6 +1114,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               isCartLoading = false;
               isCartList = !isCartList;
             });
+            Provider.of<CartProvider>(context, listen: false).increaseCart();
             if (isCartList == true) {
               Fluttertoast.showToast(msg: "Added to Cart");
             } else {

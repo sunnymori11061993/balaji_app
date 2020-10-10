@@ -6,12 +6,14 @@ import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/CartComponent.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
+import 'package:balaji/Providers/CartProvider.dart';
 import 'package:balaji/Screens/SearchingScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CartScreen extends StatefulWidget {
@@ -36,6 +38,7 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    CartProvider provider = Provider.of<CartProvider>(context);
     Widget appBarTitle = Text(
       'My_Cart'.tr().toString(),
       style: TextStyle(
@@ -121,36 +124,36 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ],
                   ),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      searchImage = !searchImage;
-                    });
-                  },
-                  child: searchImage
-                      ? Padding(
-                          padding: const EdgeInsets.only(right: 15.0),
-                          child: Container(
-                            height: 20,
-                            width: 20,
-                            child: Image.asset(
-                              "assets/search.png",
-                              color: appPrimaryMaterialColor,
-                            ),
-                          ),
-                        )
-                      : Padding(
-                          padding: const EdgeInsets.only(right: 15.0),
-                          child: Container(
-                            height: 20,
-                            width: 20,
-                            child: Image.asset(
-                              "assets/025-cancel.png",
-                              color: appPrimaryMaterialColor,
-                            ),
-                          ),
-                        ),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //     setState(() {
+                //       searchImage = !searchImage;
+                //     });
+                //   },
+                //   child: searchImage
+                //       ? Padding(
+                //           padding: const EdgeInsets.only(right: 15.0),
+                //           child: Container(
+                //             height: 20,
+                //             width: 20,
+                //             child: Image.asset(
+                //               "assets/search.png",
+                //               color: appPrimaryMaterialColor,
+                //             ),
+                //           ),
+                //         )
+                //       : Padding(
+                //           padding: const EdgeInsets.only(right: 15.0),
+                //           child: Container(
+                //             height: 20,
+                //             width: 20,
+                //             child: Image.asset(
+                //               "assets/025-cancel.png",
+                //               color: appPrimaryMaterialColor,
+                //             ),
+                //           ),
+                //         ),
+                // ),
                 // searchImage
                 //     ? Padding(
                 //         padding: const EdgeInsets.only(
@@ -170,45 +173,44 @@ class _CartScreenState extends State<CartScreen> {
                 //                 ))),
                 //       )
                 //     : Container(),
-                searchImage
-                    ? Stack(
-                        alignment: Alignment.topCenter,
-                        children: [
-                          Padding(
+                Stack(
+                  alignment: Alignment.topCenter,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+                      child: Container(
+                          height: 20,
+                          width: 20,
+                          child: GestureDetector(
+                              onTap: () {
+                                //Navigator.of(context).pushNamed('/Whishlist');
+                              },
+                              child: Image.asset(
+                                "assets/039-shopping-cart.png",
+                                color: appPrimaryMaterialColor,
+                              ))),
+                    ),
+                    provider.cartCount > 0
+                        ? Padding(
                             padding: const EdgeInsets.only(
-                                right: 15.0, left: 8, top: 18),
-                            child: Container(
-                                height: 20,
-                                width: 20,
-                                child: GestureDetector(
-                                    onTap: () {
-                                      //Navigator.of(context).pushNamed('/Whishlist');
-                                    },
-                                    child: Image.asset(
-                                      "assets/039-shopping-cart.png",
-                                      color: appPrimaryMaterialColor,
-                                    ))),
-                          ),
-                          // if (cartList.length > 0)
-                          //   Padding(
-                          //     padding: const EdgeInsets.only(
-                          //         left: 0.0, top: 13, right: 10),
-                          //     child: CircleAvatar(
-                          //       radius: 6.0,
-                          //       backgroundColor: Colors.red,
-                          //       foregroundColor: Colors.white,
-                          //       child: Text(
-                          //         cartList.length.toString(),
-                          //         style: TextStyle(
-                          //           fontWeight: FontWeight.bold,
-                          //           fontSize: 10.0,
-                          //         ),
-                          //       ),
-                          //     ),
-                          //   ),
-                        ],
-                      )
-                    : Container(),
+                                left: 1.0, top: 13, right: 10),
+                            child: CircleAvatar(
+                              radius: 7.0,
+                              backgroundColor: Colors.red,
+                              foregroundColor: Colors.white,
+                              child: Text(
+                                provider.cartCount.toString(),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 9.0,
+                                ),
+                              ),
+                            ),
+                          )
+                        : Container()
+                  ],
+                )
 
                 // Padding(
                 //   padding: const EdgeInsets.only(

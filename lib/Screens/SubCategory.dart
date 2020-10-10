@@ -4,11 +4,13 @@ import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/SubCategoriesComponent.dart';
+import 'package:balaji/Providers/CartProvider.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SubCategory extends StatefulWidget {
@@ -86,7 +88,7 @@ class _SubCategoryState extends State<SubCategory>
 
   @override
   Widget build(BuildContext context) {
-    var mediaQueryData = MediaQuery.of(context);
+    CartProvider provider = Provider.of<CartProvider>(context);
 
     return Scaffold(
       key: _scaffoldKey,
@@ -178,22 +180,24 @@ class _SubCategoryState extends State<SubCategory>
               //     Navigator.of(context).pushNamed('/CartScreen');
               //   },
               // ),
-              if (cartList.length > 0)
-                Padding(
-                  padding: const EdgeInsets.only(left: 0.0, top: 13, right: 5),
-                  child: CircleAvatar(
-                    radius: 6.0,
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    child: Text(
-                      cartList.length.toString(),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 10.0,
+              provider.cartCount > 0
+                  ? Padding(
+                      padding:
+                          const EdgeInsets.only(left: 1.0, top: 13, right: 10),
+                      child: CircleAvatar(
+                        radius: 7.0,
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                        child: Text(
+                          provider.cartCount.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 9.0,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
+                    )
+                  : Container()
             ],
           ),
 

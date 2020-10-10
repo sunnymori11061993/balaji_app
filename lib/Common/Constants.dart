@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //const String SOAP_API_URL = "http://pmc.studyfield.com/Service.asmx/";
 
@@ -41,5 +45,6 @@ class Session {
   static const String ManufacturerPhoneNo = "ManufacturerPhoneNo";
   static const String ManufacturerAddress = "ManufacturerAddress";
   static const String ManufacturerCompanyName = "ManufacturerCompanyName";
+  static const String CustomerImage = "CustomerImage";
   static const String v = "__v";
 }

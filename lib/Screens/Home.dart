@@ -5,6 +5,7 @@ import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/CategoriesComponent.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/TrendingProductComponent.dart';
+import 'package:balaji/Providers/CartProvider.dart';
 import 'package:balaji/Screens/Address%20Screen.dart';
 import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/SearchingScreen.dart';
@@ -14,6 +15,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_slider/image_slider.dart';
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -107,14 +109,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Widget appBarTitle = Text(
-      'home1'.tr().toString(),
-      style: TextStyle(
-          color: appPrimaryMaterialColor,
-          //fontFamily: 'RobotoSlab',
-          // color: Colors.black,
-          fontSize: 17),
-    );
+    // Widget appBarTitle = Text(
+    //   'home1'.tr().toString(),
+    //   style: TextStyle(
+    //       color: appPrimaryMaterialColor,
+    //       //fontFamily: 'RobotoSlab',
+    //       // color: Colors.black,
+    //       fontSize: 17),
+    // );
+    CartProvider provider = Provider.of<CartProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       // bottomNavigationBar: BottomNavigationBar(
@@ -308,45 +311,43 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           //         ),
           // ),
           //
-          searchImage
-              ? Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    Padding(
+          Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 15.0, left: 13, top: 18),
+                child: Container(
+                    height: 20,
+                    width: 20,
+                    child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed('/CartScreen');
+                        },
+                        child: Image.asset(
+                          "assets/shopping-cart.png",
+                          color: appPrimaryMaterialColor,
+                        ))),
+              ),
+              provider.cartCount > 0
+                  ? Padding(
                       padding:
-                          const EdgeInsets.only(right: 15.0, left: 13, top: 18),
-                      child: Container(
-                          height: 20,
-                          width: 20,
-                          child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushNamed('/CartScreen');
-                              },
-                              child: Image.asset(
-                                "assets/shopping-cart.png",
-                                color: appPrimaryMaterialColor,
-                              ))),
-                    ),
-                    // if (cartList.length > 0)
-                    //   Padding(
-                    //     padding: const EdgeInsets.only(
-                    //         left: 0.0, top: 13, right: 10),
-                    //     child: CircleAvatar(
-                    //       radius: 6.0,
-                    //       backgroundColor: Colors.red,
-                    //       foregroundColor: Colors.white,
-                    //       child: Text(
-                    //         cartList.length.toString(),
-                    //         style: TextStyle(
-                    //           fontWeight: FontWeight.bold,
-                    //           fontSize: 10.0,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ),
-                  ],
-                )
-              : Container(),
+                          const EdgeInsets.only(left: 5.0, top: 13, right: 10),
+                      child: CircleAvatar(
+                        radius: 7.0,
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                        child: Text(
+                          provider.cartCount.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 9.0,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container()
+            ],
+          )
         ],
       ),
 //       drawer: Drawer(

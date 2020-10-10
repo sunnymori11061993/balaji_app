@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
+import 'package:balaji/Providers/CartProvider.dart';
 import 'package:balaji/Screens/ProductDetailScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WishlistComponent extends StatefulWidget {
@@ -52,14 +54,13 @@ class _WishlistComponentState extends State<WishlistComponent> {
             style: TextStyle(
                 fontSize: 22,
                 color: appPrimaryMaterialColor,
-                fontWeight: FontWeight.w400
-            ),
+                fontWeight: FontWeight.w400),
           ),
           content: new Text(
             "Are you sure want to remove from cart!!!",
             style: TextStyle(
-                fontSize: 14, color: Colors.black,
-                //fontWeight: FontWeight.w400
+              fontSize: 14, color: Colors.black,
+              //fontWeight: FontWeight.w400
             ),
           ),
           actions: <Widget>[
@@ -242,8 +243,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
                                       fontSize: 15,
                                       color: Colors.white,
                                       // color: Colors.grey[700],
-                                      fontWeight: FontWeight.w400
-                                  ),
+                                      fontWeight: FontWeight.w400),
                                 ),
                               ],
                             ),
@@ -321,6 +321,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
             isCartLoading = false;
           });
           if (responseList.IsSuccess == true && responseList.Data == "1") {
+            Provider.of<CartProvider>(context, listen: false).increaseCart();
             Fluttertoast.showToast(msg: "Added in Cart");
             _removeFromWishlist();
           } else {

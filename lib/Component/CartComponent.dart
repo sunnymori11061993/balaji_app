@@ -3,11 +3,13 @@ import 'dart:io';
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
+import 'package:balaji/Providers/CartProvider.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class CartComponent extends StatefulWidget {
   var getCartData;
@@ -84,8 +86,8 @@ class _CartComponentState extends State<CartComponent> {
           content: new Text(
             "Are you sure want to remove from cart!!!",
             style: TextStyle(
-                fontSize: 14, color: Colors.black,
-                //fontWeight: FontWeight.w600
+              fontSize: 14, color: Colors.black,
+              //fontWeight: FontWeight.w600
             ),
           ),
           actions: <Widget>[
@@ -283,8 +285,7 @@ class _CartComponentState extends State<CartComponent> {
                                 fontSize: 16,
                                 // color: Colors.white,
                                 color: Colors.grey[700],
-                                fontWeight: FontWeight.w400
-                            ),
+                                fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),
@@ -318,8 +319,7 @@ class _CartComponentState extends State<CartComponent> {
                                 fontSize: 16,
                                 //color: Colors.white,
                                 color: Colors.grey[700],
-                               fontWeight: FontWeight.w400
-                            ),
+                                fontWeight: FontWeight.w400),
                           ),
                           Text(
                             "₹",
@@ -327,8 +327,7 @@ class _CartComponentState extends State<CartComponent> {
                                 fontSize: 16,
                                 //color: Colors.white,
                                 color: Colors.grey[700],
-                               fontWeight: FontWeight.w400
-                            ),
+                                fontWeight: FontWeight.w400),
                           ),
                           Text(
                             "${res}",
@@ -336,8 +335,7 @@ class _CartComponentState extends State<CartComponent> {
                                 fontSize: 16,
                                 // color: Colors.white,
                                 color: Colors.grey[700],
-                                fontWeight: FontWeight.w400
-                            ),
+                                fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),
@@ -371,6 +369,7 @@ class _CartComponentState extends State<CartComponent> {
           });
           if (responseList.IsSuccess == true && responseList.Data == "1") {
             widget.onRemove(res);
+            Provider.of<CartProvider>(context, listen: false).decrementCart();
             total();
           } else {
             Fluttertoast.showToast(msg: "Data Not Found");

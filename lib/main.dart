@@ -1,3 +1,4 @@
+import 'package:balaji/Providers/CartProvider.dart';
 import 'package:balaji/Screens/Address%20Screen.dart';
 import 'package:balaji/Screens/BottomCategory.dart';
 import 'package:balaji/Screens/CartScreen.dart';
@@ -28,10 +29,18 @@ import 'package:balaji/Screens/WalkThroughScreen.dart';
 import 'package:balaji/Screens/Whishlist.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(EasyLocalization(
-    child: MyApp(),
+    child: MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CartProvider(),
+        )
+      ],
+      child: MyApp(),
+    ),
     path: "assets/locale",
     saveLocale: true,
     supportedLocales: [Locale('hi', 'HI'), Locale('en', 'US')],
