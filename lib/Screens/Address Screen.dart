@@ -5,6 +5,7 @@ import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/AddressComponent.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
+import 'package:balaji/Providers/CartProvider.dart';
 import 'package:balaji/Screens/Home.dart';
 import 'package:balaji/Screens/SettingScreen.dart';
 import 'package:balaji/Screens/UserProfileScreen.dart';
@@ -13,6 +14,7 @@ import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddressScreen extends StatefulWidget {
@@ -58,6 +60,7 @@ class _AddressScreenState extends State<AddressScreen> {
 
   @override
   Widget build(BuildContext context) {
+    CartProvider provider = Provider.of<CartProvider>(context);
     return Scaffold(
         appBar: AppBar(
           leading: Padding(
@@ -71,14 +74,52 @@ class _AddressScreenState extends State<AddressScreen> {
                   //color: appPrimaryMaterialColor,
                 )),
           ),
+          actions: [
+            Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/CartScreen');
+                    },
+                    child: Container(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset(
+                          "assets/shopping-cart.png",
+                          color: appPrimaryMaterialColor,
+                        )),
+                  ),
+                ),
+                provider.cartCount > 0
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                            left: 1.0, top: 13, right: 10),
+                        child: CircleAvatar(
+                          radius: 7.0,
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          child: Text(
+                            provider.cartCount.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 9.0,
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container()
+              ],
+            )
+          ],
           elevation: 1,
           backgroundColor: Colors.white,
           iconTheme: new IconThemeData(color: Colors.grey),
           title: Text(
             'drw_manage_address'.tr().toString(),
-            style: TextStyle(
-              color: appPrimaryMaterialColor,
-            ),
+            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 17),
           ),
         ),
         floatingActionButton: FloatingActionButton(

@@ -1512,8 +1512,9 @@ class _showBottomSheetState extends State<showBottomSheet> {
           if (responseList.IsSuccess == true && responseList.Data == "1") {
             widget.onOrder();
             Navigator.of(context).pop();
+            Provider.of<CartProvider>(context, listen: false).decrementCart();
             Fluttertoast.showToast(msg: "Order Placed Successfully!!!");
-            Navigator.of(context).pushNamed('/HistoryScreen');
+            Navigator.of(context).pushNamed('/ThankYouScreen');
           } else {
             Fluttertoast.showToast(msg: "Data Not Found");
             //show "data not found" in dialog

@@ -316,17 +316,18 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             children: [
               Padding(
                 padding: const EdgeInsets.only(right: 15.0, left: 13, top: 18),
-                child: Container(
-                    height: 20,
-                    width: 20,
-                    child: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushNamed('/CartScreen');
-                        },
-                        child: Image.asset(
-                          "assets/shopping-cart.png",
-                          color: appPrimaryMaterialColor,
-                        ))),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/CartScreen');
+                  },
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/shopping-cart.png",
+                        color: appPrimaryMaterialColor,
+                      )),
+                ),
               ),
               provider.cartCount > 0
                   ? Padding(
@@ -760,24 +761,60 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       ),
                     ),
                     Padding(
-                        padding: const EdgeInsets.only(top: 15.0),
-                        child: GridView.builder(
-                          scrollDirection: Axis.vertical,
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 0.60,
-                                  //widthScreen / heightScreen,
-                                  crossAxisSpacing: 2.0,
-                                  mainAxisSpacing: 2.0),
-                          itemBuilder: (BuildContext context, int index) {
-                            return TrendingProductComponent(
-                                trendingProductList[index]);
+                      padding: const EdgeInsets.only(top: 15.0),
+                      child: GridView.builder(
+                        scrollDirection: Axis.vertical,
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.60,
+                            //widthScreen / heightScreen,
+                            crossAxisSpacing: 2.0,
+                            mainAxisSpacing: 2.0),
+                        itemBuilder: (BuildContext context, int index) {
+                          return TrendingProductComponent(
+                              trendingProductList[index]);
+                        },
+                        itemCount: trendingProductList.length,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 12.0, top: 5),
+                      child: Center(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed('/AboutUsScreen');
                           },
-                          itemCount: trendingProductList.length,
-                        ))
+                          child: Container(
+                            height: 25,
+                            width: 120,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(
+                                  color: Colors.grey[300],
+                                )),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 4.0),
+                                  child: Text(
+                                    "Know more",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                                Icon(Icons.arrow_drop_down)
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -856,43 +893,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     }
   }
 
-  _getCart() async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        isGetCartLoading = true;
-        SharedPreferences pref = await SharedPreferences.getInstance();
-        FormData body = FormData.fromMap(
-            {"customerId": pref.getString(Session.CustomerId)});
-        Services.PostForList(api_name: 'get_data_where/tblcart', body: body)
-            .then((responseList) async {
-          setState(() {
-            isGetCartLoading = false;
-          });
-          if (responseList.length > 0) {
-            setState(() {
-              cartList = responseList; //set "data" here to your variable
-            });
-          } else {
-            setState(() {
-              isGetCartLoading = false;
-            });
-            Fluttertoast.showToast(msg: "Data Not Found");
-            //show "data not found" in dialog
-          }
-        }, onError: (e) {
-          setState(() {
-            isGetCartLoading = false;
-          });
-          print("error on call -> ${e.message}");
-          Fluttertoast.showToast(msg: "Something Went Wrong");
-        });
-      }
-    } on SocketException catch (_) {
-      Fluttertoast.showToast(msg: "No Internet Connection.");
-    }
-  }
-
   _trendingProduct() async {
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -908,7 +908,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               //isWishList = trendProductResponseList[0]["isFav"];
               //set "data" here to your variable
             });
-            _getCart();
           } else {
             setState(() {
               isLoading = false;

@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:balaji/Common/Constants.dart';
+import 'package:balaji/Providers/CartProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class ContactUs extends StatefulWidget {
@@ -19,6 +21,7 @@ class _ContactUsState extends State<ContactUs> {
 
   @override
   Widget build(BuildContext context) {
+    CartProvider provider = Provider.of<CartProvider>(context);
     Widget appBarTitle = Text(
       //'home1'.tr().toString(),
       "Contact Us",
@@ -42,24 +45,52 @@ class _ContactUsState extends State<ContactUs> {
                   //color: appPrimaryMaterialColor,
                 )),
           ),
+          actions: [
+            Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/CartScreen');
+                    },
+                    child: Container(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset(
+                          "assets/shopping-cart.png",
+                          color: appPrimaryMaterialColor,
+                        )),
+                  ),
+                ),
+                provider.cartCount > 0
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                            left: 1.0, top: 13, right: 10),
+                        child: CircleAvatar(
+                          radius: 7.0,
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          child: Text(
+                            provider.cartCount.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 9.0,
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container()
+              ],
+            )
+          ],
           elevation: 1,
           backgroundColor: Colors.white,
           iconTheme: new IconThemeData(
             color: appPrimaryMaterialColor,
           ),
           title: appBarTitle,
-          actions: <Widget>[
-            // IconButton(
-            //     icon: Icon(Icons.favorite_border),
-            //     onPressed: () {
-            //       Navigator.of(context).pushNamed('/Whishlist');
-            //     }),
-            // IconButton(
-            //     icon: Icon(Icons.card_travel),
-            //     onPressed: () {
-            //       Navigator.of(context).pushNamed('/CartScreen');
-            //     }),
-          ],
         ),
         body: Stack(
           children: [

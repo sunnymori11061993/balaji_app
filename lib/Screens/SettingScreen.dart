@@ -96,104 +96,105 @@ class _SettingScreenState extends State<SettingScreen> {
           elevation: 1,
           iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
           actions: <Widget>[
-            if (searchImage == false)
-              // Row(
-              //   children: [
-              //     Container(
-              //       height: 20,
-              //       width: 20,
-              //       child: Image.asset(
-              //         "assets/search.png",
-              //         color: appPrimaryMaterialColor,
-              //       ),
-              //     ),
-              //     Container(
-              //       width: MediaQuery.of(context).size.width - 80,
-              //       height: 50,
-              //       child: TextFormField(
-              //         controller: txtSearch,
-              //         textInputAction: TextInputAction.done,
-              //         onFieldSubmitted: (aa) {
-              //           //  _getSearching();
-              //           Navigator.push(
-              //               context,
-              //               MaterialPageRoute(
-              //                   builder: (BuildContext context) =>
-              //                       new SearchingScreen(
-              //                         searchData: txtSearch.text,
-              //                       )));
-              //           txtSearch.clear();
-              //           //Navigator.pop(context, this.txtSearch.text);
-              //         },
-              //         style: TextStyle(
-              //             //color: Colors.white,
-              //             ),
-              //         cursorColor: appPrimaryMaterialColor,
-              //         decoration: InputDecoration(
-              //             // prefixIcon: SizedBox(
-              //             //   height: 20,
-              //             //   width: 10,
-              //             //   child: Image.asset(
-              //             //     "assets/search.png",
-              //             //     color: appPrimaryMaterialColor,
-              //             //   ),
-              //             // ),
-              //
-              //             hintText: "    Search...",
-              //             hintStyle: TextStyle(color: Colors.grey),
-              //             focusedBorder: UnderlineInputBorder(
-              //               borderSide: BorderSide(color: Colors.grey),
-              //             )),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    searchImage = !searchImage;
-                  });
-                },
-                child: searchImage
-                    ? Padding(
-                        padding: const EdgeInsets.only(right: 15.0),
-                        child: Container(
-                          height: 20,
-                          width: 20,
-                          child: Image.asset(
-                            "assets/search.png",
-                            color: appPrimaryMaterialColor,
-                          ),
-                        ),
-                      )
-                    : Padding(
-                        padding: const EdgeInsets.only(right: 15.0),
-                        child: Container(
-                          height: 20,
-                          width: 20,
-                          child: Image.asset(
-                            "assets/025-cancel.png",
-                            color: appPrimaryMaterialColor,
-                          ),
-                        ),
-                      ),
-              ),
+            // if (searchImage == false)
+            // Row(
+            //   children: [
+            //     Container(
+            //       height: 20,
+            //       width: 20,
+            //       child: Image.asset(
+            //         "assets/search.png",
+            //         color: appPrimaryMaterialColor,
+            //       ),
+            //     ),
+            //     Container(
+            //       width: MediaQuery.of(context).size.width - 80,
+            //       height: 50,
+            //       child: TextFormField(
+            //         controller: txtSearch,
+            //         textInputAction: TextInputAction.done,
+            //         onFieldSubmitted: (aa) {
+            //           //  _getSearching();
+            //           Navigator.push(
+            //               context,
+            //               MaterialPageRoute(
+            //                   builder: (BuildContext context) =>
+            //                       new SearchingScreen(
+            //                         searchData: txtSearch.text,
+            //                       )));
+            //           txtSearch.clear();
+            //           //Navigator.pop(context, this.txtSearch.text);
+            //         },
+            //         style: TextStyle(
+            //             //color: Colors.white,
+            //             ),
+            //         cursorColor: appPrimaryMaterialColor,
+            //         decoration: InputDecoration(
+            //             // prefixIcon: SizedBox(
+            //             //   height: 20,
+            //             //   width: 10,
+            //             //   child: Image.asset(
+            //             //     "assets/search.png",
+            //             //     color: appPrimaryMaterialColor,
+            //             //   ),
+            //             // ),
+            //
+            //             hintText: "    Search...",
+            //             hintStyle: TextStyle(color: Colors.grey),
+            //             focusedBorder: UnderlineInputBorder(
+            //               borderSide: BorderSide(color: Colors.grey),
+            //             )),
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            // GestureDetector(
+            //   onTap: () {
+            //     setState(() {
+            //       searchImage = !searchImage;
+            //     });
+            //   },
+            //   child: searchImage
+            //       ? Padding(
+            //           padding: const EdgeInsets.only(right: 15.0),
+            //           child: Container(
+            //             height: 20,
+            //             width: 20,
+            //             child: Image.asset(
+            //               "assets/search.png",
+            //               color: appPrimaryMaterialColor,
+            //             ),
+            //           ),
+            //         )
+            //       : Padding(
+            //           padding: const EdgeInsets.only(right: 15.0),
+            //           child: Container(
+            //             height: 20,
+            //             width: 20,
+            //             child: Image.asset(
+            //               "assets/025-cancel.png",
+            //               color: appPrimaryMaterialColor,
+            //             ),
+            //           ),
+            //         ),
+            // ),
             Stack(
               alignment: Alignment.topCenter,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).pushNamed('/CartScreen');
-                          },
-                          child: Image.asset(
-                            "assets/shopping-cart.png",
-                            color: appPrimaryMaterialColor,
-                          ))),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/CartScreen');
+                    },
+                    child: Container(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset(
+                          "assets/shopping-cart.png",
+                          color: appPrimaryMaterialColor,
+                        )),
+                  ),
                 ),
                 provider.cartCount > 0
                     ? Padding(
@@ -304,7 +305,6 @@ class _SettingScreenState extends State<SettingScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.of(context).pop();
                         Navigator.push(
                             context,
                             MaterialPageRoute(

@@ -1,4 +1,5 @@
 import 'package:balaji/Providers/CartProvider.dart';
+import 'package:balaji/Screens/AboutUsScreen.dart';
 import 'package:balaji/Screens/Address%20Screen.dart';
 import 'package:balaji/Screens/BottomCategory.dart';
 import 'package:balaji/Screens/CartScreen.dart';
@@ -22,6 +23,7 @@ import 'package:balaji/Screens/SettingScreen.dart';
 import 'package:balaji/Screens/Splash.dart';
 import 'package:balaji/Screens/SubCategory.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
+import 'package:balaji/Screens/ThankYouScreen.dart';
 import 'package:balaji/Screens/UserProfileScreen.dart';
 import 'package:balaji/Screens/VerificationScreen.dart';
 import 'package:balaji/Screens/ViewCatalougeScreen.dart';
@@ -93,6 +95,8 @@ class _MyAppState extends State<MyApp> {
         '/HomePage': (context) => HomePage(),
         '/SettingScreen': (context) => SettingScreen(),
         '/UserProfileScreen': (context) => UserProfileScreen(),
+        '/AboutUsScreen': (context) => AboutUsScreen(),
+        '/ThankYouScreen': (context) => ThankYouScreen(),
       },
       theme: ThemeData(
         fontFamily: 'RobotoSlab',

@@ -3,11 +3,13 @@ import 'dart:io';
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
+import 'package:balaji/Providers/CartProvider.dart';
 import 'package:balaji/Screens/ProductDetailScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //import 'package:easy_localization/easy_localization.dart';
@@ -62,6 +64,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
 
   @override
   Widget build(BuildContext context) {
+    CartProvider provider = Provider.of<CartProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -76,6 +79,46 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                 //color: appPrimaryMaterialColor,
               )),
         ),
+        actions: [
+          Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/CartScreen');
+                  },
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/shopping-cart.png",
+                        color: appPrimaryMaterialColor,
+                      )),
+                ),
+              ),
+              provider.cartCount > 0
+                  ? Padding(
+                      padding:
+                          const EdgeInsets.only(left: 1.0, top: 13, right: 10),
+                      child: CircleAvatar(
+                        radius: 7.0,
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                        child: Text(
+                          provider.cartCount.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 9.0,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container()
+            ],
+          )
+        ],
         elevation: 1,
         backgroundColor: Colors.white,
         iconTheme: new IconThemeData(
@@ -83,9 +126,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
         ),
         title: Text("View Details",
             //'drw_order_history'.tr().toString(),
-            style: TextStyle(
-              color: appPrimaryMaterialColor,
-            )),
+            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 17)),
       ),
       body: isViewDetailLoading
           ? LoadingComponent()
@@ -374,9 +415,9 @@ class _RatingDialogState extends State<RatingDialog> {
       title: new Text(
         "Add Rating & Review",
         style: TextStyle(
-            fontSize: 22,
-            color: appPrimaryMaterialColor,
-            //fontWeight: FontWeight.bold
+          fontSize: 22,
+          color: appPrimaryMaterialColor,
+          //fontWeight: FontWeight.bold
         ),
       ),
       content: new Column(

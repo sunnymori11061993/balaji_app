@@ -109,7 +109,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   void initState() {
     //total();
     _getProductDetail();
-    _getCart();
     _getRating();
   }
 
@@ -170,9 +169,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             color: appPrimaryMaterialColor,
           ),
           title: Text('Product_Detail'.tr().toString(),
-              style: TextStyle(
-                color: appPrimaryMaterialColor,
-              )),
+              style: TextStyle(color: appPrimaryMaterialColor, fontSize: 17)),
           actions: <Widget>[
             // Padding(
             //   padding: const EdgeInsets.only(
@@ -198,19 +195,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 15.0, left: 4, top: 18),
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: GestureDetector(
-                          onTap: () async {
-                            final result = await Navigator.of(context)
-                                .pushNamed('/CartScreen');
-                            if (result == "pop") _getProductDetail();
-                          },
-                          child: Image.asset(
-                            "assets/shopping-cart.png",
-                            color: appPrimaryMaterialColor,
-                          ))),
+                  child: GestureDetector(
+                    onTap: () async {
+                      final result =
+                          await Navigator.of(context).pushNamed('/CartScreen');
+                      if (result == "pop") _getProductDetail();
+                    },
+                    child: Container(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset(
+                          "assets/shopping-cart.png",
+                          color: appPrimaryMaterialColor,
+                        )),
+                  ),
                 ),
                 // IconButton(
                 //     icon: Icon(Icons.card_travel),
@@ -1014,43 +1012,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     }
   }
 
-  _getCart() async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        isGetCartLoading = true;
-        SharedPreferences pref = await SharedPreferences.getInstance();
-        FormData body = FormData.fromMap(
-            {"customerId": pref.getString(Session.CustomerId)});
-        Services.PostForList(api_name: 'get_data_where/tblcart', body: body)
-            .then((responseList) async {
-          setState(() {
-            isGetCartLoading = false;
-          });
-          if (responseList.length > 0) {
-            setState(() {
-              cartList = responseList; //set "data" here to your variable
-            });
-          } else {
-            setState(() {
-              isGetCartLoading = false;
-            });
-            Fluttertoast.showToast(msg: "Data Not Found");
-            //show "data not found" in dialog
-          }
-        }, onError: (e) {
-          setState(() {
-            isGetCartLoading = false;
-          });
-          print("error on call -> ${e.message}");
-          Fluttertoast.showToast(msg: "Something Went Wrong");
-        });
-      }
-    } on SocketException catch (_) {
-      Fluttertoast.showToast(msg: "No Internet Connection.");
-    }
-  }
-
   _addToWishlist() async {
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -1121,7 +1082,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               Fluttertoast.showToast(msg: "Already in Cart");
             }
             total();
-            _getCart();
             // _getProductDetail();
           } else {
             setState(() {

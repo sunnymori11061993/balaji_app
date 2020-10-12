@@ -302,13 +302,10 @@ class _CartComponentState extends State<CartComponent> {
                   child: SizedBox(
                     width: 150,
                     height: 45,
-                    child: FlatButton(
-//color: appPrimaryMaterialColor,
-                      shape: RoundedRectangleBorder(
+                    child: Container(
+                      decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          side: BorderSide(color: Colors.grey[300])),
-
-                      onPressed: () {},
+                          border: Border.all(color: Colors.grey[300])),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,

@@ -62,7 +62,6 @@ class _SubCategoryState extends State<SubCategory>
 
     _subCatTab();
     print(widget.catId);
-    _getCart();
   }
 
   _tabCon() {
@@ -105,47 +104,19 @@ class _SubCategoryState extends State<SubCategory>
                 //color: appPrimaryMaterialColor,
               )),
         ),
-
-//        IconButton(
-//            icon: Icon(
-//              Icons.arrow_back_ios,
-//              color: appPrimaryMaterialColor,
-//            ),
-//            onPressed: () {
-//              Navigator.of(context).pop();
-//            }),
         elevation: 0,
         backgroundColor: Colors.white,
         iconTheme: new IconThemeData(
           color: appPrimaryMaterialColor,
         ),
         title: Text('Sub_Category'.tr().toString(),
-            style: TextStyle(
-              color: appPrimaryMaterialColor,
-            )),
+            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 17)),
         actions: <Widget>[
-          // Padding(
-          //   padding: const EdgeInsets.only(
-          //     right: 10.0,
-          //     left: 8,
-          //   ),
-          //   child: Container(
-          //       height: 20,
-          //       width: 20,
-          //       child: GestureDetector(
-          //           onTap: () {
-          //             Navigator.of(context).pushNamed('/Whishlist');
-          //           },
-          //           child: Image.asset(
-          //             "assets/heart.png",
-          //             color: appPrimaryMaterialColor,
-          //           ))),
-          // ),
           Padding(
-            padding: const EdgeInsets.only(right: 12.0, left: 4),
+            padding: const EdgeInsets.only(right: 8.0, left: 4),
             child: Container(
                 height: 20,
-                width: 22,
+                width: 20,
                 child: GestureDetector(
                     onTap: () {
                       setState(() {
@@ -153,8 +124,8 @@ class _SubCategoryState extends State<SubCategory>
                       });
                     },
                     child: Image.asset(
-                      "assets/fil.png",
-                      //  color: appPrimaryMaterialColor,
+                      "assets/ft.png",
+                      color: appPrimaryMaterialColor,
                     ))),
           ),
           Stack(
@@ -162,17 +133,18 @@ class _SubCategoryState extends State<SubCategory>
             children: [
               Padding(
                 padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),
-                child: Container(
-                    height: 20,
-                    width: 20,
-                    child: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushNamed('/CartScreen');
-                        },
-                        child: Image.asset(
-                          "assets/shopping-cart.png",
-                          color: appPrimaryMaterialColor,
-                        ))),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/CartScreen');
+                  },
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/shopping-cart.png",
+                        color: appPrimaryMaterialColor,
+                      )),
+                ),
               ),
               // IconButton(
               //   icon: Icon(Icons.card_travel),
@@ -245,159 +217,7 @@ class _SubCategoryState extends State<SubCategory>
               thickness: 1,
               endIndent: 10,
             ),
-            ListTile(
-              title: Text(
-                "Price Filter",
-                style: TextStyle(color: Colors.black, fontSize: 16),
-              ),
-            ),
-            ListTile(
-              title: Column(
-                children: <Widget>[
-                  Container(
-                    height: 40,
-                    child: RadioListTile(
-                      activeColor: appPrimaryMaterialColor,
-                      groupValue: pricefilter,
-                      title: Text('100 - 350',
-                          style: TextStyle(color: Colors.black, fontSize: 16)),
-                      value: 'p1',
-                      onChanged: (val) {
-                        setState(() {
-                          pricefilter = val;
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    height: 40,
-                    child: RadioListTile(
-                      activeColor: appPrimaryMaterialColor,
-                      groupValue: pricefilter,
-                      title: Text('350 - 560',
-                          style: TextStyle(color: Colors.black, fontSize: 16)),
-                      value: 'p2',
-                      onChanged: (val) {
-                        setState(() {
-                          pricefilter = val;
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    height: 40,
-                    child: RadioListTile(
-                      activeColor: appPrimaryMaterialColor,
-                      groupValue: pricefilter,
-                      title: Text('560 - 850',
-                          style: TextStyle(color: Colors.black, fontSize: 16)),
-                      value: 'p3',
-                      onChanged: (val) {
-                        setState(() {
-                          pricefilter = val;
-                        });
-                      },
-                    ),
-                  ),
-                  RadioListTile(
-                    activeColor: appPrimaryMaterialColor,
-                    groupValue: pricefilter,
-                    title: Text('850 - Above',
-                        style: TextStyle(color: Colors.black, fontSize: 16)),
-                    value: 'p4',
-                    onChanged: (val) {
-                      setState(() {
-                        pricefilter = val;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-            ListTile(
-              title: Text(
-                "Fabric Filter",
-                style: TextStyle(color: Colors.black, fontSize: 16),
-              ),
-            ),
-            ListTile(
-              title: Column(
-                children: <Widget>[
-                  Container(
-                    height: 40,
-                    child: RadioListTile(
-                      activeColor: appPrimaryMaterialColor,
-                      groupValue: fabricfilter,
-                      title: Text('Dhakai',
-                          style: TextStyle(color: Colors.black, fontSize: 16)),
-                      value: 'f1',
-                      onChanged: (val) {
-                        setState(() {
-                          fabricfilter = val;
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    height: 40,
-                    child: RadioListTile(
-                      activeColor: appPrimaryMaterialColor,
-                      groupValue: fabricfilter,
-                      title: Text('Litchi',
-                          style: TextStyle(color: Colors.black, fontSize: 16)),
-                      value: 'f2',
-                      onChanged: (val) {
-                        setState(() {
-                          fabricfilter = val;
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    height: 40,
-                    child: RadioListTile(
-                      activeColor: appPrimaryMaterialColor,
-                      groupValue: fabricfilter,
-                      title: Text('Cotton / Slab',
-                          style: TextStyle(color: Colors.black, fontSize: 16)),
-                      value: 'f3',
-                      onChanged: (val) {
-                        setState(() {
-                          fabricfilter = val;
-                        });
-                      },
-                    ),
-                  ),
-                  Container(
-                    height: 40,
-                    child: RadioListTile(
-                      activeColor: appPrimaryMaterialColor,
-                      groupValue: fabricfilter,
-                      title: Text('Digital',
-                          style: TextStyle(color: Colors.black, fontSize: 16)),
-                      value: 'f4',
-                      onChanged: (val) {
-                        setState(() {
-                          fabricfilter = val;
-                        });
-                      },
-                    ),
-                  ),
-                  RadioListTile(
-                    activeColor: appPrimaryMaterialColor,
-                    groupValue: fabricfilter,
-                    title: Text('Fancy',
-                        style: TextStyle(color: Colors.black, fontSize: 16)),
-                    value: 'f5',
-                    onChanged: (val) {
-                      setState(() {
-                        fabricfilter = val;
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
+
             Padding(
               padding: const EdgeInsets.only(left: 8.0, right: 8, top: 90),
               child: Container(
@@ -523,43 +343,6 @@ class _SubCategoryState extends State<SubCategory>
         }, onError: (e) {
           setState(() {
             isLoadingPro = false;
-          });
-          print("error on call -> ${e.message}");
-          Fluttertoast.showToast(msg: "Something Went Wrong");
-        });
-      }
-    } on SocketException catch (_) {
-      Fluttertoast.showToast(msg: "No Internet Connection.");
-    }
-  }
-
-  _getCart() async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        isGetCartLoading = true;
-        SharedPreferences pref = await SharedPreferences.getInstance();
-        FormData body = FormData.fromMap(
-            {"customerId": pref.getString(Session.CustomerId)});
-        Services.PostForList(api_name: 'get_data_where/tblcart', body: body)
-            .then((responseList) async {
-          setState(() {
-            isGetCartLoading = false;
-          });
-          if (responseList.length > 0) {
-            setState(() {
-              cartList = responseList; //set "data" here to your variable
-            });
-          } else {
-            setState(() {
-              isGetCartLoading = false;
-            });
-            Fluttertoast.showToast(msg: "Data Not Found");
-            //show "data not found" in dialog
-          }
-        }, onError: (e) {
-          setState(() {
-            isGetCartLoading = false;
           });
           print("error on call -> ${e.message}");
           Fluttertoast.showToast(msg: "Something Went Wrong");

@@ -175,17 +175,18 @@ class _WhishlistState extends State<Whishlist> {
                   Padding(
                     padding:
                         const EdgeInsets.only(right: 15.0, left: 8, top: 18),
-                    child: Container(
-                        height: 20,
-                        width: 20,
-                        child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pushNamed('/CartScreen');
-                            },
-                            child: Image.asset(
-                              "assets/shopping-cart.png",
-                              color: appPrimaryMaterialColor,
-                            ))),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/CartScreen');
+                      },
+                      child: Container(
+                          height: 20,
+                          width: 20,
+                          child: Image.asset(
+                            "assets/shopping-cart.png",
+                            color: appPrimaryMaterialColor,
+                          )),
+                    ),
                   ),
                   provider.cartCount > 0
                       ? Padding(
