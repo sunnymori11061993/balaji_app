@@ -3,10 +3,14 @@ import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/SubCategoriesComponent.dart';
+import 'package:balaji/Providers/CartProvider.dart';
 import 'package:balaji/Screens/ProductDetailScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+
+import 'package:easy_localization/easy_localization.dart';
 
 class SearchingScreen extends StatefulWidget {
   var searchData;
@@ -29,6 +33,7 @@ class _SearchingScreenState extends State<SearchingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    CartProvider provider = Provider.of<CartProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -46,12 +51,50 @@ class _SearchingScreenState extends State<SearchingScreen> {
         elevation: 1,
         backgroundColor: Colors.white,
         iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
-        title:  Text(
-          "Searched Products",
-          style: TextStyle(
-            color: appPrimaryMaterialColor,
-          ),
+        title: Text(
+          'Product_Detail'.tr().toString(),
+          style: TextStyle(color: appPrimaryMaterialColor, fontSize: 17),
         ),
+        actions: <Widget>[
+          Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/CartScreen');
+                  },
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/shopping-cart.png",
+                        color: appPrimaryMaterialColor,
+                      )),
+                ),
+              ),
+              provider.cartCount > 0
+                  ? Padding(
+                      padding:
+                          const EdgeInsets.only(left: 1.0, top: 13, right: 10),
+                      child: CircleAvatar(
+                        radius: 7.0,
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                        child: Text(
+                          provider.cartCount.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 9.0,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container()
+            ],
+          )
+        ],
       ),
       body: isSearchLoading
           ? LoadingComponent()
@@ -81,7 +124,6 @@ class _SearchingScreenState extends State<SearchingScreen> {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        isSearchLoading = true;
         FormData body = FormData.fromMap({"ProductName": widget.searchData});
         Services.PostForList(api_name: 'search', body: body).then(
             (responseList) async {

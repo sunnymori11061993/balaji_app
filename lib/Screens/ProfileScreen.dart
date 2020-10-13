@@ -7,7 +7,6 @@ import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Providers/CartProvider.dart';
 import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
@@ -15,6 +14,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -211,8 +211,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           backgroundColor: Colors.white,
           iconTheme: new IconThemeData(color: Colors.grey),
           title: Text(
-            //'Profile'.tr().toString(),
-            "Edit Profile",
+            'Edit_Profile'.tr().toString(),
+            //"Edit Profile",
             style: TextStyle(color: appPrimaryMaterialColor, fontSize: 17),
           ),
         ),
@@ -249,8 +249,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             color:
                                                 appPrimaryMaterialColor[600]),
                                         image: DecorationImage(
-                                            image: FileImage(
-                                              _Image,
+                                            image: NetworkImage(
+                                              img,
                                             ),
                                             fit: BoxFit.cover),
                                       ),
@@ -638,9 +638,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 : null,
           }); //"key":"value"
 
-          Services.postForSave(apiname: 'update_profile', body: body).then(
-              (response) async {
-            if (response.IsSuccess == true && response.Data == "1") {
+          Services.PostForList(api_name: 'update_profile', body: body).then(
+              (responseList) async {
+            setState(() {
+              isLoading = false;
+            });
+            if (responseList.length > 0) {
               SharedPreferences prefs = await SharedPreferences.getInstance();
 
               setState(() {
@@ -648,12 +651,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 prefs.setString(Session.CustomerCompanyName, txtCName.text);
                 prefs.setString(Session.CustomerEmailId, txtEmail.text);
                 prefs.setString(Session.CustomerPhoneNo, txtMobileNumber.text);
-                prefs.setString(Session.CustomerImage, filename);
+                prefs.setString(
+                    Session.CustomerImage, responseList[0]["CustomerImage"]);
               });
 
               Fluttertoast.showToast(
                   msg: "Profile Updated Successfully",
                   gravity: ToastGravity.BOTTOM);
+              Navigator.of(context).pushNamed('/UserprofileScreen');
             }
 
             setState(() {

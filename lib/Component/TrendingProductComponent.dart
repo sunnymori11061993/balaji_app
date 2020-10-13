@@ -75,7 +75,7 @@ class _TrendingProductComponentState extends State<TrendingProductComponent> {
                       width: MediaQuery.of(context).size.width,
                       height: 237,
                       child: Image.network(
-                          Image_URL + "${widget.trendData["ProductImages"][0]}",
+                          Image_URL + "${widget.trendData["ProductImages"]}",
                           fit: BoxFit.fill)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

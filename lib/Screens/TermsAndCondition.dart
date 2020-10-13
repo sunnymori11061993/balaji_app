@@ -6,6 +6,7 @@ import 'package:balaji/Providers/CartProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class TermsAndCondition extends StatefulWidget {
   var termsConData;
@@ -41,49 +42,47 @@ class _TermsAndConditionState extends State<TermsAndCondition> {
           iconTheme: new IconThemeData(
             color: appPrimaryMaterialColor,
           ),
-          title: Text('Terms & Conditions',
-              style: TextStyle(
-                color: appPrimaryMaterialColor,
-              )),
+          title: Text('drw_Terms'.tr().toString(),
+              style: TextStyle(color: appPrimaryMaterialColor, fontSize: 17)),
           actions: [
-            Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/CartScreen');
-                    },
-                    child: Container(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset(
-                          "assets/shopping-cart.png",
-                          color: appPrimaryMaterialColor,
-                        )),
-                  ),
-                ),
-                provider.cartCount > 0
-                    ? Padding(
-                        padding: const EdgeInsets.only(
-                            left: 1.0, top: 13, right: 10),
-                        child: CircleAvatar(
-                          radius: 7.0,
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white,
-                          child: Text(
-                            provider.cartCount.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 9.0,
-                            ),
-                          ),
-                        ),
-                      )
-                    : Container()
-              ],
-            )
+            // Stack(
+            //   alignment: Alignment.topCenter,
+            //   children: [
+            //     Padding(
+            //       padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+            //       child: GestureDetector(
+            //         onTap: () {
+            //           Navigator.of(context).pushNamed('/CartScreen');
+            //         },
+            //         child: Container(
+            //             height: 20,
+            //             width: 20,
+            //             child: Image.asset(
+            //               "assets/shopping-cart.png",
+            //               color: appPrimaryMaterialColor,
+            //             )),
+            //       ),
+            //     ),
+            //     provider.cartCount > 0
+            //         ? Padding(
+            //             padding: const EdgeInsets.only(
+            //                 left: 1.0, top: 13, right: 10),
+            //             child: CircleAvatar(
+            //               radius: 7.0,
+            //               backgroundColor: Colors.red,
+            //               foregroundColor: Colors.white,
+            //               child: Text(
+            //                 provider.cartCount.toString(),
+            //                 style: TextStyle(
+            //                   fontWeight: FontWeight.bold,
+            //                   fontSize: 9.0,
+            //                 ),
+            //               ),
+            //             ),
+            //           )
+            //         : Container()
+            //   ],
+            // )
           ],
         ),
         body: Stack(

@@ -48,11 +48,7 @@ class _SubCategoryState extends State<SubCategory>
     {
       "title": "Offers",
       "type": "radio",
-      "values": [
-        "5%",
-        "20%",
-        "30%",
-      ],
+      "values": ["5%", "20%", "30%"],
     },
   ];
 
@@ -81,6 +77,7 @@ class _SubCategoryState extends State<SubCategory>
   List subCategoriesTab = [];
   bool isLoadingCat = true;
   bool isLoadingPro = false;
+  bool c1 = false;
   TextStyle tabStyle = TextStyle(fontSize: 16);
   List cartList = [];
   bool isGetCartLoading = true;
@@ -217,14 +214,64 @@ class _SubCategoryState extends State<SubCategory>
               thickness: 1,
               endIndent: 10,
             ),
-
+            ListView.builder(
+                itemCount: filterList.length,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, top: 20),
+                        child: Text(
+                          "${filterList[index]["title"]}",
+                          style: TextStyle(
+                              color: appPrimaryMaterialColor,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      ListView.builder(
+                          itemCount: filterList[index]["values"].length,
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemBuilder: (context, vindex) {
+                            return Container(
+                              height: 40,
+                              child: CheckboxListTile(
+                                title: Text(
+                                  filterList[index]["values"][vindex],
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                value: c1,
+                                activeColor: appPrimaryMaterialColor,
+                                onChanged: (val1) {
+                                  setState(() {
+                                    c1 = val1;
+                                  });
+                                },
+                                controlAffinity: ListTileControlAffinity
+                                    .leading, //  <-- leading Checkbox
+                              ),
+                            );
+                          }),
+                    ],
+                  );
+                }),
             Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8, top: 90),
+              padding: const EdgeInsets.only(
+                  left: 8.0, right: 8, top: 90, bottom: 15),
               child: Container(
                 height: 40,
                 child: RaisedButton(
                   color: appPrimaryMaterialColor,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/FilterScreen');
+                  },
                   child: Text(
                     "APPLY",
                     style: TextStyle(fontSize: 16, color: Colors.white),

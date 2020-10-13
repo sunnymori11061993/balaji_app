@@ -77,8 +77,7 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     CartProvider provider = Provider.of<CartProvider>(context);
     Widget appBarTitle = Text(
-      //'home1'.tr().toString(),
-      "Settings",
+      'Settings'.tr().toString(),
       style: TextStyle(
           color: appPrimaryMaterialColor,
           //fontFamily: 'RobotoSlab',
@@ -269,7 +268,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10.0, bottom: 10),
                       child: Text(
-                        "Settings And Help",
+                        'Settings_And_Help'.tr().toString(),
                         style: TextStyle(
                           fontSize: 16,
                           color: appPrimaryMaterialColor,

@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class ContactUs extends StatefulWidget {
   var contactData;
@@ -24,7 +25,7 @@ class _ContactUsState extends State<ContactUs> {
     CartProvider provider = Provider.of<CartProvider>(context);
     Widget appBarTitle = Text(
       //'home1'.tr().toString(),
-      "Contact Us",
+      'drw_Contact'.tr().toString(),
       style: TextStyle(
           color: appPrimaryMaterialColor,
           //fontFamily: 'RobotoSlab',

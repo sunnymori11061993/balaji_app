@@ -2,13 +2,15 @@ import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
+import 'package:balaji/Screens/TermsAndCondition.dart';
 import 'package:balaji/Screens/VerificationScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'package:easy_localization/easy_localization.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -89,6 +91,16 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  _showDialogLang(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return ALertLang();
+      },
+    );
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -110,6 +122,30 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        _showDialogLang(context);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.only(
+                            top: 5, right: 10, left: 10, bottom: 5),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: Colors.grey[300])),
+                        child: Text("Select Language",
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.black,
+                              //color: appPrimaryMaterialColor,
+                              // / fontWeight: FontWeight.w800
+                            )),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).padding.top + 20,
+                  ),
                   Text(
                     "SIGN IN / SIGN UP",
                     style: TextStyle(
@@ -141,9 +177,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
+
             SizedBox(
-              height: MediaQuery.of(context).padding.top + 50,
+              height: MediaQuery.of(context).padding.top + 20,
             ),
+
             Padding(
               padding: const EdgeInsets.only(top: 15.0),
               child: Container(
@@ -289,6 +327,7 @@ class _LoginScreenState extends State<LoginScreen> {
             // SizedBox(
             //   height: MediaQuery.of(context).padding.top + 15,
             // ),
+
             Column(
               children: <Widget>[
                 Container(
@@ -302,15 +341,27 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: Colors.grey,
                             fontWeight: FontWeight.w500),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 4.0),
-                        child: Text(
-                          "Terms & Conditions",
-                          style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.grey[700],
-                              fontWeight: FontWeight.w700,
-                              decoration: TextDecoration.underline),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      new TermsAndCondition(
+                                        termsConData: termsConList[0]
+                                            ["SettingTermsConditionURL"],
+                                      )));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Text(
+                            "Terms & Conditions",
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.grey[700],
+                                fontWeight: FontWeight.w700,
+                                decoration: TextDecoration.underline),
+                          ),
                         ),
                       ),
                     ],
@@ -360,6 +411,7 @@ class _LoginScreenState extends State<LoginScreen> {
           if (responseList.length > 0) {
             setState(() {
               isTermLoading = false;
+              termsConList = responseList;
               msg = responseList[0]["SettingWhatsAppMessage"];
               whatsapp = "+91" + responseList[0]["SettingWhatsAppNumber"];
 
@@ -440,4 +492,126 @@ class _LoginScreenState extends State<LoginScreen> {
       Fluttertoast.showToast(msg: "Please fill the Field");
     }
   }
+}
+
+class ALertLang extends StatefulWidget {
+  @override
+  _ALertLangState createState() => _ALertLangState();
+}
+
+class _ALertLangState extends State<ALertLang> {
+  String lang = 'p1';
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: new Text(
+        'Select_Language'.tr().toString(),
+        style: TextStyle(
+          fontSize: 22,
+          color: appPrimaryMaterialColor,
+          //fontWeight: FontWeight.bold
+        ),
+      ),
+      content: Wrap(
+        children: [
+          ListTile(
+            title: Column(
+              children: <Widget>[
+                Container(
+                  height: 40,
+                  child: RadioListTile(
+                    activeColor: appPrimaryMaterialColor,
+                    groupValue: lang,
+                    title: Text('English'.tr().toString(),
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600)),
+                    value: 'p1',
+                    onChanged: (val) {
+                      setState(() {
+                        lang = val;
+                      });
+                    },
+                  ),
+                ),
+                Container(
+                  height: 40,
+                  child: RadioListTile(
+                    activeColor: appPrimaryMaterialColor,
+                    groupValue: lang,
+                    title: Text('Hindi'.tr().toString(),
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600)),
+                    value: 'p2',
+                    onChanged: (val) {
+                      setState(() {
+                        lang = val;
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      actions: <Widget>[
+        // usually buttons at the bottom of the dialog
+        FlatButton(
+          child: new Text(
+            "Cancel",
+            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
+          ),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        new FlatButton(
+          child: new Text(
+            "Ok",
+            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
+          ),
+          onPressed: () async {
+            if (lang == 'p1') {
+              EasyLocalization.of(context).locale = Locale('en', 'US');
+            } else {
+              EasyLocalization.of(context).locale = Locale('hi', 'HI');
+            }
+
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    );
+  }
+
+// Container buildSwitchListTileMenuItem(
+//     {BuildContext context, String title, String subtitle, Locale locale}) {
+//   return Container(
+//     margin: EdgeInsets.only(
+//       left: 10,
+//       right: 10,
+//       top: 5,
+//     ),
+//     child: ListTile(
+//         dense: true,
+//         // isThreeLine: true,
+//         title: Text(
+//           title,
+//         ),
+//         subtitle: Text(
+//           subtitle,
+//         ),
+//         onTap: () {
+//           log(locale.toString(), name: toString());
+//           context.locale = locale; //BuildContext extension method
+//           //EasyLocalization.of(context).locale = locale;
+//           Navigator.pop(context);
+//         }),
+//   );
+// }
 }
