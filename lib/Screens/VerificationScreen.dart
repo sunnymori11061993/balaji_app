@@ -43,6 +43,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
           Session.CustomerCompanyName, widget.loginData["CustomerCompanyName"]);
       await prefs.setString(
           Session.CustomerEmailId, widget.loginData["CustomerEmailId"]);
+      await prefs.setString(
+          Session.CustomerImage, widget.loginData["CustomerImage"]);
 
       await prefs.setString(
           Session.CustomerPhoneNo, widget.loginData["CustomerPhoneNo"]);
@@ -57,6 +59,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
           widget.loginData["ManufacturerCompanyName"]);
       await prefs.setString(
           Session.CustomerEmailId, widget.loginData["ManufacturerEmailId"]);
+      await prefs.setString(
+          Session.ManuCustomerImage, widget.loginData["CustomerImage"]);
       await prefs.setString(
           Session.CustomerPhoneNo, widget.loginData["ManufacturerPhoneNo"]);
       Navigator.pushNamedAndRemoveUntil(

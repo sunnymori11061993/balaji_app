@@ -26,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController txtCName = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtMobileNumber = TextEditingController();
-  var img;
+  String img, userName = "";
   final _formkey = new GlobalKey<FormState>();
 
   bool isLoading = false;
@@ -237,24 +237,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               onTap: () {
                                 _settingModalBottomSheet();
                               },
-                              child: _Image != null
-                                  ? Container(
-                                      height: 130.0,
-                                      width: 150.0,
-                                      decoration: BoxDecoration(
-                                        // borderRadius: BorderRadius.circular(30),
+                              child: _Image != null || img != null
+                                  ? _Image != null
+                                      ? Container(
+                                          height: 130.0,
+                                          width: 150.0,
+                                          decoration: BoxDecoration(
+                                            // borderRadius: BorderRadius.circular(30),
 
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                            color:
-                                                appPrimaryMaterialColor[600]),
-                                        image: DecorationImage(
-                                            image: NetworkImage(
-                                              img,
-                                            ),
-                                            fit: BoxFit.cover),
-                                      ),
-                                    )
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                                color: appPrimaryMaterialColor[
+                                                    600]),
+                                            image: DecorationImage(
+                                                image: FileImage(
+                                                  _Image,
+                                                ),
+                                                fit: BoxFit.cover),
+                                          ),
+                                        )
+                                      : img != null
+                                          ? Container(
+                                              height: 130.0,
+                                              width: 150.0,
+                                              decoration: BoxDecoration(
+                                                // borderRadius: BorderRadius.circular(30),
+
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                    color:
+                                                        appPrimaryMaterialColor[
+                                                            600]),
+                                                image: DecorationImage(
+                                                    image: NetworkImage(
+                                                      Image_URL + img,
+                                                    ),
+                                                    fit: BoxFit.cover),
+                                              ),
+                                            )
+                                          : Container(
+                                              height: 130.0,
+                                              width: 150.0,
+                                              decoration: BoxDecoration(
+                                                // borderRadius: BorderRadius.circular(30),
+
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                    color:
+                                                        appPrimaryMaterialColor[
+                                                            600]),
+                                                image: DecorationImage(
+                                                    image: FileImage(
+                                                      _Image,
+                                                    ),
+                                                    fit: BoxFit.cover),
+                                              ),
+                                            )
                                   : Container(
                                       height: 130.0,
                                       width: 150.0,
@@ -281,7 +319,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Padding(
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Text(
-                              "Rinki Sharma",
+                              userName != null ? userName : "",
                               style: TextStyle(
                                   fontSize: 18,
                                   color: appPrimaryMaterialColor,
@@ -590,10 +628,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       txtName.text = prefs.getString(Session.CustomerName);
+      userName = prefs.getString(Session.CustomerName);
       txtCName.text = prefs.getString(Session.CustomerCompanyName);
       txtEmail.text = prefs.getString(Session.CustomerEmailId);
       txtMobileNumber.text = prefs.getString(Session.CustomerPhoneNo);
-      img = Image_URL + prefs.getString(Session.CustomerImage);
+      img = prefs.getString(Session.CustomerImage);
+      print(img);
     });
   }
 
@@ -654,11 +694,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 prefs.setString(
                     Session.CustomerImage, responseList[0]["CustomerImage"]);
               });
-
+              Navigator.of(context).pushNamed('/HomePage');
               Fluttertoast.showToast(
                   msg: "Profile Updated Successfully",
                   gravity: ToastGravity.BOTTOM);
-              Navigator.of(context).pushNamed('/UserprofileScreen');
             }
 
             setState(() {

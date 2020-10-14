@@ -27,6 +27,16 @@ class _SettingScreenState extends State<SettingScreen> {
   bool isTermLoading = false;
   List termsConList = [];
   String msg, whatsapp;
+  String txtname = "";
+  String img;
+  _profile() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      txtname = prefs.getString(Session.CustomerName);
+      img = prefs.getString(Session.CustomerImage);
+    });
+  }
+
   TextEditingController txtSearch = TextEditingController();
 
   _showDialogLang(BuildContext context) {
@@ -52,6 +62,7 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   void initState() {
     _settingApi();
+    _profile();
   }
 
   void launchwhatsapp({
@@ -228,23 +239,40 @@ class _SettingScreenState extends State<SettingScreen> {
             padding: const EdgeInsets.only(top: 60.0),
             child: Row(
               children: [
-                Container(
-                  height: 95.0,
-                  width: 120.0,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white),
-                      // borderRadius: BorderRadius.circular(30),
-                      //color: Colors.white,
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: NetworkImage(
-                              "https://static1.bigstockphoto.com/8/2/3/large1500/328918366.jpg"),
-                          fit: BoxFit.cover)),
-                ),
+                img != null
+                    ? Container(
+                        height: 95.0,
+                        width: 120.0,
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            // borderRadius: BorderRadius.circular(30),
+                            //color: Colors.white,
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                image: NetworkImage(Image_URL + img),
+                                fit: BoxFit.cover)),
+                      )
+                    : Container(
+                        height: 95.0,
+                        width: 120.0,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white),
+                          // borderRadius: BorderRadius.circular(30),
+                          //color: Colors.white,
+                          color: appPrimaryMaterialColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          widthFactor: 40.0,
+                          heightFactor: 40.0,
+                          child: Image.asset("assets/051-user.png",
+                              color: Colors.white, width: 80.0, height: 80.0),
+                        ),
+                      ),
                 Padding(
                   padding: const EdgeInsets.only(top: 50.0),
                   child: Text(
-                    "Rinki Sharma",
+                    txtname != null ? txtname : "",
                     style: TextStyle(
                       fontSize: 22,
                       color: Colors.white,

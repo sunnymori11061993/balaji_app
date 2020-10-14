@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfileScreen extends StatefulWidget {
   @override
@@ -15,7 +16,22 @@ class UserProfileScreen extends StatefulWidget {
 class _UserProfileScreenState extends State<UserProfileScreen> {
   bool isSearching = false;
   bool searchImage = true;
+  String txtname = "";
+  String img;
   TextEditingController txtSearch = TextEditingController();
+
+  _profile() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      txtname = prefs.getString(Session.CustomerName);
+      img = prefs.getString(Session.CustomerImage);
+    });
+  }
+
+  @override
+  void initState() {
+    _profile();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -252,24 +268,44 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     // crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
-                        height: 200.0,
-                        width: 150.0,
-                        decoration: BoxDecoration(
-                            // borderRadius: BorderRadius.circular(30),
-                            //color: Colors.white,
-                            shape: BoxShape.circle,
-                            border:
-                                Border.all(color: appPrimaryMaterialColor[600]),
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://static1.bigstockphoto.com/8/2/3/large1500/328918366.jpg"),
-                                fit: BoxFit.cover)),
-                      ),
+                      img != null
+                          ? Container(
+                              height: 200.0,
+                              width: 150.0,
+                              decoration: BoxDecoration(
+                                  // borderRadius: BorderRadius.circular(30),
+                                  //color: Colors.white,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                      color: appPrimaryMaterialColor[600]),
+                                  image: DecorationImage(
+                                      image: NetworkImage(Image_URL + img),
+                                      fit: BoxFit.cover)),
+                            )
+                          : Container(
+                              height: 200.0,
+                              width: 150.0,
+                              decoration: BoxDecoration(
+                                // borderRadius: BorderRadius.circular(30),
+                                //color: Colors.white,
+                                color: appPrimaryMaterialColor,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                    color: appPrimaryMaterialColor[600]),
+                              ),
+                              child: Center(
+                                widthFactor: 40.0,
+                                heightFactor: 40.0,
+                                child: Image.asset("assets/051-user.png",
+                                    color: Colors.white,
+                                    width: 80.0,
+                                    height: 80.0),
+                              ),
+                            ),
                       Text(
-                        "Rinki Sharma",
+                        txtname != null ? txtname : "",
                         style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 20,
                             color: appPrimaryMaterialColor,
                             fontWeight: FontWeight.w600),
                       )

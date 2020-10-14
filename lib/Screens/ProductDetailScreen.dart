@@ -112,17 +112,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     _getRating();
   }
 
-  _showDialogView(BuildContext context, var data) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          // return object of type Dialog
-          return AlertViewCatalogue(
-            viewCatData: data,
-          );
-        });
-  }
-
   Future<File> createFileOfPdfUrl(url) async {
     Completer<File> completer = Completer();
     print("Start download file from internet!");
@@ -672,9 +661,42 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   productList["ProductDescription"],
                                   //  "${widget.productDetail["ProductDescription"]}",
                                   style: TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w400),
+                                    fontSize: 13,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10.0, left: 20, right: 8),
+                          child: Divider(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10.0, left: 20, right: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                'About_Products'.tr().toString(),
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 15.0, bottom: 10),
+                                child: Text(
+                                  productList["ProductDescription"],
+                                  //  "${widget.productDetail["ProductDescription"]}",
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.grey,
+                                  ),
                                 ),
                               ),
                             ],
@@ -1102,96 +1124,4 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       Fluttertoast.showToast(msg: "No Internet Connection.");
     }
   }
-}
-
-class AlertViewCatalogue extends StatefulWidget {
-  var viewCatData;
-
-  AlertViewCatalogue({this.viewCatData});
-
-  @override
-  _AlertViewCatalogueState createState() => _AlertViewCatalogueState();
-}
-
-class _AlertViewCatalogueState extends State<AlertViewCatalogue> {
-  List getCatalogue = [];
-
-  //bool isSelectLoading = true;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    // _getAddress();
-    print(widget.viewCatData);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: new Text(
-        "View Catalogue",
-        style: TextStyle(
-            fontSize: 22,
-            color: appPrimaryMaterialColor,
-            fontWeight: FontWeight.bold),
-      ),
-      content: SingleChildScrollView(
-        child: Text("${widget.viewCatData["ProductCatlogPDF"]}",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 16,
-            )),
-      ),
-      actions: <Widget>[
-        // usually buttons at the bottom of the dialog
-
-        FlatButton(
-          child: new Text(
-            "Cancel",
-            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
-    );
-  }
-
-//  _getAddress() async {
-//    try {
-//      final result = await InternetAddress.lookup('google.com');
-//      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-//        isSelectLoading = true;
-//
-//        SharedPreferences prefs = await SharedPreferences.getInstance();
-//
-//        FormData body = FormData.fromMap({
-//          "CustomerId": prefs.getString(Session.CustomerId),
-//        });
-//        Services.PostForList(api_name: 'getAddress', body: body).then(
-//            (addResponseList) async {
-//          setState(() {
-//            isSelectLoading = false;
-//          });
-//          if (addResponseList.length > 0) {
-//            setState(() {
-//              getAddressList = addResponseList;
-//            });
-//          } else {
-//            Fluttertoast.showToast(msg: "Data Not Found");
-//            //show "data not found" in dialog
-//          }
-//        }, onError: (e) {
-//          setState(() {
-//            isSelectLoading = false;
-//          });
-//          print("error on call -> ${e.message}");
-//          Fluttertoast.showToast(msg: "Something Went Wrong");
-//        });
-//      }
-//    } on SocketException catch (_) {
-//      Fluttertoast.showToast(msg: "No Internet Connection.");
-//    }
-//  }
 }
