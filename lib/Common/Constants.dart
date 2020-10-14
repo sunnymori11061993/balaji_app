@@ -47,5 +47,6 @@ class Session {
   static const String ManufacturerCompanyName = "ManufacturerCompanyName";
   static const String CustomerImage = "CustomerImage";
   static const String ManuCustomerImage = "CustomerImage";
+  static const String langauge = "language";
   static const String v = "__v";
 }

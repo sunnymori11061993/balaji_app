@@ -59,6 +59,7 @@ class _RatingDialogState extends State<RatingDialog> {
             child: Directionality(
               textDirection: _isRTLMode ? TextDirection.rtl : TextDirection.ltr,
               child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 child: Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

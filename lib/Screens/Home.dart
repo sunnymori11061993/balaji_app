@@ -61,26 +61,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     // _getCart();
   }
 
-  _showDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertboxLogout();
-      },
-    );
-  }
-
-  _showDialogLang(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return ALertLang();
-      },
-    );
-  }
-
   void launchwhatsapp({
     @required String whatsappNumber,
     @required String message,
@@ -649,6 +629,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       body: isLoading
           ? LoadingComponent()
           : SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: Column(
@@ -735,6 +716,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       child: Container(
                         height: 120,
                         child: ListView.builder(
+                            physics: BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                             itemCount: catList.length,
                             itemBuilder: (BuildContext context, int index) {

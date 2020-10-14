@@ -237,7 +237,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               onTap: () {
                                 _settingModalBottomSheet();
                               },
-                              child: _Image != null || img != null
+                              child: _Image != null || img != ""
                                   ? _Image != null
                                       ? Container(
                                           height: 130.0,
@@ -256,7 +256,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 fit: BoxFit.cover),
                                           ),
                                         )
-                                      : img != null
+                                      : img != ""
                                           ? Container(
                                               height: 130.0,
                                               width: 150.0,

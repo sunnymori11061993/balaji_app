@@ -100,6 +100,7 @@ class _FAQScreenState extends State<FAQScreen> {
                     children: <Widget>[
                       Expanded(
                         child: ListView.separated(
+                          physics: BouncingScrollPhysics(),
                           itemCount: listfaq.length,
                           itemBuilder: (BuildContext context, int index) {
                             return FAQComponent(faqdata: listfaq[index]);

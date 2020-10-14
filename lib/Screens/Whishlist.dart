@@ -272,6 +272,7 @@ class _WhishlistState extends State<Whishlist> {
                   ? Padding(
                       padding: const EdgeInsets.only(top: 8.0, bottom: 10),
                       child: ListView.separated(
+                        physics: BouncingScrollPhysics(),
                         itemCount: wishList.length,
                         itemBuilder: (BuildContext context, int index) {
                           return WishlistComponent(

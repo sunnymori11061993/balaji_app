@@ -326,6 +326,7 @@ class _SubCategoryState extends State<SubCategory>
                       Divider(),
                       Flexible(
                         child: TabBarView(
+                            physics: BouncingScrollPhysics(),
                             controller: _tabController,
                             children: List<Widget>.generate(
                                 subCategoriesTab.length, (int index) {
@@ -336,6 +337,7 @@ class _SubCategoryState extends State<SubCategory>
                                           appPrimaryMaterialColor),
                                     ))
                                   : GridView.builder(
+                                physics: BouncingScrollPhysics(),
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 2,

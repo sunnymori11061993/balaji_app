@@ -33,6 +33,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
         height: MediaQuery.of(context).size.height,
         color: Colors.white,
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8, bottom: 10),
             child: Column(

@@ -101,6 +101,7 @@ class _SearchingScreenState extends State<SearchingScreen> {
           : Padding(
               padding: const EdgeInsets.only(top: 15.0),
               child: GridView.builder(
+                physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.vertical,
                 //physics: NeverScrollableScrollPhysics(),
                 //shrinkWrap: true,

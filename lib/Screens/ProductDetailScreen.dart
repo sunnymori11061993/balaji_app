@@ -323,6 +323,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             : Stack(
                 children: [
                   SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -669,39 +670,39 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10.0, left: 20, right: 8),
-                          child: Divider(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 10.0, left: 20, right: 8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'About_Products'.tr().toString(),
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 15.0, bottom: 10),
-                                child: Text(
-                                  productList["ProductDescription"],
-                                  //  "${widget.productDetail["ProductDescription"]}",
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(
+                        //       top: 10.0, left: 20, right: 8),
+                        //   child: Divider(),
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(
+                        //       top: 10.0, left: 20, right: 8),
+                        //   child: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: <Widget>[
+                        //       Text(
+                        //         'About_Products'.tr().toString(),
+                        //         style: TextStyle(
+                        //             fontSize: 15,
+                        //             color: Colors.black,
+                        //             fontWeight: FontWeight.w600),
+                        //       ),
+                        //       Padding(
+                        //         padding: const EdgeInsets.only(
+                        //             top: 15.0, bottom: 10),
+                        //         child: Text(
+                        //           productList["ProductDescription"],
+                        //           //  "${widget.productDetail["ProductDescription"]}",
+                        //           style: TextStyle(
+                        //             fontSize: 13,
+                        //             color: Colors.grey,
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                         Padding(
                           padding: const EdgeInsets.only(top: 20.0),
                           child: Container(
@@ -729,6 +730,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   height:
                                       MediaQuery.of(context).size.height / 2.4,
                                   child: ListView.builder(
+                                      physics: BouncingScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
                                       itemCount: relatedProductList.length,
                                       itemBuilder:

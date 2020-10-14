@@ -138,6 +138,7 @@ class _AddressScreenState extends State<AddressScreen> {
                 ? Padding(
                     padding: const EdgeInsets.only(top: 8.0, bottom: 30),
                     child: ListView.builder(
+                        physics: BouncingScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         itemCount: getAddressList.length,
                         itemBuilder: (BuildContext context, int index) {

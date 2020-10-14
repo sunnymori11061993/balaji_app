@@ -105,6 +105,7 @@ class _FilterScreenState extends State<FilterScreen> {
               padding: const EdgeInsets.only(top: 15.0),
               child: GridView.builder(
                 scrollDirection: Axis.vertical,
+                physics: BouncingScrollPhysics(),
                 //physics: NeverScrollableScrollPhysics(),
                 //shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

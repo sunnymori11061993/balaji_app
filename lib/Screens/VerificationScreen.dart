@@ -88,6 +88,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
         backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           children: <Widget>[
             SizedBox(

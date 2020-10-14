@@ -134,6 +134,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
           : Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: ListView.separated(
+                physics: BouncingScrollPhysics(),
                 itemCount: viewOrderDetailList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(

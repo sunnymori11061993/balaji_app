@@ -8,6 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -82,7 +83,8 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               onPressed: () {
                 Navigator.of(context).pop();
-                launchwhatsapp(whatsappNumber: whatsapp, message: msg);
+                //launchwhatsapp(whatsappNumber: whatsapp, message: msg);
+                Navigator.of(context).pushNamed('/ContactUs');
               },
             ),
           ],
@@ -500,7 +502,21 @@ class ALertLang extends StatefulWidget {
 }
 
 class _ALertLangState extends State<ALertLang> {
-  String lang = 'p1';
+  String lang;
+
+  _language() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      String lang1;
+      lang1 = prefs.getString(Session.langauge);
+      lang1 != null ? lang = lang1 : lang = "p1";
+    });
+  }
+
+  @override
+  void initState() {
+    _language();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -577,8 +593,16 @@ class _ALertLangState extends State<ALertLang> {
           ),
           onPressed: () async {
             if (lang == 'p1') {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              setState(() {
+                prefs.setString(Session.langauge, lang);
+              });
               EasyLocalization.of(context).locale = Locale('en', 'US');
             } else {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              setState(() {
+                prefs.setString(Session.langauge, lang);
+              });
               EasyLocalization.of(context).locale = Locale('hi', 'HI');
             }
 
@@ -588,30 +612,4 @@ class _ALertLangState extends State<ALertLang> {
       ],
     );
   }
-
-// Container buildSwitchListTileMenuItem(
-//     {BuildContext context, String title, String subtitle, Locale locale}) {
-//   return Container(
-//     margin: EdgeInsets.only(
-//       left: 10,
-//       right: 10,
-//       top: 5,
-//     ),
-//     child: ListTile(
-//         dense: true,
-//         // isThreeLine: true,
-//         title: Text(
-//           title,
-//         ),
-//         subtitle: Text(
-//           subtitle,
-//         ),
-//         onTap: () {
-//           log(locale.toString(), name: toString());
-//           context.locale = locale; //BuildContext extension method
-//           //EasyLocalization.of(context).locale = locale;
-//           Navigator.pop(context);
-//         }),
-//   );
-// }
 }

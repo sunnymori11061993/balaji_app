@@ -323,6 +323,7 @@ class _CartScreenState extends State<CartScreen> {
                     ? Padding(
                         padding: const EdgeInsets.only(top: 8.0, bottom: 10),
                         child: ListView.separated(
+                          physics: BouncingScrollPhysics(),
                           itemCount: getCartList.length,
                           itemBuilder: (BuildContext context, int index) {
                             return CartComponent(

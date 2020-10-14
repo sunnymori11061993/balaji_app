@@ -98,6 +98,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 ? Padding(
                     padding: const EdgeInsets.only(top: 8.0),
                     child: ListView.separated(
+                      physics: BouncingScrollPhysics(),
                       itemCount: historyList.length,
                       itemBuilder: (BuildContext context, int index) {
                         return HistoryComponent(

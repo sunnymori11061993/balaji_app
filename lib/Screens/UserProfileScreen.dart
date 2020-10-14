@@ -26,6 +26,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       txtname = prefs.getString(Session.CustomerName);
       img = prefs.getString(Session.CustomerImage);
     });
+    print("-------------------"+img);
   }
 
   @override
@@ -160,6 +161,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 height: MediaQuery.of(context).size.height / 1.8,
                 color: Colors.white,
                 child: SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
                   child: Padding(
                     padding: const EdgeInsets.only(top: 140.0),
                     child: Column(
@@ -268,9 +270,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                     // crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      img != null
+                      img != ""
                           ? Container(
-                              height: 200.0,
+                              height: 180.0,
                               width: 150.0,
                               decoration: BoxDecoration(
                                   // borderRadius: BorderRadius.circular(30),
@@ -283,7 +285,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                       fit: BoxFit.cover)),
                             )
                           : Container(
-                              height: 200.0,
+                              height: 180.0,
                               width: 150.0,
                               decoration: BoxDecoration(
                                 // borderRadius: BorderRadius.circular(30),

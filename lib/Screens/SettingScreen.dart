@@ -29,6 +29,8 @@ class _SettingScreenState extends State<SettingScreen> {
   String msg, whatsapp;
   String txtname = "";
   String img;
+  String language;
+
   _profile() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -228,246 +230,490 @@ class _SettingScreenState extends State<SettingScreen> {
             )
           ],
         ),
-        body: Stack(children: [
-          Opacity(
-            opacity: 0.7,
-            child: Container(
-              color: appPrimaryMaterialColor,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 60.0),
-            child: Row(
+        body: SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            color: Colors.white ,
+            child: Column(
               children: [
-                img != null
-                    ? Container(
-                        height: 95.0,
-                        width: 120.0,
-                        decoration: BoxDecoration(
+                Container(
+                  color: appPrimaryMaterialColor[600] ,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 60.0,bottom: 20),
+                    child: Row(
+                      children: [
+                        img != ""
+                            ? Container(
+                          height: 95.0,
+                          width: 120.0,
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.white),
+                              // borderRadius: BorderRadius.circular(30),
+                              //color: Colors.white,
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: NetworkImage(Image_URL + img),
+                                  fit: BoxFit.cover)),
+                        )
+                            : Container(
+                          height: 95.0,
+                          width: 120.0,
+                          decoration: BoxDecoration(
                             border: Border.all(color: Colors.white),
                             // borderRadius: BorderRadius.circular(30),
                             //color: Colors.white,
+                            color: appPrimaryMaterialColor,
                             shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: NetworkImage(Image_URL + img),
-                                fit: BoxFit.cover)),
-                      )
-                    : Container(
-                        height: 95.0,
-                        width: 120.0,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white),
-                          // borderRadius: BorderRadius.circular(30),
-                          //color: Colors.white,
-                          color: appPrimaryMaterialColor,
-                          shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            widthFactor: 40.0,
+                            heightFactor: 40.0,
+                            child: Image.asset("assets/051-user.png",
+                                color: Colors.white, width: 40.0, height: 40.0),
+                          ),
                         ),
-                        child: Center(
-                          widthFactor: 40.0,
-                          heightFactor: 40.0,
-                          child: Image.asset("assets/051-user.png",
-                              color: Colors.white, width: 80.0, height: 80.0),
-                        ),
-                      ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 50.0),
-                  child: Text(
-                    txtname != null ? txtname : "",
-                    style: TextStyle(
-                      fontSize: 22,
-                      color: Colors.white,
-                      //fontWeight: FontWeight.w600
+                        Padding(
+                          padding: const EdgeInsets.only(top: 50.0),
+                          child: Text(
+                            txtname != null ? txtname : "",
+                            style: TextStyle(
+                              fontSize: 22,
+                              color: Colors.white,
+                              //fontWeight: FontWeight.w600
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                )
+                ),
+          Align(
+                alignment: AlignmentDirectional.bottomEnd,
+                child: Container(
+                  padding: const EdgeInsets.only(top: 30.0),
+                  color: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0, bottom: 10),
+                        child: Text(
+                          'Settings_And_Help'.tr().toString(),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: appPrimaryMaterialColor,
+                            //fontWeight: FontWeight.w600
+                          ),
+                        ),
+                      ),
+                      Divider(),
+                      GestureDetector(
+                        onTap: () {
+                          // Navigator.of(context).pop();
+                          _showDialogLang(context);
+                        },
+                        child: ListTile(
+                          leading: Padding(
+                            padding: const EdgeInsets.only(right: 10.0, left: 4),
+                            child: Container(
+                                height: 20,
+                                width: 20,
+                                child: Image.asset(
+                                  "assets/world-grid.png",
+                                  color: appPrimaryMaterialColor,
+                                )),
+                          ),
+                          title: Text(
+                            'drw_change_Lang'.tr().toString(),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: Divider(),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      new FAQScreen()));
+                        },
+                        child: ListTile(
+                          leading: Padding(
+                            padding: const EdgeInsets.only(right: 10.0, left: 4),
+                            child: Container(
+                                height: 20,
+                                width: 20,
+                                child: Image.asset(
+                                  "assets/f.png",
+                                  color: appPrimaryMaterialColor,
+                                )),
+                          ),
+                          title: Text(
+                            'drw_faq'.tr().toString(),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: Divider(),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Share.share('check out my website https://balaji.com',
+                              subject: 'Look what An Amazing Clothes!');
+                        },
+                        child: ListTile(
+                          leading: Padding(
+                            padding: const EdgeInsets.only(right: 10.0, left: 4),
+                            child: Container(
+                                height: 20,
+                                width: 20,
+                                child: Image.asset(
+                                  "assets/share.png",
+                                  color: appPrimaryMaterialColor,
+                                )),
+                          ),
+                          title: Text(
+                            'drw_share'.tr().toString(),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: Divider(),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          // Navigator.of(context).pop();
+                          //launchwhatsapp(whatsappNumber: whatsapp, message: msg);
+                          Navigator.of(context).pushNamed('/ContactUs');
+                        },
+                        child: ListTile(
+                          leading: Padding(
+                            padding: const EdgeInsets.only(right: 10.0, left: 4),
+                            child: Container(
+                                height: 20,
+                                width: 20,
+                                child: Image.asset(
+                                  "assets/phone-call.png",
+                                  color: appPrimaryMaterialColor,
+                                )),
+                          ),
+                          title: Text(
+                            'drw_Contact'.tr().toString(),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: Divider(),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          //  Navigator.of(context).pop();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      new TermsAndCondition(
+                                        termsConData: termsConList[0]
+                                            ["SettingTermsConditionURL"],
+                                      )));
+                        },
+                        child: ListTile(
+                          leading: Padding(
+                            padding: const EdgeInsets.only(right: 10.0, left: 4),
+                            child: Container(
+                                height: 20,
+                                width: 20,
+                                child: Image.asset(
+                                  "assets/file.png",
+                                  color: appPrimaryMaterialColor,
+                                )),
+                          ),
+                          title: Text(
+                            'drw_Terms'.tr().toString(),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: Divider(),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          // Navigator.of(context).pop();
+                          _showDialog(context);
+                        },
+                        child: ListTile(
+                          leading: Padding(
+                            padding: const EdgeInsets.only(right: 10.0, left: 4),
+                            child: Container(
+                                height: 20,
+                                width: 20,
+                                child: Image.asset(
+                                  "assets/logout.png",
+                                  color: appPrimaryMaterialColor,
+                                )),
+                          ),
+                          title: Text(
+                            'drw_logout'.tr().toString(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               ],
             ),
           ),
-          Align(
-            alignment: AlignmentDirectional.bottomEnd,
-            child: Container(
-              padding: const EdgeInsets.only(top: 30.0),
-              height: MediaQuery.of(context).size.height / 1.7,
-              color: Colors.white,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10.0, bottom: 10),
-                      child: Text(
-                        'Settings_And_Help'.tr().toString(),
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: appPrimaryMaterialColor,
-                          //fontWeight: FontWeight.w600
-                        ),
-                      ),
-                    ),
-                    Divider(),
-                    GestureDetector(
-                      onTap: () {
-                        // Navigator.of(context).pop();
-                        _showDialogLang(context);
-                      },
-                      child: ListTile(
-                        leading: Padding(
-                          padding: const EdgeInsets.only(right: 10.0, left: 4),
-                          child: Container(
-                              height: 20,
-                              width: 20,
-                              child: Image.asset(
-                                "assets/world-grid.png",
-                                color: appPrimaryMaterialColor,
-                              )),
-                        ),
-                        title: Text(
-                          'drw_change_Lang'.tr().toString(),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      child: Divider(),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    new FAQScreen()));
-                      },
-                      child: ListTile(
-                        leading: Padding(
-                          padding: const EdgeInsets.only(right: 10.0, left: 4),
-                          child: Container(
-                              height: 20,
-                              width: 20,
-                              child: Image.asset(
-                                "assets/f.png",
-                                color: appPrimaryMaterialColor,
-                              )),
-                        ),
-                        title: Text(
-                          'drw_faq'.tr().toString(),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      child: Divider(),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Share.share('check out my website https://balaji.com',
-                            subject: 'Look what An Amazing Clothes!');
-                      },
-                      child: ListTile(
-                        leading: Padding(
-                          padding: const EdgeInsets.only(right: 10.0, left: 4),
-                          child: Container(
-                              height: 20,
-                              width: 20,
-                              child: Image.asset(
-                                "assets/share.png",
-                                color: appPrimaryMaterialColor,
-                              )),
-                        ),
-                        title: Text(
-                          'drw_share'.tr().toString(),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      child: Divider(),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // Navigator.of(context).pop();
-                        //launchwhatsapp(whatsappNumber: whatsapp, message: msg);
-                        Navigator.of(context).pushNamed('/ContactUs');
-                      },
-                      child: ListTile(
-                        leading: Padding(
-                          padding: const EdgeInsets.only(right: 10.0, left: 4),
-                          child: Container(
-                              height: 20,
-                              width: 20,
-                              child: Image.asset(
-                                "assets/phone-call.png",
-                                color: appPrimaryMaterialColor,
-                              )),
-                        ),
-                        title: Text(
-                          'drw_Contact'.tr().toString(),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      child: Divider(),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        //  Navigator.of(context).pop();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    new TermsAndCondition(
-                                      termsConData: termsConList[0]
-                                          ["SettingTermsConditionURL"],
-                                    )));
-                      },
-                      child: ListTile(
-                        leading: Padding(
-                          padding: const EdgeInsets.only(right: 10.0, left: 4),
-                          child: Container(
-                              height: 20,
-                              width: 20,
-                              child: Image.asset(
-                                "assets/file.png",
-                                color: appPrimaryMaterialColor,
-                              )),
-                        ),
-                        title: Text(
-                          'drw_Terms'.tr().toString(),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
-                      child: Divider(),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // Navigator.of(context).pop();
-                        _showDialog(context);
-                      },
-                      child: ListTile(
-                        leading: Padding(
-                          padding: const EdgeInsets.only(right: 10.0, left: 4),
-                          child: Container(
-                              height: 20,
-                              width: 20,
-                              child: Image.asset(
-                                "assets/logout.png",
-                                color: appPrimaryMaterialColor,
-                              )),
-                        ),
-                        title: Text(
-                          'drw_logout'.tr().toString(),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ]));
+        )
+        // Stack(children: [
+        //   Opacity(
+        //     opacity: 0.7,
+        //     child: Container(
+        //       color: appPrimaryMaterialColor,
+        //     ),
+        //   ),
+        //   Padding(
+        //     padding: const EdgeInsets.only(top: 60.0),
+        //     child: Row(
+        //       children: [
+        //         img != ""
+        //             ? Container(
+        //                 height: 95.0,
+        //                 width: 120.0,
+        //                 decoration: BoxDecoration(
+        //                     border: Border.all(color: Colors.white),
+        //                     // borderRadius: BorderRadius.circular(30),
+        //                     //color: Colors.white,
+        //                     shape: BoxShape.circle,
+        //                     image: DecorationImage(
+        //                         image: NetworkImage(Image_URL + img),
+        //                         fit: BoxFit.cover)),
+        //               )
+        //             : Container(
+        //                 height: 95.0,
+        //                 width: 120.0,
+        //                 decoration: BoxDecoration(
+        //                   border: Border.all(color: Colors.white),
+        //                   // borderRadius: BorderRadius.circular(30),
+        //                   //color: Colors.white,
+        //                   color: appPrimaryMaterialColor,
+        //                   shape: BoxShape.circle,
+        //                 ),
+        //                 child: Center(
+        //                   widthFactor: 40.0,
+        //                   heightFactor: 40.0,
+        //                   child: Image.asset("assets/051-user.png",
+        //                       color: Colors.white, width: 40.0, height: 40.0),
+        //                 ),
+        //               ),
+        //         Padding(
+        //           padding: const EdgeInsets.only(top: 50.0),
+        //           child: Text(
+        //             txtname != null ? txtname : "",
+        //             style: TextStyle(
+        //               fontSize: 22,
+        //               color: Colors.white,
+        //               //fontWeight: FontWeight.w600
+        //             ),
+        //           ),
+        //         )
+        //       ],
+        //     ),
+        //   ),
+        //   Align(
+        //     alignment: AlignmentDirectional.bottomEnd,
+        //     child: Container(
+        //       padding: const EdgeInsets.only(top: 30.0),
+        //       height: MediaQuery.of(context).size.height / 1.7,
+        //       color: Colors.white,
+        //       child: SingleChildScrollView(
+        //         physics: BouncingScrollPhysics(),
+        //         child: Column(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           children: [
+        //             Padding(
+        //               padding: const EdgeInsets.only(left: 10.0, bottom: 10),
+        //               child: Text(
+        //                 'Settings_And_Help'.tr().toString(),
+        //                 style: TextStyle(
+        //                   fontSize: 16,
+        //                   color: appPrimaryMaterialColor,
+        //                   //fontWeight: FontWeight.w600
+        //                 ),
+        //               ),
+        //             ),
+        //             Divider(),
+        //             GestureDetector(
+        //               onTap: () {
+        //                 // Navigator.of(context).pop();
+        //                 _showDialogLang(context);
+        //               },
+        //               child: ListTile(
+        //                 leading: Padding(
+        //                   padding: const EdgeInsets.only(right: 10.0, left: 4),
+        //                   child: Container(
+        //                       height: 20,
+        //                       width: 20,
+        //                       child: Image.asset(
+        //                         "assets/world-grid.png",
+        //                         color: appPrimaryMaterialColor,
+        //                       )),
+        //                 ),
+        //                 title: Text(
+        //                   'drw_change_Lang'.tr().toString(),
+        //                 ),
+        //               ),
+        //             ),
+        //             Padding(
+        //               padding: const EdgeInsets.only(left: 15, right: 15),
+        //               child: Divider(),
+        //             ),
+        //             GestureDetector(
+        //               onTap: () {
+        //                 Navigator.push(
+        //                     context,
+        //                     MaterialPageRoute(
+        //                         builder: (BuildContext context) =>
+        //                             new FAQScreen()));
+        //               },
+        //               child: ListTile(
+        //                 leading: Padding(
+        //                   padding: const EdgeInsets.only(right: 10.0, left: 4),
+        //                   child: Container(
+        //                       height: 20,
+        //                       width: 20,
+        //                       child: Image.asset(
+        //                         "assets/f.png",
+        //                         color: appPrimaryMaterialColor,
+        //                       )),
+        //                 ),
+        //                 title: Text(
+        //                   'drw_faq'.tr().toString(),
+        //                 ),
+        //               ),
+        //             ),
+        //             Padding(
+        //               padding: const EdgeInsets.only(left: 15, right: 15),
+        //               child: Divider(),
+        //             ),
+        //             GestureDetector(
+        //               onTap: () {
+        //                 Share.share('check out my website https://balaji.com',
+        //                     subject: 'Look what An Amazing Clothes!');
+        //               },
+        //               child: ListTile(
+        //                 leading: Padding(
+        //                   padding: const EdgeInsets.only(right: 10.0, left: 4),
+        //                   child: Container(
+        //                       height: 20,
+        //                       width: 20,
+        //                       child: Image.asset(
+        //                         "assets/share.png",
+        //                         color: appPrimaryMaterialColor,
+        //                       )),
+        //                 ),
+        //                 title: Text(
+        //                   'drw_share'.tr().toString(),
+        //                 ),
+        //               ),
+        //             ),
+        //             Padding(
+        //               padding: const EdgeInsets.only(left: 15, right: 15),
+        //               child: Divider(),
+        //             ),
+        //             GestureDetector(
+        //               onTap: () {
+        //                 // Navigator.of(context).pop();
+        //                 //launchwhatsapp(whatsappNumber: whatsapp, message: msg);
+        //                 Navigator.of(context).pushNamed('/ContactUs');
+        //               },
+        //               child: ListTile(
+        //                 leading: Padding(
+        //                   padding: const EdgeInsets.only(right: 10.0, left: 4),
+        //                   child: Container(
+        //                       height: 20,
+        //                       width: 20,
+        //                       child: Image.asset(
+        //                         "assets/phone-call.png",
+        //                         color: appPrimaryMaterialColor,
+        //                       )),
+        //                 ),
+        //                 title: Text(
+        //                   'drw_Contact'.tr().toString(),
+        //                 ),
+        //               ),
+        //             ),
+        //             Padding(
+        //               padding: const EdgeInsets.only(left: 15, right: 15),
+        //               child: Divider(),
+        //             ),
+        //             GestureDetector(
+        //               onTap: () {
+        //                 //  Navigator.of(context).pop();
+        //                 Navigator.push(
+        //                     context,
+        //                     MaterialPageRoute(
+        //                         builder: (BuildContext context) =>
+        //                             new TermsAndCondition(
+        //                               termsConData: termsConList[0]
+        //                                   ["SettingTermsConditionURL"],
+        //                             )));
+        //               },
+        //               child: ListTile(
+        //                 leading: Padding(
+        //                   padding: const EdgeInsets.only(right: 10.0, left: 4),
+        //                   child: Container(
+        //                       height: 20,
+        //                       width: 20,
+        //                       child: Image.asset(
+        //                         "assets/file.png",
+        //                         color: appPrimaryMaterialColor,
+        //                       )),
+        //                 ),
+        //                 title: Text(
+        //                   'drw_Terms'.tr().toString(),
+        //                 ),
+        //               ),
+        //             ),
+        //             Padding(
+        //               padding: const EdgeInsets.only(left: 15, right: 15),
+        //               child: Divider(),
+        //             ),
+        //             GestureDetector(
+        //               onTap: () {
+        //                 // Navigator.of(context).pop();
+        //                 _showDialog(context);
+        //               },
+        //               child: ListTile(
+        //                 leading: Padding(
+        //                   padding: const EdgeInsets.only(right: 10.0, left: 4),
+        //                   child: Container(
+        //                       height: 20,
+        //                       width: 20,
+        //                       child: Image.asset(
+        //                         "assets/logout.png",
+        //                         color: appPrimaryMaterialColor,
+        //                       )),
+        //                 ),
+        //                 title: Text(
+        //                   'drw_logout'.tr().toString(),
+        //                 ),
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ])
+    );
   }
 
   _settingApi() async {
@@ -513,7 +759,21 @@ class ALertLang extends StatefulWidget {
 }
 
 class _ALertLangState extends State<ALertLang> {
-  String lang = 'p1';
+  String lang;
+
+  _language() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      String lang1;
+      lang1 = prefs.getString(Session.langauge);
+      lang1 != null ? lang = lang1 : lang = "p1";
+    });
+  }
+
+  @override
+  void initState() {
+    _language();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -590,8 +850,16 @@ class _ALertLangState extends State<ALertLang> {
           ),
           onPressed: () async {
             if (lang == 'p1') {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              setState(() {
+                prefs.setString(Session.langauge, lang);
+              });
               EasyLocalization.of(context).locale = Locale('en', 'US');
             } else {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              setState(() {
+                prefs.setString(Session.langauge, lang);
+              });
               EasyLocalization.of(context).locale = Locale('hi', 'HI');
             }
 
@@ -601,32 +869,6 @@ class _ALertLangState extends State<ALertLang> {
       ],
     );
   }
-
-// Container buildSwitchListTileMenuItem(
-//     {BuildContext context, String title, String subtitle, Locale locale}) {
-//   return Container(
-//     margin: EdgeInsets.only(
-//       left: 10,
-//       right: 10,
-//       top: 5,
-//     ),
-//     child: ListTile(
-//         dense: true,
-//         // isThreeLine: true,
-//         title: Text(
-//           title,
-//         ),
-//         subtitle: Text(
-//           subtitle,
-//         ),
-//         onTap: () {
-//           log(locale.toString(), name: toString());
-//           context.locale = locale; //BuildContext extension method
-//           //EasyLocalization.of(context).locale = locale;
-//           Navigator.pop(context);
-//         }),
-//   );
-// }
 }
 
 class AlertboxLogout extends StatefulWidget {
