@@ -157,7 +157,7 @@ class _AddressScreenState extends State<AddressScreen> {
                   )
                 : Center(
                     child: Text(
-                    "Address Not Found!!!",
+                    'Address_Not_Found'.tr().toString(),
                     style: TextStyle(
                         fontSize: 18,
                         color: Colors.grey[700],
@@ -299,7 +299,7 @@ class _AlertFloatingState extends State<AlertFloating> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: new Text(
-        "Address Details",
+        'Address_Details'.tr().toString(),
         style: TextStyle(
           fontSize: 22,
           color: appPrimaryMaterialColor,
@@ -469,7 +469,7 @@ class _AlertFloatingState extends State<AlertFloating> {
                     children: [
                       Text(
                         //'Full_Address'.tr().toString(),
-                        "Landmark",
+                        'Landmark'.tr().toString(),
                         style: TextStyle(
                             fontSize: 15,
                             color: Colors.black,
@@ -490,7 +490,7 @@ class _AlertFloatingState extends State<AlertFloating> {
                           },
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.all(5),
-                            hintText: ' near abc hospital ',
+                            hintText: ' Near abc hospital ',
                             prefixIcon: Padding(
                               padding: const EdgeInsets.only(right: 8.0),
                               child: Container(
@@ -539,7 +539,7 @@ class _AlertFloatingState extends State<AlertFloating> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                    "Pincode",
+                    'Pincode'.tr().toString(),
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
@@ -602,7 +602,7 @@ class _AlertFloatingState extends State<AlertFloating> {
                   padding: const EdgeInsets.only(top: 8.0, bottom: 5),
                   child: Text(
                     //'Pincode'.tr().toString(),
-                    "State",
+                    'State'.tr().toString(),
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
@@ -694,7 +694,7 @@ class _AlertFloatingState extends State<AlertFloating> {
 
         FlatButton(
           child: new Text(
-            "Cancel",
+            'Cancel'.tr().toString(),
             style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
           ),
           onPressed: () {
@@ -705,7 +705,7 @@ class _AlertFloatingState extends State<AlertFloating> {
           child: isLoading
               ? LoadingComponent()
               : Text(
-                  "Add",
+                  'Add'.tr().toString(),
                   style:
                       TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
                 ),

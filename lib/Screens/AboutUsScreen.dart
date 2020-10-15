@@ -4,8 +4,11 @@ import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AboutUsScreen extends StatefulWidget {
+  var aboutData;
+  AboutUsScreen({this.aboutData});
   @override
   _AboutUsScreenState createState() => _AboutUsScreenState();
 }
@@ -17,8 +20,8 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
   @override
   Widget build(BuildContext context) {
     Widget appBarTitle = Text(
-      //'home1'.tr().toString(),
-      "About Us",
+      'About_Us'.tr().toString(),
+      //"About Us",
       style: TextStyle(
           color: appPrimaryMaterialColor,
           //fontFamily: 'RobotoSlab',
@@ -61,8 +64,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
         body: Stack(
           children: [
             WebView(
-              initialUrl:
-                  "https://www.pinterest.com/pin/457256168418070956/?d=t&mt=login",
+              initialUrl: "${widget.aboutData}",
               javascriptMode: JavascriptMode.unrestricted,
               onPageFinished: (finish) {
                 setState(() {

@@ -125,15 +125,15 @@ class _SubCategoryState extends State<SubCategory>
                       color: appPrimaryMaterialColor,
                     ))),
           ),
-          Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/CartScreen');
-                  },
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed('/CartScreen');
+            },
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),
                   child: Container(
                       height: 20,
                       width: 20,
@@ -142,32 +142,32 @@ class _SubCategoryState extends State<SubCategory>
                         color: appPrimaryMaterialColor,
                       )),
                 ),
-              ),
-              // IconButton(
-              //   icon: Icon(Icons.card_travel),
-              //   onPressed: () {
-              //     Navigator.of(context).pushNamed('/CartScreen');
-              //   },
-              // ),
-              provider.cartCount > 0
-                  ? Padding(
-                      padding:
-                          const EdgeInsets.only(left: 1.0, top: 13, right: 10),
-                      child: CircleAvatar(
-                        radius: 7.0,
-                        backgroundColor: Colors.red,
-                        foregroundColor: Colors.white,
-                        child: Text(
-                          provider.cartCount.toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 9.0,
+                // IconButton(
+                //   icon: Icon(Icons.card_travel),
+                //   onPressed: () {
+                //     Navigator.of(context).pushNamed('/CartScreen');
+                //   },
+                // ),
+                provider.cartCount > 0
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                            left: 1.0, top: 13, right: 10),
+                        child: CircleAvatar(
+                          radius: 7.0,
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          child: Text(
+                            provider.cartCount.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 9.0,
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  : Container()
-            ],
+                      )
+                    : Container()
+              ],
+            ),
           ),
 
 //          IconButton(
@@ -337,7 +337,7 @@ class _SubCategoryState extends State<SubCategory>
                                           appPrimaryMaterialColor),
                                     ))
                                   : GridView.builder(
-                                physics: BouncingScrollPhysics(),
+                                      physics: BouncingScrollPhysics(),
                                       gridDelegate:
                                           SliverGridDelegateWithFixedCrossAxisCount(
                                               crossAxisCount: 2,

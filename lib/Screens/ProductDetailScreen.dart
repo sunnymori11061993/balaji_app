@@ -179,17 +179,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             //             color: appPrimaryMaterialColor,
             //           ))),
             // ),
-            Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 15.0, left: 4, top: 18),
-                  child: GestureDetector(
-                    onTap: () async {
-                      final result =
-                          await Navigator.of(context).pushNamed('/CartScreen');
-                      if (result == "pop") _getProductDetail();
-                    },
+            GestureDetector(
+              onTap: () async {
+                final result =
+                    await Navigator.of(context).pushNamed('/CartScreen');
+                if (result == "pop") _getProductDetail();
+              },
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(right: 15.0, left: 4, top: 18),
                     child: Container(
                         height: 20,
                         width: 20,
@@ -198,33 +199,33 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           color: appPrimaryMaterialColor,
                         )),
                   ),
-                ),
-                // IconButton(
-                //     icon: Icon(Icons.card_travel),
-                //     onPressed: () async {
-                //       final result =
-                //           await Navigator.of(context).pushNamed('/CartScreen');
-                //       if (result == "pop") _getProductDetail();
-                //     }),
-                provider.cartCount > 0
-                    ? Padding(
-                        padding: const EdgeInsets.only(
-                            left: 1.0, top: 13, right: 15),
-                        child: CircleAvatar(
-                          radius: 7.0,
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white,
-                          child: Text(
-                            provider.cartCount.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 9.0,
+                  // IconButton(
+                  //     icon: Icon(Icons.card_travel),
+                  //     onPressed: () async {
+                  //       final result =
+                  //           await Navigator.of(context).pushNamed('/CartScreen');
+                  //       if (result == "pop") _getProductDetail();
+                  //     }),
+                  provider.cartCount > 0
+                      ? Padding(
+                          padding: const EdgeInsets.only(
+                              left: 1.0, top: 13, right: 15),
+                          child: CircleAvatar(
+                            radius: 7.0,
+                            backgroundColor: Colors.red,
+                            foregroundColor: Colors.white,
+                            child: Text(
+                              provider.cartCount.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 9.0,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    : Container()
-              ],
+                        )
+                      : Container()
+                ],
+              ),
             )
           ],
         ),
@@ -249,7 +250,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             children: [
                               Text(
                                 // "Total:₹ " + "${res}",
-                                "Total:₹ " + "${res}",
+                                'Total'.tr().toString() + "${res}",
                                 style: TextStyle(
                                     fontSize: 18,
                                     color: Colors.black,
@@ -293,7 +294,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 //                                        ),
                                         isCartList == true
                                             ? Text(
-                                                "Already in Cart",
+                                                'Already_in_Cart'
+                                                    .tr()
+                                                    .toString(),
                                                 style: TextStyle(
                                                     fontSize: 15,
                                                     color: Colors.white,
@@ -301,7 +304,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                         FontWeight.w600),
                                               )
                                             : Text(
-                                                "Add to Cart",
+                                                'Add_to_Cart'.tr().toString(),
                                                 style: TextStyle(
                                                     fontSize: 15,
                                                     color: Colors.white,
@@ -363,7 +366,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                               fit: BoxFit.fill,
                                                               width: 1000.0,
                                                               placeholder:
-                                                                  'assets/balajiLogo.png',
+                                                                  'assets/023-film.png',
                                                             ),
                                                             Positioned(
                                                               bottom: 0.0,
@@ -617,7 +620,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                         msg: "file not found");
                                                 },
                                                 child: Text(
-                                                  "View Catalogue",
+                                                  'View_Catalogue'
+                                                      .tr()
+                                                      .toString(),
                                                   style: TextStyle(
                                                     fontSize: 14,
                                                     //color: Colors.white,
@@ -847,7 +852,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: Center(
                                         child: Text(
-                                      "No Rating &  Review Found!!!",
+                                      'norating'.tr().toString(),
                                       style: TextStyle(
                                           fontSize: 18,
                                           color: Colors.grey[700],
@@ -881,7 +886,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                             padding: const EdgeInsets.only(
                                                 left: 4.0),
                                             child: Text(
-                                              "See more",
+                                              'See_more'.tr().toString(),
                                               style: TextStyle(
                                                   fontSize: 15,
                                                   color: Colors.black,

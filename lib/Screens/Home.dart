@@ -6,6 +6,7 @@ import 'package:balaji/Component/CategoriesComponent.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/TrendingProductComponent.dart';
 import 'package:balaji/Providers/CartProvider.dart';
+import 'package:balaji/Screens/AboutUsScreen.dart';
 import 'package:balaji/Screens/Address%20Screen.dart';
 import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/SearchingScreen.dart';
@@ -100,56 +101,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     CartProvider provider = Provider.of<CartProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
-      // bottomNavigationBar: BottomNavigationBar(
-      //   selectedIconTheme: IconThemeData(color: appPrimaryMaterialColor),
-      //   unselectedIconTheme: IconThemeData(color: Colors.grey),
-      //   items:  <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //
-      //         icon:Container(
-      //           height: 20,
-      //           width: 20,
-      //           child: Image.asset(
-      //             "assets/012-house.png",
-      //             color: appPrimaryMaterialColor,
-      //           ),
-      //         ),
-      //         title: Text("Home")),
-      //     BottomNavigationBarItem(
-      //         icon: Container(
-      //           height: 20,
-      //           width: 20,
-      //           child: Image.asset(
-      //             "assets/020-heart.png",
-      //             color: appPrimaryMaterialColor,
-      //           ),
-      //         ),
-      //         title: Text("Wishlist")),
-      //     BottomNavigationBarItem(
-      //         icon: Container(
-      //           height: 20,
-      //           width: 20,
-      //           child: Image.asset(
-      //             "assets/051-user.png",
-      //             color: appPrimaryMaterialColor,
-      //           ),
-      //         ),
-      //         title: Text("Profile")),
-      //     BottomNavigationBarItem(
-      //         icon: Container(
-      //           height: 20,
-      //           width: 20,
-      //           child: Image.asset(
-      //             "assets/018-settings.png",
-      //             color: appPrimaryMaterialColor,
-      //           ),
-      //         ),
-      //         title: Text("Setting")),
-      //   ],
-      //   //currentIndex: _selectedIndex,
-      //   selectedItemColor: appPrimaryMaterialColor,
-      //  // onTap: _onItemTapped,
-      // ),
       appBar: AppBar(
         // title: Padding(
         //   padding: const EdgeInsets.only(left: 15.0),
@@ -204,7 +155,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     hintStyle: TextStyle(fontSize: 15.0, color: Colors.grey),
                     contentPadding: EdgeInsets.only(
                         left: 10, bottom: 12, top: 7, right: 15),
-                    hintText: "Search..."),
+                    hintText: 'Search'.tr().toString()),
               ),
             ),
           ),
@@ -291,15 +242,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           //         ),
           // ),
           //
-          Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 15.0, left: 13, top: 18),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/CartScreen');
-                  },
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed('/CartScreen');
+            },
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.only(right: 15.0, left: 13, top: 18),
                   child: Container(
                       height: 20,
                       width: 20,
@@ -308,26 +260,26 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         color: appPrimaryMaterialColor,
                       )),
                 ),
-              ),
-              provider.cartCount > 0
-                  ? Padding(
-                      padding:
-                          const EdgeInsets.only(left: 5.0, top: 13, right: 10),
-                      child: CircleAvatar(
-                        radius: 7.0,
-                        backgroundColor: Colors.red,
-                        foregroundColor: Colors.white,
-                        child: Text(
-                          provider.cartCount.toString(),
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 9.0,
+                provider.cartCount > 0
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                            left: 5.0, top: 13, right: 10),
+                        child: CircleAvatar(
+                          radius: 7.0,
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          child: Text(
+                            provider.cartCount.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 9.0,
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  : Container()
-            ],
+                      )
+                    : Container()
+              ],
+            ),
           )
         ],
       ),
@@ -629,7 +581,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       body: isLoading
           ? LoadingComponent()
           : SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               child: Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: Column(
@@ -766,7 +718,15 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       child: Center(
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed('/AboutUsScreen');
+                            // Navigator.of(context).pushNamed('/AboutUsScreen');
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        new AboutUsScreen(
+                                          aboutData: termsConList[0]
+                                              ["SettingAboutUsURL"],
+                                        )));
                           },
                           child: Container(
                             height: 25,
@@ -783,7 +743,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 4.0),
                                   child: Text(
-                                    "Know more",
+                                    'Know_more'.tr().toString(),
                                     style: TextStyle(
                                         fontSize: 15,
                                         color: Colors.black,
@@ -846,9 +806,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         isLoading = true;
-        var body = {};
-        Services.PostForList(api_name: 'get_all_data_api/?tblName=tblcategory')
-            .then((catResponseList) async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        FormData body =
+            FormData.fromMap({"Language": prefs.getString(Session.langauge)});
+        Services.PostForList(api_name: 'getCategorAPI', body: body).then(
+            (catResponseList) async {
           if (catResponseList.length > 0) {
             setState(() {
               isLoading = false;
@@ -915,8 +878,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         isTermLoading = true;
-        Services.PostForList(api_name: 'get_all_data_api/?tblName=tblsetting')
-            .then((responseList) async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        FormData body =
+            FormData.fromMap({"Language": prefs.getString(Session.langauge)});
+        Services.PostForList(api_name: 'getSetting', body: body).then(
+            (responseList) async {
           if (responseList.length > 0) {
             setState(() {
               isTermLoading = false;
@@ -945,127 +912,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       Fluttertoast.showToast(msg: "No Internet Connection.");
     }
   }
-}
-
-class ALertLang extends StatefulWidget {
-  @override
-  _ALertLangState createState() => _ALertLangState();
-}
-
-class _ALertLangState extends State<ALertLang> {
-  String lang = 'p1';
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: new Text(
-        'Select_Language'.tr().toString(),
-        style: TextStyle(
-          fontSize: 22,
-          color: appPrimaryMaterialColor,
-          //fontWeight: FontWeight.bold
-        ),
-      ),
-      content: new Wrap(
-        children: [
-          ListTile(
-            title: Column(
-              children: <Widget>[
-                Container(
-                  height: 40,
-                  child: RadioListTile(
-                    activeColor: appPrimaryMaterialColor,
-                    groupValue: lang,
-                    title: Text('English'.tr().toString(),
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600)),
-                    value: 'p1',
-                    onChanged: (val) {
-                      setState(() {
-                        lang = val;
-                      });
-                    },
-                  ),
-                ),
-                Container(
-                  height: 40,
-                  child: RadioListTile(
-                    activeColor: appPrimaryMaterialColor,
-                    groupValue: lang,
-                    title: Text('Hindi'.tr().toString(),
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600)),
-                    value: 'p2',
-                    onChanged: (val) {
-                      setState(() {
-                        lang = val;
-                      });
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-      actions: <Widget>[
-        // usually buttons at the bottom of the dialog
-        FlatButton(
-          child: new Text(
-            "Cancel",
-            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        new FlatButton(
-          child: new Text(
-            "Ok",
-            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
-          ),
-          onPressed: () async {
-            Navigator.of(context).pop();
-            if (lang == 'p1') {
-              EasyLocalization.of(context).locale = Locale('en', 'US');
-            } else {
-              EasyLocalization.of(context).locale = Locale('hi', 'HI');
-            }
-          },
-        ),
-      ],
-    );
-  }
-
-// Container buildSwitchListTileMenuItem(
-//     {BuildContext context, String title, String subtitle, Locale locale}) {
-//   return Container(
-//     margin: EdgeInsets.only(
-//       left: 10,
-//       right: 10,
-//       top: 5,
-//     ),
-//     child: ListTile(
-//         dense: true,
-//         // isThreeLine: true,
-//         title: Text(
-//           title,
-//         ),
-//         subtitle: Text(
-//           subtitle,
-//         ),
-//         onTap: () {
-//           log(locale.toString(), name: toString());
-//           context.locale = locale; //BuildContext extension method
-//           //EasyLocalization.of(context).locale = locale;
-//           Navigator.pop(context);
-//         }),
-//   );
-// }
 }
 
 class AlertboxLogout extends StatefulWidget {

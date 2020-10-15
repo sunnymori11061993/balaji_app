@@ -4,10 +4,12 @@ import 'dart:io';
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Providers/CartProvider.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -24,7 +26,7 @@ class ContactUs extends StatefulWidget {
 class _ContactUsState extends State<ContactUs> {
   Completer<WebViewController> _webView = Completer<WebViewController>();
   String msg, whatsapp;
-
+  String phoneNumber1;
   bool isTermLoading = false;
   List termsConList = [];
 
@@ -147,7 +149,7 @@ class _ContactUsState extends State<ContactUs> {
                 child: Column(
                   children: [
                     Text(
-                      "Contact Us",
+                      'drw_Contact'.tr().toString(),
                       style: TextStyle(
                         fontSize: 28,
                         color: Colors.white,
@@ -158,7 +160,7 @@ class _ContactUsState extends State<ContactUs> {
                       padding:
                           const EdgeInsets.only(top: 30.0, left: 10, right: 10),
                       child: Text(
-                        "Email us or Whatsapp us with any questions or inquiries or call us. We would be happy to answer your questions. Balaji Wholesale Bazaar can help set you apart from the flock!",
+                        'epw'.tr().toString(),
                         style: TextStyle(
                           fontSize: 13,
                           color: Colors.white,
@@ -197,8 +199,8 @@ class _ContactUsState extends State<ContactUs> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            _launchURL('chiragtech9teen@gmail.com',
-                                'Flutter Email Test', 'Hello Flutter');
+                            _launchURL(
+                                termsConList[0]["SettingEmailId"], '', '');
                           },
                           child: Container(
                             height: 40,
@@ -223,7 +225,7 @@ class _ContactUsState extends State<ContactUs> {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 8.0),
                                   child: Text(
-                                    "Email",
+                                    'Email'.tr().toString(),
                                     style: TextStyle(
                                         color: appPrimaryMaterialColor,
                                         //fontFamily: 'RobotoSlab',
@@ -239,7 +241,7 @@ class _ContactUsState extends State<ContactUs> {
                           padding: const EdgeInsets.only(top: 15.0),
                           child: GestureDetector(
                             onTap: () {
-                              launch(('tel:// 8690389909'));
+                              launch(('tel:// ${phoneNumber1}'));
                             },
                             child: Container(
                               height: 40,
@@ -264,7 +266,7 @@ class _ContactUsState extends State<ContactUs> {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 8.0),
                                     child: Text(
-                                      "Phone Call",
+                                      'Phone_Call'.tr().toString(),
                                       style: TextStyle(
                                           color: appPrimaryMaterialColor,
                                           //fontFamily: 'RobotoSlab',
@@ -307,7 +309,7 @@ class _ContactUsState extends State<ContactUs> {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 8.0),
                                     child: Text(
-                                      "Whatsapp",
+                                      'Whatsapp'.tr().toString(),
                                       style: TextStyle(
                                           color: appPrimaryMaterialColor,
                                           //fontFamily: 'RobotoSlab',
@@ -335,17 +337,23 @@ class _ContactUsState extends State<ContactUs> {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         isTermLoading = true;
-        Services.PostForList(api_name: 'get_all_data_api/?tblName=tblsetting')
-            .then((responseList) async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        FormData body =
+            FormData.fromMap({"Language": prefs.getString(Session.langauge)});
+        Services.PostForList(api_name: 'getSetting', body: body).then(
+            (responseList) async {
           if (responseList.length > 0) {
             setState(() {
               isTermLoading = false;
               termsConList = responseList;
               msg = responseList[0]["SettingWhatsAppMessage"];
               whatsapp = "+91" + responseList[0]["SettingWhatsAppNumber"];
+              phoneNumber1 = responseList[0]["SettingPhoneNumber"];
 
               //set "data" here to your variable
             });
+            print(phoneNumber1);
           } else {
             setState(() {
               isTermLoading = false;

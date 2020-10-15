@@ -140,14 +140,7 @@ class _TrendingProductComponentState extends State<TrendingProductComponent> {
                               Row(
                                 children: <Widget>[
                                   Text(
-                                    "₹",
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  Text(
-                                    "${widget.trendData["ProductSrp"]}",
+                                    "₹" + "${widget.trendData["ProductSrp"]}",
                                     style: TextStyle(
                                         // color: Colors.grey[600],
                                         color: Colors.black,

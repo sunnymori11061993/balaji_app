@@ -108,15 +108,16 @@ class _RelatedProductComponentState extends State<RelatedProductComponent> {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
+                              // Text(
+                              //   ,
+                              //   style: TextStyle(
+                              //       color: Colors.grey,
+                              //       fontSize: 14,
+                              //       fontWeight: FontWeight.w600),
+                              // ),
                               Text(
-                                "₹",
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              Text(
-                                "${widget.relatedProductData["ProductSrp"]}",
+                                "₹" +
+                                    "${widget.relatedProductData["ProductSrp"]}",
                                 // "125",
                                 style: TextStyle(
                                     // color: Colors.grey[600],

@@ -1,6 +1,7 @@
 import 'package:balaji/Common/Constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class ThankYouScreen extends StatefulWidget {
   @override
@@ -43,7 +44,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                 ),
                 Center(
                   child: Text(
-                    "Thank you for choosing",
+                    'thanks'.tr().toString(),
                     style: TextStyle(
                       fontSize: 18,
                       //color: Colors.white,
@@ -53,7 +54,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                   ),
                 ),
                 Text(
-                  "BALAJI WHOLESALE BAZAAR",
+                  'balaji'.tr().toString(),
                   style: TextStyle(
                       fontSize: 18,
                       //color: Colors.white,
@@ -79,7 +80,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                 ),
                 Center(
                   child: Text(
-                    "Order Placed Successfully",
+                    'Order_Placed_Successfully'.tr().toString(),
                     style: TextStyle(
                       fontSize: 20,
                       //color: Colors.white,
@@ -90,7 +91,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                 ),
                 Center(
                   child: Text(
-                    "we will deliver your order soon",
+                    'order_del'.tr().toString(),
                     style: TextStyle(
                       fontSize: 15,
                       //color: Colors.white,
@@ -104,7 +105,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                 ),
                 Center(
                   child: Text(
-                    "In case of any query related to your order please",
+                    'incase'.tr().toString(),
                     style: TextStyle(
                       fontSize: 15,
                       //color: Colors.white,
@@ -115,7 +116,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                 ),
                 Center(
                   child: Text(
-                    "feel free to Contact Us...",
+                    'feel_free'.tr().toString(),
                     style: TextStyle(
                       fontSize: 15,
                       //color: Colors.white,
@@ -129,7 +130,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                 ),
                 SizedBox(
                   height: 45,
-                  width: 150,
+                  width: 190,
                   child: FlatButton(
                     color: appPrimaryMaterialColor,
                     shape: RoundedRectangleBorder(
@@ -139,7 +140,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                       Navigator.of(context).pushNamed("/HomePage");
                     },
                     child: Text(
-                      "Got it...",
+                      'Continue_shopping'.tr().toString(),
                       style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,

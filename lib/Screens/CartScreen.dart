@@ -72,107 +72,6 @@ class _CartScreenState extends State<CartScreen> {
               ),
               title: appBarTitle,
               actions: <Widget>[
-                if (searchImage == false)
-                  Row(
-                    children: [
-                      Container(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset(
-                          "assets/search.png",
-                          color: appPrimaryMaterialColor,
-                        ),
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width - 120,
-                        height: 50,
-                        child: TextFormField(
-                          controller: txtSearch,
-                          textInputAction: TextInputAction.done,
-                          onFieldSubmitted: (aa) {
-                            //  _getSearching();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        new SearchingScreen(
-                                          searchData: txtSearch.text,
-                                        )));
-                            txtSearch.clear();
-                            //Navigator.pop(context, this.txtSearch.text);
-                          },
-                          style: TextStyle(
-                              //color: Colors.white,
-                              ),
-                          cursorColor: appPrimaryMaterialColor,
-                          decoration: InputDecoration(
-                              // prefixIcon: SizedBox(
-                              //   height: 20,
-                              //   width: 10,
-                              //   child: Image.asset(
-                              //     "assets/search.png",
-                              //     color: appPrimaryMaterialColor,
-                              //   ),
-                              // ),
-
-                              hintText: "    Search...",
-                              hintStyle: TextStyle(color: Colors.grey),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
-                              )),
-                        ),
-                      ),
-                    ],
-                  ),
-                // GestureDetector(
-                //   onTap: () {
-                //     setState(() {
-                //       searchImage = !searchImage;
-                //     });
-                //   },
-                //   child: searchImage
-                //       ? Padding(
-                //           padding: const EdgeInsets.only(right: 15.0),
-                //           child: Container(
-                //             height: 20,
-                //             width: 20,
-                //             child: Image.asset(
-                //               "assets/search.png",
-                //               color: appPrimaryMaterialColor,
-                //             ),
-                //           ),
-                //         )
-                //       : Padding(
-                //           padding: const EdgeInsets.only(right: 15.0),
-                //           child: Container(
-                //             height: 20,
-                //             width: 20,
-                //             child: Image.asset(
-                //               "assets/025-cancel.png",
-                //               color: appPrimaryMaterialColor,
-                //             ),
-                //           ),
-                //         ),
-                // ),
-                // searchImage
-                //     ? Padding(
-                //         padding: const EdgeInsets.only(
-                //           right: 10.0,
-                //           left: 8,
-                //         ),
-                //         child: Container(
-                //             height: 20,
-                //             width: 20,
-                //             child: GestureDetector(
-                //                 onTap: () {
-                //                   Navigator.of(context).pushNamed('/Whishlist');
-                //                 },
-                //                 child: Image.asset(
-                //                   "assets/heart.png",
-                //                   color: appPrimaryMaterialColor,
-                //                 ))),
-                //       )
-                //     : Container(),
                 Stack(
                   alignment: Alignment.topCenter,
                   children: [
@@ -211,41 +110,6 @@ class _CartScreenState extends State<CartScreen> {
                         : Container()
                   ],
                 )
-
-                // Padding(
-                //   padding: const EdgeInsets.only(
-                //     right: 10.0,
-                //     left: 8,
-                //   ),
-                //   child: Container(
-                //       height: 20,
-                //       width: 20,
-                //       child: GestureDetector(
-                //           onTap: () {
-                //             Navigator.of(context).pushNamed('/Whishlist');
-                //           },
-                //           child: Image.asset(
-                //             "assets/heart.png",
-                //             color: appPrimaryMaterialColor,
-                //           ))),
-                // ),
-                // Padding(
-                //   padding: const EdgeInsets.only(
-                //     right: 15.0,
-                //     left: 8,
-                //   ),
-                //   child: Container(
-                //       height: 20,
-                //       width: 20,
-                //       child: GestureDetector(
-                //           onTap: () {
-                //             //Navigator.of(context).pushNamed('/Whishlist');
-                //           },
-                //           child: Image.asset(
-                //             "assets/039-shopping-cart.png",
-                //             color: appPrimaryMaterialColor,
-                //           ))),
-                // ),
               ],
             ),
             bottomNavigationBar: isLoading
@@ -269,7 +133,7 @@ class _CartScreenState extends State<CartScreen> {
                                 children: [
                                   Text(
                                     // "Total:₹ " + "${res}",
-                                    "Total:₹ " + "$mainTotal",
+                                    'Total'.tr().toString() + "$mainTotal",
                                     //"${res}",
                                     style: TextStyle(
                                         fontSize: 18,
@@ -297,7 +161,7 @@ class _CartScreenState extends State<CartScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "Select Address ",
+                                        'Place_Order'.tr().toString(),
                                         style: TextStyle(
                                             color: Colors.white,
                                             //fontWeight: FontWeight.w400,
@@ -353,7 +217,7 @@ class _CartScreenState extends State<CartScreen> {
                       )
                     : Center(
                         child: Text(
-                        "Cart Data Not Found!!!",
+                        'Cart_Data_Not_Found'.tr().toString(),
                         style: TextStyle(
                             fontSize: 18,
                             color: Colors.grey[700],
@@ -689,7 +553,7 @@ class _AlertAddState extends State<AlertAdd> {
                     children: [
                       Text(
                         //'Full_Address'.tr().toString(),
-                        "Landmark",
+                        'Landmark'.tr().toString(),
                         style: TextStyle(
                             fontSize: 15,
                             color: Colors.black,
@@ -710,7 +574,7 @@ class _AlertAddState extends State<AlertAdd> {
                           },
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.all(5),
-                            hintText: ' near abc hospital ',
+                            hintText: ' Near abc hospital ',
                             prefixIcon: Padding(
                               padding: const EdgeInsets.only(right: 8.0),
                               child: Container(
@@ -821,8 +685,8 @@ class _AlertAddState extends State<AlertAdd> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 5),
                   child: Text(
-                    //'Pincode'.tr().toString(),
-                    "State",
+                    'State'.tr().toString(),
+                    // "State",
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
@@ -916,7 +780,7 @@ class _AlertAddState extends State<AlertAdd> {
 
         FlatButton(
           child: new Text(
-            "Cancel",
+            'Cancel'.tr().toString(),
             style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
           ),
           onPressed: () {
@@ -927,7 +791,7 @@ class _AlertAddState extends State<AlertAdd> {
           child: isAddLoading
               ? LoadingComponent()
               : Text(
-                  "Add",
+                  'Add'.tr().toString(),
                   style:
                       TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
                 ),
@@ -1126,7 +990,7 @@ class _AlertSelectAddressState extends State<AlertSelectAddress> {
 
         FlatButton(
           child: new Text(
-            "Cancel",
+            'Cancel'.tr().toString(),
             style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
           ),
           onPressed: () {
@@ -1420,7 +1284,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
 //                              Icon(Icons.delete_forever, color: Colors.white),
                               // color: Colors.grey[700],),
                               Text(
-                                "Cancel",
+                                'Cancel'.tr().toString(),
                                 style: TextStyle(
                                     fontSize: 16,
                                     color: Colors.white,
@@ -1471,7 +1335,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
 //                                    Icon(Icons.add_shopping_cart,
 //                                        color: Colors.white),
                                     Text(
-                                      "Place Order",
+                                      'Place_Order'.tr().toString(),
                                       style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.white,

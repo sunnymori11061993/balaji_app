@@ -249,15 +249,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                             CrossAxisAlignment.center,
                                         children: [
                                           Text(
-                                            "Total :",
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                //color: Colors.white,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                          Text(
-                                            "₹",
+                                            'Total'.tr().toString(),
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 //color: Colors.white,
@@ -312,7 +304,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                             padding: const EdgeInsets.only(
                                                 left: 3.0),
                                             child: Text(
-                                              "Rating",
+                                              'Rating'.tr().toString(),
                                               style: TextStyle(
                                                   fontSize: 16,
                                                   color: Colors.white,

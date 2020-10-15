@@ -3,7 +3,8 @@ import 'dart:math';
 
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
-import 'package:balaji/Screens/RegistrationScreen.dart';
+import 'package:balaji/Component/LoadingComponent.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -99,7 +100,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               children: <Widget>[
                 Center(
                   child: Text(
-                    "Enter Verification Code",
+                    'enter_ver_code'.tr().toString(),
                     style: TextStyle(
                         fontSize: 24,
                         color: Colors.black,
@@ -108,7 +109,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),
-                  child: Text("We have sent the verification code on",
+                  child: Text('code_send'.tr().toString(),
                       style: TextStyle(
                           fontSize: 15,
                           color: Colors.black,
@@ -142,7 +143,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 35.0),
-                  child: Text("Enter verification code you received on SMS",
+                  child: Text('enter_code'.tr().toString(),
                       style: TextStyle(
                           fontSize: 13,
                           color: Colors.grey,
@@ -167,7 +168,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             : Fluttertoast.showToast(msg: "OTP is wrong");
                       },
                       child: Text(
-                        "VERIFY",
+                        'VERIFY'.tr().toString(),
                         style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w500,
@@ -176,13 +177,20 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 35.0),
-                  child: Text("Resend PIN 00:30",
-                      style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500)),
+                GestureDetector(
+                  onTap: () {
+                    _sendOTP();
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 35.0),
+                    child: isLoading == true
+                        ? LoadingComponent()
+                        : Text('Resend_OTP'.tr().toString(),
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500)),
+                  ),
                 ),
               ],
             )

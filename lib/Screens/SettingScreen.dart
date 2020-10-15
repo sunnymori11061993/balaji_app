@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
+import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Providers/CartProvider.dart';
+import 'package:balaji/Screens/AboutUsScreen.dart';
 import 'package:balaji/Screens/Address%20Screen.dart';
 import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/SearchingScreen.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -24,7 +27,7 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   bool isSearching = false;
   bool searchImage = true;
-  bool isTermLoading = false;
+  bool isTermLoading = true;
   List termsConList = [];
   String msg, whatsapp;
   String txtname = "";
@@ -108,97 +111,16 @@ class _SettingScreenState extends State<SettingScreen> {
           elevation: 1,
           iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
           actions: <Widget>[
-            // if (searchImage == false)
-            // Row(
-            //   children: [
-            //     Container(
-            //       height: 20,
-            //       width: 20,
-            //       child: Image.asset(
-            //         "assets/search.png",
-            //         color: appPrimaryMaterialColor,
-            //       ),
-            //     ),
-            //     Container(
-            //       width: MediaQuery.of(context).size.width - 80,
-            //       height: 50,
-            //       child: TextFormField(
-            //         controller: txtSearch,
-            //         textInputAction: TextInputAction.done,
-            //         onFieldSubmitted: (aa) {
-            //           //  _getSearching();
-            //           Navigator.push(
-            //               context,
-            //               MaterialPageRoute(
-            //                   builder: (BuildContext context) =>
-            //                       new SearchingScreen(
-            //                         searchData: txtSearch.text,
-            //                       )));
-            //           txtSearch.clear();
-            //           //Navigator.pop(context, this.txtSearch.text);
-            //         },
-            //         style: TextStyle(
-            //             //color: Colors.white,
-            //             ),
-            //         cursorColor: appPrimaryMaterialColor,
-            //         decoration: InputDecoration(
-            //             // prefixIcon: SizedBox(
-            //             //   height: 20,
-            //             //   width: 10,
-            //             //   child: Image.asset(
-            //             //     "assets/search.png",
-            //             //     color: appPrimaryMaterialColor,
-            //             //   ),
-            //             // ),
-            //
-            //             hintText: "    Search...",
-            //             hintStyle: TextStyle(color: Colors.grey),
-            //             focusedBorder: UnderlineInputBorder(
-            //               borderSide: BorderSide(color: Colors.grey),
-            //             )),
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            // GestureDetector(
-            //   onTap: () {
-            //     setState(() {
-            //       searchImage = !searchImage;
-            //     });
-            //   },
-            //   child: searchImage
-            //       ? Padding(
-            //           padding: const EdgeInsets.only(right: 15.0),
-            //           child: Container(
-            //             height: 20,
-            //             width: 20,
-            //             child: Image.asset(
-            //               "assets/search.png",
-            //               color: appPrimaryMaterialColor,
-            //             ),
-            //           ),
-            //         )
-            //       : Padding(
-            //           padding: const EdgeInsets.only(right: 15.0),
-            //           child: Container(
-            //             height: 20,
-            //             width: 20,
-            //             child: Image.asset(
-            //               "assets/025-cancel.png",
-            //               color: appPrimaryMaterialColor,
-            //             ),
-            //           ),
-            //         ),
-            // ),
-            Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/CartScreen');
-                    },
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/CartScreen');
+              },
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(right: 15.0, left: 8, top: 18),
                     child: Container(
                         height: 20,
                         width: 20,
@@ -207,271 +129,331 @@ class _SettingScreenState extends State<SettingScreen> {
                           color: appPrimaryMaterialColor,
                         )),
                   ),
-                ),
-                provider.cartCount > 0
-                    ? Padding(
-                        padding: const EdgeInsets.only(
-                            left: 1.0, top: 13, right: 10),
-                        child: CircleAvatar(
-                          radius: 7.0,
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white,
-                          child: Text(
-                            provider.cartCount.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 9.0,
+                  provider.cartCount > 0
+                      ? Padding(
+                          padding: const EdgeInsets.only(
+                              left: 1.0, top: 13, right: 10),
+                          child: CircleAvatar(
+                            radius: 7.0,
+                            backgroundColor: Colors.red,
+                            foregroundColor: Colors.white,
+                            child: Text(
+                              provider.cartCount.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 9.0,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    : Container()
-              ],
+                        )
+                      : Container()
+                ],
+              ),
             )
           ],
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            color: Colors.white ,
-            child: Column(
-              children: [
-                Container(
-                  color: appPrimaryMaterialColor[600] ,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 60.0,bottom: 20),
-                    child: Row(
-                      children: [
-                        img != ""
-                            ? Container(
-                          height: 95.0,
-                          width: 120.0,
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white),
-                              // borderRadius: BorderRadius.circular(30),
-                              //color: Colors.white,
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: NetworkImage(Image_URL + img),
-                                  fit: BoxFit.cover)),
-                        )
-                            : Container(
-                          height: 95.0,
-                          width: 120.0,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white),
-                            // borderRadius: BorderRadius.circular(30),
-                            //color: Colors.white,
-                            color: appPrimaryMaterialColor,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            widthFactor: 40.0,
-                            heightFactor: 40.0,
-                            child: Image.asset("assets/051-user.png",
-                                color: Colors.white, width: 40.0, height: 40.0),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 50.0),
-                          child: Text(
-                            txtname != null ? txtname : "",
-                            style: TextStyle(
-                              fontSize: 22,
-                              color: Colors.white,
-                              //fontWeight: FontWeight.w600
-                            ),
-                          ),
-                        )
-                      ],
+        body: isTermLoading == true
+            ? LoadingComponent()
+            : SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    Container(
+                      color: appPrimaryMaterialColor,
+                      height: 150,
+                      width: MediaQuery.of(context).size.width,
+                      child: Image.asset(
+                        "assets/balajiLogo-removebg.png",
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
+                    // Container(
+                    //   color: appPrimaryMaterialColor,
+                    //   child: Padding(
+                    //     padding: const EdgeInsets.only(top: 60.0, bottom: 20),
+                    //     child: Row(
+                    //       children: [
+                    //         img != ""
+                    //             ? Container(
+                    //                 height: 95.0,
+                    //                 width: 120.0,
+                    //                 decoration: BoxDecoration(
+                    //                     border:
+                    //                         Border.all(color: Colors.white),
+                    //                     // borderRadius: BorderRadius.circular(30),
+                    //                     //color: Colors.white,
+                    //                     shape: BoxShape.circle,
+                    //                     image: DecorationImage(
+                    //                         image:
+                    //                             NetworkImage(Image_URL + img),
+                    //                         fit: BoxFit.cover)),
+                    //               )
+                    //             : Container(
+                    //                 height: 95.0,
+                    //                 width: 120.0,
+                    //                 decoration: BoxDecoration(
+                    //                   border: Border.all(color: Colors.white),
+                    //                   // borderRadius: BorderRadius.circular(30),
+                    //                   //color: Colors.white,
+                    //                   color: appPrimaryMaterialColor,
+                    //                   shape: BoxShape.circle,
+                    //                 ),
+                    //                 child: Center(
+                    //                   widthFactor: 40.0,
+                    //                   heightFactor: 40.0,
+                    //                   child: Image.asset(
+                    //                       "assets/051-user.png",
+                    //                       color: Colors.white,
+                    //                       width: 40.0,
+                    //                       height: 40.0),
+                    //                 ),
+                    //               ),
+                    //         Padding(
+                    //           padding: const EdgeInsets.only(top: 50.0),
+                    //           child: Text(
+                    //             txtname != null ? txtname : "",
+                    //             style: TextStyle(
+                    //               fontSize: 22,
+                    //               color: Colors.white,
+                    //               //fontWeight: FontWeight.w600
+                    //             ),
+                    //           ),
+                    //         )
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    Align(
+                      alignment: AlignmentDirectional.bottomEnd,
+                      child: Container(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        color: Colors.white,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 10.0, bottom: 20),
+                              child: Text(
+                                'Settings_And_Help'.tr().toString(),
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: appPrimaryMaterialColor,
+                                  //fontWeight: FontWeight.w600
+                                ),
+                              ),
+                            ),
+                            //Divider(),
+                            GestureDetector(
+                              onTap: () {
+                                // Navigator.of(context).pop();
+                                _showDialogLang(context);
+                              },
+                              child: ListTile(
+                                leading: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 10.0, left: 4),
+                                  child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      child: Image.asset(
+                                        "assets/world-grid.png",
+                                        color: appPrimaryMaterialColor,
+                                      )),
+                                ),
+                                title: Text(
+                                  'drw_change_Lang'.tr().toString(),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              child: Divider(),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            new FAQScreen()));
+                              },
+                              child: ListTile(
+                                leading: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 10.0, left: 4),
+                                  child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      child: Image.asset(
+                                        "assets/f.png",
+                                        color: appPrimaryMaterialColor,
+                                      )),
+                                ),
+                                title: Text(
+                                  'drw_faq'.tr().toString(),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              child: Divider(),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Share.share(
+                                    'check out my website https://balaji.com',
+                                    subject: 'Look what An Amazing Clothes!');
+                              },
+                              child: ListTile(
+                                leading: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 10.0, left: 4),
+                                  child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      child: Image.asset(
+                                        "assets/share.png",
+                                        color: appPrimaryMaterialColor,
+                                      )),
+                                ),
+                                title: Text(
+                                  'drw_share'.tr().toString(),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              child: Divider(),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                // Navigator.of(context).pop();
+                                //launchwhatsapp(whatsappNumber: whatsapp, message: msg);
+                                Navigator.of(context).pushNamed('/ContactUs');
+                              },
+                              child: ListTile(
+                                leading: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 10.0, left: 4),
+                                  child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      child: Image.asset(
+                                        "assets/phone-call.png",
+                                        color: appPrimaryMaterialColor,
+                                      )),
+                                ),
+                                title: Text(
+                                  'drw_Contact'.tr().toString(),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              child: Divider(),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                //  Navigator.of(context).pop();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            new AboutUsScreen(
+                                              aboutData: termsConList[0]
+                                                  ["SettingAboutUsURL"],
+                                            )));
+                              },
+                              child: ListTile(
+                                leading: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 10.0, left: 4),
+                                  child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      child: Image.asset(
+                                        "assets/information.png",
+                                        color: appPrimaryMaterialColor,
+                                      )),
+                                ),
+                                title: Text(
+                                  'About_Us'.tr().toString(),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              child: Divider(),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                //  Navigator.of(context).pop();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            new TermsAndCondition(
+                                              termsConData: termsConList[0]
+                                                  ["SettingTermsConditionURL"],
+                                            )));
+                              },
+                              child: ListTile(
+                                leading: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 10.0, left: 4),
+                                  child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      child: Image.asset(
+                                        "assets/file.png",
+                                        color: appPrimaryMaterialColor,
+                                      )),
+                                ),
+                                title: Text(
+                                  'drw_Terms'.tr().toString(),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              child: Divider(),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                // Navigator.of(context).pop();
+                                _showDialog(context);
+                              },
+                              child: ListTile(
+                                leading: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 10.0, left: 4),
+                                  child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      child: Image.asset(
+                                        "assets/logout.png",
+                                        color: appPrimaryMaterialColor,
+                                      )),
+                                ),
+                                title: Text(
+                                  'drw_logout'.tr().toString(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-          Align(
-                alignment: AlignmentDirectional.bottomEnd,
-                child: Container(
-                  padding: const EdgeInsets.only(top: 30.0),
-                  color: Colors.white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10.0, bottom: 10),
-                        child: Text(
-                          'Settings_And_Help'.tr().toString(),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: appPrimaryMaterialColor,
-                            //fontWeight: FontWeight.w600
-                          ),
-                        ),
-                      ),
-                      Divider(),
-                      GestureDetector(
-                        onTap: () {
-                          // Navigator.of(context).pop();
-                          _showDialogLang(context);
-                        },
-                        child: ListTile(
-                          leading: Padding(
-                            padding: const EdgeInsets.only(right: 10.0, left: 4),
-                            child: Container(
-                                height: 20,
-                                width: 20,
-                                child: Image.asset(
-                                  "assets/world-grid.png",
-                                  color: appPrimaryMaterialColor,
-                                )),
-                          ),
-                          title: Text(
-                            'drw_change_Lang'.tr().toString(),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15, right: 15),
-                        child: Divider(),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      new FAQScreen()));
-                        },
-                        child: ListTile(
-                          leading: Padding(
-                            padding: const EdgeInsets.only(right: 10.0, left: 4),
-                            child: Container(
-                                height: 20,
-                                width: 20,
-                                child: Image.asset(
-                                  "assets/f.png",
-                                  color: appPrimaryMaterialColor,
-                                )),
-                          ),
-                          title: Text(
-                            'drw_faq'.tr().toString(),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15, right: 15),
-                        child: Divider(),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Share.share('check out my website https://balaji.com',
-                              subject: 'Look what An Amazing Clothes!');
-                        },
-                        child: ListTile(
-                          leading: Padding(
-                            padding: const EdgeInsets.only(right: 10.0, left: 4),
-                            child: Container(
-                                height: 20,
-                                width: 20,
-                                child: Image.asset(
-                                  "assets/share.png",
-                                  color: appPrimaryMaterialColor,
-                                )),
-                          ),
-                          title: Text(
-                            'drw_share'.tr().toString(),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15, right: 15),
-                        child: Divider(),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          // Navigator.of(context).pop();
-                          //launchwhatsapp(whatsappNumber: whatsapp, message: msg);
-                          Navigator.of(context).pushNamed('/ContactUs');
-                        },
-                        child: ListTile(
-                          leading: Padding(
-                            padding: const EdgeInsets.only(right: 10.0, left: 4),
-                            child: Container(
-                                height: 20,
-                                width: 20,
-                                child: Image.asset(
-                                  "assets/phone-call.png",
-                                  color: appPrimaryMaterialColor,
-                                )),
-                          ),
-                          title: Text(
-                            'drw_Contact'.tr().toString(),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15, right: 15),
-                        child: Divider(),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          //  Navigator.of(context).pop();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      new TermsAndCondition(
-                                        termsConData: termsConList[0]
-                                            ["SettingTermsConditionURL"],
-                                      )));
-                        },
-                        child: ListTile(
-                          leading: Padding(
-                            padding: const EdgeInsets.only(right: 10.0, left: 4),
-                            child: Container(
-                                height: 20,
-                                width: 20,
-                                child: Image.asset(
-                                  "assets/file.png",
-                                  color: appPrimaryMaterialColor,
-                                )),
-                          ),
-                          title: Text(
-                            'drw_Terms'.tr().toString(),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15, right: 15),
-                        child: Divider(),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          // Navigator.of(context).pop();
-                          _showDialog(context);
-                        },
-                        child: ListTile(
-                          leading: Padding(
-                            padding: const EdgeInsets.only(right: 10.0, left: 4),
-                            child: Container(
-                                height: 20,
-                                width: 20,
-                                child: Image.asset(
-                                  "assets/logout.png",
-                                  color: appPrimaryMaterialColor,
-                                )),
-                          ),
-                          title: Text(
-                            'drw_logout'.tr().toString(),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              ],
-            ),
-          ),
-        )
+              )
         // Stack(children: [
         //   Opacity(
         //     opacity: 0.7,
@@ -713,7 +695,7 @@ class _SettingScreenState extends State<SettingScreen> {
         //     ),
         //   ),
         // ])
-    );
+        );
   }
 
   _settingApi() async {
@@ -721,8 +703,12 @@ class _SettingScreenState extends State<SettingScreen> {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         isTermLoading = true;
-        Services.PostForList(api_name: 'get_all_data_api/?tblName=tblsetting')
-            .then((responseList) async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        FormData body =
+            FormData.fromMap({"Language": prefs.getString(Session.langauge)});
+        Services.PostForList(api_name: 'getSetting', body: body).then(
+            (responseList) async {
           if (responseList.length > 0) {
             setState(() {
               isTermLoading = false;
@@ -836,7 +822,7 @@ class _ALertLangState extends State<ALertLang> {
         // usually buttons at the bottom of the dialog
         FlatButton(
           child: new Text(
-            "Cancel",
+            'Cancel'.tr().toString(),
             style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
           ),
           onPressed: () {
@@ -845,7 +831,7 @@ class _ALertLangState extends State<ALertLang> {
         ),
         new FlatButton(
           child: new Text(
-            "Ok",
+            'Ok'.tr().toString(),
             style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
           ),
           onPressed: () async {
@@ -889,7 +875,7 @@ class _AlertboxLogoutState extends State<AlertboxLogout> {
         ),
       ),
       content: new Text(
-        "Are you sure want to Logout!!!",
+        'Are_you_sure_logout'.tr().toString(),
         style: TextStyle(
             fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600),
       ),
@@ -897,7 +883,7 @@ class _AlertboxLogoutState extends State<AlertboxLogout> {
         // usually buttons at the bottom of the dialog
         FlatButton(
           child: new Text(
-            "Cancel",
+            'Cancel'.tr().toString(),
             style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
           ),
           onPressed: () {
@@ -906,7 +892,7 @@ class _AlertboxLogoutState extends State<AlertboxLogout> {
         ),
         new FlatButton(
           child: new Text(
-            "Ok",
+            'Ok'.tr().toString(),
             style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
           ),
           onPressed: () async {

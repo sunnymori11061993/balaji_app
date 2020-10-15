@@ -123,7 +123,7 @@ class _AddressComponentState extends State<AddressComponent> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text(
-            "Remove",
+            'Remove'.tr().toString(),
             style: TextStyle(
               fontSize: 22,
               color: appPrimaryMaterialColor,
@@ -131,7 +131,7 @@ class _AddressComponentState extends State<AddressComponent> {
             ),
           ),
           content: new Text(
-            "Are you sure want to remove the address!!!",
+            'Are_you_sure_add'.tr().toString(),
             style: TextStyle(
                 fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600),
           ),
@@ -139,7 +139,7 @@ class _AddressComponentState extends State<AddressComponent> {
             // usually buttons at the bottom of the dialog
             FlatButton(
               child: new Text(
-                "Cancel",
+                'Cancel'.tr().toString(),
                 style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
               ),
               onPressed: () {
@@ -148,7 +148,7 @@ class _AddressComponentState extends State<AddressComponent> {
             ),
             new FlatButton(
               child: new Text(
-                "Ok",
+                'Ok'.tr().toString(),
                 style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
               ),
               onPressed: () {
@@ -189,7 +189,7 @@ class _AddressComponentState extends State<AddressComponent> {
                   padding:
                       const EdgeInsets.only(top: 20.0, left: 15, right: 15),
                   child: Text(
-                    "Address",
+                    'Address'.tr().toString(),
                     style: TextStyle(
                         fontSize: 18,
                         color: Colors.grey[700],
@@ -349,7 +349,7 @@ class _AddressComponentState extends State<AddressComponent> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "Landmark",
+                            'Landmark'.tr().toString(),
                             style: TextStyle(
                                 fontSize: 15,
                                 color: Colors.black,
@@ -404,7 +404,7 @@ class _AddressComponentState extends State<AddressComponent> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "Pincode",
+                            'Pincode'.tr().toString(),
                             style: TextStyle(
                                 fontSize: 15,
                                 color: Colors.black,
@@ -469,7 +469,7 @@ class _AddressComponentState extends State<AddressComponent> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            "State",
+                            'State'.tr().toString(),
                             style: TextStyle(
                                 fontSize: 15,
                                 color: Colors.black,
@@ -612,7 +612,7 @@ class _AddressComponentState extends State<AddressComponent> {
                                 //           ))),
                                 // ),
                                 Text(
-                                  "Remove",
+                                  'Remove'.tr().toString(),
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.white,
@@ -658,7 +658,7 @@ class _AddressComponentState extends State<AddressComponent> {
 //                                      )),
 //                                ),
                                 Text(
-                                  "Update",
+                                  'Update'.tr().toString(),
                                   style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.white,

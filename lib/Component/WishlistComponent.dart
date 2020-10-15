@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class WishlistComponent extends StatefulWidget {
   var wishListData;
@@ -50,14 +51,14 @@ class _WishlistComponentState extends State<WishlistComponent> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text(
-            "Remove",
+            'Remove'.tr().toString(),
             style: TextStyle(
                 fontSize: 22,
                 color: appPrimaryMaterialColor,
                 fontWeight: FontWeight.w400),
           ),
           content: new Text(
-            "Are you sure want to remove from cart!!!",
+            'Are_you_sure'.tr().toString(),
             style: TextStyle(
               fontSize: 14, color: Colors.black,
               //fontWeight: FontWeight.w400
@@ -67,7 +68,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
             // usually buttons at the bottom of the dialog
             FlatButton(
               child: new Text(
-                "Cancel",
+                'Cancel'.tr().toString(),
                 style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
               ),
               onPressed: () {
@@ -76,7 +77,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
             ),
             new FlatButton(
               child: new Text(
-                "Ok",
+                'Ok'.tr().toString(),
                 style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
               ),
               onPressed: () {
@@ -238,7 +239,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
 //                                Icon(Icons.delete_forever, color: Colors.white),
                                 // color: Colors.grey[700],),
                                 Text(
-                                  "Remove",
+                                  'Remove'.tr().toString(),
                                   style: TextStyle(
                                       fontSize: 15,
                                       color: Colors.white,
@@ -277,7 +278,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
 //                                  color: Colors.white,
 //                                ),
                                 Text(
-                                  "Move To Cart",
+                                  'Move_To_Cart'.tr().toString(),
                                   style: TextStyle(
                                       fontSize: 15,
                                       color: Colors.white,

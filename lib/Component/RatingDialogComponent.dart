@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:easy_localization/easy_localization.dart' as easy;
 
 class RatingDialog extends StatefulWidget {
   var viewDetailProductId;
@@ -43,7 +44,7 @@ class _RatingDialogState extends State<RatingDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: new Text(
-        "Add Rating & Review",
+        'Add_Rating_&_Review'.tr().toString(),
         style: TextStyle(
           fontSize: 22,
           color: appPrimaryMaterialColor,
@@ -96,7 +97,7 @@ class _RatingDialogState extends State<RatingDialog> {
                 decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.only(left: 10, top: 18, right: 10),
-                    hintText: "Write Review",
+                    hintText: 'Write_Review'.tr().toString(),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(5)),
                         borderSide: BorderSide(color: Colors.grey)),
@@ -116,7 +117,7 @@ class _RatingDialogState extends State<RatingDialog> {
         // usually buttons at the bottom of the dialog
         FlatButton(
           child: new Text(
-            "Not Now",
+            'Not_Now'.tr().toString(),
             style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
           ),
           onPressed: () {

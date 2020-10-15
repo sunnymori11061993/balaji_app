@@ -135,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
                             border: Border.all(color: Colors.grey[300])),
-                        child: Text("Select Language",
+                        child: Text('Select_Language'.tr().toString(),
                             style: TextStyle(
                               fontSize: 13,
                               color: Colors.black,
@@ -149,7 +149,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: MediaQuery.of(context).padding.top + 20,
                   ),
                   Text(
-                    "SIGN IN / SIGN UP",
+                    'SIGN_IN'.tr().toString(),
                     style: TextStyle(
                         fontSize: 22,
                         color: Colors.black,
@@ -159,20 +159,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.only(top: 2.0),
                     child: Row(
                       children: <Widget>[
-                        Text("Welcome to",
+                        Text('Welcome_to_balaji'.tr().toString(),
                             style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w400)),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 5.0),
-                          child: Text("Balaji",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: appPrimaryMaterialColor,
-                                  //color: appPrimaryMaterialColor,
-                                  fontWeight: FontWeight.w800)),
-                        ),
+                              fontSize: 16,
+                              color: appPrimaryMaterialColor,
+                              //color: appPrimaryMaterialColor,
+                              //fontWeight: FontWeight.w800
+                            )),
                       ],
                     ),
                   ),
@@ -188,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.only(top: 15.0),
               child: Container(
                 child: Text(
-                  "Enter Your Mobile Number to Continue",
+                  'enter_mobile'.tr().toString(),
                   style: TextStyle(
                       fontSize: 15,
                       color: Colors.black,
@@ -218,40 +211,41 @@ class _LoginScreenState extends State<LoginScreen> {
                       return null;
                     },
                     decoration: InputDecoration(
-                        counterText: "",
-                        contentPadding: const EdgeInsets.all(15),
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: Container(
-                            width: 45,
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    right: BorderSide(
-                                        width: 2, color: Colors.grey))),
-                            child: Icon(
-                              Icons.call,
-                              color: appPrimaryMaterialColor,
-                            ),
+                      counterText: "",
+                      contentPadding: const EdgeInsets.all(15),
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Container(
+                          width: 45,
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  right: BorderSide(
+                                      width: 2, color: Colors.grey))),
+                          child: Icon(
+                            Icons.call,
+                            color: appPrimaryMaterialColor,
                           ),
                         ),
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(color: Colors.grey),
-                        ),
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(color: Colors.red),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          borderSide: BorderSide(color: Colors.red),
-                        ),
-                        hintText: "Enter 10 digit Mobile Number"),
+                      ),
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+                      hintText: '10digit'.tr().toString(),
+                    ),
                   ),
                 ),
               ),
@@ -337,7 +331,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "By continuing you are accepting the",
+                        'by_continue'.tr().toString(),
                         style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey,
@@ -357,7 +351,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 4.0),
                           child: Text(
-                            "Terms & Conditions",
+                            'drw_Terms'.tr().toString(),
                             style: TextStyle(
                                 fontSize: 13,
                                 color: Colors.grey[700],
@@ -390,7 +384,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             valueColor:
                                 new AlwaysStoppedAnimation<Color>(Colors.white),
                           )
-                        : Text("CONTINUE",
+                        : Text('CONTINUE'.tr().toString(),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.w500,

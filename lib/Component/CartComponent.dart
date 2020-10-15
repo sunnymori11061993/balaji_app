@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class CartComponent extends StatefulWidget {
   var getCartData;
@@ -77,14 +78,14 @@ class _CartComponentState extends State<CartComponent> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text(
-            "Remove",
+            'Remove'.tr().toString(),
             style: TextStyle(
                 fontSize: 22,
                 color: appPrimaryMaterialColor,
                 fontWeight: FontWeight.w400),
           ),
           content: new Text(
-            "Are you sure want to remove from cart!!!",
+            'Are_you_sure_cart'.tr().toString(),
             style: TextStyle(
               fontSize: 14, color: Colors.black,
               //fontWeight: FontWeight.w600
@@ -94,7 +95,7 @@ class _CartComponentState extends State<CartComponent> {
             // usually buttons at the bottom of the dialog
             FlatButton(
               child: new Text(
-                "Cancel",
+                'Cancel'.tr().toString(),
                 style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
               ),
               onPressed: () {
@@ -103,7 +104,7 @@ class _CartComponentState extends State<CartComponent> {
             ),
             new FlatButton(
               child: new Text(
-                "Ok",
+                'Ok'.tr().toString(),
                 style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
               ),
               onPressed: () {
@@ -280,7 +281,7 @@ class _CartComponentState extends State<CartComponent> {
 //                            color: Colors.grey[700],
 //                          ),
                           Text(
-                            "Remove",
+                            'Remove'.tr().toString(),
                             style: TextStyle(
                                 fontSize: 16,
                                 // color: Colors.white,
@@ -311,15 +312,7 @@ class _CartComponentState extends State<CartComponent> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "Total :",
-                            style: TextStyle(
-                                fontSize: 16,
-                                //color: Colors.white,
-                                color: Colors.grey[700],
-                                fontWeight: FontWeight.w400),
-                          ),
-                          Text(
-                            "₹",
+                            'Total'.tr().toString(),
                             style: TextStyle(
                                 fontSize: 16,
                                 //color: Colors.white,

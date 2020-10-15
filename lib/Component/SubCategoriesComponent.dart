@@ -148,15 +148,15 @@ class _SubCategoriesComponentState extends State<SubCategoriesComponent> {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
+                              // Text(
+                              //  ,
+                              //   style: TextStyle(
+                              //       color: Colors.grey,
+                              //       fontSize: 14,
+                              //       fontWeight: FontWeight.w600),
+                              // ),
                               Text(
-                                "₹",
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              Text(
-                                "${widget.subCat["ProductSrp"]}",
+                                "₹" + "${widget.subCat["ProductSrp"]}",
                                 style: TextStyle(
                                     // color: Colors.grey[600],
                                     color: Colors.black,

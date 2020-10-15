@@ -6,6 +6,7 @@ import 'package:balaji/Screens/OrderHistoryScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class HistoryComponent extends StatefulWidget {
   var orderData;
@@ -27,9 +28,9 @@ class _HistoryComponentState extends State<HistoryComponent> {
           title: new Text(
             "Cancel Order",
             style: TextStyle(
-                fontSize: 22,
-                color: appPrimaryMaterialColor,
-                //fontWeight: FontWeight.bold
+              fontSize: 22,
+              color: appPrimaryMaterialColor,
+              //fontWeight: FontWeight.bold
             ),
           ),
           content: new Text(
@@ -83,7 +84,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
             Row(
               children: [
                 Text(
-                  "Order No         :",
+                  'Order_No'.tr().toString() + "         :",
                   style: TextStyle(
                       fontSize: 15,
                       color: Colors.black,
@@ -94,9 +95,9 @@ class _HistoryComponentState extends State<HistoryComponent> {
                   child: Text(
                     "${widget.orderData["OrderId"]}",
                     style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.grey[700],
-                        //fontWeight: FontWeight.w400
+                      fontSize: 15,
+                      color: Colors.grey[700],
+                      //fontWeight: FontWeight.w400
                     ),
                   ),
                 ),
@@ -107,7 +108,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
               child: Row(
                 children: [
                   Text(
-                    "Status             :",
+                    'Status'.tr().toString() + "             :",
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
@@ -118,9 +119,9 @@ class _HistoryComponentState extends State<HistoryComponent> {
                     child: Text(
                       "${widget.orderData["OrderStageDropDown"]}",
                       style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.grey[700],
-                          //fontWeight: FontWeight.w400
+                        fontSize: 15,
+                        color: Colors.grey[700],
+                        //fontWeight: FontWeight.w400
                       ),
                     ),
                   ),
@@ -132,7 +133,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
               child: Row(
                 children: [
                   Text(
-                    "Total                :",
+                    'Totals'.tr().toString() + "                :",
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
@@ -143,9 +144,9 @@ class _HistoryComponentState extends State<HistoryComponent> {
                     child: Text(
                       "${widget.orderData["OrderTotal"]}",
                       style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.grey[700],
-                         // fontWeight: FontWeight.w400
+                        fontSize: 15,
+                        color: Colors.grey[700],
+                        // fontWeight: FontWeight.w400
                       ),
                     ),
                   ),
@@ -157,7 +158,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
               child: Row(
                 children: [
                   Text(
-                    "Order date      :",
+                    'Order_date'.tr().toString() + "      :",
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
@@ -168,9 +169,9 @@ class _HistoryComponentState extends State<HistoryComponent> {
                     child: Text(
                       "${widget.orderData["OrderDate"]}",
                       style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.grey[700],
-                          //fontWeight: FontWeight.w400
+                        fontSize: 15,
+                        color: Colors.grey[700],
+                        //fontWeight: FontWeight.w400
                       ),
                     ),
                   ),
@@ -182,7 +183,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
               child: Row(
                 children: [
                   Text(
-                    "Delivery date :",
+                    'Delivery_date'.tr().toString() + " :",
                     style: TextStyle(
                         fontSize: 15,
                         color: Colors.black,
@@ -193,8 +194,8 @@ class _HistoryComponentState extends State<HistoryComponent> {
                     child: Text(
                       "${widget.orderData["OrderDeliveryDate"]}",
                       style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.grey[700],
+                        fontSize: 15,
+                        color: Colors.grey[700],
                         //  fontWeight: FontWeight.w400
                       ),
                     ),
@@ -231,7 +232,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
                             // color: Colors.grey[700],),
                             widget.orderData["OrderStageDropDown"] != "Cancel"
                                 ? Text(
-                                    "Cancel Order",
+                                    'Cancel_Order'.tr().toString(),
                                     style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.white,
@@ -239,7 +240,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
                                         fontWeight: FontWeight.w400),
                                   )
                                 : Text(
-                                    "Cancelled",
+                                    'Cancelled'.tr().toString(),
                                     style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.white,
@@ -284,7 +285,7 @@ class _HistoryComponentState extends State<HistoryComponent> {
 //                              color: Colors.white,
 //                            ),
                             Text(
-                              "View Details",
+                              'View_Details'.tr().toString(),
                               style: TextStyle(
                                   fontSize: 16,
                                   color: Colors.white,
