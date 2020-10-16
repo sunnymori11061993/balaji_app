@@ -309,7 +309,7 @@ class _SubCategoryState extends State<SubCategory>
                       }
                     }
                     print(map);
-                    if (map == {}) {
+                    if (map.isEmpty) {
                       Fluttertoast.showToast(msg: "Please select any one");
                     } else {
                       Navigator.push(
