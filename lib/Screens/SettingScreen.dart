@@ -162,9 +162,16 @@ class _SettingScreenState extends State<SettingScreen> {
                       color: appPrimaryMaterialColor,
                       height: 150,
                       width: MediaQuery.of(context).size.width,
-                      child: Image.asset(
-                        "assets/balajiLogo-removebg.png",
-                        color: Colors.white,
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20.0, right: 20, top: 20, bottom: 20),
+                          child: Image.asset(
+                            "assets/BWD-white.png",
+
+                            // color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                     // Container(

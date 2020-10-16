@@ -12,6 +12,10 @@ import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class FilterScreen extends StatefulWidget {
+  var filterData;
+
+  FilterScreen({this.filterData});
+
   @override
   _FilterScreenState createState() => _FilterScreenState();
 }
@@ -37,7 +41,7 @@ class _FilterScreenState extends State<FilterScreen> {
           padding: const EdgeInsets.only(top: 8.0, left: 5, bottom: 8),
           child: GestureDetector(
               onTap: () {
-                Navigator.of(context).pop("pop");
+                Navigator.of(context).pop();
               },
               child: Image.asset(
                 "assets/backarrow.png",
@@ -128,9 +132,7 @@ class _FilterScreenState extends State<FilterScreen> {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        FormData body = FormData.fromMap({
-          // "ProductName": widget.searchData
-        });
+        FormData body = FormData.fromMap(widget.filterData);
         Services.PostForList(api_name: 'search', body: body).then(
             (responseList) async {
           setState(() {

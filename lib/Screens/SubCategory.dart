@@ -5,6 +5,7 @@ import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/SubCategoriesComponent.dart';
 import 'package:balaji/Providers/CartProvider.dart';
+import 'package:balaji/Screens/FilterScreen.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -26,31 +27,31 @@ class _SubCategoryState extends State<SubCategory>
     with TickerProviderStateMixin {
   TabController _tabController;
 
-  List filterList = [
-    {
-      "title": "Prices",
-      "type": "radio",
-      "values": [
-        "100",
-        "200",
-        "300",
-      ],
-    },
-    {
-      "title": "Fabrics",
-      "type": "checkbox",
-      "values": [
-        "cotton",
-        "silk",
-        "other",
-      ],
-    },
-    {
-      "title": "Offers",
-      "type": "radio",
-      "values": ["5%", "20%", "30%"],
-    },
-  ];
+  // List filterList = [
+  //   {
+  //     "title": "Prices",
+  //     "type": "radio",
+  //     "values": [
+  //       "100",
+  //       "200",
+  //       "300",
+  //     ],
+  //   },
+  //   {
+  //     "title": "Fabrics",
+  //     "type": "checkbox",
+  //     "values": [
+  //       "cotton",
+  //       "silk",
+  //       "other",
+  //     ],
+  //   },
+  //   {
+  //     "title": "Offers",
+  //     "type": "radio",
+  //     "values": ["5%", "20%", "30%"],
+  //   },
+  // ];
 
   @override
   void initState() {
@@ -58,6 +59,7 @@ class _SubCategoryState extends State<SubCategory>
 
     _subCatTab();
     print(widget.catId);
+    _getFilter();
   }
 
   _tabCon() {
@@ -75,11 +77,15 @@ class _SubCategoryState extends State<SubCategory>
   String fabricfilter = '';
   List subCategoriesList = [];
   List subCategoriesTab = [];
+  List selectedList = [];
+  Map<String, dynamic> filterMap;
   bool isLoadingCat = true;
+  bool isLoadingFilter = true;
   bool isLoadingPro = false;
   bool c1 = false;
   TextStyle tabStyle = TextStyle(fontSize: 16);
   List cartList = [];
+  List filterList = [];
   bool isGetCartLoading = true;
 
   @override
@@ -225,7 +231,7 @@ class _SubCategoryState extends State<SubCategory>
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0, top: 20),
                         child: Text(
-                          "${filterList[index]["title"]}",
+                          "${filterList[index]["Title"]}",
                           style: TextStyle(
                               color: appPrimaryMaterialColor,
                               fontSize: 17,
@@ -240,6 +246,8 @@ class _SubCategoryState extends State<SubCategory>
                             return Container(
                               height: 40,
                               child: CheckboxListTile(
+                                controlAffinity:
+                                    ListTileControlAffinity.leading,
                                 title: Text(
                                   filterList[index]["values"][vindex],
                                   style: TextStyle(
@@ -247,15 +255,24 @@ class _SubCategoryState extends State<SubCategory>
                                     fontSize: 16,
                                   ),
                                 ),
-                                value: c1,
+                                value: selectedList.contains(filterList[index]
+                                        ["values"][vindex] +
+                                    "#${filterList[index]["Title"]}#"),
+                                //value: true,
                                 activeColor: appPrimaryMaterialColor,
-                                onChanged: (val1) {
+                                onChanged: (bool val1) {
                                   setState(() {
-                                    c1 = val1;
+                                    String value = filterList[index]["values"]
+                                            [vindex] +
+                                        "#${filterList[index]["Title"]}#";
+                                    if (val1) {
+                                      selectedList.add(value);
+                                    } else {
+                                      selectedList.remove(value);
+                                    }
                                   });
+                                  print(selectedList);
                                 },
-                                controlAffinity: ListTileControlAffinity
-                                    .leading, //  <-- leading Checkbox
                               ),
                             );
                           }),
@@ -270,7 +287,39 @@ class _SubCategoryState extends State<SubCategory>
                 child: RaisedButton(
                   color: appPrimaryMaterialColor,
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/FilterScreen');
+                    //Navigator.of(context).pushNamed('/FilterScreen');
+                    Map<String, String> map = {};
+                    for (int i = 0; i < selectedList.length; i++) {
+                      for (int j = 0; j < filterList.length; j++) {
+                        String title = selectedList[i].toString().split("#")[1];
+                        String txtValue =
+                            selectedList[i].toString().split("#")[0];
+                        if (title == filterList[j]["Title"]) {
+                          if (map.containsKey(title)) {
+                            map.update(
+                                title, (value) => value + "," + txtValue);
+                          } else {
+                            map.addAll({title: txtValue});
+                          }
+                        }
+
+                        /*if(!map.containsKey(title))
+                        map.addAll({title});*/
+                        //if(filterList[i]["Title"])
+                      }
+                    }
+                    print(map);
+                    if (map == {}) {
+                      Fluttertoast.showToast(msg: "Please select any one");
+                    } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  new FilterScreen(
+                                    filterData: map,
+                                  )));
+                    }
                   },
                   child: Text(
                     "APPLY",
@@ -432,6 +481,41 @@ class _SubCategoryState extends State<SubCategory>
         }, onError: (e) {
           setState(() {
             isLoadingCat = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
+  }
+
+  _getFilter() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        //FormData body = FormData.fromMap({"categoryId": widget.catId});
+        Services.PostForList(api_name: 'getFilter').then((ResponseList) async {
+          setState(() {
+            isLoadingFilter = false;
+          });
+          if (ResponseList.length > 0) {
+            //print("anirudh");
+            setState(() {
+              filterList = ResponseList;
+              //set "data" here to your variable
+            });
+          } else {
+            setState(() {
+              isLoadingFilter = false;
+            });
+            Fluttertoast.showToast(msg: "Product Not Found");
+            //show "data not found" in dialog
+          }
+        }, onError: (e) {
+          setState(() {
+            isLoadingFilter = false;
           });
           print("error on call -> ${e.message}");
           Fluttertoast.showToast(msg: "Something Went Wrong");

@@ -675,41 +675,73 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ],
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(
-                        //       top: 10.0, left: 20, right: 8),
-                        //   child: Divider(),
-                        // ),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(
-                        //       top: 10.0, left: 20, right: 8),
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: <Widget>[
-                        //       Text(
-                        //         'About_Products'.tr().toString(),
-                        //         style: TextStyle(
-                        //             fontSize: 15,
-                        //             color: Colors.black,
-                        //             fontWeight: FontWeight.w600),
-                        //       ),
-                        //       Padding(
-                        //         padding: const EdgeInsets.only(
-                        //             top: 15.0, bottom: 10),
-                        //         child: Text(
-                        //           productList["ProductDescription"],
-                        //           //  "${widget.productDetail["ProductDescription"]}",
-                        //           style: TextStyle(
-                        //             fontSize: 13,
-                        //             color: Colors.grey,
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 20.0),
+                          padding: const EdgeInsets.only(
+                              top: 10.0, left: 20, right: 8),
+                          child: Divider(),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              top: 10.0, left: 20, right: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                'About_Products'.tr().toString(),
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 15.0, bottom: 0),
+                                child: Text(
+                                  "Size" +
+                                      " : " +
+                                      productList["ProductAttributes"][0]
+                                          ["Size"],
+                                  style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                              Text(
+                                "Colour" +
+                                    " : " +
+                                    productList["ProductAttributes"][0]
+                                        ["Color"],
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                "Fabric" +
+                                    " : " +
+                                    productList["ProductAttributes"][0]
+                                        ["Material"],
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Text(
+                                "Brand Name" +
+                                    " : " +
+                                    productList["ProductAttributes"][0]
+                                        ["Brand Name"],
+                                style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 30.0),
                           child: Container(
                             height: 20,
                             color: Colors.grey[100],
