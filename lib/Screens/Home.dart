@@ -714,6 +714,45 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       ),
                     ),
                     Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                      child: Container(
+                        height: 20,
+                        color: Colors.grey[100],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(top: 10.0, left: 20, right: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'Related_Products'.tr().toString(),
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 15.0, bottom: 10),
+                            child: Container(
+                              height: MediaQuery.of(context).size.height / 2.4,
+                              child: ListView.builder(
+                                  physics: BouncingScrollPhysics(),
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: trendingProductList.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return TrendingProductComponent(
+                                        trendingProductList[index]);
+                                  }),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
                       padding: const EdgeInsets.only(bottom: 12.0, top: 5),
                       child: Center(
                         child: GestureDetector(
@@ -756,7 +795,46 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           ),
                         ),
                       ),
-                    )
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10.0, bottom: 20),
+                      child: Center(
+                        child: SizedBox(
+                          height: 45,
+                          width: 250,
+                          child: FlatButton(
+                            color: appPrimaryMaterialColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                side: BorderSide(color: Colors.grey[300])),
+                            onPressed: () {},
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+//                                Icon(Icons.delete_forever, color: Colors.white),
+                                // color: Colors.grey[700],),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 4.0),
+                                  child: Text(
+                                    'Know_more'.tr().toString(),
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.arrow_drop_down,
+                                  color: Colors.white,
+                                  size: 30,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

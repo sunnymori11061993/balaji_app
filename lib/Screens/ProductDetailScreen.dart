@@ -42,6 +42,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   bool isGetCartLoading = true;
   bool isFavLoading = false;
   bool isCartLoading = false;
+  bool isCatlogLoading = false;
   bool isRelatedProductLoading = true;
   bool isWishList = false;
   bool isCartList = false;
@@ -115,6 +116,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Future<File> createFileOfPdfUrl(url) async {
     Completer<File> completer = Completer();
     print("Start download file from internet!");
+    setState(() {
+      isCatlogLoading = true;
+    });
     try {
       //final url = "http://www.pdf995.com/samples/pdf.pdf";
       final filename = url.substring(url.lastIndexOf("/") + 1);
@@ -128,7 +132,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
       await file.writeAsBytes(bytes, flush: true);
       completer.complete(file);
+      setState(() {
+        isCatlogLoading = false;
+      });
     } catch (e) {
+      setState(() {
+        isCatlogLoading = false;
+      });
       throw Exception('Error parsing asset file!');
     }
 
@@ -160,25 +170,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           title: Text('Product_Detail'.tr().toString(),
               style: TextStyle(color: appPrimaryMaterialColor, fontSize: 17)),
           actions: <Widget>[
-            // Padding(
-            //   padding: const EdgeInsets.only(
-            //     right: 15.0,
-            //     left: 8,
-            //   ),
-            //   child: Container(
-            //       height: 20,
-            //       width: 20,
-            //       child: GestureDetector(
-            //           onTap: () async {
-            //             final result =
-            //                 await Navigator.of(context).pushNamed('/Whishlist');
-            //             if (result == "pop") _getProductDetail();
-            //           },
-            //           child: Image.asset(
-            //             "assets/heart.png",
-            //             color: appPrimaryMaterialColor,
-            //           ))),
-            // ),
             GestureDetector(
               onTap: () async {
                 final result =
@@ -611,26 +602,38 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                                   context) =>
                                                               new ViewCatalougeScreen(
                                                             path: f.path,
+                                                            catData: productList[
+                                                                "ProductCatlogPDF"],
                                                           ),
                                                         ),
                                                       );
                                                     });
                                                   } else
                                                     Fluttertoast.showToast(
-                                                        msg: "file not found");
+                                                        msg:
+                                                            "Catalogue not found");
                                                 },
-                                                child: Text(
-                                                  'View_Catalogue'
-                                                      .tr()
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                    fontSize: 14,
-                                                    //color: Colors.white,
-                                                    color: Colors.grey[700],
+                                                child: isCatlogLoading
+                                                    ? Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child:
+                                                            LoadingComponent(),
+                                                      )
+                                                    : Text(
+                                                        'View_Catalogue'
+                                                            .tr()
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          //color: Colors.white,
+                                                          color:
+                                                              Colors.grey[700],
 //                                                          fontWeight:
 //                                                              FontWeight.bold
-                                                  ),
-                                                ),
+                                                        ),
+                                                      ),
                                               ),
                                             ),
                                           )
@@ -693,49 +696,143 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     color: Colors.black,
                                     fontWeight: FontWeight.w600),
                               ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 15.0, bottom: 0),
+                                        child: Text(
+                                          "Size",
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[700],
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 5.0, bottom: 0),
+                                        child: Text(
+                                          productList["ProductAttributes"][0]
+                                              ["Size"],
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 15.0, bottom: 0),
+                                        child: Text(
+                                          "Brand Name",
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.grey[700],
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 5.0, bottom: 0),
+                                        child: Text(
+                                          productList["ProductAttributes"][0]
+                                              ["Brand Name"],
+                                          style: TextStyle(
+                                              fontSize: 13,
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 30.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 15.0, bottom: 0),
+                                          child: Text(
+                                            "Fabric",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.grey[700],
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 5.0, bottom: 0),
+                                          child: Text(
+                                            productList["ProductAttributes"][0]
+                                                ["Material"],
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.grey,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 15.0, bottom: 0),
+                                          child: Text(
+                                            "Colour",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.grey[700],
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 5.0, bottom: 0),
+                                          child: Text(
+                                            productList["ProductAttributes"][0]
+                                                ["Color"],
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.grey,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                               Padding(
                                 padding:
                                     const EdgeInsets.only(top: 15.0, bottom: 0),
                                 child: Text(
-                                  "Size" +
-                                      " : " +
-                                      productList["ProductAttributes"][0]
-                                          ["Size"],
+                                  "Sku Code",
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey[700],
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 5.0, bottom: 0),
+                                child: Text(
+                                  productList["ProductSKU"],
                                   style: TextStyle(
                                       fontSize: 13,
                                       color: Colors.grey,
                                       fontWeight: FontWeight.w600),
                                 ),
-                              ),
-                              Text(
-                                "Colour" +
-                                    " : " +
-                                    productList["ProductAttributes"][0]
-                                        ["Color"],
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              Text(
-                                "Fabric" +
-                                    " : " +
-                                    productList["ProductAttributes"][0]
-                                        ["Material"],
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              Text(
-                                "Brand Name" +
-                                    " : " +
-                                    productList["ProductAttributes"][0]
-                                        ["Brand Name"],
-                                style: TextStyle(
-                                    fontSize: 13,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w600),
                               ),
                             ],
                           ),

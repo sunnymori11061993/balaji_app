@@ -402,8 +402,12 @@ class _LoginScreenState extends State<LoginScreen> {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         isTermLoading = true;
-        Services.PostForList(api_name: 'get_all_data_api/?tblName=tblsetting')
-            .then((responseList) async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        FormData body =
+            FormData.fromMap({"Language": prefs.getString(Session.langauge)});
+        Services.PostForList(api_name: 'getSetting', body: body).then(
+            (responseList) async {
           if (responseList.length > 0) {
             setState(() {
               isTermLoading = false;
@@ -462,7 +466,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               );
             } else {
-              _showDialog(context);
+              //  _showDialog(context);
+
+              Navigator.of(context).pushNamed('/ContactUs');
               // Navigator.of(context).push(
               //   MaterialPageRoute(
               //     builder: (BuildContext context) => new VerificationScreen(

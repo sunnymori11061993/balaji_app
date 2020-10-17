@@ -220,65 +220,67 @@ class _SubCategoryState extends State<SubCategory>
               thickness: 1,
               endIndent: 10,
             ),
-            ListView.builder(
-                itemCount: filterList.length,
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0, top: 20),
-                        child: Text(
-                          "${filterList[index]["Title"]}",
-                          style: TextStyle(
-                              color: appPrimaryMaterialColor,
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600),
-                        ),
-                      ),
-                      ListView.builder(
-                          itemCount: filterList[index]["values"].length,
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemBuilder: (context, vindex) {
-                            return Container(
-                              height: 40,
-                              child: CheckboxListTile(
-                                controlAffinity:
-                                    ListTileControlAffinity.leading,
-                                title: Text(
-                                  filterList[index]["values"][vindex],
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
+            isLoadingFilter == true
+                ? LoadingComponent()
+                : ListView.builder(
+                    itemCount: filterList.length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20.0, top: 20),
+                            child: Text(
+                              "${filterList[index]["Title"]}",
+                              style: TextStyle(
+                                  color: appPrimaryMaterialColor,
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                          ListView.builder(
+                              itemCount: filterList[index]["values"].length,
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemBuilder: (context, vindex) {
+                                return Container(
+                                  height: 40,
+                                  child: CheckboxListTile(
+                                    controlAffinity:
+                                        ListTileControlAffinity.leading,
+                                    title: Text(
+                                      filterList[index]["values"][vindex],
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    value: selectedList.contains(
+                                        filterList[index]["values"][vindex] +
+                                            "#${filterList[index]["Title"]}#"),
+                                    //value: true,
+                                    activeColor: appPrimaryMaterialColor,
+                                    onChanged: (bool val1) {
+                                      setState(() {
+                                        String value = filterList[index]
+                                                ["values"][vindex] +
+                                            "#${filterList[index]["Title"]}#";
+                                        if (val1) {
+                                          selectedList.add(value);
+                                        } else {
+                                          selectedList.remove(value);
+                                        }
+                                      });
+                                      print(selectedList);
+                                    },
                                   ),
-                                ),
-                                value: selectedList.contains(filterList[index]
-                                        ["values"][vindex] +
-                                    "#${filterList[index]["Title"]}#"),
-                                //value: true,
-                                activeColor: appPrimaryMaterialColor,
-                                onChanged: (bool val1) {
-                                  setState(() {
-                                    String value = filterList[index]["values"]
-                                            [vindex] +
-                                        "#${filterList[index]["Title"]}#";
-                                    if (val1) {
-                                      selectedList.add(value);
-                                    } else {
-                                      selectedList.remove(value);
-                                    }
-                                  });
-                                  print(selectedList);
-                                },
-                              ),
-                            );
-                          }),
-                    ],
-                  );
-                }),
+                                );
+                              }),
+                        ],
+                      );
+                    }),
             Padding(
               padding: const EdgeInsets.only(
                   left: 8.0, right: 8, top: 90, bottom: 15),

@@ -37,6 +37,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
     print(widget.loginData["Type"]);
     if (widget.loginData["Type"] == "retailer") {
       await prefs.setString(Session.CustomerId, widget.loginData["CustomerId"]);
+      await prefs.setString(
+          Session.CustomerGSTNo, widget.loginData["CustomerGSTNo"]);
       await prefs.setString(Session.type, widget.loginData["Type"]);
       await prefs.setString(
           Session.CustomerName, widget.loginData["CustomerName"]);
@@ -53,6 +55,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
     } else {
       await prefs.setString(
           Session.CustomerId, widget.loginData["ManufacturerId"]);
+      await prefs.setString(
+          Session.CustomerGSTNo, widget.loginData["CustomerGSTNo"]);
       await prefs.setString(Session.type, widget.loginData["Type"]);
       await prefs.setString(
           Session.CustomerName, widget.loginData["ManufacturerName"]);

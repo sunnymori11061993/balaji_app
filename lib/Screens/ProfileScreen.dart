@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io' as Io;
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
@@ -26,6 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   TextEditingController txtCName = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtMobileNumber = TextEditingController();
+  TextEditingController txtGstNumber = TextEditingController();
   String img, userName = "";
   final _formkey = new GlobalKey<FormState>();
 
@@ -362,9 +364,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     border: Border(
                                         right: BorderSide(
                                             width: 2, color: Colors.grey))),
-                                child: Icon(
-                                  Icons.perm_identity,
-                                  color: appPrimaryMaterialColor,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Image.asset(
+                                    'assets/051-user.png',
+                                    color: appPrimaryMaterialColor,
+                                  ),
                                 ),
                               ),
                             ),
@@ -411,7 +416,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           cursorColor: Colors.black,
                           validator: (name) {
                             if (name.length == 0) {
-                              return 'Please company name';
+                              return 'Please enter company name';
                             }
                             return null;
                           },
@@ -425,9 +430,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     border: Border(
                                         right: BorderSide(
                                             width: 2, color: Colors.grey))),
-                                child: Icon(
-                                  Icons.work,
-                                  color: appPrimaryMaterialColor,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Icon(
+                                    Icons.work,
+                                    color: appPrimaryMaterialColor,
+                                  ),
                                 ),
                               ),
                             ),
@@ -507,9 +515,78 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     border: Border(
                                         right: BorderSide(
                                             width: 2, color: Colors.grey))),
-                                child: Icon(
-                                  Icons.email,
-                                  color: appPrimaryMaterialColor,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(11.0),
+                                  child: Image.asset(
+                                    'assets/026-email.png',
+                                    color: appPrimaryMaterialColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            fillColor: Colors.white,
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.red),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15.0),
+                        child: Text(
+                          'GST_Number'.tr().toString(),
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: TextFormField(
+                          controller: txtGstNumber,
+                          keyboardType: TextInputType.text,
+                          style: TextStyle(fontSize: 15),
+                          cursorColor: Colors.black,
+                          validator: (name) {
+                            if (name.length == 0) {
+                              return 'Please enter gst number';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(15),
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Container(
+                                width: 43,
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        right: BorderSide(
+                                            width: 2, color: Colors.grey))),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Image.asset(
+                                    'assets/031-newspaper.png',
+                                    color: appPrimaryMaterialColor,
+                                  ),
                                 ),
                               ),
                             ),
@@ -561,14 +638,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             prefixIcon: Padding(
                               padding: const EdgeInsets.only(right: 8.0),
                               child: Container(
-                                width: 43,
+                                width: 45,
                                 decoration: BoxDecoration(
                                     border: Border(
                                         right: BorderSide(
                                             width: 2, color: Colors.grey))),
-                                child: Icon(
-                                  Icons.call,
-                                  color: appPrimaryMaterialColor,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Image.asset(
+                                    'assets/022-phone-call.png',
+                                    color: appPrimaryMaterialColor,
+                                  ),
                                 ),
                               ),
                             ),
@@ -632,6 +712,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       userName = prefs.getString(Session.CustomerName);
       txtCName.text = prefs.getString(Session.CustomerCompanyName);
       txtEmail.text = prefs.getString(Session.CustomerEmailId);
+      txtGstNumber.text = prefs.getString(Session.CustomerGSTNo);
       txtMobileNumber.text = prefs.getString(Session.CustomerPhoneNo);
       img = prefs.getString(Session.CustomerImage);
       print(img);
@@ -672,6 +753,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             "CustomerName": txtName.text,
             "CustomerCompanyName": txtCName.text,
             "CustomerEmailId": txtEmail.text,
+            "CustomerGSTNo": txtGstNumber.text,
             "CustomerPhoneNo": txtMobileNumber.text,
             "CustomerImage": (filePath != null && filePath != '')
                 ? await MultipartFile.fromFile(filePath,

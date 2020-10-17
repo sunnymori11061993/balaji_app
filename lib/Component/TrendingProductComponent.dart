@@ -59,10 +59,10 @@ class _TrendingProductComponentState extends State<TrendingProductComponent> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (BuildContext context) =>
-                          new ProductDetailScreen(
-                            productDetail: widget.trendData["ProductId"],
-                          )));
+                    builder: (BuildContext context) => new ProductDetailScreen(
+                      productDetail: widget.trendData["ProductId"],
+                    ),
+                  ));
             },
             child: Container(
               decoration: BoxDecoration(
@@ -72,107 +72,116 @@ class _TrendingProductComponentState extends State<TrendingProductComponent> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                      width: MediaQuery.of(context).size.width,
+                      width: MediaQuery.of(context).size.width / 2.1,
                       height: 237,
-                      child: Image.network(
-                          Image_URL + "${widget.trendData["ProductImages"]}",
-                          fit: BoxFit.fill)),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            left: 4.0,
-                            top: 2.0,
+                      child:
+                          // Image.network(
+                          //   "https://images.indulgexpress.com/uploads/user/ckeditor_images/article/2019/12/3/DF0374_(2).jpg",
+                          //   fit: BoxFit.cover,
+                          // ),
+
+                          Image.network(
+                              Image_URL +
+                                  "${widget.trendData["ProductImages"]}",
+                              fit: BoxFit.fill)),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 4.0,
+                      top: 2.0,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("${widget.trendData["ProductName"]}",
+                            // Text("Goofy",
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            )),
+                        GestureDetector(
+                          onTap: () {
+                            _addToWishlist();
+                          },
+                          child: Container(
+                            child: isWishList == false
+                                ? Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 8.0, top: 5),
+                                    child: Container(
+                                        height: 20,
+                                        width: 20,
+                                        child: Image.asset(
+                                          "assets/heart.png",
+                                          color: appPrimaryMaterialColor,
+                                        )),
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 8.0, top: 5),
+                                    child: Container(
+                                        height: 20,
+                                        width: 20,
+                                        child: Image.asset(
+                                          "assets/020-heart.png",
+                                          color: appPrimaryMaterialColor,
+                                        )),
+                                  ),
                           ),
-                          child: Text("${widget.trendData["ProductName"]}",
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1,
-                              style: TextStyle(
-                                color: Colors.grey[600],
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                              )),
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          _addToWishlist();
-                        },
-                        child: Container(
-                          child: isWishList == false
-                              ? Padding(
-                                  padding:
-                                      const EdgeInsets.only(right: 8.0, top: 5),
-                                  child: Container(
-                                      height: 20,
-                                      width: 20,
-                                      child: Image.asset(
-                                        "assets/heart.png",
-                                        color: appPrimaryMaterialColor,
-                                      )),
-                                )
-                              : Padding(
-                                  padding:
-                                      const EdgeInsets.only(right: 8.0, top: 5),
-                                  child: Container(
-                                      height: 20,
-                                      width: 20,
-                                      child: Image.asset(
-                                        "assets/020-heart.png",
-                                        color: appPrimaryMaterialColor,
-                                      )),
-                                ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 8, bottom: 1),
                       child: Row(
-                        //crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  Text(
-                                    "₹" + "${widget.trendData["ProductSrp"]}",
-                                    style: TextStyle(
-                                        // color: Colors.grey[600],
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 12.0),
-                                child: Text(
-                                  "₹" + "${widget.trendData["ProductMrp"]}",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.grey,
-                                      fontSize: 14,
-                                      decoration: TextDecoration.lineThrough),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 5.0),
-                                child: Text(
-                                  // "${widget.relatedProductData["ProductSrp"]}",
-                                  "(${percentResult.toStringAsFixed(0)}% OFF)",
-                                  style: TextStyle(
-                                      // color: Colors.grey[600],
-                                      color: appPrimaryMaterialColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w600),
-                                ),
+                              // Text(
+                              //   ,
+                              //   style: TextStyle(
+                              //       color: Colors.grey,
+                              //       fontSize: 14,
+                              //       fontWeight: FontWeight.w600),
+                              // ),
+                              Text(
+                                "₹" + "${widget.trendData["ProductSrp"]}",
+                                // "125",
+                                style: TextStyle(
+                                    // color: Colors.grey[600],
+                                    color: Colors.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600),
                               ),
                             ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Text(
+                              // /"₹" + "140",
+                              "₹" + "${widget.trendData["ProductMrp"]}",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.grey,
+                                  fontSize: 14,
+                                  decoration: TextDecoration.lineThrough),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: Text(
+                              // "${widget.relatedProductData["ProductSrp"]}",
+                              "(${percentResult.toStringAsFixed(0)}% OFF)",
+                              style: TextStyle(
+                                  // color: Colors.grey[600],
+                                  color: appPrimaryMaterialColor,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ],
                       ),
@@ -183,6 +192,137 @@ class _TrendingProductComponentState extends State<TrendingProductComponent> {
             ),
           ),
         ),
+        // Padding(
+        //   padding: const EdgeInsets.only(bottom: 10, left: 6, right: 6),
+        //   child: GestureDetector(
+        //     onTap: () {
+        //       Navigator.push(
+        //           context,
+        //           MaterialPageRoute(
+        //               builder: (BuildContext context) =>
+        //                   new ProductDetailScreen(
+        //                     productDetail: widget.trendData["ProductId"],
+        //                   )));
+        //     },
+        //     child: Container(
+        //       decoration: BoxDecoration(
+        //         border: Border.all(color: Colors.grey[300]),
+        //       ),
+        //       child: Column(
+        //         crossAxisAlignment: CrossAxisAlignment.start,
+        //         children: <Widget>[
+        //           Container(
+        //               width: MediaQuery.of(context).size.width,
+        //               height: 237,
+        //               child: Image.network(
+        //                   Image_URL + "${widget.trendData["ProductImages"]}",
+        //                   fit: BoxFit.fill)),
+        //           Row(
+        //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //             children: [
+        //               Expanded(
+        //                 child: Padding(
+        //                   padding: const EdgeInsets.only(
+        //                     left: 4.0,
+        //                     top: 2.0,
+        //                   ),
+        //                   child: Text("${widget.trendData["ProductName"]}",
+        //                       overflow: TextOverflow.ellipsis,
+        //                       maxLines: 1,
+        //                       style: TextStyle(
+        //                         color: Colors.grey[600],
+        //                         fontSize: 12,
+        //                         fontWeight: FontWeight.w500,
+        //                       )),
+        //                 ),
+        //               ),
+        //               GestureDetector(
+        //                 onTap: () {
+        //                   _addToWishlist();
+        //                 },
+        //                 child: Container(
+        //                   child: isWishList == false
+        //                       ? Padding(
+        //                           padding:
+        //                               const EdgeInsets.only(right: 8.0, top: 5),
+        //                           child: Container(
+        //                               height: 20,
+        //                               width: 20,
+        //                               child: Image.asset(
+        //                                 "assets/heart.png",
+        //                                 color: appPrimaryMaterialColor,
+        //                               )),
+        //                         )
+        //                       : Padding(
+        //                           padding:
+        //                               const EdgeInsets.only(right: 8.0, top: 5),
+        //                           child: Container(
+        //                               height: 20,
+        //                               width: 20,
+        //                               child: Image.asset(
+        //                                 "assets/020-heart.png",
+        //                                 color: appPrimaryMaterialColor,
+        //                               )),
+        //                         ),
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //           Expanded(
+        //             child: Padding(
+        //               padding: const EdgeInsets.only(left: 8, bottom: 1),
+        //               child: Row(
+        //                 //crossAxisAlignment: CrossAxisAlignment.start,
+        //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //                 children: <Widget>[
+        //                   Row(
+        //                     children: <Widget>[
+        //                       Row(
+        //                         children: <Widget>[
+        //                           Text(
+        //                             "₹" + "${widget.trendData["ProductSrp"]}",
+        //                             style: TextStyle(
+        //                                 // color: Colors.grey[600],
+        //                                 color: Colors.black,
+        //                                 fontSize: 14,
+        //                                 fontWeight: FontWeight.w600),
+        //                           ),
+        //                         ],
+        //                       ),
+        //                       Padding(
+        //                         padding: const EdgeInsets.only(left: 12.0),
+        //                         child: Text(
+        //                           "₹" + "${widget.trendData["ProductMrp"]}",
+        //                           style: TextStyle(
+        //                               fontWeight: FontWeight.w600,
+        //                               color: Colors.grey,
+        //                               fontSize: 14,
+        //                               decoration: TextDecoration.lineThrough),
+        //                         ),
+        //                       ),
+        //                       Padding(
+        //                         padding: const EdgeInsets.only(left: 5.0),
+        //                         child: Text(
+        //                           // "${widget.relatedProductData["ProductSrp"]}",
+        //                           "(${percentResult.toStringAsFixed(0)}% OFF)",
+        //                           style: TextStyle(
+        //                               // color: Colors.grey[600],
+        //                               color: appPrimaryMaterialColor,
+        //                               fontSize: 12,
+        //                               fontWeight: FontWeight.w600),
+        //                         ),
+        //                       ),
+        //                     ],
+        //                   ),
+        //                 ],
+        //               ),
+        //             ),
+        //           )
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // ),
         isFavLoading ? LoadingComponent() : Container()
       ],
     );

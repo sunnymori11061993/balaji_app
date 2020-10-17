@@ -49,4 +49,5 @@ class Session {
   static const String ManuCustomerImage = "CustomerImage";
   static const String langauge = "language";
   static const String v = "__v";
+  static const String CustomerGSTNo = "CustomerGSTNo";
 }
