@@ -77,7 +77,7 @@ class _CartScreenState extends State<CartScreen> {
                   children: [
                     Padding(
                       padding:
-                          const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+                          const EdgeInsets.only(right: 15.0, left: 10, top: 18),
                       child: Container(
                           height: 20,
                           width: 20,

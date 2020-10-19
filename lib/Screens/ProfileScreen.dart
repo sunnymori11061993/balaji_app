@@ -172,6 +172,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
           actions: [
             GestureDetector(
               onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/HomePage', (route) => false);
+              },
+              child: Container(
+                  height: 20,
+                  width: 20,
+                  child: Image.asset(
+                    "assets/home.png",
+                    color: appPrimaryMaterialColor,
+                  )),
+            ),
+            GestureDetector(
+              onTap: () {
                 Navigator.of(context).pushNamed('/CartScreen');
               },
               child: Stack(
@@ -179,7 +192,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+                        const EdgeInsets.only(right: 15.0, left: 4, top: 18),
                     child: Container(
                         height: 20,
                         width: 20,

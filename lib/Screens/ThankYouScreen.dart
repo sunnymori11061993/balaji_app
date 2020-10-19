@@ -45,6 +45,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                 Center(
                   child: Text(
                     'thanks'.tr().toString(),
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 18,
                       //color: Colors.white,
@@ -55,6 +56,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                 ),
                 Text(
                   'balaji'.tr().toString(),
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 18,
                       //color: Colors.white,
@@ -81,6 +83,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                 Center(
                   child: Text(
                     'Order_Placed_Successfully'.tr().toString(),
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,
                       //color: Colors.white,
@@ -92,6 +95,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                 Center(
                   child: Text(
                     'order_del'.tr().toString(),
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,
                       //color: Colors.white,
@@ -106,6 +110,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                 Center(
                   child: Text(
                     'incase'.tr().toString(),
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,
                       //color: Colors.white,
@@ -117,6 +122,7 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                 Center(
                   child: Text(
                     'feel_free'.tr().toString(),
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15,
                       //color: Colors.white,

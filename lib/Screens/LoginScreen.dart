@@ -124,29 +124,29 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Center(
-                    child: GestureDetector(
-                      onTap: () {
-                        _showDialogLang(context);
-                      },
-                      child: Container(
-                        padding: EdgeInsets.only(
-                            top: 5, right: 10, left: 10, bottom: 5),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: Colors.grey[300])),
-                        child: Text('Select_Language'.tr().toString(),
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.black,
-                              //color: appPrimaryMaterialColor,
-                              // / fontWeight: FontWeight.w800
-                            )),
-                      ),
-                    ),
-                  ),
+                  // Center(
+                  //   child: GestureDetector(
+                  //     onTap: () {
+                  //       _showDialogLang(context);
+                  //     },
+                  //     child: Container(
+                  //       padding: EdgeInsets.only(
+                  //           top: 5, right: 10, left: 10, bottom: 5),
+                  //       decoration: BoxDecoration(
+                  //           borderRadius: BorderRadius.circular(5),
+                  //           border: Border.all(color: Colors.grey[300])),
+                  //       child: Text('Select_Language'.tr().toString(),
+                  //           style: TextStyle(
+                  //             fontSize: 13,
+                  //             color: Colors.black,
+                  //             //color: appPrimaryMaterialColor,
+                  //             // / fontWeight: FontWeight.w800
+                  //           )),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(
-                    height: MediaQuery.of(context).padding.top + 20,
+                    height: MediaQuery.of(context).padding.top + 30,
                   ),
                   Text(
                     'SIGN_IN'.tr().toString(),

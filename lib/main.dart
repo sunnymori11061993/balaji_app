@@ -3,6 +3,7 @@ import 'package:balaji/Screens/AboutUsScreen.dart';
 import 'package:balaji/Screens/Address%20Screen.dart';
 import 'package:balaji/Screens/BottomCategory.dart';
 import 'package:balaji/Screens/CartScreen.dart';
+import 'package:balaji/Screens/ChangeLanguage.dart';
 import 'package:balaji/Screens/ContactUs.dart';
 import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/FilterScreen.dart';
@@ -97,6 +98,7 @@ class _MyAppState extends State<MyApp> {
         '/UserProfileScreen': (context) => UserProfileScreen(),
         '/AboutUsScreen': (context) => AboutUsScreen(),
         '/ThankYouScreen': (context) => ThankYouScreen(),
+        '/ChangeLanguage': (context) => ChangeLanguage(),
       },
       theme: ThemeData(
         fontFamily: 'RobotoSlab',

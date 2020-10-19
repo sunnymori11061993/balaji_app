@@ -21,7 +21,7 @@ class _SplashState extends State<Splash> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: Image.asset(
-                'assets/Splash_Screen-01.png',
+                'assets/Splash_Screen-02.png',
                 fit: BoxFit.cover,
               ))),
     );
@@ -36,7 +36,8 @@ class _SplashState extends State<Splash> {
       print(Type);
       print(MobileNumber);
       if (MobileNumber == null) {
-        Navigator.pushReplacementNamed(context, '/WalkThroughScreen');
+        // Navigator.pushReplacementNamed(context, '/WalkThroughScreen');
+        Navigator.pushReplacementNamed(context, '/ChangeLanguage');
       } else {
         //Navigator.pushReplacementNamed(context, '/Home');
         if (Type == "retailer") {

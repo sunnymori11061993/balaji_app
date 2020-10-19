@@ -115,21 +115,35 @@ class _SubCategoryState extends State<SubCategory>
         title: Text('Sub_Category'.tr().toString(),
             style: TextStyle(color: appPrimaryMaterialColor, fontSize: 17)),
         actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0, left: 4),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _scaffoldKey.currentState.openEndDrawer();
+              });
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 12.0, left: 4, top: 4),
+              child: Container(
+                  height: 20,
+                  width: 20,
+                  child: Image.asset(
+                    "assets/filter-01.png",
+                    //color: appPrimaryMaterialColor,
+                  )),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/HomePage', (route) => false);
+            },
             child: Container(
                 height: 20,
                 width: 20,
-                child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _scaffoldKey.currentState.openEndDrawer();
-                      });
-                    },
-                    child: Image.asset(
-                      "assets/ft.png",
-                      color: appPrimaryMaterialColor,
-                    ))),
+                child: Image.asset(
+                  "assets/home.png",
+                  color: appPrimaryMaterialColor,
+                )),
           ),
           GestureDetector(
             onTap: () {
@@ -139,7 +153,8 @@ class _SubCategoryState extends State<SubCategory>
               alignment: Alignment.topCenter,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+                  padding:
+                      const EdgeInsets.only(right: 15.0, left: 12, top: 18),
                   child: Container(
                       height: 20,
                       width: 20,

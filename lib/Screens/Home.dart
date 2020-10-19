@@ -111,9 +111,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
         actions: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top: 13.0, bottom: 13),
+            padding: const EdgeInsets.only(top: 13.0, bottom: 13, right: 10),
             child: Container(
-              width: MediaQuery.of(context).size.width - 57,
+              width: MediaQuery.of(context).size.width - 90,
               //height: 10,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(3),
@@ -145,7 +145,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                     disabledBorder: InputBorder.none,
                     prefixIcon: Container(
                         height: 35,
-                        width: 35,
+                        width: 30,
                         padding: EdgeInsets.only(
                             left: 7, right: 0, top: 7, bottom: 7),
                         child: Image.asset(
@@ -242,6 +242,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           //         ),
           // ),
           //
+          Icon(
+            Icons.notifications_none_outlined,
+            size: 25,
+          ),
           GestureDetector(
             onTap: () {
               Navigator.of(context).pushNamed('/CartScreen');
@@ -251,7 +255,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
               children: [
                 Padding(
                   padding:
-                      const EdgeInsets.only(right: 15.0, left: 13, top: 18),
+                      const EdgeInsets.only(right: 15.0, left: 10, top: 18),
                   child: Container(
                       height: 20,
                       width: 20,
@@ -694,147 +698,204 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                             fontWeight: FontWeight.w400),
                       ),
                     ),
+                    // // Padding(
+                    // //   padding: const EdgeInsets.only(top: 15.0),
+                    // //   child: GridView.builder(
+                    // //     scrollDirection: Axis.vertical,
+                    // //     physics: NeverScrollableScrollPhysics(),
+                    // //     shrinkWrap: true,
+                    // //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    // //         crossAxisCount: 2,
+                    // //         childAspectRatio: 0.60,
+                    // //         //widthScreen / heightScreen,
+                    // //         crossAxisSpacing: 2.0,
+                    // //         mainAxisSpacing: 2.0),
+                    // //     itemBuilder: (BuildContext context, int index) {
+                    // //       return TrendingProductComponent(
+                    // //           trendingProductList[index]);
+                    // //     },
+                    // //     itemCount: trendingProductList.length,
+                    // //   ),
+                    // // ),
+                    // // Padding(
+                    // //   padding: const EdgeInsets.only(top: 30.0),
+                    // //   child: Container(
+                    // //     height: 20,
+                    // //     color: Colors.grey[100],
+                    // //   ),
+                    // // ),
+                    // Text(
+                    //   'Related_Products'.tr().toString(),
+                    //   style: TextStyle(
+                    //       fontSize: 15,
+                    //       color: Colors.black,
+                    //       fontWeight: FontWeight.w600),
+                    // ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: GridView.builder(
-                        scrollDirection: Axis.vertical,
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.60,
-                            //widthScreen / heightScreen,
-                            crossAxisSpacing: 2.0,
-                            mainAxisSpacing: 2.0),
-                        itemBuilder: (BuildContext context, int index) {
-                          return TrendingProductComponent(
-                              trendingProductList[index]);
-                        },
-                        itemCount: trendingProductList.length,
+                      padding: const EdgeInsets.only(
+                        top: 15.0,
+                        //bottom: 10,
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30.0),
                       child: Container(
-                        height: 20,
-                        color: Colors.grey[100],
+                        height: MediaQuery.of(context).size.height / 2.5,
+                        child: ListView.builder(
+                            physics: BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: trendingProductList.length + 1,
+                            itemBuilder: (BuildContext context, int index) {
+                              if (index > trendingProductList.length - 1) {
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      height: 30,
+                                      width: 110,
+                                      child: FlatButton(
+                                        child: Row(
+                                          children: [
+                                            Center(
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 0.0),
+                                                child: Text(
+                                                  'See_all'.tr().toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      color:
+                                                          appPrimaryMaterialColor,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              ),
+                                            ),
+                                            Icon(
+                                              Icons.arrow_forward,
+                                              size: 18,
+                                              color: appPrimaryMaterialColor,
+                                            )
+                                          ],
+                                        ),
+                                        onPressed: () {},
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              } else {
+                                return TrendingProductComponent(
+                                    trendingProductList[index]);
+                              }
+                            }),
                       ),
                     ),
                     Padding(
-                      padding:
-                          const EdgeInsets.only(top: 10.0, left: 20, right: 8),
+                      padding: const EdgeInsets.only(top: 25.0, bottom: 20),
+                      child: Container(
+                        color: Colors.grey[100],
+                        height: 10,
+                      ),
+                    ),
+                    Center(
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            'Related_Products'.tr().toString(),
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600),
+                        //mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            "assets/balajiLogo-removebg.png",
+                            height: 90,
+                            width: 160,
                           ),
                           Padding(
                             padding:
-                                const EdgeInsets.only(top: 15.0, bottom: 10),
-                            child: Container(
-                              height: MediaQuery.of(context).size.height / 2.4,
-                              child: ListView.builder(
-                                  physics: BouncingScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: trendingProductList.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return TrendingProductComponent(
-                                        trendingProductList[index]);
-                                  }),
+                                const EdgeInsets.only(left: 45.0, right: 45),
+                            child: Text(
+                                "Shopping list that improves the quality of your grocery shopping by making it easier, faster, and most importantly smarter. It is all you would want out of a shopping list and more",
+                                //overflow: TextOverflow.ellipsis,
+                                //maxLines: 1,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.grey[600],
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(bottom: 10.0, left: 20),
+                            child: FlatButton(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Know_more'.tr().toString(),
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: appPrimaryMaterialColor,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_drop_down,
+                                    size: 20,
+                                    color: appPrimaryMaterialColor,
+                                  )
+                                ],
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            new AboutUsScreen(
+                                              aboutData: termsConList[0]
+                                                  ["SettingAboutUsURL"],
+                                            )));
+                              },
                             ),
                           ),
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 12.0, top: 5),
-                      child: Center(
-                        child: GestureDetector(
-                          onTap: () {
-                            // Navigator.of(context).pushNamed('/AboutUsScreen');
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        new AboutUsScreen(
-                                          aboutData: termsConList[0]
-                                              ["SettingAboutUsURL"],
-                                        )));
-                          },
-                          child: Container(
-                            height: 25,
-                            width: 120,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                border: Border.all(
-                                  color: Colors.grey[300],
-                                )),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 4.0),
-                                  child: Text(
-                                    'Know_more'.tr().toString(),
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                                Icon(Icons.arrow_drop_down)
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10.0, bottom: 20),
-                      child: Center(
-                        child: SizedBox(
-                          height: 45,
-                          width: 250,
-                          child: FlatButton(
-                            color: appPrimaryMaterialColor,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
-                                side: BorderSide(color: Colors.grey[300])),
-                            onPressed: () {},
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-//                                Icon(Icons.delete_forever, color: Colors.white),
-                                // color: Colors.grey[700],),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 4.0),
-                                  child: Text(
-                                    'Know_more'.tr().toString(),
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.arrow_drop_down,
-                                  color: Colors.white,
-                                  size: 30,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+
+//                     Padding(
+//                       padding: const EdgeInsets.only(top: 10.0, bottom: 20),
+//                       child: Center(
+//                         child: SizedBox(
+//                           height: 45,
+//                           width: 250,
+//                           child: FlatButton(
+//                             color: appPrimaryMaterialColor,
+//                             shape: RoundedRectangleBorder(
+//                                 borderRadius: BorderRadius.circular(5),
+//                                 side: BorderSide(color: Colors.grey[300])),
+//                             onPressed: () {},
+//                             child: Row(
+//                               mainAxisAlignment: MainAxisAlignment.center,
+//                               crossAxisAlignment: CrossAxisAlignment.center,
+//                               children: [
+// //                                Icon(Icons.delete_forever, color: Colors.white),
+//                                 // color: Colors.grey[700],),
+//                                 Padding(
+//                                   padding: const EdgeInsets.only(left: 4.0),
+//                                   child: Text(
+//                                     'Know_more'.tr().toString(),
+//                                     style: TextStyle(
+//                                       fontSize: 17,
+//                                       color: Colors.white,
+//                                     ),
+//                                   ),
+//                                 ),
+//                                 Icon(
+//                                   Icons.arrow_drop_down,
+//                                   color: Colors.white,
+//                                   size: 30,
+//                                 )
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
                   ],
                 ),
               ),
