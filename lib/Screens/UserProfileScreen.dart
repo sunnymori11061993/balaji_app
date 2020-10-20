@@ -68,7 +68,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 Navigator.of(context).pushNamed('/CartScreen');
               },
               child: Stack(
-                alignment: Alignment.topCenter,
+                alignment: Alignment.topRight,
                 children: [
                   Padding(
                     padding:

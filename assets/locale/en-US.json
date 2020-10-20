@@ -57,6 +57,7 @@
  "Move_To_Cart": "Move To Cart",
  "Ok": "Ok",
  "Wishlist_Data_Not_Found": "Wishlist Data Not Found!",
+ "Notification_Data_Not_Found": "Notification Data Not Found!",
  "Are_you_sure": "Are you sure want to remove from wishlist!",
  "Are_you_sure_cart": "Are you sure want to remove from cart!",
  "Cart_Data_Not_Found": "Cart Data Not Found!",
@@ -107,5 +108,8 @@
  "Continue_shopping": "Continue shopping",
  "Catalogue": "Catalogue",
  "GST_Number": "GST Number",
- "See_all": "View all"
+ "See_all": "View all",
+ "Grant_Permission": "Grant Permission",
+ "Permission": "Please grant accessing storage permission to continue!",
+ "Notification": "Notification"
 }

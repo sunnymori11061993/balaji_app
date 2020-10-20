@@ -64,7 +64,7 @@ class _FilterScreenState extends State<FilterScreen> {
         ),
         actions: <Widget>[
           Stack(
-            alignment: Alignment.topCenter,
+            alignment: Alignment.topRight,
             children: [
               Padding(
                 padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),

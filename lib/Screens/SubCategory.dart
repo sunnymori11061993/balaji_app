@@ -127,7 +127,7 @@ class _SubCategoryState extends State<SubCategory>
                   height: 20,
                   width: 20,
                   child: Image.asset(
-                    "assets/filter-01.png",
+                    "assets/fffffff.png",
                     //color: appPrimaryMaterialColor,
                   )),
             ),
@@ -150,7 +150,7 @@ class _SubCategoryState extends State<SubCategory>
               Navigator.of(context).pushNamed('/CartScreen');
             },
             child: Stack(
-              alignment: Alignment.topCenter,
+              alignment: Alignment.topRight,
               children: [
                 Padding(
                   padding:

@@ -73,7 +73,7 @@ class _CartScreenState extends State<CartScreen> {
               title: appBarTitle,
               actions: <Widget>[
                 Stack(
-                  alignment: Alignment.topCenter,
+                  alignment: Alignment.topRight,
                   children: [
                     Padding(
                       padding:

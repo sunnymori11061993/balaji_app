@@ -89,7 +89,7 @@ class _AddressScreenState extends State<AddressScreen> {
                   )),
             ),
             Stack(
-              alignment: Alignment.topCenter,
+              alignment: Alignment.topRight,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 15.0, left: 4, top: 18),

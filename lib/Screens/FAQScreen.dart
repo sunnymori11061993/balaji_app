@@ -60,7 +60,7 @@ class _FAQScreenState extends State<FAQScreen> {
                 Navigator.of(context).pushNamed('/CartScreen');
               },
               child: Stack(
-                alignment: Alignment.topCenter,
+                alignment: Alignment.topRight,
                 children: [
                   Padding(
                     padding:

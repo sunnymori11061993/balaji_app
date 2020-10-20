@@ -190,7 +190,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 if (result == "pop") _getProductDetail();
               },
               child: Stack(
-                alignment: Alignment.topCenter,
+                alignment: Alignment.topRight,
                 children: [
                   Padding(
                     padding:
@@ -370,7 +370,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                               fit: BoxFit.fill,
                                                               width: 1000.0,
                                                               placeholder:
-                                                                  'assets/023-film.png',
+                                                                  'assets/BWB_Logo-02.jpg',
                                                             ),
                                                             Positioned(
                                                               bottom: 0.0,

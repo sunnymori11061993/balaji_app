@@ -9,6 +9,7 @@ import 'package:balaji/Providers/CartProvider.dart';
 import 'package:balaji/Screens/AboutUsScreen.dart';
 import 'package:balaji/Screens/Address%20Screen.dart';
 import 'package:balaji/Screens/FAQScreen.dart';
+import 'package:balaji/Screens/NotificationScreen.dart';
 import 'package:balaji/Screens/SearchingScreen.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
 import 'package:dio/dio.dart';
@@ -39,7 +40,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   List trendingProductList = [];
 
   List cartList = [];
+  List notiList = [];
   bool isGetCartLoading = true;
+  bool isNotiLoading = true;
   bool isSearching = false;
   bool isFavLoading = false;
   String msg, whatsapp;
@@ -59,6 +62,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     _trendingProduct();
     _settingApi();
     userName();
+    _notification();
     // _getCart();
   }
 
@@ -242,16 +246,61 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           //         ),
           // ),
           //
-          Icon(
-            Icons.notifications_none_outlined,
-            size: 25,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => new NotificationScreen(
+                            notiData: notiList,
+                          )));
+            },
+            child: Stack(
+              alignment: Alignment.topRight,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 0, left: 0, top: 18),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/bell_icon.png",
+                        color: appPrimaryMaterialColor,
+                      )),
+                ),
+                notiList.length > 0
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: CircleAvatar(
+                          radius: 7.0,
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          child: Text(
+                            notiList.length.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 9.0,
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container()
+              ],
+            ),
+
+            // Image.asset(
+            //   "assets/bell_icon.png",
+            //   color: appPrimaryMaterialColor,
+            //   height: 17,
+            //   width: 17,
+            // ),
           ),
           GestureDetector(
             onTap: () {
               Navigator.of(context).pushNamed('/CartScreen');
             },
             child: Stack(
-              alignment: Alignment.topCenter,
+              alignment: Alignment.topRight,
               children: [
                 Padding(
                   padding:
@@ -266,8 +315,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 ),
                 provider.cartCount > 0
                     ? Padding(
-                        padding: const EdgeInsets.only(
-                            left: 5.0, top: 13, right: 10),
+                        padding: const EdgeInsets.only(top: 10, right: 10),
                         child: CircleAvatar(
                           radius: 7.0,
                           backgroundColor: Colors.red,
@@ -776,7 +824,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                             )
                                           ],
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pushNamed('/ViewAllScreen');
+                                        },
                                       ),
                                     ),
                                   ],
@@ -808,11 +859,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           Padding(
                             padding:
                                 const EdgeInsets.only(left: 45.0, right: 45),
-                            child: Text(
-                                "Shopping list that improves the quality of your grocery shopping by making it easier, faster, and most importantly smarter. It is all you would want out of a shopping list and more",
+                            child: Text(termsConList[0]["SettingTermsKnowMore"],
                                 //overflow: TextOverflow.ellipsis,
                                 //maxLines: 1,
-                                textAlign: TextAlign.center,
+                                textAlign: TextAlign.justify,
                                 style: TextStyle(
                                   color: Colors.grey[600],
                                   fontSize: 12,
@@ -1042,6 +1092,45 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         }, onError: (e) {
           setState(() {
             isTermLoading = false;
+          });
+          print("error on call -> ${e.message}");
+          Fluttertoast.showToast(msg: "Something Went Wrong");
+        });
+      }
+    } on SocketException catch (_) {
+      Fluttertoast.showToast(msg: "No Internet Connection.");
+    }
+  }
+
+  _notification() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        isTermLoading = true;
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        FormData body = FormData.fromMap({
+          "Language": prefs.getString(Session.langauge),
+          "CustomerId": prefs.getString(Session.CustomerId),
+        });
+        Services.PostForList(api_name: 'getNotificationHistory', body: body)
+            .then((responseList) async {
+          if (responseList.length > 0) {
+            setState(() {
+              isNotiLoading = false;
+              notiList = responseList;
+              //set "data" here to your variable
+            });
+          } else {
+            setState(() {
+              isNotiLoading = false;
+            });
+            Fluttertoast.showToast(msg: "Data Not Found");
+            //show "data not found" in dialog
+          }
+        }, onError: (e) {
+          setState(() {
+            isNotiLoading = false;
           });
           print("error on call -> ${e.message}");
           Fluttertoast.showToast(msg: "Something Went Wrong");

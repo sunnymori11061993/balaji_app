@@ -51,6 +51,7 @@ dependencies:
   provider: ^4.3.2+2
   flutter_native_image: ^0.0.5+2
   flutter_downloader: ^1.5.1
+  permission_handler: ^5.0.1+1
 
 
 dev_dependencies:
@@ -91,8 +92,10 @@ flutter:
     - assets/balajiLogo-removebg.png
     - assets/BWD-white.png
     - assets/download.png
+    - assets/BWB_Logo-02.jpg
     - assets/ft.png
     - assets/fi.png
+    - assets/bell_icon.png
     - assets/cancel.png
     - assets/intro1.jpeg
     - assets/intro2.jpeg
@@ -104,6 +107,8 @@ flutter:
     - assets/backarrow.png
     - assets/2.png
     - assets/3.png
+    - assets/fffff.png
+    - assets/fffffff.png
     - assets/contactus.png
     - assets/Contact.jpg
     - assets/contactbg.jpg

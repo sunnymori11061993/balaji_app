@@ -1,39 +1,36 @@
 import 'dart:io';
+
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/SubCategoriesComponent.dart';
 import 'package:balaji/Providers/CartProvider.dart';
-import 'package:balaji/Screens/ProductDetailScreen.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:easy_localization/easy_localization.dart';
-
-class SearchingScreen extends StatefulWidget {
-  var searchData;
-
-  SearchingScreen({this.searchData});
-
+class ViewAllScreen extends StatefulWidget {
   @override
-  _SearchingScreenState createState() => _SearchingScreenState();
+  _ViewAllScreenState createState() => _ViewAllScreenState();
 }
 
-class _SearchingScreenState extends State<SearchingScreen> {
-  List searchList = [];
-  bool isSearchLoading = true;
+class _ViewAllScreenState extends State<ViewAllScreen> {
+  List viewAllList = [];
+  bool isViewAllLoading = true;
 
   @override
   void initState() {
     // TODO: implement initState
-    _getSearching();
+    _viewAll();
   }
 
   @override
   Widget build(BuildContext context) {
     CartProvider provider = Provider.of<CartProvider>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -52,7 +49,7 @@ class _SearchingScreenState extends State<SearchingScreen> {
         backgroundColor: Colors.white,
         iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
         title: Text(
-          'Product_Detail'.tr().toString(),
+          'Trending_Products'.tr().toString(),
           style: TextStyle(color: appPrimaryMaterialColor, fontSize: 17),
         ),
         actions: <Widget>[
@@ -109,7 +106,7 @@ class _SearchingScreenState extends State<SearchingScreen> {
           )
         ],
       ),
-      body: isSearchLoading
+      body: isViewAllLoading
           ? LoadingComponent()
           : Padding(
               padding: const EdgeInsets.only(top: 15.0),
@@ -126,27 +123,31 @@ class _SearchingScreenState extends State<SearchingScreen> {
                     mainAxisSpacing: 2.0),
                 itemBuilder: (BuildContext context, int index) {
                   return SubCategoriesComponent(
-                    subCat: searchList[index],
+                    subCat: viewAllList[index],
                   );
                 },
-                itemCount: searchList.length,
+                itemCount: viewAllList.length,
               )),
     );
   }
 
-  _getSearching() async {
+  _viewAll() async {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        FormData body = FormData.fromMap({"ProductName": widget.searchData});
-        Services.PostForList(api_name: 'search', body: body).then(
-            (responseList) async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        FormData body =
+            FormData.fromMap({"Language": prefs.getString(Session.langauge)});
+        Services.PostForList(
+                api_name: 'get_trending_product_api_viewall', body: body)
+            .then((responseList) async {
           setState(() {
-            isSearchLoading = false;
+            isViewAllLoading = false;
           });
           if (responseList.length > 0) {
             setState(() {
-              searchList = responseList; //set "data" here to your variable
+              viewAllList = responseList; //set "data" here to your variable
             });
           } else {
             Fluttertoast.showToast(msg: "Data Not Found");
@@ -154,7 +155,7 @@ class _SearchingScreenState extends State<SearchingScreen> {
           }
         }, onError: (e) {
           setState(() {
-            isSearchLoading = false;
+            isViewAllLoading = false;
           });
           print("error on call -> ${e.message}");
           Fluttertoast.showToast(msg: "Something Went Wrong");

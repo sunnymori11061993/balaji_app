@@ -174,7 +174,7 @@ class _WhishlistState extends State<Whishlist> {
                   Navigator.of(context).pushNamed('/CartScreen');
                 },
                 child: Stack(
-                  alignment: Alignment.topCenter,
+                  alignment: Alignment.topRight,
                   children: [
                     Padding(
                       padding:

@@ -14,6 +14,7 @@ import 'package:balaji/Screens/LanguageChangeScreen.dart';
 import 'package:balaji/Screens/LoginScreen.dart';
 import 'package:balaji/Screens/ManuHomeScreen.dart';
 import 'package:balaji/Screens/ManuProfileScreen.dart';
+import 'package:balaji/Screens/NotificationScreen.dart';
 import 'package:balaji/Screens/OrderHistoryScreen.dart';
 import 'package:balaji/Screens/PlaceOrderScreen.dart';
 import 'package:balaji/Screens/ProductDetailScreen.dart';
@@ -27,14 +28,20 @@ import 'package:balaji/Screens/TermsAndCondition.dart';
 import 'package:balaji/Screens/ThankYouScreen.dart';
 import 'package:balaji/Screens/UserProfileScreen.dart';
 import 'package:balaji/Screens/VerificationScreen.dart';
+import 'package:balaji/Screens/ViewAllScreen.dart';
 import 'package:balaji/Screens/ViewCatalougeScreen.dart';
 import 'package:balaji/Screens/WalkThroughScreen.dart';
 import 'package:balaji/Screens/Whishlist.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+const debug = true;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await FlutterDownloader.initialize(debug: debug);
   runApp(EasyLocalization(
     child: MultiProvider(
       providers: [
@@ -99,6 +106,8 @@ class _MyAppState extends State<MyApp> {
         '/AboutUsScreen': (context) => AboutUsScreen(),
         '/ThankYouScreen': (context) => ThankYouScreen(),
         '/ChangeLanguage': (context) => ChangeLanguage(),
+        '/ViewAllScreen': (context) => ViewAllScreen(),
+        '/NotificationScreen': (context) => NotificationScreen(),
       },
       theme: ThemeData(
         fontFamily: 'RobotoSlab',
