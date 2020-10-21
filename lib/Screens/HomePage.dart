@@ -1,16 +1,46 @@
+import 'dart:developer';
+
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Screens/Home.dart';
 import 'package:balaji/Screens/SettingScreen.dart';
 import 'package:balaji/Screens/UserProfileScreen.dart';
 import 'package:balaji/Screens/Whishlist.dart';
 import 'package:flutter/material.dart';
+import 'package:showcaseview/showcase.dart';
+import 'package:showcaseview/showcase_widget.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ShowCaseWidget(
+        onStart: (index, key) {
+          log('onStart: $index, $key');
+        },
+        onComplete: (index, key) {
+          log('onComplete: $index, $key');
+        },
+        builder: Builder(builder: (context) => HomePage1()),
+        autoPlay: true,
+        autoPlayDelay: Duration(seconds: 3),
+        autoPlayLockEnable: true,
+      ),
+    );
+  }
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePage1 extends StatefulWidget {
+  @override
+  _HomePage1State createState() => _HomePage1State();
+}
+
+class _HomePage1State extends State<HomePage1> {
+  GlobalKey _one = GlobalKey();
+  GlobalKey _two = GlobalKey();
+  GlobalKey _three = GlobalKey();
+  GlobalKey _four = GlobalKey();
+  GlobalKey _five = GlobalKey();
+
   int _selectedIndex = 0;
   List<Widget> _widgetOptions = <Widget>[
     Home(),
@@ -27,6 +57,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        ShowCaseWidget.of(context)
+            .startShowCase([_one, _two, _three, _four, _five]));
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(

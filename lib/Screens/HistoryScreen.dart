@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
@@ -11,13 +12,37 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcase.dart';
+import 'package:showcaseview/showcase_widget.dart';
 
-class HistoryScreen extends StatefulWidget {
+class HistoryScreen extends StatelessWidget {
   @override
-  _HistoryScreenState createState() => _HistoryScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ShowCaseWidget(
+        onStart: (index, key) {
+          log('onStart: $index, $key');
+        },
+        onComplete: (index, key) {
+          log('onComplete: $index, $key');
+        },
+        builder: Builder(builder: (context) => HistoryScreen11()),
+        autoPlay: true,
+        autoPlayDelay: Duration(seconds: 3),
+      ),
+    );
+  }
 }
 
-class _HistoryScreenState extends State<HistoryScreen> {
+class HistoryScreen11 extends StatefulWidget {
+  @override
+  _HistoryScreen11State createState() => _HistoryScreen11State();
+}
+
+class _HistoryScreen11State extends State<HistoryScreen11> {
+  GlobalKey _one = GlobalKey();
+  GlobalKey _two = GlobalKey();
+
   List historyList = [];
   bool isHistoryLoading = true;
 
@@ -25,6 +50,8 @@ class _HistoryScreenState extends State<HistoryScreen> {
   void initState() {
     // TODO: implement initState
     _orderHistory();
+    WidgetsBinding.instance.addPostFrameCallback(
+        (_) => ShowCaseWidget.of(context).startShowCase([_one, _two]));
   }
 
   @override
@@ -45,56 +72,64 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 )),
           ),
           actions: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/HomePage', (route) => false);
-              },
-              child: Container(
-                  height: 20,
-                  width: 20,
-                  child: Image.asset(
-                    "assets/home.png",
-                    color: appPrimaryMaterialColor,
-                  )),
+            Showcase(
+              key: _one,
+              description: 'Tap to move towards home!',
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/HomePage', (route) => false);
+                },
+                child: Container(
+                    height: 20,
+                    width: 20,
+                    child: Image.asset(
+                      "assets/home.png",
+                      color: appPrimaryMaterialColor,
+                    )),
+              ),
             ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed('/CartScreen');
-              },
-              child: Stack(
-                alignment: Alignment.topRight,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(right: 15.0, left: 10, top: 18),
-                    child: Container(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset(
-                          "assets/shopping-cart.png",
-                          color: appPrimaryMaterialColor,
-                        )),
-                  ),
-                  provider.cartCount > 0
-                      ? Padding(
-                          padding: const EdgeInsets.only(
-                              left: 1.0, top: 13, right: 10),
-                          child: CircleAvatar(
-                            radius: 7.0,
-                            backgroundColor: Colors.red,
-                            foregroundColor: Colors.white,
-                            child: Text(
-                              provider.cartCount.toString(),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 9.0,
+            Showcase(
+              key: _two,
+              description: 'Tap to see your cart products!',
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed('/CartScreen');
+                },
+                child: Stack(
+                  alignment: Alignment.topRight,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(right: 15.0, left: 10, top: 18),
+                      child: Container(
+                          height: 20,
+                          width: 20,
+                          child: Image.asset(
+                            "assets/shopping-cart.png",
+                            color: appPrimaryMaterialColor,
+                          )),
+                    ),
+                    provider.cartCount > 0
+                        ? Padding(
+                            padding: const EdgeInsets.only(
+                                left: 1.0, top: 13, right: 10),
+                            child: CircleAvatar(
+                              radius: 7.0,
+                              backgroundColor: Colors.red,
+                              foregroundColor: Colors.white,
+                              child: Text(
+                                provider.cartCount.toString(),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 9.0,
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                      : Container()
-                ],
+                          )
+                        : Container()
+                  ],
+                ),
               ),
             )
           ],

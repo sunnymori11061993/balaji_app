@@ -52,6 +52,7 @@ dependencies:
   flutter_native_image: ^0.0.5+2
   flutter_downloader: ^1.5.1
   permission_handler: ^5.0.1+1
+  showcaseview: ^0.1.6
 
 
 dev_dependencies:

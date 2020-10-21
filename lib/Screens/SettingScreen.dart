@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
@@ -17,14 +18,44 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcase.dart';
+import 'package:showcaseview/showcase_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SettingScreen extends StatefulWidget {
+class SettingScreen extends StatelessWidget {
   @override
-  _SettingScreenState createState() => _SettingScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ShowCaseWidget(
+        onStart: (index, key) {
+          log('onStart: $index, $key');
+        },
+        onComplete: (index, key) {
+          log('onComplete: $index, $key');
+        },
+        builder: Builder(builder: (context) => SettingScreen11()),
+        autoPlay: true,
+        autoPlayDelay: Duration(seconds: 3),
+      ),
+    );
+  }
 }
 
-class _SettingScreenState extends State<SettingScreen> {
+class SettingScreen11 extends StatefulWidget {
+  @override
+  _SettingScreen11State createState() => _SettingScreen11State();
+}
+
+class _SettingScreen11State extends State<SettingScreen11> {
+  GlobalKey _one = GlobalKey();
+  GlobalKey _two = GlobalKey();
+  GlobalKey _three = GlobalKey();
+  GlobalKey _four = GlobalKey();
+  GlobalKey _five = GlobalKey();
+  GlobalKey _six = GlobalKey();
+  GlobalKey _seven = GlobalKey();
+  GlobalKey _eight = GlobalKey();
+
   bool isSearching = false;
   bool searchImage = true;
   bool isTermLoading = true;
@@ -68,6 +99,9 @@ class _SettingScreenState extends State<SettingScreen> {
   void initState() {
     _settingApi();
     _profile();
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        ShowCaseWidget.of(context).startShowCase(
+            [_one, _two, _three, _four, _five, _six, _seven, _eight]));
   }
 
   void launchwhatsapp({
@@ -111,43 +145,47 @@ class _SettingScreenState extends State<SettingScreen> {
           elevation: 1,
           iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
           actions: <Widget>[
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed('/CartScreen');
-              },
-              child: Stack(
-                alignment: Alignment.topRight,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(right: 15.0, left: 8, top: 18),
-                    child: Container(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset(
-                          "assets/shopping-cart.png",
-                          color: appPrimaryMaterialColor,
-                        )),
-                  ),
-                  provider.cartCount > 0
-                      ? Padding(
-                          padding: const EdgeInsets.only(
-                              left: 1.0, top: 13, right: 10),
-                          child: CircleAvatar(
-                            radius: 7.0,
-                            backgroundColor: Colors.red,
-                            foregroundColor: Colors.white,
-                            child: Text(
-                              provider.cartCount.toString(),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 9.0,
+            Showcase(
+              key: _one,
+              description: 'Tap to see your cart products!',
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed('/CartScreen');
+                },
+                child: Stack(
+                  alignment: Alignment.topRight,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+                      child: Container(
+                          height: 20,
+                          width: 20,
+                          child: Image.asset(
+                            "assets/shopping-cart.png",
+                            color: appPrimaryMaterialColor,
+                          )),
+                    ),
+                    provider.cartCount > 0
+                        ? Padding(
+                            padding: const EdgeInsets.only(
+                                left: 1.0, top: 13, right: 10),
+                            child: CircleAvatar(
+                              radius: 7.0,
+                              backgroundColor: Colors.red,
+                              foregroundColor: Colors.white,
+                              child: Text(
+                                provider.cartCount.toString(),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 9.0,
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                      : Container()
-                ],
+                          )
+                        : Container()
+                  ],
+                ),
               ),
             )
           ],
@@ -256,20 +294,24 @@ class _SettingScreenState extends State<SettingScreen> {
                                 // Navigator.of(context).pop();
                                 _showDialogLang(context);
                               },
-                              child: ListTile(
-                                leading: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 10.0, left: 4),
-                                  child: Container(
-                                      height: 20,
-                                      width: 20,
-                                      child: Image.asset(
-                                        "assets/world-grid.png",
-                                        color: appPrimaryMaterialColor,
-                                      )),
-                                ),
-                                title: Text(
-                                  'drw_change_Lang'.tr().toString(),
+                              child: Showcase(
+                                key: _two,
+                                description: 'Tap to change language!',
+                                child: ListTile(
+                                  leading: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10.0, left: 4),
+                                    child: Container(
+                                        height: 20,
+                                        width: 20,
+                                        child: Image.asset(
+                                          "assets/world-grid.png",
+                                          color: appPrimaryMaterialColor,
+                                        )),
+                                  ),
+                                  title: Text(
+                                    'drw_change_Lang'.tr().toString(),
+                                  ),
                                 ),
                               ),
                             ),
@@ -286,20 +328,24 @@ class _SettingScreenState extends State<SettingScreen> {
                                         builder: (BuildContext context) =>
                                             new FAQScreen()));
                               },
-                              child: ListTile(
-                                leading: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 10.0, left: 4),
-                                  child: Container(
-                                      height: 20,
-                                      width: 20,
-                                      child: Image.asset(
-                                        "assets/f.png",
-                                        color: appPrimaryMaterialColor,
-                                      )),
-                                ),
-                                title: Text(
-                                  'drw_faq'.tr().toString(),
+                              child: Showcase(
+                                key: _three,
+                                description: 'Tap to see FAQs!',
+                                child: ListTile(
+                                  leading: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10.0, left: 4),
+                                    child: Container(
+                                        height: 20,
+                                        width: 20,
+                                        child: Image.asset(
+                                          "assets/f.png",
+                                          color: appPrimaryMaterialColor,
+                                        )),
+                                  ),
+                                  title: Text(
+                                    'drw_faq'.tr().toString(),
+                                  ),
                                 ),
                               ),
                             ),
@@ -313,20 +359,24 @@ class _SettingScreenState extends State<SettingScreen> {
                                 Share.share(termsConList[0]["SettingShareLink"],
                                     subject: '');
                               },
-                              child: ListTile(
-                                leading: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 10.0, left: 4),
-                                  child: Container(
-                                      height: 20,
-                                      width: 20,
-                                      child: Image.asset(
-                                        "assets/share.png",
-                                        color: appPrimaryMaterialColor,
-                                      )),
-                                ),
-                                title: Text(
-                                  'drw_share'.tr().toString(),
+                              child: Showcase(
+                                key: _four,
+                                description: 'Tap to share app link!',
+                                child: ListTile(
+                                  leading: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10.0, left: 4),
+                                    child: Container(
+                                        height: 20,
+                                        width: 20,
+                                        child: Image.asset(
+                                          "assets/share.png",
+                                          color: appPrimaryMaterialColor,
+                                        )),
+                                  ),
+                                  title: Text(
+                                    'drw_share'.tr().toString(),
+                                  ),
                                 ),
                               ),
                             ),
@@ -341,20 +391,24 @@ class _SettingScreenState extends State<SettingScreen> {
                                 //launchwhatsapp(whatsappNumber: whatsapp, message: msg);
                                 Navigator.of(context).pushNamed('/ContactUs');
                               },
-                              child: ListTile(
-                                leading: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 10.0, left: 4),
-                                  child: Container(
-                                      height: 20,
-                                      width: 20,
-                                      child: Image.asset(
-                                        "assets/phone-call.png",
-                                        color: appPrimaryMaterialColor,
-                                      )),
-                                ),
-                                title: Text(
-                                  'drw_Contact'.tr().toString(),
+                              child: Showcase(
+                                key: _five,
+                                description: 'Tap to contact with us!',
+                                child: ListTile(
+                                  leading: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10.0, left: 4),
+                                    child: Container(
+                                        height: 20,
+                                        width: 20,
+                                        child: Image.asset(
+                                          "assets/phone-call.png",
+                                          color: appPrimaryMaterialColor,
+                                        )),
+                                  ),
+                                  title: Text(
+                                    'drw_Contact'.tr().toString(),
+                                  ),
                                 ),
                               ),
                             ),
@@ -375,20 +429,24 @@ class _SettingScreenState extends State<SettingScreen> {
                                                   ["SettingAboutUsURL"],
                                             )));
                               },
-                              child: ListTile(
-                                leading: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 10.0, left: 4),
-                                  child: Container(
-                                      height: 20,
-                                      width: 20,
-                                      child: Image.asset(
-                                        "assets/information.png",
-                                        color: appPrimaryMaterialColor,
-                                      )),
-                                ),
-                                title: Text(
-                                  'About_Us'.tr().toString(),
+                              child: Showcase(
+                                key: _six,
+                                description: 'Tap to see about us!',
+                                child: ListTile(
+                                  leading: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10.0, left: 4),
+                                    child: Container(
+                                        height: 20,
+                                        width: 20,
+                                        child: Image.asset(
+                                          "assets/information.png",
+                                          color: appPrimaryMaterialColor,
+                                        )),
+                                  ),
+                                  title: Text(
+                                    'About_Us'.tr().toString(),
+                                  ),
                                 ),
                               ),
                             ),
@@ -409,20 +467,24 @@ class _SettingScreenState extends State<SettingScreen> {
                                                   ["SettingTermsConditionURL"],
                                             )));
                               },
-                              child: ListTile(
-                                leading: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 10.0, left: 4),
-                                  child: Container(
-                                      height: 20,
-                                      width: 20,
-                                      child: Image.asset(
-                                        "assets/file.png",
-                                        color: appPrimaryMaterialColor,
-                                      )),
-                                ),
-                                title: Text(
-                                  'drw_Terms'.tr().toString(),
+                              child: Showcase(
+                                key: _seven,
+                                description: 'Tap to see terms & conditions!',
+                                child: ListTile(
+                                  leading: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10.0, left: 4),
+                                    child: Container(
+                                        height: 20,
+                                        width: 20,
+                                        child: Image.asset(
+                                          "assets/file.png",
+                                          color: appPrimaryMaterialColor,
+                                        )),
+                                  ),
+                                  title: Text(
+                                    'drw_Terms'.tr().toString(),
+                                  ),
                                 ),
                               ),
                             ),
@@ -436,20 +498,24 @@ class _SettingScreenState extends State<SettingScreen> {
                                 // Navigator.of(context).pop();
                                 _showDialog(context);
                               },
-                              child: ListTile(
-                                leading: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 10.0, left: 4),
-                                  child: Container(
-                                      height: 20,
-                                      width: 20,
-                                      child: Image.asset(
-                                        "assets/logout.png",
-                                        color: appPrimaryMaterialColor,
-                                      )),
-                                ),
-                                title: Text(
-                                  'drw_logout'.tr().toString(),
+                              child: Showcase(
+                                key: _eight,
+                                description: 'Tap to logout from balaji!',
+                                child: ListTile(
+                                  leading: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10.0, left: 4),
+                                    child: Container(
+                                        height: 20,
+                                        width: 20,
+                                        child: Image.asset(
+                                          "assets/logout.png",
+                                          color: appPrimaryMaterialColor,
+                                        )),
+                                  ),
+                                  title: Text(
+                                    'drw_logout'.tr().toString(),
+                                  ),
                                 ),
                               ),
                             ),

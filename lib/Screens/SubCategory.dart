@@ -224,7 +224,7 @@ class _SubCategoryState extends State<SubCategory>
               title: Padding(
                 padding: const EdgeInsets.only(top: 40.0),
                 child: Center(
-                  child: Text("Filter Products",
+                  child: Text('Filter_Products'.tr().toString(),
                       style: TextStyle(
                           color: appPrimaryMaterialColor, fontSize: 18)),
                 ),

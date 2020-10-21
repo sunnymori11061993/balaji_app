@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:balaji/Common/ClassList.dart';
@@ -16,13 +17,38 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcase.dart';
+import 'package:showcaseview/showcase_widget.dart';
 
-class AddressScreen extends StatefulWidget {
+class AddressScreen extends StatelessWidget {
   @override
-  _AddressScreenState createState() => _AddressScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ShowCaseWidget(
+        onStart: (index, key) {
+          log('onStart: $index, $key');
+        },
+        onComplete: (index, key) {
+          log('onComplete: $index, $key');
+        },
+        builder: Builder(builder: (context) => AddressScreen11()),
+        autoPlay: true,
+        autoPlayDelay: Duration(seconds: 3),
+      ),
+    );
+  }
 }
 
-class _AddressScreenState extends State<AddressScreen> {
+class AddressScreen11 extends StatefulWidget {
+  @override
+  _AddressScreen11State createState() => _AddressScreen11State();
+}
+
+class _AddressScreen11State extends State<AddressScreen11> {
+  GlobalKey _one = GlobalKey();
+  GlobalKey _two = GlobalKey();
+  GlobalKey _three = GlobalKey();
+
   _showDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -56,6 +82,8 @@ class _AddressScreenState extends State<AddressScreen> {
   void initState() {
     // TODO: implement initState
     _getAddress();
+    WidgetsBinding.instance.addPostFrameCallback(
+        (_) => ShowCaseWidget.of(context).startShowCase([_one, _two, _three]));
   }
 
   @override
@@ -75,56 +103,65 @@ class _AddressScreenState extends State<AddressScreen> {
                 )),
           ),
           actions: [
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/HomePage', (route) => false);
-              },
-              child: Container(
-                  height: 20,
-                  width: 20,
-                  child: Image.asset(
-                    "assets/home.png",
-                    color: appPrimaryMaterialColor,
-                  )),
+            Showcase(
+              key: _one,
+              description: 'Tap to move towards home!',
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/HomePage', (route) => false);
+                },
+                child: Container(
+                    height: 20,
+                    width: 20,
+                    child: Image.asset(
+                      "assets/home.png",
+                      color: appPrimaryMaterialColor,
+                    )),
+              ),
             ),
-            Stack(
-              alignment: Alignment.topRight,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 15.0, left: 4, top: 18),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed('/CartScreen');
-                    },
-                    child: Container(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset(
-                          "assets/shopping-cart.png",
-                          color: appPrimaryMaterialColor,
-                        )),
+            Showcase(
+              key: _two,
+              description: 'Tap to see your cart products!',
+              child: Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(right: 15.0, left: 10, top: 18),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed('/CartScreen');
+                      },
+                      child: Container(
+                          height: 20,
+                          width: 20,
+                          child: Image.asset(
+                            "assets/shopping-cart.png",
+                            color: appPrimaryMaterialColor,
+                          )),
+                    ),
                   ),
-                ),
-                provider.cartCount > 0
-                    ? Padding(
-                        padding: const EdgeInsets.only(
-                            left: 1.0, top: 13, right: 10),
-                        child: CircleAvatar(
-                          radius: 7.0,
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white,
-                          child: Text(
-                            provider.cartCount.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 9.0,
+                  provider.cartCount > 0
+                      ? Padding(
+                          padding: const EdgeInsets.only(
+                              left: 1.0, top: 13, right: 10),
+                          child: CircleAvatar(
+                            radius: 7.0,
+                            backgroundColor: Colors.red,
+                            foregroundColor: Colors.white,
+                            child: Text(
+                              provider.cartCount.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 9.0,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    : Container()
-              ],
+                        )
+                      : Container()
+                ],
+              ),
             )
           ],
           elevation: 1,
@@ -135,15 +172,19 @@ class _AddressScreenState extends State<AddressScreen> {
             style: TextStyle(color: appPrimaryMaterialColor, fontSize: 17),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: appPrimaryMaterialColor,
-          child: Icon(
-            Icons.add,
-            color: Colors.white,
+        floatingActionButton: Showcase(
+          key: _three,
+          description: 'Tap to add your address!',
+          child: FloatingActionButton(
+            backgroundColor: appPrimaryMaterialColor,
+            child: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              _showDialog(context);
+            },
           ),
-          onPressed: () {
-            _showDialog(context);
-          },
         ),
         body: isDisplayLoading
             ? LoadingComponent()

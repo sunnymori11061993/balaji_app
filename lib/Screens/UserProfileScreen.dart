@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
@@ -13,13 +14,38 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcase.dart';
+import 'package:showcaseview/showcase_widget.dart';
 
-class UserProfileScreen extends StatefulWidget {
+class UserProfileScreen extends StatelessWidget {
   @override
-  _UserProfileScreenState createState() => _UserProfileScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ShowCaseWidget(
+        onStart: (index, key) {
+          log('onStart: $index, $key');
+        },
+        onComplete: (index, key) {
+          log('onComplete: $index, $key');
+        },
+        builder: Builder(builder: (context) => UserProfileScreen1()),
+        autoPlay: true,
+        autoPlayDelay: Duration(seconds: 3),
+      ),
+    );
+  }
 }
 
-class _UserProfileScreenState extends State<UserProfileScreen> {
+class UserProfileScreen1 extends StatefulWidget {
+  @override
+  _UserProfileScreen1State createState() => _UserProfileScreen1State();
+}
+
+class _UserProfileScreen1State extends State<UserProfileScreen1> {
+  GlobalKey _one = GlobalKey();
+  GlobalKey _two = GlobalKey();
+  GlobalKey _three = GlobalKey();
+  GlobalKey _four = GlobalKey();
   bool isSearching = true;
   String txtname = "";
   String img;
@@ -38,6 +64,8 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   void initState() {
     _profile();
     _settingApi();
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        ShowCaseWidget.of(context).startShowCase([_one, _two, _three, _four]));
   }
 
   @override
@@ -63,43 +91,47 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           elevation: 1,
           iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
           actions: <Widget>[
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed('/CartScreen');
-              },
-              child: Stack(
-                alignment: Alignment.topRight,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(right: 15.0, left: 10, top: 18),
-                    child: Container(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset(
-                          "assets/shopping-cart.png",
-                          color: appPrimaryMaterialColor,
-                        )),
-                  ),
-                  provider.cartCount > 0
-                      ? Padding(
-                          padding: const EdgeInsets.only(
-                              left: 1.0, top: 13, right: 10),
-                          child: CircleAvatar(
-                            radius: 7.0,
-                            backgroundColor: Colors.red,
-                            foregroundColor: Colors.white,
-                            child: Text(
-                              provider.cartCount.toString(),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 9.0,
+            Showcase(
+              key: _one,
+              description: 'Tap to see your cart products!',
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed('/CartScreen');
+                },
+                child: Stack(
+                  alignment: Alignment.topRight,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(right: 15.0, left: 10, top: 18),
+                      child: Container(
+                          height: 20,
+                          width: 20,
+                          child: Image.asset(
+                            "assets/shopping-cart.png",
+                            color: appPrimaryMaterialColor,
+                          )),
+                    ),
+                    provider.cartCount > 0
+                        ? Padding(
+                            padding: const EdgeInsets.only(
+                                left: 1.0, top: 13, right: 10),
+                            child: CircleAvatar(
+                              radius: 7.0,
+                              backgroundColor: Colors.red,
+                              foregroundColor: Colors.white,
+                              child: Text(
+                                provider.cartCount.toString(),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 9.0,
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                      : Container()
-                ],
+                          )
+                        : Container()
+                  ],
+                ),
               ),
             )
           ],
@@ -127,20 +159,25 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   Navigator.of(context)
                                       .pushNamed('/ProfileScreen');
                                 },
-                                child: ListTile(
-                                  leading: Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 10.0, left: 4),
-                                    child: Container(
-                                        height: 20,
-                                        width: 20,
-                                        child: Image.asset(
-                                          "assets/edit.png",
-                                          color: appPrimaryMaterialColor,
-                                        )),
-                                  ),
-                                  title: Text(
-                                    'drw_edit_profile'.tr().toString(),
+                                child: Showcase(
+                                  key: _two,
+                                  description:
+                                      'Tap to see your profile and update your profile!',
+                                  child: ListTile(
+                                    leading: Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 10.0, left: 4),
+                                      child: Container(
+                                          height: 20,
+                                          width: 20,
+                                          child: Image.asset(
+                                            "assets/edit.png",
+                                            color: appPrimaryMaterialColor,
+                                          )),
+                                    ),
+                                    title: Text(
+                                      'drw_edit_profile'.tr().toString(),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -157,20 +194,25 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                           builder: (BuildContext context) =>
                                               new AddressScreen()));
                                 },
-                                child: ListTile(
-                                  leading: Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 10.0, left: 4),
-                                    child: Container(
-                                        height: 20,
-                                        width: 20,
-                                        child: Image.asset(
-                                          "assets/location.png",
-                                          color: appPrimaryMaterialColor,
-                                        )),
-                                  ),
-                                  title: Text(
-                                    'drw_manage_address'.tr().toString(),
+                                child: Showcase(
+                                  key: _three,
+                                  description:
+                                      'Tap to manage your address- add ,update or delete!',
+                                  child: ListTile(
+                                    leading: Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 10.0, left: 4),
+                                      child: Container(
+                                          height: 20,
+                                          width: 20,
+                                          child: Image.asset(
+                                            "assets/location.png",
+                                            color: appPrimaryMaterialColor,
+                                          )),
+                                    ),
+                                    title: Text(
+                                      'drw_manage_address'.tr().toString(),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -184,20 +226,25 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                                   Navigator.of(context)
                                       .pushNamed('/HistoryScreen');
                                 },
-                                child: ListTile(
-                                  leading: Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 10.0, left: 4),
-                                    child: Container(
-                                        height: 20,
-                                        width: 20,
-                                        child: Image.asset(
-                                          "assets/history.png",
-                                          color: appPrimaryMaterialColor,
-                                        )),
-                                  ),
-                                  title: Text(
-                                    'drw_order_history'.tr().toString(),
+                                child: Showcase(
+                                  key: _four,
+                                  description:
+                                      'Tap to see your ordered product history!',
+                                  child: ListTile(
+                                    leading: Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 10.0, left: 4),
+                                      child: Container(
+                                          height: 20,
+                                          width: 20,
+                                          child: Image.asset(
+                                            "assets/history.png",
+                                            color: appPrimaryMaterialColor,
+                                          )),
+                                    ),
+                                    title: Text(
+                                      'drw_order_history'.tr().toString(),
+                                    ),
                                   ),
                                 ),
                               ),

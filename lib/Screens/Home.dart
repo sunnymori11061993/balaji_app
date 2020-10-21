@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
@@ -14,22 +15,49 @@ import 'package:balaji/Screens/SearchingScreen.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_slider/image_slider.dart';
 import 'package:provider/provider.dart';
-import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcase.dart';
+import 'package:showcaseview/showcase_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 //slider
 
-class Home extends StatefulWidget {
+class Home extends StatelessWidget {
   @override
-  _HomeState createState() => _HomeState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ShowCaseWidget(
+        onStart: (index, key) {
+          log('onStart: $index, $key');
+        },
+        onComplete: (index, key) {
+          log('onComplete: $index, $key');
+        },
+        builder: Builder(builder: (context) => Home1()),
+        autoPlay: true,
+        autoPlayDelay: Duration(seconds: 3),
+      ),
+    );
+  }
 }
 
-class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+class Home1 extends StatefulWidget {
+  @override
+  _Home1State createState() => _Home1State();
+}
+
+class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
+  GlobalKey _one = GlobalKey();
+  GlobalKey _two = GlobalKey();
+  GlobalKey _three = GlobalKey();
+  GlobalKey _four = GlobalKey();
+  GlobalKey _five = GlobalKey();
+
   bool isLoading = true;
   bool isTermLoading = false;
   List termsConList = [];
@@ -63,6 +91,9 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     _settingApi();
     userName();
     _notification();
+    WidgetsBinding.instance.addPostFrameCallback((_) =>
+        ShowCaseWidget.of(context)
+            .startShowCase([_one, _two, _three, _four, _five]));
     // _getCart();
   }
 
@@ -102,6 +133,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     //       // color: Colors.black,
     //       fontSize: 17),
     // );
+
     CartProvider provider = Provider.of<CartProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
@@ -123,43 +155,47 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 borderRadius: BorderRadius.circular(3),
                 color: Colors.grey[100],
               ),
-              child: TextFormField(
-                controller: txtSearch,
-                maxLines: 1,
-                cursorColor: Colors.black,
-                keyboardType: TextInputType.text,
-                textInputAction: TextInputAction.done,
-                onFieldSubmitted: (aa) {
-                  //  _getSearching();
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              new SearchingScreen(
-                                searchData: txtSearch.text,
-                              )));
-                  txtSearch.clear();
-                  //Navigator.pop(context, this.txtSearch.text);
-                },
-                decoration: new InputDecoration(
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                    enabledBorder: InputBorder.none,
-                    errorBorder: InputBorder.none,
-                    disabledBorder: InputBorder.none,
-                    prefixIcon: Container(
-                        height: 35,
-                        width: 30,
-                        padding: EdgeInsets.only(
-                            left: 7, right: 0, top: 7, bottom: 7),
-                        child: Image.asset(
-                          "assets/search.png",
-                          color: Colors.grey,
-                        )),
-                    hintStyle: TextStyle(fontSize: 15.0, color: Colors.grey),
-                    contentPadding: EdgeInsets.only(
-                        left: 10, bottom: 12, top: 7, right: 15),
-                    hintText: 'Search'.tr().toString()),
+              child: Showcase(
+                key: _one,
+                description: 'Type to search Products!',
+                child: TextFormField(
+                  controller: txtSearch,
+                  maxLines: 1,
+                  cursorColor: Colors.black,
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (aa) {
+                    //  _getSearching();
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                new SearchingScreen(
+                                  searchData: txtSearch.text,
+                                )));
+                    txtSearch.clear();
+                    //Navigator.pop(context, this.txtSearch.text);
+                  },
+                  decoration: new InputDecoration(
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      disabledBorder: InputBorder.none,
+                      prefixIcon: Container(
+                          height: 35,
+                          width: 30,
+                          padding: EdgeInsets.only(
+                              left: 7, right: 0, top: 7, bottom: 7),
+                          child: Image.asset(
+                            "assets/search.png",
+                            color: Colors.grey,
+                          )),
+                      hintStyle: TextStyle(fontSize: 15.0, color: Colors.grey),
+                      contentPadding: EdgeInsets.only(
+                          left: 10, bottom: 12, top: 7, right: 15),
+                      hintText: 'Search'.tr().toString()),
+                ),
               ),
             ),
           ),
@@ -246,91 +282,100 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           //         ),
           // ),
           //
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (BuildContext context) => new NotificationScreen(
-                            notiData: notiList,
-                          )));
-            },
-            child: Stack(
-              alignment: Alignment.topRight,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 0, left: 0, top: 18),
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/bell_icon.png",
-                        color: appPrimaryMaterialColor,
-                      )),
-                ),
-                notiList.length > 0
-                    ? Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: CircleAvatar(
-                          radius: 7.0,
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white,
-                          child: Text(
-                            notiList.length.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 9.0,
+          Showcase(
+            key: _two,
+            description: 'Tap to see notification!',
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            new NotificationScreen(
+                              notiData: notiList,
+                            )));
+              },
+              child: Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 0, left: 0, top: 18),
+                    child: Container(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset(
+                          "assets/bell_icon.png",
+                          color: appPrimaryMaterialColor,
+                        )),
+                  ),
+                  notiList.length > 0
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 10.0),
+                          child: CircleAvatar(
+                            radius: 7.0,
+                            backgroundColor: Colors.red,
+                            foregroundColor: Colors.white,
+                            child: Text(
+                              notiList.length.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 9.0,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    : Container()
-              ],
-            ),
+                        )
+                      : Container()
+                ],
+              ),
 
-            // Image.asset(
-            //   "assets/bell_icon.png",
-            //   color: appPrimaryMaterialColor,
-            //   height: 17,
-            //   width: 17,
-            // ),
+              // Image.asset(
+              //   "assets/bell_icon.png",
+              //   color: appPrimaryMaterialColor,
+              //   height: 17,
+              //   width: 17,
+              // ),
+            ),
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed('/CartScreen');
-            },
-            child: Stack(
-              alignment: Alignment.topRight,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.only(right: 15.0, left: 10, top: 18),
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/shopping-cart.png",
-                        color: appPrimaryMaterialColor,
-                      )),
-                ),
-                provider.cartCount > 0
-                    ? Padding(
-                        padding: const EdgeInsets.only(top: 10, right: 10),
-                        child: CircleAvatar(
-                          radius: 7.0,
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white,
-                          child: Text(
-                            provider.cartCount.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 9.0,
+          Showcase(
+            key: _three,
+            description: 'Tap to see your cart products!',
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/CartScreen');
+              },
+              child: Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(right: 15.0, left: 10, top: 18),
+                    child: Container(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset(
+                          "assets/shopping-cart.png",
+                          color: appPrimaryMaterialColor,
+                        )),
+                  ),
+                  provider.cartCount > 0
+                      ? Padding(
+                          padding: const EdgeInsets.only(top: 10, right: 10),
+                          child: CircleAvatar(
+                            radius: 7.0,
+                            backgroundColor: Colors.red,
+                            foregroundColor: Colors.white,
+                            child: Text(
+                              provider.cartCount.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 9.0,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    : Container()
-              ],
+                        )
+                      : Container()
+                ],
+              ),
             ),
           )
         ],
@@ -415,7 +460,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 //             GestureDetector(
 //               onTap: () {
 //                 Navigator.of(context).pop();
-//                 Navigator.of(context).pushNamed('/HomePage');
+//                 Navigator.of(context).pushNamed('/Home1Page');
 //               },
 //               child: ListTile(
 //                 leading: Padding(

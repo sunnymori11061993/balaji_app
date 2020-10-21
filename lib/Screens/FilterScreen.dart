@@ -55,7 +55,7 @@ class _FilterScreenState extends State<FilterScreen> {
         ),
         title: Text(
           //'My_Cart'.tr().toString(),
-          'Product_Detail'.tr().toString(),
+          'Filter_Products'.tr().toString(),
           style: TextStyle(
               color: appPrimaryMaterialColor,
               //fontFamily: 'RobotoSlab',
@@ -63,11 +63,28 @@ class _FilterScreenState extends State<FilterScreen> {
               fontSize: 17),
         ),
         actions: <Widget>[
+          GestureDetector(
+            onTap: () {
+              // Navigator.of(context).pushReplacementNamed('/HomePage');
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/HomePage', (route) => false);
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Container(
+                  height: 20,
+                  width: 20,
+                  child: Image.asset(
+                    "assets/home.png",
+                    color: appPrimaryMaterialColor,
+                  )),
+            ),
+          ),
           Stack(
             alignment: Alignment.topRight,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+                padding: const EdgeInsets.only(right: 15.0, left: 10, top: 18),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.of(context).pushNamed('/CartScreen');

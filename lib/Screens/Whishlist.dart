@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
@@ -12,13 +13,35 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcase.dart';
+import 'package:showcaseview/showcase_widget.dart';
 
-class Whishlist extends StatefulWidget {
+class Whishlist extends StatelessWidget {
   @override
-  _WhishlistState createState() => _WhishlistState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ShowCaseWidget(
+        onStart: (index, key) {
+          log('onStart: $index, $key');
+        },
+        onComplete: (index, key) {
+          log('onComplete: $index, $key');
+        },
+        builder: Builder(builder: (context) => Whishlist1()),
+        autoPlay: true,
+        autoPlayDelay: Duration(seconds: 3),
+      ),
+    );
+  }
 }
 
-class _WhishlistState extends State<Whishlist> {
+class Whishlist1 extends StatefulWidget {
+  @override
+  _Whishlist1State createState() => _Whishlist1State();
+}
+
+class _Whishlist1State extends State<Whishlist1> {
+  GlobalKey _one = GlobalKey();
   bool isLoading = true;
   List wishList = [];
   TextEditingController txtSearch = TextEditingController();
@@ -27,6 +50,8 @@ class _WhishlistState extends State<Whishlist> {
   @override
   void initState() {
     _wishList();
+    WidgetsBinding.instance.addPostFrameCallback(
+        (_) => ShowCaseWidget.of(context).startShowCase([_one]));
   }
 
   @override
@@ -68,144 +93,47 @@ class _WhishlistState extends State<Whishlist> {
               child: appBarTitle,
             ),
             actions: <Widget>[
-              if (searchImage == false)
-                Row(
-                  children: [
-                    // Container(
-                    //   height: 20,
-                    //   width: 20,
-                    //   child: Image.asset(
-                    //     "assets/search.png",
-                    //     color: appPrimaryMaterialColor,
-                    //   ),
-                    // ),
-                    // Container(
-                    //   width: MediaQuery.of(context).size.width - 120,
-                    //   height: 50,
-                    //   child: TextFormField(
-                    //     controller: txtSearch,
-                    //     textInputAction: TextInputAction.done,
-                    //     onFieldSubmitted: (aa) {
-                    //       //  _getSearching();
-                    //       Navigator.push(
-                    //           context,
-                    //           MaterialPageRoute(
-                    //               builder: (BuildContext context) =>
-                    //                   new SearchingScreen(
-                    //                     searchData: txtSearch.text,
-                    //                   )));
-                    //       txtSearch.clear();
-                    //       //Navigator.pop(context, this.txtSearch.text);
-                    //     },
-                    //     style: TextStyle(
-                    //         //color: Colors.white,
-                    //         ),
-                    //     cursorColor: appPrimaryMaterialColor,
-                    //     decoration: InputDecoration(
-                    //         // prefixIcon: SizedBox(
-                    //         //   height: 20,
-                    //         //   width: 10,
-                    //         //   child: Image.asset(
-                    //         //     "assets/search.png",
-                    //         //     color: appPrimaryMaterialColor,
-                    //         //   ),
-                    //         // ),
-                    //
-                    //         hintText: "    Search...",
-                    //         hintStyle: TextStyle(color: Colors.grey),
-                    //         focusedBorder: UnderlineInputBorder(
-                    //           borderSide: BorderSide(color: Colors.grey),
-                    //         )),
-                    //   ),
-                    // ),
-                  ],
-                ),
-              // GestureDetector(
-              //   onTap: () {
-              //     setState(() {
-              //       searchImage = !searchImage;
-              //     });
-              //   },
-              //   child: searchImage
-              //       ? Padding(
-              //           padding: const EdgeInsets.only(right: 15.0),
-              //           child: Container(
-              //             height: 20,
-              //             width: 20,
-              //             child: Image.asset(
-              //               "assets/search.png",
-              //               color: appPrimaryMaterialColor,
-              //             ),
-              //           ),
-              //         )
-              //       : Padding(
-              //           padding: const EdgeInsets.only(right: 15.0),
-              //           child: Container(
-              //             height: 20,
-              //             width: 20,
-              //             child: Image.asset(
-              //               "assets/025-cancel.png",
-              //               color: appPrimaryMaterialColor,
-              //             ),
-              //           ),
-              //         ),
-              // ),
-              // searchImage
-              //     ? Padding(
-              //   padding: const EdgeInsets.only(
-              //     right: 10.0,
-              //     left: 8,
-              //   ),
-              //   child:Container(
-              //           height: 20,
-              //           width: 20,
-              //           child: GestureDetector(
-              //               onTap: () {
-              //                 //Navigator.of(context).pushNamed('/Whishlist');
-              //               },
-              //               child: Image.asset(
-              //                 "assets/020-heart.png",
-              //                 color: appPrimaryMaterialColor,
-              //               ))),
-              // )
-              //     : Container(),
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushNamed('/CartScreen');
-                },
-                child: Stack(
-                  alignment: Alignment.topRight,
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(right: 15.0, left: 8, top: 18),
-                      child: Container(
-                          height: 20,
-                          width: 20,
-                          child: Image.asset(
-                            "assets/shopping-cart.png",
-                            color: appPrimaryMaterialColor,
-                          )),
-                    ),
-                    provider.cartCount > 0
-                        ? Padding(
-                            padding: const EdgeInsets.only(
-                                left: 1.0, top: 13, right: 10),
-                            child: CircleAvatar(
-                              radius: 7.0,
-                              backgroundColor: Colors.red,
-                              foregroundColor: Colors.white,
-                              child: Text(
-                                provider.cartCount.toString(),
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 9.0,
+              Showcase(
+                key: _one,
+                description: 'Tap to see your cart products!',
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/CartScreen');
+                  },
+                  child: Stack(
+                    alignment: Alignment.topRight,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            right: 15.0, left: 8, top: 18),
+                        child: Container(
+                            height: 20,
+                            width: 20,
+                            child: Image.asset(
+                              "assets/shopping-cart.png",
+                              color: appPrimaryMaterialColor,
+                            )),
+                      ),
+                      provider.cartCount > 0
+                          ? Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 1.0, top: 13, right: 10),
+                              child: CircleAvatar(
+                                radius: 7.0,
+                                backgroundColor: Colors.red,
+                                foregroundColor: Colors.white,
+                                child: Text(
+                                  provider.cartCount.toString(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 9.0,
+                                  ),
                                 ),
                               ),
-                            ),
-                          )
-                        : Container()
-                  ],
+                            )
+                          : Container()
+                    ],
+                  ),
                 ),
               )
 
@@ -219,7 +147,7 @@ class _WhishlistState extends State<Whishlist> {
               //       width: 20,
               //       child: GestureDetector(
               //           onTap: () {
-              //             //Navigator.of(context).pushNamed('/Whishlist');
+              //             //Navigator.of(context).pushNamed('/Whishlist1');
               //           },
               //           child: Image.asset(
               //             "assets/020-heart.png",
