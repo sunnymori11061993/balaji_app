@@ -49,6 +49,7 @@ class _UserProfileScreen1State extends State<UserProfileScreen1> {
   bool isSearching = true;
   String txtname = "";
   String img;
+  String isShowcase = "false";
   TextEditingController txtSearch = TextEditingController();
 
   _profile() async {
@@ -60,12 +61,24 @@ class _UserProfileScreen1State extends State<UserProfileScreen1> {
     print("-------------------" + img);
   }
 
+  showShowCase() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isShowcase = prefs.getString(Session.showCaseUserProfile);
+
+    if (isShowcase == null || isShowcase == "false") {
+      WidgetsBinding.instance.addPostFrameCallback((_) =>
+          ShowCaseWidget.of(context)
+              .startShowCase([_one, _two, _three, _four]));
+      prefs.setString(Session.showCaseUserProfile, "true");
+    }
+    ;
+  }
+
   @override
   void initState() {
     _profile();
     _settingApi();
-    WidgetsBinding.instance.addPostFrameCallback((_) =>
-        ShowCaseWidget.of(context).startShowCase([_one, _two, _three, _four]));
+    showShowCase();
   }
 
   @override
@@ -93,7 +106,7 @@ class _UserProfileScreen1State extends State<UserProfileScreen1> {
           actions: <Widget>[
             Showcase(
               key: _one,
-              description: 'Tap to see your cart products!',
+              description: 'Tap_to_see_your_cart_products'.tr().toString(),
               child: GestureDetector(
                 onTap: () {
                   Navigator.of(context).pushNamed('/CartScreen');
@@ -162,7 +175,9 @@ class _UserProfileScreen1State extends State<UserProfileScreen1> {
                                 child: Showcase(
                                   key: _two,
                                   description:
-                                      'Tap to see your profile and update your profile!',
+                                      'Tap_to_see_your_profile_or_to_update_your_profile'
+                                          .tr()
+                                          .toString(),
                                   child: ListTile(
                                     leading: Padding(
                                       padding: const EdgeInsets.only(
@@ -196,8 +211,7 @@ class _UserProfileScreen1State extends State<UserProfileScreen1> {
                                 },
                                 child: Showcase(
                                   key: _three,
-                                  description:
-                                      'Tap to manage your address- add ,update or delete!',
+                                  description: 'Tap_to_manage'.tr().toString(),
                                   child: ListTile(
                                     leading: Padding(
                                       padding: const EdgeInsets.only(
@@ -229,7 +243,9 @@ class _UserProfileScreen1State extends State<UserProfileScreen1> {
                                 child: Showcase(
                                   key: _four,
                                   description:
-                                      'Tap to see your ordered product history!',
+                                      'Tap_to_see_your_ordered_product_history'
+                                          .tr()
+                                          .toString(),
                                   child: ListTile(
                                     leading: Padding(
                                       padding: const EdgeInsets.only(

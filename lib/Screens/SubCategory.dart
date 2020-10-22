@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
@@ -13,45 +14,49 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcase.dart';
+import 'package:showcaseview/showcase_widget.dart';
 
-class SubCategory extends StatefulWidget {
+class SubCategory extends StatelessWidget {
   var catId;
 
   SubCategory({this.catId});
-
   @override
-  _SubCategoryState createState() => _SubCategoryState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ShowCaseWidget(
+        onStart: (index, key) {
+          log('onStart: $index, $key');
+        },
+        onComplete: (index, key) {
+          log('onComplete: $index, $key');
+        },
+        builder: Builder(
+            builder: (context) => SubCategory11(
+                  catId: catId,
+                )),
+        autoPlay: true,
+        autoPlayDelay: Duration(seconds: 3),
+      ),
+    );
+  }
 }
 
-class _SubCategoryState extends State<SubCategory>
+class SubCategory11 extends StatefulWidget {
+  var catId;
+
+  SubCategory11({this.catId});
+
+  @override
+  _SubCategory11State createState() => _SubCategory11State();
+}
+
+class _SubCategory11State extends State<SubCategory11>
     with TickerProviderStateMixin {
   TabController _tabController;
-
-  // List filterList = [
-  //   {
-  //     "title": "Prices",
-  //     "type": "radio",
-  //     "values": [
-  //       "100",
-  //       "200",
-  //       "300",
-  //     ],
-  //   },
-  //   {
-  //     "title": "Fabrics",
-  //     "type": "checkbox",
-  //     "values": [
-  //       "cotton",
-  //       "silk",
-  //       "other",
-  //     ],
-  //   },
-  //   {
-  //     "title": "Offers",
-  //     "type": "radio",
-  //     "values": ["5%", "20%", "30%"],
-  //   },
-  // ];
+  GlobalKey _one = GlobalKey();
+  GlobalKey _two = GlobalKey();
+  GlobalKey _three = GlobalKey();
 
   @override
   void initState() {
@@ -60,6 +65,8 @@ class _SubCategoryState extends State<SubCategory>
     _subCatTab();
     print(widget.catId);
     _getFilter();
+    WidgetsBinding.instance.addPostFrameCallback(
+        (_) => ShowCaseWidget.of(context).startShowCase([_one, _two, _three]));
   }
 
   _tabCon() {
@@ -115,79 +122,91 @@ class _SubCategoryState extends State<SubCategory>
         title: Text('Sub_Category'.tr().toString(),
             style: TextStyle(color: appPrimaryMaterialColor, fontSize: 17)),
         actions: <Widget>[
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _scaffoldKey.currentState.openEndDrawer();
-              });
-            },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 12.0, left: 4, top: 4),
+          Showcase(
+            key: _one,
+            description: 'Tap_to_Filter_products'.tr().toString(),
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _scaffoldKey.currentState.openEndDrawer();
+                });
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(right: 12.0, left: 4, top: 4),
+                child: Container(
+                    height: 20,
+                    width: 20,
+                    child: Image.asset(
+                      "assets/fffffff.png",
+                      //color: appPrimaryMaterialColor,
+                    )),
+              ),
+            ),
+          ),
+          Showcase(
+            key: _two,
+            description: 'Tap_to_move_towards_home'.tr().toString(),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/HomePage', (route) => false);
+              },
               child: Container(
                   height: 20,
                   width: 20,
                   child: Image.asset(
-                    "assets/fffffff.png",
-                    //color: appPrimaryMaterialColor,
+                    "assets/home.png",
+                    color: appPrimaryMaterialColor,
                   )),
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamedAndRemoveUntil(
-                  context, '/HomePage', (route) => false);
-            },
-            child: Container(
-                height: 20,
-                width: 20,
-                child: Image.asset(
-                  "assets/home.png",
-                  color: appPrimaryMaterialColor,
-                )),
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed('/CartScreen');
-            },
-            child: Stack(
-              alignment: Alignment.topRight,
-              children: [
-                Padding(
-                  padding:
-                      const EdgeInsets.only(right: 15.0, left: 12, top: 18),
-                  child: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        "assets/shopping-cart.png",
-                        color: appPrimaryMaterialColor,
-                      )),
-                ),
-                // IconButton(
-                //   icon: Icon(Icons.card_travel),
-                //   onPressed: () {
-                //     Navigator.of(context).pushNamed('/CartScreen');
-                //   },
-                // ),
-                provider.cartCount > 0
-                    ? Padding(
-                        padding: const EdgeInsets.only(
-                            left: 1.0, top: 13, right: 10),
-                        child: CircleAvatar(
-                          radius: 7.0,
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white,
-                          child: Text(
-                            provider.cartCount.toString(),
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 9.0,
+          Showcase(
+            key: _three,
+            description: 'Tap_to_see_your_cart_products'.tr().toString(),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/CartScreen');
+              },
+              child: Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(right: 15.0, left: 12, top: 18),
+                    child: Container(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset(
+                          "assets/shopping-cart.png",
+                          color: appPrimaryMaterialColor,
+                        )),
+                  ),
+                  // IconButton(
+                  //   icon: Icon(Icons.card_travel),
+                  //   onPressed: () {
+                  //     Navigator.of(context).pushNamed('/CartScreen');
+                  //   },
+                  // ),
+                  provider.cartCount > 0
+                      ? Padding(
+                          padding: const EdgeInsets.only(
+                              left: 1.0, top: 13, right: 10),
+                          child: CircleAvatar(
+                            radius: 7.0,
+                            backgroundColor: Colors.red,
+                            foregroundColor: Colors.white,
+                            child: Text(
+                              provider.cartCount.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 9.0,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    : Container()
-              ],
+                        )
+                      : Container()
+                ],
+              ),
             ),
           ),
 

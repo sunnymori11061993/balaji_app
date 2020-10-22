@@ -50,4 +50,8 @@ class Session {
   static const String langauge = "language";
   static const String v = "__v";
   static const String CustomerGSTNo = "CustomerGSTNo";
+  static const String showCaseHome = "showCaseHome";
+  static const String showCaseWislist = "showCaseWislist";
+  static const String showCaseUserProfile = "showCaseUserProfile";
+  static const String showCaseSetting = "showCaseSetting";
 }

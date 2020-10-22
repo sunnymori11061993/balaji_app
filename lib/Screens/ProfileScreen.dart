@@ -199,7 +199,7 @@ class _ProfileScreen11State extends State<ProfileScreen11> {
           actions: [
             Showcase(
               key: _one,
-              description: 'Tap to move towards Home!',
+              description: 'Tap_to_move_towards_home'.tr().toString(),
               child: GestureDetector(
                 onTap: () {
                   Navigator.pushNamedAndRemoveUntil(
@@ -216,7 +216,7 @@ class _ProfileScreen11State extends State<ProfileScreen11> {
             ),
             Showcase(
               key: _two,
-              description: 'Tap to see your cart products!',
+              description: 'Tap_to_see_your_cart_products'.tr().toString(),
               child: GestureDetector(
                 onTap: () {
                   Navigator.of(context).pushNamed('/CartScreen');

@@ -37,7 +37,6 @@ class CartProvider extends ChangeNotifier {
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         SharedPreferences pref = await SharedPreferences.getInstance();
 
-        log("--------------------------------");
         FormData body = FormData.fromMap(
             {"customerId": pref.getString(Session.CustomerId)});
         Services.PostForList(api_name: 'get_data_where/tblcart', body: body)

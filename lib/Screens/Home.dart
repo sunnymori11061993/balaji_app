@@ -35,7 +35,7 @@ class Home extends StatelessWidget {
         onStart: (index, key) {
           log('onStart: $index, $key');
         },
-        onComplete: (index, key) {
+        onComplete: (index, key) async {
           log('onComplete: $index, $key');
         },
         builder: Builder(builder: (context) => Home1()),
@@ -55,8 +55,6 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
   GlobalKey _one = GlobalKey();
   GlobalKey _two = GlobalKey();
   GlobalKey _three = GlobalKey();
-  GlobalKey _four = GlobalKey();
-  GlobalKey _five = GlobalKey();
 
   bool isLoading = true;
   bool isTermLoading = false;
@@ -76,6 +74,7 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
   String msg, whatsapp;
 
   bool isBannerLoading = true;
+  String isShowcase = "false";
   bool searchImage = true;
   String txtName = "";
 
@@ -83,18 +82,27 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
 
   TextEditingController txtSearch = TextEditingController();
 
+  showShowCase() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isShowcase = prefs.getString(Session.showCaseHome);
+
+    if (isShowcase == null || isShowcase == "false") {
+      WidgetsBinding.instance.addPostFrameCallback((_) =>
+          ShowCaseWidget.of(context).startShowCase([_one, _two, _three]));
+      prefs.setString(Session.showCaseHome, "true");
+    }
+    ;
+  }
+
   @override
   void initState() {
+    showShowCase();
     _bannerImage();
     _categoryImage();
     _trendingProduct();
     _settingApi();
     userName();
     _notification();
-    WidgetsBinding.instance.addPostFrameCallback((_) =>
-        ShowCaseWidget.of(context)
-            .startShowCase([_one, _two, _three, _four, _five]));
-    // _getCart();
   }
 
   void launchwhatsapp({
@@ -125,23 +133,17 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    // Widget appBarTitle = Text(
-    //   'home1'.tr().toString(),
-    //   style: TextStyle(
-    //       color: appPrimaryMaterialColor,
-    //       //fontFamily: 'RobotoSlab',
-    //       // color: Colors.black,
-    //       fontSize: 17),
-    // );
-
     CartProvider provider = Provider.of<CartProvider>(context);
+    setShowcasevalue() async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      setState(() {
+        prefs.setString(Session.showCaseHome, "true");
+      });
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        // title: Padding(
-        //   padding: const EdgeInsets.only(left: 15.0),
-        //   child: appBarTitle,
-        // ),
         backgroundColor: Colors.white,
         elevation: 0,
         iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
@@ -157,7 +159,7 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
               ),
               child: Showcase(
                 key: _one,
-                description: 'Type to search Products!',
+                description: 'Type_to_search_Products'.tr().toString(),
                 child: TextFormField(
                   controller: txtSearch,
                   maxLines: 1,
@@ -284,7 +286,7 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
           //
           Showcase(
             key: _two,
-            description: 'Tap to see notification!',
+            description: 'Tap_to_see_notification'.tr().toString(),
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -338,7 +340,7 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
           ),
           Showcase(
             key: _three,
-            description: 'Tap to see your cart products!',
+            description: 'Tap_to_see_your_cart_products'.tr().toString(),
             child: GestureDetector(
               onTap: () {
                 Navigator.of(context).pushNamed('/CartScreen');

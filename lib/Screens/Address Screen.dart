@@ -105,7 +105,7 @@ class _AddressScreen11State extends State<AddressScreen11> {
           actions: [
             Showcase(
               key: _one,
-              description: 'Tap to move towards home!',
+              description: 'Tap_to_move_towards_home'.tr().toString(),
               child: GestureDetector(
                 onTap: () {
                   Navigator.pushNamedAndRemoveUntil(
@@ -122,7 +122,7 @@ class _AddressScreen11State extends State<AddressScreen11> {
             ),
             Showcase(
               key: _two,
-              description: 'Tap to see your cart products!',
+              description: 'Tap_to_see_your_cart_products'.tr().toString(),
               child: Stack(
                 alignment: Alignment.topRight,
                 children: [
@@ -174,7 +174,7 @@ class _AddressScreen11State extends State<AddressScreen11> {
         ),
         floatingActionButton: Showcase(
           key: _three,
-          description: 'Tap to add your address!',
+          description: 'Tap_to_add_your_address'.tr().toString(),
           child: FloatingActionButton(
             backgroundColor: appPrimaryMaterialColor,
             child: Icon(

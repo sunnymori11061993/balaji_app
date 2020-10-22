@@ -74,7 +74,7 @@ class _HistoryScreen11State extends State<HistoryScreen11> {
           actions: [
             Showcase(
               key: _one,
-              description: 'Tap to move towards home!',
+              description: 'Tap_to_move_towards_home'.tr().toString(),
               child: GestureDetector(
                 onTap: () {
                   Navigator.pushNamedAndRemoveUntil(
@@ -91,7 +91,7 @@ class _HistoryScreen11State extends State<HistoryScreen11> {
             ),
             Showcase(
               key: _two,
-              description: 'Tap to see your cart products!',
+              description: 'Tap_to_see_your_cart_products'.tr().toString(),
               child: GestureDetector(
                 onTap: () {
                   Navigator.of(context).pushNamed('/CartScreen');

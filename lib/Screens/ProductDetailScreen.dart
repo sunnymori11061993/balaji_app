@@ -18,24 +18,53 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcase.dart';
+import 'package:showcaseview/showcase_widget.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 import '../Component/LoadingComponent.dart';
 
 //slider
 
-class ProductDetailScreen extends StatefulWidget {
+class ProductDetailScreen extends StatelessWidget {
   var productDetail;
 
   ProductDetailScreen({this.productDetail});
-
   @override
-  _ProductDetailScreenState createState() => _ProductDetailScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ShowCaseWidget(
+        onStart: (index, key) {
+          log('onStart: $index, $key');
+        },
+        onComplete: (index, key) {
+          log('onComplete: $index, $key');
+        },
+        builder: Builder(
+            builder: (context) => ProductDetailScreen11(
+                  productDetail: productDetail,
+                )),
+        autoPlay: true,
+        autoPlayDelay: Duration(seconds: 3),
+      ),
+    );
+  }
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
-  TextEditingController controller = new TextEditingController();
+class ProductDetailScreen11 extends StatefulWidget {
+  var productDetail;
 
+  ProductDetailScreen11({this.productDetail});
+
+  @override
+  _ProductDetailScreen11State createState() => _ProductDetailScreen11State();
+}
+
+class _ProductDetailScreen11State extends State<ProductDetailScreen11> {
+  TextEditingController controller = new TextEditingController();
+  GlobalKey _one = GlobalKey();
+  GlobalKey _two = GlobalKey();
+  GlobalKey _three = GlobalKey();
   int _m = 1;
   int res = 0;
   bool isLoading = true;
@@ -111,6 +140,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     //total();
     _getProductDetail();
     _getRating();
+    WidgetsBinding.instance.addPostFrameCallback(
+        (_) => ShowCaseWidget.of(context).startShowCase([_one, _two, _three]));
   }
 
   Future<File> createFileOfPdfUrl(url) async {
@@ -170,65 +201,73 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           title: Text('Product_Detail'.tr().toString(),
               style: TextStyle(color: appPrimaryMaterialColor, fontSize: 17)),
           actions: <Widget>[
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/HomePage', (route) => false);
-              },
-              child: Container(
-                  height: 20,
-                  width: 20,
-                  child: Image.asset(
-                    "assets/home.png",
-                    color: appPrimaryMaterialColor,
-                  )),
+            Showcase(
+              key: _one,
+              description: 'Tap_to_move_towards_home'.tr().toString(),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, '/HomePage', (route) => false);
+                },
+                child: Container(
+                    height: 20,
+                    width: 20,
+                    child: Image.asset(
+                      "assets/home.png",
+                      color: appPrimaryMaterialColor,
+                    )),
+              ),
             ),
-            GestureDetector(
-              onTap: () async {
-                final result =
-                    await Navigator.of(context).pushNamed('/CartScreen');
-                if (result == "pop") _getProductDetail();
-              },
-              child: Stack(
-                alignment: Alignment.topRight,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(right: 15.0, left: 10, top: 18),
-                    child: Container(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset(
-                          "assets/shopping-cart.png",
-                          color: appPrimaryMaterialColor,
-                        )),
-                  ),
-                  // IconButton(
-                  //     icon: Icon(Icons.card_travel),
-                  //     onPressed: () async {
-                  //       final result =
-                  //           await Navigator.of(context).pushNamed('/CartScreen');
-                  //       if (result == "pop") _getProductDetail();
-                  //     }),
-                  provider.cartCount > 0
-                      ? Padding(
-                          padding: const EdgeInsets.only(
-                              left: 1.0, top: 13, right: 15),
-                          child: CircleAvatar(
-                            radius: 7.0,
-                            backgroundColor: Colors.red,
-                            foregroundColor: Colors.white,
-                            child: Text(
-                              provider.cartCount.toString(),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 9.0,
+            Showcase(
+              key: _two,
+              description: 'Tap_to_see_your_cart_products'.tr().toString(),
+              child: GestureDetector(
+                onTap: () async {
+                  final result =
+                      await Navigator.of(context).pushNamed('/CartScreen');
+                  if (result == "pop") _getProductDetail();
+                },
+                child: Stack(
+                  alignment: Alignment.topRight,
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(right: 15.0, left: 10, top: 18),
+                      child: Container(
+                          height: 20,
+                          width: 20,
+                          child: Image.asset(
+                            "assets/shopping-cart.png",
+                            color: appPrimaryMaterialColor,
+                          )),
+                    ),
+                    // IconButton(
+                    //     icon: Icon(Icons.card_travel),
+                    //     onPressed: () async {
+                    //       final result =
+                    //           await Navigator.of(context).pushNamed('/CartScreen');
+                    //       if (result == "pop") _getProductDetail();
+                    //     }),
+                    provider.cartCount > 0
+                        ? Padding(
+                            padding: const EdgeInsets.only(
+                                left: 1.0, top: 13, right: 15),
+                            child: CircleAvatar(
+                              radius: 7.0,
+                              backgroundColor: Colors.red,
+                              foregroundColor: Colors.white,
+                              child: Text(
+                                provider.cartCount.toString(),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 9.0,
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                      : Container()
-                ],
+                          )
+                        : Container()
+                  ],
+                ),
               ),
             )
           ],
@@ -265,58 +304,63 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 8.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              if (isCartLoading == false &&
-                                  isCartList == false) {
-                                _addToCart();
-                              }
-                            },
-                            child: Container(
-                              width: 150,
-                              height: 40,
-                              // color: appPrimaryMaterialColor,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  // border: Border.all(color: Colors.grey[300]),
-                                  color: appPrimaryMaterialColor),
-                              child: isCartLoading
-                                  ? Center(
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            new AlwaysStoppedAnimation<Color>(
-                                                Colors.white),
-                                      ),
-                                    )
-                                  : Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: <Widget>[
+                          child: Showcase(
+                            key: _three,
+                            description:
+                                'Tap_to_add_product_in_cart'.tr().toString(),
+                            child: GestureDetector(
+                              onTap: () {
+                                if (isCartLoading == false &&
+                                    isCartList == false) {
+                                  _addToCart();
+                                }
+                              },
+                              child: Container(
+                                width: 150,
+                                height: 40,
+                                // color: appPrimaryMaterialColor,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    // border: Border.all(color: Colors.grey[300]),
+                                    color: appPrimaryMaterialColor),
+                                child: isCartLoading
+                                    ? Center(
+                                        child: CircularProgressIndicator(
+                                          valueColor:
+                                              new AlwaysStoppedAnimation<Color>(
+                                                  Colors.white),
+                                        ),
+                                      )
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
 //                                        Icon(
 //                                          Icons.shopping_cart,
 //                                          color: Colors.white,
 //                                        ),
-                                        isCartList == true
-                                            ? Text(
-                                                'Already_in_Cart'
-                                                    .tr()
-                                                    .toString(),
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              )
-                                            : Text(
-                                                'Add_to_Cart'.tr().toString(),
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.w600),
-                                              ),
-                                      ],
-                                    ),
+                                          isCartList == true
+                                              ? Text(
+                                                  'Already_in_Cart'
+                                                      .tr()
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                )
+                                              : Text(
+                                                  'Add_to_Cart'.tr().toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                        ],
+                                      ),
+                              ),
                             ),
                           ),
                         ),

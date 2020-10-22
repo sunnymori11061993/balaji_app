@@ -64,6 +64,7 @@ class _SettingScreen11State extends State<SettingScreen11> {
   String txtname = "";
   String img;
   String language;
+  String isShowcase = "false";
 
   _profile() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -95,13 +96,24 @@ class _SettingScreen11State extends State<SettingScreen11> {
     );
   }
 
+  showShowCase() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isShowcase = prefs.getString(Session.showCaseSetting);
+
+    if (isShowcase == null || isShowcase == "false") {
+      WidgetsBinding.instance.addPostFrameCallback((_) =>
+          ShowCaseWidget.of(context).startShowCase(
+              [_one, _two, _three, _four, _five, _six, _seven, _eight]));
+      prefs.setString(Session.showCaseSetting, "true");
+    }
+    ;
+  }
+
   @override
   void initState() {
     _settingApi();
     _profile();
-    WidgetsBinding.instance.addPostFrameCallback((_) =>
-        ShowCaseWidget.of(context).startShowCase(
-            [_one, _two, _three, _four, _five, _six, _seven, _eight]));
+    showShowCase();
   }
 
   void launchwhatsapp({
@@ -147,7 +159,7 @@ class _SettingScreen11State extends State<SettingScreen11> {
           actions: <Widget>[
             Showcase(
               key: _one,
-              description: 'Tap to see your cart products!',
+              description: 'Tap_to_see_your_cart_products'.tr().toString(),
               child: GestureDetector(
                 onTap: () {
                   Navigator.of(context).pushNamed('/CartScreen');
@@ -296,7 +308,8 @@ class _SettingScreen11State extends State<SettingScreen11> {
                               },
                               child: Showcase(
                                 key: _two,
-                                description: 'Tap to change language!',
+                                description:
+                                    'Tap_to_change_language'.tr().toString(),
                                 child: ListTile(
                                   leading: Padding(
                                     padding: const EdgeInsets.only(
@@ -330,7 +343,7 @@ class _SettingScreen11State extends State<SettingScreen11> {
                               },
                               child: Showcase(
                                 key: _three,
-                                description: 'Tap to see FAQs!',
+                                description: 'Tap_to_see_FAQs'.tr().toString(),
                                 child: ListTile(
                                   leading: Padding(
                                     padding: const EdgeInsets.only(
@@ -361,7 +374,8 @@ class _SettingScreen11State extends State<SettingScreen11> {
                               },
                               child: Showcase(
                                 key: _four,
-                                description: 'Tap to share app link!',
+                                description:
+                                    'Tap_to_share_app_link'.tr().toString(),
                                 child: ListTile(
                                   leading: Padding(
                                     padding: const EdgeInsets.only(
@@ -393,7 +407,8 @@ class _SettingScreen11State extends State<SettingScreen11> {
                               },
                               child: Showcase(
                                 key: _five,
-                                description: 'Tap to contact with us!',
+                                description:
+                                    'Tap_to_contact_with_us'.tr().toString(),
                                 child: ListTile(
                                   leading: Padding(
                                     padding: const EdgeInsets.only(
@@ -431,7 +446,8 @@ class _SettingScreen11State extends State<SettingScreen11> {
                               },
                               child: Showcase(
                                 key: _six,
-                                description: 'Tap to see about us!',
+                                description:
+                                    'Tap_to_see_about_us'.tr().toString(),
                                 child: ListTile(
                                   leading: Padding(
                                     padding: const EdgeInsets.only(
@@ -469,7 +485,9 @@ class _SettingScreen11State extends State<SettingScreen11> {
                               },
                               child: Showcase(
                                 key: _seven,
-                                description: 'Tap to see terms & conditions!',
+                                description: 'Tap_to_see_termsconditions'
+                                    .tr()
+                                    .toString(),
                                 child: ListTile(
                                   leading: Padding(
                                     padding: const EdgeInsets.only(
@@ -500,7 +518,8 @@ class _SettingScreen11State extends State<SettingScreen11> {
                               },
                               child: Showcase(
                                 key: _eight,
-                                description: 'Tap to logout from balaji!',
+                                description:
+                                    'Tap_to_logout_from_balaji'.tr().toString(),
                                 child: ListTile(
                                   leading: Padding(
                                     padding: const EdgeInsets.only(

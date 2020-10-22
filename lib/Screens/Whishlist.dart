@@ -44,14 +44,25 @@ class _Whishlist1State extends State<Whishlist1> {
   GlobalKey _one = GlobalKey();
   bool isLoading = true;
   List wishList = [];
+  String isShowcase = "false";
   TextEditingController txtSearch = TextEditingController();
   bool searchImage = true;
+  showShowCase() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isShowcase = prefs.getString(Session.showCaseWislist);
+
+    if (isShowcase == null || isShowcase == "false") {
+      WidgetsBinding.instance.addPostFrameCallback(
+          (_) => ShowCaseWidget.of(context).startShowCase([_one]));
+      prefs.setString(Session.showCaseWislist, "true");
+    }
+    ;
+  }
 
   @override
   void initState() {
     _wishList();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => ShowCaseWidget.of(context).startShowCase([_one]));
+    showShowCase();
   }
 
   @override
@@ -95,7 +106,7 @@ class _Whishlist1State extends State<Whishlist1> {
             actions: <Widget>[
               Showcase(
                 key: _one,
-                description: 'Tap to see your cart products!',
+                description: 'Tap_to_see_your_cart_products'.tr().toString(),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.of(context).pushNamed('/CartScreen');

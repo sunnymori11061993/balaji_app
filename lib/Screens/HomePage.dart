@@ -9,32 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:showcaseview/showcase.dart';
 import 'package:showcaseview/showcase_widget.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ShowCaseWidget(
-        onStart: (index, key) {
-          log('onStart: $index, $key');
-        },
-        onComplete: (index, key) {
-          log('onComplete: $index, $key');
-        },
-        builder: Builder(builder: (context) => HomePage1()),
-        autoPlay: true,
-        autoPlayDelay: Duration(seconds: 3),
-        autoPlayLockEnable: true,
-      ),
-    );
-  }
+  _HomePageState createState() => _HomePageState();
 }
 
-class HomePage1 extends StatefulWidget {
-  @override
-  _HomePage1State createState() => _HomePage1State();
-}
-
-class _HomePage1State extends State<HomePage1> {
+class _HomePageState extends State<HomePage> {
   GlobalKey _one = GlobalKey();
   GlobalKey _two = GlobalKey();
   GlobalKey _three = GlobalKey();
@@ -57,9 +37,6 @@ class _HomePage1State extends State<HomePage1> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) =>
-        ShowCaseWidget.of(context)
-            .startShowCase([_one, _two, _three, _four, _five]));
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
