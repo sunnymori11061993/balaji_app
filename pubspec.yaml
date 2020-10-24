@@ -53,6 +53,7 @@ dependencies:
   flutter_downloader: ^1.5.1
   permission_handler: ^5.0.1+1
   showcaseview: ^0.1.6
+  firebase_messaging: ^7.0.3
 
 
 dev_dependencies:
