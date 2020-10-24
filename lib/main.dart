@@ -36,6 +36,7 @@ import 'package:balaji/Screens/ViewCatalougeScreen.dart';
 import 'package:balaji/Screens/WalkThroughScreen.dart';
 import 'package:balaji/Screens/Whishlist.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:provider/provider.dart';
@@ -66,6 +67,40 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // _firebaseToken();
+    _firebaseMessaging.configure(onMessage: (Map<String, dynamic> message) {
+      print("onMessage");
+      print(message);
+    }, onResume: (Map<String, dynamic> message) {
+      print("onResume");
+      print(message);
+    }, onLaunch: (Map<String, dynamic> message) {
+      print("onLaunch");
+      print(message);
+    });
+
+    //For Ios Notification
+    // _firebaseMessaging.requestNotificationPermissions(
+    //     const IosNotificationSettings(sound: true, badge: true, alert: true));
+    //
+    //   _firebaseMessaging.onIosSettingsRegistered
+    //       .listen((IosNotificationSettings settings) {
+    //     print("Setting reqistered : $settings");
+    //   });
+  }
+
+  void _firebaseToken() {
+    _firebaseMessaging.getToken().then((token) {
+      print(token);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

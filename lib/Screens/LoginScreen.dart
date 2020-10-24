@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
@@ -5,6 +6,7 @@ import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
 import 'package:balaji/Screens/VerificationScreen.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -21,10 +23,36 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController txtLogin = TextEditingController();
   bool isLoading = false;
-  String msg, whatsapp;
-
+  String msg, whatsapp, fcmToken;
   bool isTermLoading = false;
   List termsConList = [];
+  StreamSubscription iosSubscription;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+  _configureNotification() async {
+    if (Platform.isIOS) {
+      iosSubscription =
+          _firebaseMessaging.onIosSettingsRegistered.listen((data) {
+        print("Firebase Messaging---->" + data.toString());
+        saveDeviceToken();
+      });
+      _firebaseMessaging
+          .requestNotificationPermissions(IosNotificationSettings());
+    } else {
+      await saveDeviceToken();
+    }
+  }
+
+  saveDeviceToken() async {
+    _firebaseMessaging.getToken().then((String token) {
+      print("Original Token:$token");
+      var tokendata = token.split(':');
+      setState(() {
+        fcmToken = token;
+      });
+      print("FCM Token : $fcmToken");
+    });
+  }
 
   void launchwhatsapp({
     @required String whatsappNumber,
@@ -107,6 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     // TODO: implement initState
     _settingApi();
+    _configureNotification();
   }
 
   @override
@@ -459,6 +488,7 @@ class _LoginScreenState extends State<LoginScreen> {
           });
           FormData body = FormData.fromMap({
             "PhoneNo": txtLogin.text,
+            "CutomerFCMToken": fcmToken
             // "type": toggle.toLowerCase()
           }); //"key":"value"
           Services.PostForList(api_name: 'OTP_login_api', body: body).then(
