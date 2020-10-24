@@ -78,12 +78,24 @@ class _AddressScreen11State extends State<AddressScreen11> {
   bool isDisplayLoading = true;
   List getAddressList = [];
 
+  String isShowcase = "false";
+  showShowCase() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isShowcase = prefs.getString(showSession.showCaseAddress);
+
+    if (isShowcase == null || isShowcase == "false") {
+      WidgetsBinding.instance.addPostFrameCallback((_) =>
+          ShowCaseWidget.of(context).startShowCase([_one, _two, _three]));
+      prefs.setString(showSession.showCaseAddress, "true");
+    }
+    ;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     _getAddress();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => ShowCaseWidget.of(context).startShowCase([_one, _two, _three]));
+    showShowCase();
   }
 
   @override
@@ -175,15 +187,17 @@ class _AddressScreen11State extends State<AddressScreen11> {
         floatingActionButton: Showcase(
           key: _three,
           description: 'Tap_to_add_your_address'.tr().toString(),
-          child: FloatingActionButton(
-            backgroundColor: appPrimaryMaterialColor,
-            child: Icon(
-              Icons.add,
-              color: Colors.white,
+          child: Container(
+            child: FloatingActionButton(
+              backgroundColor: appPrimaryMaterialColor,
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                _showDialog(context);
+              },
             ),
-            onPressed: () {
-              _showDialog(context);
-            },
           ),
         ),
         body: isDisplayLoading

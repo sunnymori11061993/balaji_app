@@ -12,8 +12,11 @@ import 'package:balaji/Screens/Home.dart';
 import 'package:balaji/Screens/HomePage.dart';
 import 'package:balaji/Screens/LanguageChangeScreen.dart';
 import 'package:balaji/Screens/LoginScreen.dart';
+import 'package:balaji/Screens/ManuHomePage.dart';
 import 'package:balaji/Screens/ManuHomeScreen.dart';
+import 'package:balaji/Screens/ManuProfile.dart';
 import 'package:balaji/Screens/ManuProfileScreen.dart';
+import 'package:balaji/Screens/ManuSetting.dart';
 import 'package:balaji/Screens/NotificationScreen.dart';
 import 'package:balaji/Screens/OrderHistoryScreen.dart';
 import 'package:balaji/Screens/PlaceOrderScreen.dart';
@@ -108,6 +111,9 @@ class _MyAppState extends State<MyApp> {
         '/ChangeLanguage': (context) => ChangeLanguage(),
         '/ViewAllScreen': (context) => ViewAllScreen(),
         '/NotificationScreen': (context) => NotificationScreen(),
+        '/ManuHomePage': (context) => ManuHomePage(),
+        '/ManuSetting': (context) => ManuSetting(),
+        '/ManuProfile': (context) => ManuProfile(),
       },
       theme: ThemeData(
         fontFamily: 'RobotoSlab',

@@ -135,13 +135,25 @@ class _ProductDetailScreen11State extends State<ProductDetailScreen11> {
     });
   }
 
+  String isShowcase = "false";
+  showShowCase() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isShowcase = prefs.getString(showSession.showCaseProductDetail);
+
+    if (isShowcase == null || isShowcase == "false") {
+      WidgetsBinding.instance.addPostFrameCallback((_) =>
+          ShowCaseWidget.of(context).startShowCase([_one, _two, _three]));
+      prefs.setString(showSession.showCaseProductDetail, "true");
+    }
+    ;
+  }
+
   @override
   void initState() {
     //total();
     _getProductDetail();
     _getRating();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => ShowCaseWidget.of(context).startShowCase([_one, _two, _three]));
+    showShowCase();
   }
 
   Future<File> createFileOfPdfUrl(url) async {
@@ -318,11 +330,17 @@ class _ProductDetailScreen11State extends State<ProductDetailScreen11> {
                               child: Container(
                                 width: 150,
                                 height: 40,
+
                                 // color: appPrimaryMaterialColor,
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    // border: Border.all(color: Colors.grey[300]),
-                                    color: appPrimaryMaterialColor),
+                                  borderRadius: BorderRadius.circular(5),
+                                  image: DecorationImage(
+                                      image:
+                                          AssetImage("assets/backchange.png"),
+                                      fit: BoxFit.cover),
+                                  // border: Border.all(color: Colors.grey[300]),
+                                  //    color: appPrimaryMaterialColor
+                                ),
                                 child: isCartLoading
                                     ? Center(
                                         child: CircularProgressIndicator(

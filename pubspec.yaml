@@ -96,6 +96,9 @@ flutter:
     - assets/BWB_Logo-02.jpg
     - assets/ft.png
     - assets/fi.png
+    - assets/question.png
+    - assets/trend.png
+    - assets/trendunfill.png
     - assets/bell_icon.png
     - assets/cancel.png
     - assets/intro1.jpeg

@@ -70,7 +70,13 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                   height: 70,
                   width: 70,
                   decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: appPrimaryMaterialColor),
+                      shape: BoxShape.circle,
+                      // borderRadius: BorderRadius.circular(5),
+                      image: DecorationImage(
+                          image: AssetImage("assets/backchange.png"),
+                          fit: BoxFit.cover)),
+                  // decoration: BoxDecoration(
+                  //    , color: appPrimaryMaterialColor),
                   child: Icon(
                     Icons.done,
                     color: Colors.white,
@@ -134,16 +140,22 @@ class _ThankYouScreenState extends State<ThankYouScreen> {
                 SizedBox(
                   height: MediaQuery.of(context).padding.top + 30,
                 ),
-                SizedBox(
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      image: DecorationImage(
+                          image: AssetImage("assets/backchange.png"),
+                          fit: BoxFit.cover)),
                   height: 45,
                   width: 190,
                   child: FlatButton(
-                    color: appPrimaryMaterialColor,
+                    // color: appPrimaryMaterialColor,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                         side: BorderSide(color: Colors.grey[300])),
                     onPressed: () {
-                      Navigator.of(context).pushNamed("/HomePage");
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/HomePage', (route) => false);
                     },
                     child: Text(
                       'Continue_shopping'.tr().toString(),

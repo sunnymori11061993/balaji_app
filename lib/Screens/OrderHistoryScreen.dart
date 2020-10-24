@@ -153,16 +153,16 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                 itemBuilder: (BuildContext context, int index) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              new ProductDetailScreen(
-                            productDetail: viewOrderDetailList[index]
-                                ["ProductId"],
-                          ),
-                        ),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (BuildContext context) =>
+                      //         new ProductDetailScreen(
+                      //       productDetail: viewOrderDetailList[index]
+                      //           ["ProductId"],
+                      //     ),
+                      //   ),
+                      // );
                     },
                     child: Container(
                       color: Colors.white,
@@ -243,11 +243,20 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(left: 20.0),
-                                  child: SizedBox(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/backchange.png"),
+                                          fit: BoxFit.cover),
+                                      // border: Border.all(color: Colors.grey[300]),
+                                      //    color: appPrimaryMaterialColor
+                                    ),
                                     height: 45,
                                     width: 150,
                                     child: FlatButton(
-                                      color: appPrimaryMaterialColor,
+                                      // color: appPrimaryMaterialColor,
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(5),
@@ -290,11 +299,20 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 20.0),
-                                  child: SizedBox(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/backchange.png"),
+                                          fit: BoxFit.cover),
+                                      // border: Border.all(color: Colors.grey[300]),
+                                      //    color: appPrimaryMaterialColor
+                                    ),
                                     width: 150,
                                     height: 45,
                                     child: FlatButton(
-                                      color: appPrimaryMaterialColor,
+                                      // color: appPrimaryMaterialColor,
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(5),

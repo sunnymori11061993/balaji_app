@@ -63,13 +63,13 @@ class _UserProfileScreen1State extends State<UserProfileScreen1> {
 
   showShowCase() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    isShowcase = prefs.getString(Session.showCaseUserProfile);
+    isShowcase = prefs.getString(showSession.showCaseUserProfile);
 
     if (isShowcase == null || isShowcase == "false") {
       WidgetsBinding.instance.addPostFrameCallback((_) =>
           ShowCaseWidget.of(context)
               .startShowCase([_one, _two, _three, _four]));
-      prefs.setString(Session.showCaseUserProfile, "true");
+      prefs.setString(showSession.showCaseUserProfile, "true");
     }
     ;
   }
@@ -154,7 +154,11 @@ class _UserProfileScreen1State extends State<UserProfileScreen1> {
             : Stack(
                 children: [
                   Container(
-                    color: appPrimaryMaterialColor,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage("assets/backchange.png"),
+                            fit: BoxFit.cover)),
+                    // color: appPrimaryMaterialColor,
                   ),
                   Align(
                     alignment: AlignmentDirectional.bottomEnd,

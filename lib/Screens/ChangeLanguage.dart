@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
@@ -23,6 +24,7 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
       String lang1;
       lang1 = prefs.getString(Session.langauge);
       lang1 != null ? lang = lang1 : lang = "p1";
+      prefs.setString(Session.langauge, lang);
     });
   }
 
@@ -151,12 +153,11 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
                       children: [
                         new Text(
                           'CONTINUE'.tr().toString(),
-                          style: TextStyle(
-                              color: appPrimaryMaterialColor, fontSize: 16),
+                          style: TextStyle(color: Colors.white, fontSize: 16),
                         ),
                         Icon(
                           Icons.arrow_forward,
-                          color: appPrimaryMaterialColor,
+                          color: Colors.white,
                           size: 20,
                         )
                       ],

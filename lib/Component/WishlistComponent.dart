@@ -221,11 +221,16 @@ class _WishlistComponentState extends State<WishlistComponent> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0),
-                        child: SizedBox(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              image: DecorationImage(
+                                  image: AssetImage("assets/backchange.png"),
+                                  fit: BoxFit.cover)),
                           height: 45,
                           width: 150,
                           child: FlatButton(
-                            color: appPrimaryMaterialColor,
+                            //color: appPrimaryMaterialColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                                 side: BorderSide(color: Colors.grey[300])),
@@ -258,11 +263,16 @@ class _WishlistComponentState extends State<WishlistComponent> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 20.0),
-                        child: SizedBox(
+                        child: Container(
                           width: 150,
                           height: 45,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              image: DecorationImage(
+                                  image: AssetImage("assets/backchange.png"),
+                                  fit: BoxFit.cover)),
                           child: FlatButton(
-                            color: appPrimaryMaterialColor,
+                            //color: appPrimaryMaterialColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                                 side: BorderSide(color: Colors.grey[300])),

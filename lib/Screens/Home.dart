@@ -74,22 +74,23 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
   String msg, whatsapp;
 
   bool isBannerLoading = true;
-  String isShowcase = "false";
+
   bool searchImage = true;
   String txtName = "";
 
   TabController tabController;
 
   TextEditingController txtSearch = TextEditingController();
+  String isShowcase = "false";
 
   showShowCase() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    isShowcase = prefs.getString(Session.showCaseHome);
+    isShowcase = prefs.getString(showSession.showCaseHome);
 
     if (isShowcase == null || isShowcase == "false") {
       WidgetsBinding.instance.addPostFrameCallback((_) =>
           ShowCaseWidget.of(context).startShowCase([_one, _two, _three]));
-      prefs.setString(Session.showCaseHome, "true");
+      prefs.setString(showSession.showCaseHome, "true");
     }
     ;
   }
@@ -134,12 +135,6 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     CartProvider provider = Provider.of<CartProvider>(context);
-    setShowcasevalue() async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      setState(() {
-        prefs.setString(Session.showCaseHome, "true");
-      });
-    }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -677,7 +672,7 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
 //           ],
 //         ),
 //       ),
-      body: isLoading
+      body: isLoading || isNotiLoading == true
           ? LoadingComponent()
           : SingleChildScrollView(
               physics: BouncingScrollPhysics(),
@@ -953,46 +948,6 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
                         ],
                       ),
                     ),
-
-//                     Padding(
-//                       padding: const EdgeInsets.only(top: 10.0, bottom: 20),
-//                       child: Center(
-//                         child: SizedBox(
-//                           height: 45,
-//                           width: 250,
-//                           child: FlatButton(
-//                             color: appPrimaryMaterialColor,
-//                             shape: RoundedRectangleBorder(
-//                                 borderRadius: BorderRadius.circular(5),
-//                                 side: BorderSide(color: Colors.grey[300])),
-//                             onPressed: () {},
-//                             child: Row(
-//                               mainAxisAlignment: MainAxisAlignment.center,
-//                               crossAxisAlignment: CrossAxisAlignment.center,
-//                               children: [
-// //                                Icon(Icons.delete_forever, color: Colors.white),
-//                                 // color: Colors.grey[700],),
-//                                 Padding(
-//                                   padding: const EdgeInsets.only(left: 4.0),
-//                                   child: Text(
-//                                     'Know_more'.tr().toString(),
-//                                     style: TextStyle(
-//                                       fontSize: 17,
-//                                       color: Colors.white,
-//                                     ),
-//                                   ),
-//                                 ),
-//                                 Icon(
-//                                   Icons.arrow_drop_down,
-//                                   color: Colors.white,
-//                                   size: 30,
-//                                 )
-//                               ],
-//                             ),
-//                           ),
-//                         ),
-//                       ),
-//                     ),
                   ],
                 ),
               ),
@@ -1041,7 +996,10 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        isLoading = true;
+        setState(() {
+          isLoading = true;
+        });
+
         SharedPreferences prefs = await SharedPreferences.getInstance();
 
         FormData body =
@@ -1078,10 +1036,16 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        isLoading = true;
-        var body = {};
-        Services.PostForList(api_name: 'get_trending_product_api').then(
-            (trendProductResponseList) async {
+        setState(() {
+          isLoading = true;
+        });
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        FormData body =
+            FormData.fromMap({"Language": prefs.getString(Session.langauge)});
+        Services.PostForList(api_name: 'get_trending_product_api', body: body)
+            .then((trendProductResponseList) async {
           if (trendProductResponseList.length > 0) {
             setState(() {
               isLoading = false;
@@ -1113,7 +1077,10 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        isTermLoading = true;
+        setState(() {
+          isTermLoading = true;
+        });
+
         SharedPreferences prefs = await SharedPreferences.getInstance();
 
         FormData body =
@@ -1153,7 +1120,10 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        isTermLoading = true;
+        setState(() {
+          isNotiLoading = true;
+        });
+
         SharedPreferences prefs = await SharedPreferences.getInstance();
 
         FormData body = FormData.fromMap({

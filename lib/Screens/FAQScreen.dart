@@ -9,6 +9,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcase.dart';
 import 'package:showcaseview/showcase_widget.dart';
 
@@ -41,12 +42,24 @@ class _FAQScreen11State extends State<FAQScreen11> {
   GlobalKey _two = GlobalKey();
   bool isLoading = false;
   List listfaq = [];
+  String isShowcase = "false";
+
+  showShowCase() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isShowcase = prefs.getString(showSession.showCasefaq);
+
+    if (isShowcase == null || isShowcase == "false") {
+      WidgetsBinding.instance.addPostFrameCallback(
+          (_) => ShowCaseWidget.of(context).startShowCase([_one, _two]));
+      prefs.setString(showSession.showCasefaq, "true");
+    }
+    ;
+  }
 
   @override
   void initState() {
     _getFAQ();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => ShowCaseWidget.of(context).startShowCase([_one, _two]));
+    showShowCase();
   }
 
   @override

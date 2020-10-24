@@ -9,7 +9,7 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="balaji"
-        android:icon="@mipmap/bwd">
+        android:icon="@mipmap/splash">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

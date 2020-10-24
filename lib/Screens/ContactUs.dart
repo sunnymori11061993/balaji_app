@@ -145,7 +145,11 @@ class _ContactUsState extends State<ContactUs> {
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              color: appPrimaryMaterialColor,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/backchange.png"),
+                      fit: BoxFit.cover)),
+              // color: appPrimaryMaterialColor,
             ),
             Align(
               alignment: AlignmentDirectional.bottomEnd,
@@ -165,7 +169,7 @@ class _ContactUsState extends State<ContactUs> {
                       'drw_Contact'.tr().toString(),
                       style: TextStyle(
                         fontSize: 28,
-                        color: Colors.white,
+                        color: Color(0xFF9f782d),
                         //fontWeight: FontWeight.w600
                       ),
                     ),

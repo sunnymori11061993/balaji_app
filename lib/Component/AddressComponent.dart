@@ -575,11 +575,16 @@ class _AddressComponentState extends State<AddressComponent> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.only(left: 15.0),
-                        child: SizedBox(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              image: DecorationImage(
+                                  image: AssetImage("assets/backchange.png"),
+                                  fit: BoxFit.cover)),
                           height: 45,
                           width: 150,
                           child: FlatButton(
-                            color: appPrimaryMaterialColor,
+                            // color: appPrimaryMaterialColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                                 side: BorderSide(color: Colors.grey[300])),
@@ -631,11 +636,16 @@ class _AddressComponentState extends State<AddressComponent> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(right: 15.0),
-                        child: SizedBox(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              image: DecorationImage(
+                                  image: AssetImage("assets/backchange.png"),
+                                  fit: BoxFit.cover)),
                           width: 150,
                           height: 45,
                           child: FlatButton(
-                            color: appPrimaryMaterialColor,
+                            //color: appPrimaryMaterialColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(5),
                                 side: BorderSide(color: Colors.grey[300])),

@@ -5,6 +5,7 @@ import 'package:balaji/Providers/CartProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcase.dart';
 import 'package:showcaseview/showcase_widget.dart';
 
@@ -43,10 +44,22 @@ class _NotificationScreen11State extends State<NotificationScreen11> {
   GlobalKey _one = GlobalKey();
   GlobalKey _two = GlobalKey();
 
+  String isShowcase = "false";
+  showShowCase() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isShowcase = prefs.getString(showSession.showCaseNoti);
+
+    if (isShowcase == null || isShowcase == "false") {
+      WidgetsBinding.instance.addPostFrameCallback(
+          (_) => ShowCaseWidget.of(context).startShowCase([_one, _two]));
+      prefs.setString(showSession.showCaseNoti, "true");
+    }
+    ;
+  }
+
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => ShowCaseWidget.of(context).startShowCase([_one, _two]));
+    showShowCase();
   }
 
   @override

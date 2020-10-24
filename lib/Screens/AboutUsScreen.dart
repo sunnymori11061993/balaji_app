@@ -6,6 +6,7 @@ import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Providers/CartProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcase.dart';
 import 'package:showcaseview/showcase_widget.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -13,7 +14,9 @@ import 'package:easy_localization/easy_localization.dart';
 
 class AboutUsScreen extends StatelessWidget {
   var aboutData;
+
   AboutUsScreen({this.aboutData});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +40,9 @@ class AboutUsScreen extends StatelessWidget {
 
 class AboutUsScreen11 extends StatefulWidget {
   var aboutData;
+
   AboutUsScreen11({this.aboutData});
+
   @override
   _AboutUsScreen11State createState() => _AboutUsScreen11State();
 }
@@ -48,10 +53,23 @@ class _AboutUsScreen11State extends State<AboutUsScreen11> {
   Completer<WebViewController> _webView = Completer<WebViewController>();
   bool isLoading = true;
 
+  String isShowcase = "false";
+
+  showShowCase() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isShowcase = prefs.getString(showSession.showCaseABoutUs);
+
+    if (isShowcase == null || isShowcase == "false") {
+      WidgetsBinding.instance.addPostFrameCallback(
+          (_) => ShowCaseWidget.of(context).startShowCase([_one, _two]));
+      prefs.setString(showSession.showCaseABoutUs, "true");
+    }
+    ;
+  }
+
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => ShowCaseWidget.of(context).startShowCase([_one, _two]));
+    showShowCase();
   }
 
   @override

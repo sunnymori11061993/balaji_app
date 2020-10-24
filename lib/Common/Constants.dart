@@ -33,6 +33,7 @@ MaterialColor appPrimaryMaterialColor =
 
 class Session {
   static const String CustomerId = "CustomerId";
+  static const String ManufacturerId = "ManufacturerId";
   static const String CustomerName = "CustomerName";
   static const String addressId = "addressId";
   static const String type = "type";
@@ -45,13 +46,27 @@ class Session {
   static const String ManufacturerPhoneNo = "ManufacturerPhoneNo";
   static const String ManufacturerAddress = "ManufacturerAddress";
   static const String ManufacturerCompanyName = "ManufacturerCompanyName";
+  static const String ManufacturerEmailId = "ManufacturerEmailId";
   static const String CustomerImage = "CustomerImage";
   static const String ManuCustomerImage = "CustomerImage";
   static const String langauge = "language";
   static const String v = "__v";
   static const String CustomerGSTNo = "CustomerGSTNo";
+  static const String ManufacturerGSTNo = "ManufacturerGSTNo";
+}
+
+class showSession {
   static const String showCaseHome = "showCaseHome";
   static const String showCaseWislist = "showCaseWislist";
   static const String showCaseUserProfile = "showCaseUserProfile";
   static const String showCaseSetting = "showCaseSetting";
+  static const String showCaseNoti = "showCaseNoti";
+  static const String showCaseCart = "showCaseCart";
+  static const String showCaseSubCat = "showCaseSubCat";
+  static const String showCaseProductDetail = "showCaseProductDetail";
+  static const String showCaseEditProfile = "showCaseEditProfile";
+  static const String showCaseAddress = "showCaseAddress";
+  static const String showCaseHistory = "showCaseHistory";
+  static const String showCasefaq = "showCasefaq";
+  static const String showCaseABoutUs = "showCaseABoutUs";
 }

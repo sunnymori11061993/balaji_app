@@ -21,6 +21,7 @@ class SubCategory extends StatelessWidget {
   var catId;
 
   SubCategory({this.catId});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,15 +59,27 @@ class _SubCategory11State extends State<SubCategory11>
   GlobalKey _two = GlobalKey();
   GlobalKey _three = GlobalKey();
 
+  String isShowcase = "false";
+
+  showShowCase() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isShowcase = prefs.getString(showSession.showCaseSubCat);
+
+    if (isShowcase == null || isShowcase == "false") {
+      WidgetsBinding.instance.addPostFrameCallback((_) =>
+          ShowCaseWidget.of(context).startShowCase([_one, _two, _three]));
+      prefs.setString(showSession.showCaseSubCat, "true");
+    }
+    ;
+  }
+
   @override
   void initState() {
     super.initState();
-
+    showShowCase();
     _subCatTab();
     print(widget.catId);
     _getFilter();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => ShowCaseWidget.of(context).startShowCase([_one, _two, _three]));
   }
 
   _tabCon() {
@@ -455,7 +468,14 @@ class _SubCategory11State extends State<SubCategory11>
         setState(() {
           isLoadingPro = true;
         });
-        FormData body = FormData.fromMap({"subcategoryId": "${subcatId}"});
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        FormData body = FormData.fromMap({
+          "Language": prefs.getString(Session.langauge),
+          "subcategoryId": "${subcatId}"
+        });
+
         print(body.fields);
         Services.PostForList(api_name: 'get_data_where/tblproduct', body: body)
             .then((subCatResponseList) async {
@@ -491,7 +511,11 @@ class _SubCategory11State extends State<SubCategory11>
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        FormData body = FormData.fromMap({"categoryId": widget.catId});
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        FormData body = FormData.fromMap({
+          "categoryId": widget.catId,
+          "Language": prefs.getString(Session.langauge),
+        });
         Services.PostForList(
                 api_name: 'get_data_where/tblsubcategory', body: body)
             .then((tabResponseList) async {

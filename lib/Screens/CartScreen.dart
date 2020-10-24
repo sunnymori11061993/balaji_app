@@ -54,11 +54,23 @@ class _CartScreen11State extends State<CartScreen11> {
   int mainTotal = 0;
   String dropdownvalue = 'rinki';
 
+  String isShowcase = "false";
+  showShowCase() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isShowcase = prefs.getString(showSession.showCaseCart);
+
+    if (isShowcase == null || isShowcase == "false") {
+      WidgetsBinding.instance.addPostFrameCallback(
+          (_) => ShowCaseWidget.of(context).startShowCase([_one]));
+      prefs.setString(showSession.showCaseCart, "true");
+    }
+    ;
+  }
+
   @override
   void initState() {
     _getCart();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => ShowCaseWidget.of(context).startShowCase([_one]));
+    showShowCase();
   }
 
   @override
@@ -185,9 +197,15 @@ class _CartScreen11State extends State<CartScreen11> {
                                     height: 40,
                                     // color: appPrimaryMaterialColor,
                                     decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        // border: Border.all(color: Colors.grey[300]),
-                                        color: appPrimaryMaterialColor),
+                                      borderRadius: BorderRadius.circular(5),
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/backchange.png"),
+                                          fit: BoxFit.cover),
+                                    ),
+                                    // border: Border.all(color: Colors.grey[300]),
+                                    //color: appPrimaryMaterialColor
+
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -1299,11 +1317,16 @@ class _showBottomSheetState extends State<showBottomSheet> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 20.0),
-                      child: SizedBox(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            image: DecorationImage(
+                                image: AssetImage("assets/backchange.png"),
+                                fit: BoxFit.cover)),
                         height: 45,
                         width: 150,
                         child: FlatButton(
-                          color: appPrimaryMaterialColor,
+                          // color: appPrimaryMaterialColor,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5),
                               side: BorderSide(color: Colors.grey[300])),
@@ -1336,11 +1359,16 @@ class _showBottomSheetState extends State<showBottomSheet> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 20.0),
-                      child: SizedBox(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            image: DecorationImage(
+                                image: AssetImage("assets/backchange.png"),
+                                fit: BoxFit.cover)),
                         width: 150,
                         height: 45,
                         child: FlatButton(
-                          color: appPrimaryMaterialColor,
+                          //color: appPrimaryMaterialColor,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5),
                               side: BorderSide(color: Colors.grey[300])),

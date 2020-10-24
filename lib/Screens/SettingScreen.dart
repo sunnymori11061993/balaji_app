@@ -6,9 +6,7 @@ import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Providers/CartProvider.dart';
 import 'package:balaji/Screens/AboutUsScreen.dart';
-import 'package:balaji/Screens/Address%20Screen.dart';
 import 'package:balaji/Screens/FAQScreen.dart';
-import 'package:balaji/Screens/SearchingScreen.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +53,7 @@ class _SettingScreen11State extends State<SettingScreen11> {
   GlobalKey _six = GlobalKey();
   GlobalKey _seven = GlobalKey();
   GlobalKey _eight = GlobalKey();
+  GlobalKey _nine = GlobalKey();
 
   bool isSearching = false;
   bool searchImage = true;
@@ -98,13 +97,13 @@ class _SettingScreen11State extends State<SettingScreen11> {
 
   showShowCase() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    isShowcase = prefs.getString(Session.showCaseSetting);
+    isShowcase = prefs.getString(showSession.showCaseSetting);
 
     if (isShowcase == null || isShowcase == "false") {
       WidgetsBinding.instance.addPostFrameCallback((_) =>
           ShowCaseWidget.of(context).startShowCase(
-              [_one, _two, _three, _four, _five, _six, _seven, _eight]));
-      prefs.setString(Session.showCaseSetting, "true");
+              [_one, _two, _three, _four, _five, _six, _seven, _eight, _nine]));
+      prefs.setString(showSession.showCaseSetting, "true");
     }
     ;
   }
@@ -209,7 +208,10 @@ class _SettingScreen11State extends State<SettingScreen11> {
                 child: Column(
                   children: [
                     Container(
-                      color: appPrimaryMaterialColor,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage("assets/backchange.png"),
+                              fit: BoxFit.cover)),
                       height: 150,
                       width: MediaQuery.of(context).size.width,
                       child: Center(
@@ -224,62 +226,6 @@ class _SettingScreen11State extends State<SettingScreen11> {
                         ),
                       ),
                     ),
-                    // Container(
-                    //   color: appPrimaryMaterialColor,
-                    //   child: Padding(
-                    //     padding: const EdgeInsets.only(top: 60.0, bottom: 20),
-                    //     child: Row(
-                    //       children: [
-                    //         img != ""
-                    //             ? Container(
-                    //                 height: 95.0,
-                    //                 width: 120.0,
-                    //                 decoration: BoxDecoration(
-                    //                     border:
-                    //                         Border.all(color: Colors.white),
-                    //                     // borderRadius: BorderRadius.circular(30),
-                    //                     //color: Colors.white,
-                    //                     shape: BoxShape.circle,
-                    //                     image: DecorationImage(
-                    //                         image:
-                    //                             NetworkImage(Image_URL + img),
-                    //                         fit: BoxFit.cover)),
-                    //               )
-                    //             : Container(
-                    //                 height: 95.0,
-                    //                 width: 120.0,
-                    //                 decoration: BoxDecoration(
-                    //                   border: Border.all(color: Colors.white),
-                    //                   // borderRadius: BorderRadius.circular(30),
-                    //                   //color: Colors.white,
-                    //                   color: appPrimaryMaterialColor,
-                    //                   shape: BoxShape.circle,
-                    //                 ),
-                    //                 child: Center(
-                    //                   widthFactor: 40.0,
-                    //                   heightFactor: 40.0,
-                    //                   child: Image.asset(
-                    //                       "assets/051-user.png",
-                    //                       color: Colors.white,
-                    //                       width: 40.0,
-                    //                       height: 40.0),
-                    //                 ),
-                    //               ),
-                    //         Padding(
-                    //           padding: const EdgeInsets.only(top: 50.0),
-                    //           child: Text(
-                    //             txtname != null ? txtname : "",
-                    //             style: TextStyle(
-                    //               fontSize: 22,
-                    //               color: Colors.white,
-                    //               //fontWeight: FontWeight.w600
-                    //             ),
-                    //           ),
-                    //         )
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
                     Align(
                       alignment: AlignmentDirectional.bottomEnd,
                       child: Container(
@@ -349,10 +295,10 @@ class _SettingScreen11State extends State<SettingScreen11> {
                                     padding: const EdgeInsets.only(
                                         right: 10.0, left: 4),
                                     child: Container(
-                                        height: 20,
-                                        width: 20,
+                                        height: 28,
+                                        width: 28,
                                         child: Image.asset(
-                                          "assets/f.png",
+                                          "assets/question.png",
                                           color: appPrimaryMaterialColor,
                                         )),
                                   ),
@@ -400,13 +346,74 @@ class _SettingScreen11State extends State<SettingScreen11> {
                               child: Divider(),
                             ),
                             GestureDetector(
+                              onTap: () async {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                setState(() {
+                                  prefs.setString(
+                                      showSession.showCaseHome, "false");
+                                  prefs.setString(
+                                      showSession.showCaseWislist, "false");
+                                  prefs.setString(
+                                      showSession.showCaseUserProfile, "false");
+                                  prefs.setString(
+                                      showSession.showCaseSetting, "false");
+                                  prefs.setString(
+                                      showSession.showCaseNoti, "false");
+                                  prefs.setString(
+                                      showSession.showCaseCart, "false");
+                                  prefs.setString(
+                                      showSession.showCaseSubCat, "false");
+                                  prefs.setString(
+                                      showSession.showCaseProductDetail,
+                                      "false");
+                                  prefs.setString(
+                                      showSession.showCaseEditProfile, "false");
+                                  prefs.setString(
+                                      showSession.showCaseAddress, "false");
+                                  prefs.setString(
+                                      showSession.showCaseHistory, "false");
+                                  prefs.setString(
+                                      showSession.showCasefaq, "false");
+                                  prefs.setString(
+                                      showSession.showCaseABoutUs, "false");
+                                });
+                              },
+                              child: Showcase(
+                                key: _five,
+                                description:
+                                    'How_to_use_this_app'.tr().toString(),
+                                child: ListTile(
+                                  leading: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10.0, left: 4),
+                                    child: Container(
+                                        height: 20,
+                                        width: 20,
+                                        child: Image.asset(
+                                          "assets/f.png",
+                                          color: appPrimaryMaterialColor,
+                                        )),
+                                  ),
+                                  title: Text(
+                                    'Help'.tr().toString(),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              child: Divider(),
+                            ),
+                            GestureDetector(
                               onTap: () {
                                 // Navigator.of(context).pop();
                                 //launchwhatsapp(whatsappNumber: whatsapp, message: msg);
                                 Navigator.of(context).pushNamed('/ContactUs');
                               },
                               child: Showcase(
-                                key: _five,
+                                key: _six,
                                 description:
                                     'Tap_to_contact_with_us'.tr().toString(),
                                 child: ListTile(
@@ -445,7 +452,7 @@ class _SettingScreen11State extends State<SettingScreen11> {
                                             )));
                               },
                               child: Showcase(
-                                key: _six,
+                                key: _seven,
                                 description:
                                     'Tap_to_see_about_us'.tr().toString(),
                                 child: ListTile(
@@ -484,7 +491,7 @@ class _SettingScreen11State extends State<SettingScreen11> {
                                             )));
                               },
                               child: Showcase(
-                                key: _seven,
+                                key: _eight,
                                 description: 'Tap_to_see_termsconditions'
                                     .tr()
                                     .toString(),
@@ -517,7 +524,7 @@ class _SettingScreen11State extends State<SettingScreen11> {
                                 _showDialog(context);
                               },
                               child: Showcase(
-                                key: _eight,
+                                key: _nine,
                                 description:
                                     'Tap_to_logout_from_balaji'.tr().toString(),
                                 child: ListTile(
@@ -601,7 +608,10 @@ class _ALertLangState extends State<ALertLang> {
     setState(() {
       String lang1;
       lang1 = prefs.getString(Session.langauge);
-      lang1 != null ? lang = lang1 : lang = "p1";
+      lang1 != null || lang1 != "" ? lang = lang1 : lang = "p1";
+      // lang = lang1;
+      // log("===========================================" +
+      //     prefs.getString(Session.langauge));
     });
   }
 
@@ -746,7 +756,25 @@ class _AlertboxLogoutState extends State<AlertboxLogout> {
           ),
           onPressed: () async {
             SharedPreferences prefs = await SharedPreferences.getInstance();
-            await prefs.clear();
+            // await prefs.clear();
+            await prefs.remove(Session.CustomerId);
+            await prefs.remove(Session.CustomerName);
+            await prefs.remove(Session.addressId);
+            await prefs.remove(Session.type);
+            await prefs.remove(Session.CustomerCompanyName);
+            await prefs.remove(Session.CustomerEmailId);
+            await prefs.remove(Session.CustomerPhoneNo);
+            await prefs.remove(Session.CustomerCDT);
+            await prefs.remove(Session.CustomerStatus);
+            await prefs.remove(Session.ManufacturerName);
+            await prefs.remove(Session.ManufacturerPhoneNo);
+            await prefs.remove(Session.ManufacturerAddress);
+            await prefs.remove(Session.ManufacturerCompanyName);
+            await prefs.remove(Session.CustomerImage);
+            await prefs.remove(Session.ManuCustomerImage);
+            //await prefs.remove(Session.langauge);
+            await prefs.remove(Session.v);
+            await prefs.remove(Session.CustomerGSTNo);
             Navigator.pushNamedAndRemoveUntil(
                 context, '/LoginScreen', (route) => false);
           },

@@ -49,12 +49,12 @@ class _Whishlist1State extends State<Whishlist1> {
   bool searchImage = true;
   showShowCase() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    isShowcase = prefs.getString(Session.showCaseWislist);
+    isShowcase = prefs.getString(showSession.showCaseWislist);
 
     if (isShowcase == null || isShowcase == "false") {
       WidgetsBinding.instance.addPostFrameCallback(
           (_) => ShowCaseWidget.of(context).startShowCase([_one]));
-      prefs.setString(Session.showCaseWislist, "true");
+      prefs.setString(showSession.showCaseWislist, "true");
     }
     ;
   }

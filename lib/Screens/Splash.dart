@@ -43,7 +43,7 @@ class _SplashState extends State<Splash> {
         if (Type == "retailer") {
           Navigator.pushReplacementNamed(context, '/HomePage');
         } else {
-          Navigator.pushReplacementNamed(context, '/ManuHomeScreen');
+          Navigator.pushReplacementNamed(context, '/ManuHomePage');
         }
       }
     });

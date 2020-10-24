@@ -58,11 +58,23 @@ class _ProfileScreen11State extends State<ProfileScreen11> {
 
   bool isLoading = false;
 
+  String isShowcase = "false";
+  showShowCase() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isShowcase = prefs.getString(showSession.showCaseEditProfile);
+
+    if (isShowcase == null || isShowcase == "false") {
+      WidgetsBinding.instance.addPostFrameCallback(
+          (_) => ShowCaseWidget.of(context).startShowCase([_one, _two]));
+      prefs.setString(showSession.showCaseEditProfile, "true");
+    }
+    ;
+  }
+
   @override
   void initState() {
     _profile();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => ShowCaseWidget.of(context).startShowCase([_one, _two]));
+    showShowCase();
   }
 
   File _Image;
@@ -724,8 +736,13 @@ class _ProfileScreen11State extends State<ProfileScreen11> {
                         child: Container(
                           width: MediaQuery.of(context).size.width,
                           height: 45,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              image: DecorationImage(
+                                  image: AssetImage("assets/backchange.png"),
+                                  fit: BoxFit.cover)),
                           child: RaisedButton(
-                            color: appPrimaryMaterialColor,
+                            color: Colors.transparent,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(5),
                             ),
@@ -821,6 +838,7 @@ class _ProfileScreen11State extends State<ProfileScreen11> {
                 prefs.setString(Session.CustomerName, txtName.text);
                 prefs.setString(Session.CustomerCompanyName, txtCName.text);
                 prefs.setString(Session.CustomerEmailId, txtEmail.text);
+                prefs.setString(Session.CustomerGSTNo, txtGstNumber.text);
                 prefs.setString(Session.CustomerPhoneNo, txtMobileNumber.text);
                 prefs.setString(
                     Session.CustomerImage, responseList[0]["CustomerImage"]);

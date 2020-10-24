@@ -54,22 +54,22 @@ class _VerificationScreenState extends State<VerificationScreen> {
       Navigator.pushNamedAndRemoveUntil(context, '/HomePage', (route) => false);
     } else {
       await prefs.setString(
-          Session.CustomerId, widget.loginData["ManufacturerId"]);
+          Session.ManufacturerId, widget.loginData["ManufacturerId"]);
       await prefs.setString(
-          Session.CustomerGSTNo, widget.loginData["CustomerGSTNo"]);
+          Session.ManufacturerGSTNo, widget.loginData["ManufacturerGSTNo"]);
       await prefs.setString(Session.type, widget.loginData["Type"]);
       await prefs.setString(
-          Session.CustomerName, widget.loginData["ManufacturerName"]);
-      await prefs.setString(Session.CustomerCompanyName,
+          Session.ManufacturerName, widget.loginData["ManufacturerName"]);
+      await prefs.setString(Session.ManufacturerCompanyName,
           widget.loginData["ManufacturerCompanyName"]);
       await prefs.setString(
-          Session.CustomerEmailId, widget.loginData["ManufacturerEmailId"]);
+          Session.ManufacturerEmailId, widget.loginData["ManufacturerEmailId"]);
       await prefs.setString(
-          Session.ManuCustomerImage, widget.loginData["CustomerImage"]);
+          Session.ManuCustomerImage, widget.loginData["ManufacturerImage"]);
       await prefs.setString(
-          Session.CustomerPhoneNo, widget.loginData["ManufacturerPhoneNo"]);
+          Session.ManufacturerPhoneNo, widget.loginData["ManufacturerPhoneNo"]);
       Navigator.pushNamedAndRemoveUntil(
-          context, '/ManuHomeScreen', (route) => false);
+          context, '/ManuHomePage', (route) => false);
     }
   }
 
@@ -77,128 +77,141 @@ class _VerificationScreenState extends State<VerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(top: 8.0, left: 5, bottom: 8),
-          child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).pop();
-              },
-              child: Image.asset(
-                "assets/backarrow.png",
-                //color: appPrimaryMaterialColor,
-              )),
-        ),
-        elevation: 0,
-        backgroundColor: Colors.white,
-      ),
-      body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: MediaQuery.of(context).padding.top +
-                  MediaQuery.of(context).size.height / 25,
-            ),
-            Column(
-              children: <Widget>[
-                Center(
-                  child: Text(
-                    'enter_ver_code'.tr().toString(),
-                    style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Text('code_send'.tr().toString(),
+      // appBar: AppBar(
+      //   leading: Padding(
+      //     padding: const EdgeInsets.only(top: 8.0, left: 5, bottom: 8),
+      //     child: GestureDetector(
+      //         onTap: () {
+      //           Navigator.of(context).pop();
+      //         },
+      //         child: Image.asset(
+      //           "assets/backarrow.png",
+      //           //color: appPrimaryMaterialColor,
+      //         )),
+      //   ),
+      //   elevation: 0,
+      //   backgroundColor: Colors.white,
+      // ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/backchange.png"), fit: BoxFit.cover)),
+        child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: MediaQuery.of(context).padding.top + 30),
+              SizedBox(
+                height: MediaQuery.of(context).padding.top +
+                    MediaQuery.of(context).size.height / 25,
+              ),
+              Column(
+                children: <Widget>[
+                  Center(
+                    child: Text(
+                      'enter_ver_code'.tr().toString(),
                       style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w400)),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 3.0),
-                  child: Text("${widget.mobile}"),
-                ),
-              ],
-            ),
-            Column(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.only(top: 80),
-                  child: PinCodeTextField(
-                    controller: txtOTP,
-                    autofocus: false,
-                    wrapAlignment: WrapAlignment.center,
-                    highlight: true,
-                    pinBoxHeight: 50,
-                    pinBoxWidth: 50,
-                    highlightColor: Colors.grey,
-                    defaultBorderColor: Colors.grey,
-                    hasTextBorderColor: Colors.black,
-                    maxLength: 4,
-                    pinBoxDecoration:
-                        ProvidedPinBoxDecoration.defaultPinBoxDecoration,
-                    pinTextStyle: TextStyle(fontSize: 20),
+                          fontSize: 24,
+                          color: Color(0xFF9f782d),
+                          fontWeight: FontWeight.w500),
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 35.0),
-                  child: Text('enter_code'.tr().toString(),
-                      style: TextStyle(
-                          fontSize: 13,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w500)),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).padding.top + 50,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 25.0, right: 25),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 45,
-                    child: RaisedButton(
-                      color: appPrimaryMaterialColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      onPressed: () {
-                        rndNumber == txtOTP.text
-                            ? saveDataToSession()
-                            : Fluttertoast.showToast(msg: "OTP is wrong");
-                      },
-                      child: Text(
-                        'VERIFY'.tr().toString(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: Text('code_send'.tr().toString(),
                         style: TextStyle(
+                            fontSize: 15,
                             color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 17),
+                            fontWeight: FontWeight.w400)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 3.0),
+                    child: Text(
+                      "${widget.mobile}",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.only(top: 80),
+                    child: PinCodeTextField(
+                      controller: txtOTP,
+                      autofocus: false,
+                      wrapAlignment: WrapAlignment.center,
+                      highlight: true,
+                      pinBoxHeight: 50,
+                      pinBoxWidth: 50,
+                      highlightColor: Colors.white,
+                      defaultBorderColor: Colors.white,
+                      pinBoxRadius: 5,
+                      hasTextBorderColor: Color(0xFF9f782d),
+                      maxLength: 4,
+                      pinBoxDecoration:
+                          ProvidedPinBoxDecoration.defaultPinBoxDecoration,
+                      pinTextStyle:
+                          TextStyle(fontSize: 20, color: Color(0xFF9f782d)),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 35.0),
+                    child: Text('enter_code'.tr().toString(),
+                        style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500)),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).padding.top + 50,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25.0, right: 25),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 45,
+                      child: RaisedButton(
+                        color: Color(0xFF9f782d),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        onPressed: () {
+                          rndNumber == txtOTP.text
+                              ? saveDataToSession()
+                              : Fluttertoast.showToast(msg: "OTP is wrong");
+                        },
+                        child: Text(
+                          'VERIFY'.tr().toString(),
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 17),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _sendOTP();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 35.0),
-                    child: isLoading == true
-                        ? LoadingComponent()
-                        : Text('Resend_OTP'.tr().toString(),
-                            style: TextStyle(
-                                fontSize: 15,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500)),
+                  GestureDetector(
+                    onTap: () {
+                      _sendOTP();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 35.0),
+                      child: isLoading == true
+                          ? LoadingComponent()
+                          : Text('Resend_OTP'.tr().toString(),
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  color: Color(0xFF9f782d),
+                                  fontWeight: FontWeight.w500)),
+                    ),
                   ),
-                ),
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

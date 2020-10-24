@@ -29,6 +29,15 @@ class _WalkThroughScreenState extends State<WalkThroughScreen>
 
   // List walhList = [];
   // bool iswalkLoading = true;
+  // String lang1;
+  // _slide()async{
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //
+  //   lang1 = prefs.getString(Session.langauge);
+  // if(lang1=="p1"){
+  //
+  // }
+  // }
 
   @override
   void initState() {
@@ -281,7 +290,7 @@ class _WalkThroughScreenState extends State<WalkThroughScreen>
                         child: Text(
                           "Done",
                           style: TextStyle(
-                              color: appPrimaryMaterialColor,
+                              color: Colors.white,
                               fontSize: 15,
                               decoration: TextDecoration.none),
                         ),

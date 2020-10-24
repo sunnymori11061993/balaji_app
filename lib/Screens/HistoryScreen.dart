@@ -46,12 +46,25 @@ class _HistoryScreen11State extends State<HistoryScreen11> {
   List historyList = [];
   bool isHistoryLoading = true;
 
+  String isShowcase = "false";
+
+  showShowCase() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isShowcase = prefs.getString(showSession.showCaseHistory);
+
+    if (isShowcase == null || isShowcase == "false") {
+      WidgetsBinding.instance.addPostFrameCallback(
+          (_) => ShowCaseWidget.of(context).startShowCase([_one, _two]));
+      prefs.setString(showSession.showCaseHistory, "true");
+    }
+    ;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     _orderHistory();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => ShowCaseWidget.of(context).startShowCase([_one, _two]));
+    showShowCase();
   }
 
   @override
