@@ -20,7 +20,7 @@ class WalkThroughScreen extends StatefulWidget {
 
 class _WalkThroughScreenState extends State<WalkThroughScreen>
     with SingleTickerProviderStateMixin {
-  List<Slide> slides = new List();
+  List<Slide> slides = [];
 
   int skip;
   TabController tabController;
@@ -29,117 +29,214 @@ class _WalkThroughScreenState extends State<WalkThroughScreen>
 
   // List walhList = [];
   // bool iswalkLoading = true;
-  // String lang1;
-  // _slide()async{
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //
-  //   lang1 = prefs.getString(Session.langauge);
-  // if(lang1=="p1"){
-  //
-  // }
-  // }
+
+  _slide() async {
+    String lang1;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    lang1 = await prefs.getString(Session.langauge);
+    if (lang1 == "p1") {
+      log("trueeeeee");
+      slides.add(
+        new Slide(
+          title: "",
+          styleTitle: TextStyle(
+            color: appPrimaryMaterialColor,
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold,
+            //fontFamily: 'RobotoMono'
+          ),
+          description: " ",
+          styleDescription: TextStyle(
+            color: Colors.grey[700],
+            fontSize: 16.0,
+            //fontStyle: FontStyle.italic,
+            // fontFamily: 'Raleway'
+          ),
+          pathImage: "assets/w1.png",
+        ),
+      );
+      slides.add(
+        new Slide(
+          title: "",
+          styleTitle: TextStyle(
+            color: appPrimaryMaterialColor,
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold,
+            //fontFamily: 'RobotoMono'
+          ),
+          description: "",
+          styleDescription: TextStyle(
+            color: Colors.grey[700],
+            fontSize: 16.0,
+            //fontStyle: FontStyle.italic,
+            // fontFamily: 'Raleway'
+          ),
+          pathImage: "assets/w2.png",
+        ),
+      );
+      slides.add(
+        new Slide(
+          title: "",
+          styleTitle: TextStyle(
+            color: appPrimaryMaterialColor,
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold,
+            //fontFamily: 'RobotoMono'
+          ),
+          description: "",
+          styleDescription: TextStyle(
+            color: Colors.grey[700],
+            fontSize: 16.0,
+            //fontStyle: FontStyle.italic,
+            // fontFamily: 'Raleway'
+          ),
+          pathImage: "assets/w3.png",
+        ),
+      );
+      slides.add(
+        new Slide(
+          title: "",
+          styleTitle: TextStyle(
+            color: appPrimaryMaterialColor,
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold,
+            //fontFamily: 'RobotoMono'
+          ),
+          description: "",
+          styleDescription: TextStyle(
+            color: Colors.grey[700],
+            fontSize: 16.0,
+            //fontStyle: FontStyle.italic,
+            // fontFamily: 'Raleway'
+          ),
+          pathImage: "assets/w4.png",
+        ),
+      );
+      slides.add(
+        new Slide(
+          title: "",
+          styleTitle: TextStyle(
+            color: appPrimaryMaterialColor,
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold,
+            //fontFamily: 'RobotoMono'
+          ),
+          description: "",
+          styleDescription: TextStyle(
+            color: Colors.grey[700],
+            fontSize: 16.0,
+            //fontStyle: FontStyle.italic,
+            // fontFamily: 'Raleway'
+          ),
+          pathImage: "assets/w5.png",
+        ),
+      );
+    } else {
+      log("falseeeee");
+      slides.add(
+        new Slide(
+          title: "",
+          styleTitle: TextStyle(
+            color: appPrimaryMaterialColor,
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold,
+            //fontFamily: 'RobotoMono'
+          ),
+          description: " ",
+          styleDescription: TextStyle(
+            color: Colors.grey[700],
+            fontSize: 16.0,
+            //fontStyle: FontStyle.italic,
+            // fontFamily: 'Raleway'
+          ),
+          pathImage: "assets/wh1.png",
+        ),
+      );
+      slides.add(
+        new Slide(
+          title: "",
+          styleTitle: TextStyle(
+            color: appPrimaryMaterialColor,
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold,
+            //fontFamily: 'RobotoMono'
+          ),
+          description: "",
+          styleDescription: TextStyle(
+            color: Colors.grey[700],
+            fontSize: 16.0,
+            //fontStyle: FontStyle.italic,
+            // fontFamily: 'Raleway'
+          ),
+          pathImage: "assets/wh2.png",
+        ),
+      );
+      slides.add(
+        new Slide(
+          title: "",
+          styleTitle: TextStyle(
+            color: appPrimaryMaterialColor,
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold,
+            //fontFamily: 'RobotoMono'
+          ),
+          description: "",
+          styleDescription: TextStyle(
+            color: Colors.grey[700],
+            fontSize: 16.0,
+            //fontStyle: FontStyle.italic,
+            // fontFamily: 'Raleway'
+          ),
+          pathImage: "assets/wh3.png",
+        ),
+      );
+      slides.add(
+        new Slide(
+          title: "",
+          styleTitle: TextStyle(
+            color: appPrimaryMaterialColor,
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold,
+            //fontFamily: 'RobotoMono'
+          ),
+          description: "",
+          styleDescription: TextStyle(
+            color: Colors.grey[700],
+            fontSize: 16.0,
+            //fontStyle: FontStyle.italic,
+            // fontFamily: 'Raleway'
+          ),
+          pathImage: "assets/wh4.png",
+        ),
+      );
+      slides.add(
+        new Slide(
+          title: "",
+          styleTitle: TextStyle(
+            color: appPrimaryMaterialColor,
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold,
+            //fontFamily: 'RobotoMono'
+          ),
+          description: "",
+          styleDescription: TextStyle(
+            color: Colors.grey[700],
+            fontSize: 16.0,
+            //fontStyle: FontStyle.italic,
+            // fontFamily: 'Raleway'
+          ),
+          pathImage: "assets/wh5.png",
+        ),
+      );
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     tabController = TabController(length: 5, vsync: this);
-    // _walkthrough();
-
-    slides.add(
-      new Slide(
-        title: "",
-        styleTitle: TextStyle(
-          color: appPrimaryMaterialColor,
-          fontSize: 25.0,
-          fontWeight: FontWeight.bold,
-          //fontFamily: 'RobotoMono'
-        ),
-        description: " ",
-        styleDescription: TextStyle(
-          color: Colors.grey[700],
-          fontSize: 16.0,
-          //fontStyle: FontStyle.italic,
-          // fontFamily: 'Raleway'
-        ),
-        pathImage: "assets/w1.png",
-      ),
-    );
-    slides.add(
-      new Slide(
-        title: "",
-        styleTitle: TextStyle(
-          color: appPrimaryMaterialColor,
-          fontSize: 25.0,
-          fontWeight: FontWeight.bold,
-          //fontFamily: 'RobotoMono'
-        ),
-        description: "",
-        styleDescription: TextStyle(
-          color: Colors.grey[700],
-          fontSize: 16.0,
-          //fontStyle: FontStyle.italic,
-          // fontFamily: 'Raleway'
-        ),
-        pathImage: "assets/w2.png",
-      ),
-    );
-    slides.add(
-      new Slide(
-        title: "",
-        styleTitle: TextStyle(
-          color: appPrimaryMaterialColor,
-          fontSize: 25.0,
-          fontWeight: FontWeight.bold,
-          //fontFamily: 'RobotoMono'
-        ),
-        description: "",
-        styleDescription: TextStyle(
-          color: Colors.grey[700],
-          fontSize: 16.0,
-          //fontStyle: FontStyle.italic,
-          // fontFamily: 'Raleway'
-        ),
-        pathImage: "assets/w3.png",
-      ),
-    );
-    slides.add(
-      new Slide(
-        title: "",
-        styleTitle: TextStyle(
-          color: appPrimaryMaterialColor,
-          fontSize: 25.0,
-          fontWeight: FontWeight.bold,
-          //fontFamily: 'RobotoMono'
-        ),
-        description: "",
-        styleDescription: TextStyle(
-          color: Colors.grey[700],
-          fontSize: 16.0,
-          //fontStyle: FontStyle.italic,
-          // fontFamily: 'Raleway'
-        ),
-        pathImage: "assets/w4.png",
-      ),
-    );
-    slides.add(
-      new Slide(
-        title: "",
-        styleTitle: TextStyle(
-          color: appPrimaryMaterialColor,
-          fontSize: 25.0,
-          fontWeight: FontWeight.bold,
-          //fontFamily: 'RobotoMono'
-        ),
-        description: "",
-        styleDescription: TextStyle(
-          color: Colors.grey[700],
-          fontSize: 16.0,
-          //fontStyle: FontStyle.italic,
-          // fontFamily: 'Raleway'
-        ),
-        pathImage: "assets/w5.png",
-      ),
-    );
+    _slide();
   }
 
   void onDonePress() {
@@ -210,14 +307,6 @@ class _WalkThroughScreenState extends State<WalkThroughScreen>
     }
     return tabs;
   }
-
-  static List<String> links = [
-    "assets/w1.png",
-    "assets/w2.png",
-    "assets/w3.png",
-    "assets/w4.png",
-    "assets/w5.png"
-  ];
 
   @override
   Widget build(BuildContext context) {

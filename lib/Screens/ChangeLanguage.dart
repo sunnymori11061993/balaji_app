@@ -1,5 +1,5 @@
+import 'dart:developer';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
@@ -164,22 +164,15 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
                     ),
                     onPressed: () async {
                       if (lang == 'p1') {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        setState(() {
-                          prefs.setString(Session.langauge, lang);
-                        });
                         EasyLocalization.of(context).locale =
                             Locale('en', 'US');
                       } else {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        setState(() {
-                          prefs.setString(Session.langauge, lang);
-                        });
                         EasyLocalization.of(context).locale =
                             Locale('hi', 'HI');
                       }
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setString(Session.langauge, lang);
                       Navigator.pushReplacementNamed(
                           context, '/WalkThroughScreen');
                     },
