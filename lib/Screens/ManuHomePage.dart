@@ -1,4 +1,3 @@
-import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Screens/ManuHomeScreen.dart';
 import 'package:balaji/Screens/ManuProfile.dart';
 import 'package:balaji/Screens/ManuSetting.dart';
@@ -53,7 +52,7 @@ class _ManuHomePageState extends State<ManuHomePage> {
                   ),
                 ),
               ),
-              label: '',
+              title: Text(''),
             ),
 
             BottomNavigationBarItem(
@@ -70,7 +69,7 @@ class _ManuHomePageState extends State<ManuHomePage> {
                   ),
                 ),
               ),
-              label: '',
+              title: Text(''),
             ),
             BottomNavigationBarItem(
               icon: Padding(
@@ -86,7 +85,7 @@ class _ManuHomePageState extends State<ManuHomePage> {
                   ),
                 ),
               ),
-              label: '',
+              title: Text(''),
             ),
 
             // BottomNavigationBarItem(

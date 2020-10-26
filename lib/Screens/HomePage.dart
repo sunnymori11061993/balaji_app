@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              label: '',
+              title: Text(''),
             ),
             BottomNavigationBarItem(
               icon: Padding(
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              label: '',
+              title: Text(''),
             ),
             BottomNavigationBarItem(
               icon: Padding(
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              label: '',
+              title: Text(''),
             ),
             BottomNavigationBarItem(
               icon: Padding(
@@ -107,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              label: '',
+              title: Text(''),
             ),
           ],
           currentIndex: _selectedIndex,
