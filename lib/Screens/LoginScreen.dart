@@ -488,7 +488,7 @@ class _LoginScreenState extends State<LoginScreen> {
           });
           FormData body = FormData.fromMap({
             "PhoneNo": txtLogin.text,
-            "CutomerFCMToken": fcmToken
+            "CustomerFCMToken": fcmToken
             // "type": toggle.toLowerCase()
           }); //"key":"value"
           Services.PostForList(api_name: 'OTP_login_api', body: body).then(

@@ -18,33 +18,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcase.dart';
 import 'package:showcaseview/showcase_widget.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ShowCaseWidget(
-        onStart: (index, key) {
-          log('onStart: $index, $key');
-        },
-        onComplete: (index, key) {
-          log('onComplete: $index, $key');
-        },
-        builder: Builder(builder: (context) => CartScreen11()),
-        autoPlay: true,
-        autoPlayDelay: Duration(seconds: 3),
-      ),
-    );
-  }
+  _CartScreenState createState() => _CartScreenState();
 }
 
-class CartScreen11 extends StatefulWidget {
-  @override
-  _CartScreen11State createState() => _CartScreen11State();
-}
-
-class _CartScreen11State extends State<CartScreen11> {
-  GlobalKey _one = GlobalKey();
-
+class _CartScreenState extends State<CartScreen> {
   var isLoading = true;
   List getCartList = [];
   List updateCartList = [];
@@ -55,22 +34,10 @@ class _CartScreen11State extends State<CartScreen11> {
   String dropdownvalue = 'rinki';
 
   String isShowcase = "false";
-  showShowCase() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    isShowcase = prefs.getString(showSession.showCaseCart);
-
-    if (isShowcase == null || isShowcase == "false") {
-      WidgetsBinding.instance.addPostFrameCallback(
-          (_) => ShowCaseWidget.of(context).startShowCase([_one]));
-      prefs.setString(showSession.showCaseCart, "true");
-    }
-    ;
-  }
 
   @override
   void initState() {
     _getCart();
-    showShowCase();
   }
 
   @override
@@ -182,47 +149,39 @@ class _CartScreen11State extends State<CartScreen11> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(right: 8.0),
-                              child: Showcase(
-                                key: _one,
-                                description:
-                                    'Tap_to_select_address_for_place_order'
-                                        .tr()
-                                        .toString(),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    _settingModalBottomSheet(context);
-                                  },
-                                  child: Container(
-                                    width: 170,
-                                    height: 40,
-                                    // color: appPrimaryMaterialColor,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              "assets/backchange.png"),
-                                          fit: BoxFit.cover),
-                                    ),
-                                    // border: Border.all(color: Colors.grey[300]),
-                                    //color: appPrimaryMaterialColor
+                              child: GestureDetector(
+                                onTap: () {
+                                  _settingModalBottomSheet(context);
+                                },
+                                child: Container(
+                                  width: 170,
+                                  height: 40,
+                                  // color: appPrimaryMaterialColor,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    image: DecorationImage(
+                                        image:
+                                            AssetImage("assets/backchange.png"),
+                                        fit: BoxFit.cover),
+                                  ),
+                                  // border: Border.all(color: Colors.grey[300]),
+                                  //color: appPrimaryMaterialColor
 
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Place_Order'.tr().toString(),
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              //fontWeight: FontWeight.w400,
-                                              fontSize: 16),
-                                        ),
-                                        Icon(
-                                          Icons.arrow_forward,
-                                          color: Colors.white,
-                                        )
-                                      ],
-                                    ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Place_Order'.tr().toString(),
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            //fontWeight: FontWeight.w400,
+                                            fontSize: 16),
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward,
+                                        color: Colors.white,
+                                      )
+                                    ],
                                   ),
                                 ),
                               ),

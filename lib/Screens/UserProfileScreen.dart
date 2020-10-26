@@ -17,35 +17,31 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcase.dart';
 import 'package:showcaseview/showcase_widget.dart';
 
-class UserProfileScreen extends StatelessWidget {
+// class UserProfileScreen extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: ShowCaseWidget(
+//         onStart: (index, key) {
+//           log('onStart: $index, $key');
+//         },
+//         onComplete: (index, key) {
+//           log('onComplete: $index, $key');
+//         },
+//         builder: Builder(builder: (context) => UserProfileScreen()),
+//         autoPlay: true,
+//         autoPlayDelay: Duration(seconds: 3),
+//       ),
+//     );
+//   }
+// }
+
+class UserProfileScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ShowCaseWidget(
-        onStart: (index, key) {
-          log('onStart: $index, $key');
-        },
-        onComplete: (index, key) {
-          log('onComplete: $index, $key');
-        },
-        builder: Builder(builder: (context) => UserProfileScreen1()),
-        autoPlay: true,
-        autoPlayDelay: Duration(seconds: 3),
-      ),
-    );
-  }
+  _UserProfileScreenState createState() => _UserProfileScreenState();
 }
 
-class UserProfileScreen1 extends StatefulWidget {
-  @override
-  _UserProfileScreen1State createState() => _UserProfileScreen1State();
-}
-
-class _UserProfileScreen1State extends State<UserProfileScreen1> {
-  GlobalKey _one = GlobalKey();
-  GlobalKey _two = GlobalKey();
-  GlobalKey _three = GlobalKey();
-  GlobalKey _four = GlobalKey();
+class _UserProfileScreenState extends State<UserProfileScreen> {
   bool isSearching = true;
   String txtname = "";
   String img;
@@ -61,24 +57,10 @@ class _UserProfileScreen1State extends State<UserProfileScreen1> {
     print("-------------------" + img);
   }
 
-  showShowCase() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    isShowcase = prefs.getString(showSession.showCaseUserProfile);
-
-    if (isShowcase == null || isShowcase == "false") {
-      WidgetsBinding.instance.addPostFrameCallback((_) =>
-          ShowCaseWidget.of(context)
-              .startShowCase([_one, _two, _three, _four]));
-      prefs.setString(showSession.showCaseUserProfile, "true");
-    }
-    ;
-  }
-
   @override
   void initState() {
     _profile();
     _settingApi();
-    showShowCase();
   }
 
   @override
@@ -104,47 +86,43 @@ class _UserProfileScreen1State extends State<UserProfileScreen1> {
           elevation: 1,
           iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
           actions: <Widget>[
-            Showcase(
-              key: _one,
-              description: 'Tap_to_see_your_cart_products'.tr().toString(),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushNamed('/CartScreen');
-                },
-                child: Stack(
-                  alignment: Alignment.topRight,
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(right: 15.0, left: 10, top: 18),
-                      child: Container(
-                          height: 20,
-                          width: 20,
-                          child: Image.asset(
-                            "assets/shopping-cart.png",
-                            color: appPrimaryMaterialColor,
-                          )),
-                    ),
-                    provider.cartCount > 0
-                        ? Padding(
-                            padding: const EdgeInsets.only(
-                                left: 1.0, top: 13, right: 10),
-                            child: CircleAvatar(
-                              radius: 7.0,
-                              backgroundColor: Colors.red,
-                              foregroundColor: Colors.white,
-                              child: Text(
-                                provider.cartCount.toString(),
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 9.0,
-                                ),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/CartScreen');
+              },
+              child: Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(right: 15.0, left: 10, top: 18),
+                    child: Container(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset(
+                          "assets/shopping-cart.png",
+                          color: appPrimaryMaterialColor,
+                        )),
+                  ),
+                  provider.cartCount > 0
+                      ? Padding(
+                          padding: const EdgeInsets.only(
+                              left: 1.0, top: 13, right: 10),
+                          child: CircleAvatar(
+                            radius: 7.0,
+                            backgroundColor: Colors.red,
+                            foregroundColor: Colors.white,
+                            child: Text(
+                              provider.cartCount.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 9.0,
                               ),
                             ),
-                          )
-                        : Container()
-                  ],
-                ),
+                          ),
+                        )
+                      : Container()
+                ],
               ),
             )
           ],
@@ -176,27 +154,20 @@ class _UserProfileScreen1State extends State<UserProfileScreen1> {
                                   Navigator.of(context)
                                       .pushNamed('/ProfileScreen');
                                 },
-                                child: Showcase(
-                                  key: _two,
-                                  description:
-                                      'Tap_to_see_your_profile_or_to_update_your_profile'
-                                          .tr()
-                                          .toString(),
-                                  child: ListTile(
-                                    leading: Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 10.0, left: 4),
-                                      child: Container(
-                                          height: 20,
-                                          width: 20,
-                                          child: Image.asset(
-                                            "assets/edit.png",
-                                            color: appPrimaryMaterialColor,
-                                          )),
-                                    ),
-                                    title: Text(
-                                      'drw_edit_profile'.tr().toString(),
-                                    ),
+                                child: ListTile(
+                                  leading: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10.0, left: 4),
+                                    child: Container(
+                                        height: 20,
+                                        width: 20,
+                                        child: Image.asset(
+                                          "assets/edit.png",
+                                          color: appPrimaryMaterialColor,
+                                        )),
+                                  ),
+                                  title: Text(
+                                    'drw_edit_profile'.tr().toString(),
                                   ),
                                 ),
                               ),
@@ -213,24 +184,20 @@ class _UserProfileScreen1State extends State<UserProfileScreen1> {
                                           builder: (BuildContext context) =>
                                               new AddressScreen()));
                                 },
-                                child: Showcase(
-                                  key: _three,
-                                  description: 'Tap_to_manage'.tr().toString(),
-                                  child: ListTile(
-                                    leading: Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 10.0, left: 4),
-                                      child: Container(
-                                          height: 20,
-                                          width: 20,
-                                          child: Image.asset(
-                                            "assets/location.png",
-                                            color: appPrimaryMaterialColor,
-                                          )),
-                                    ),
-                                    title: Text(
-                                      'drw_manage_address'.tr().toString(),
-                                    ),
+                                child: ListTile(
+                                  leading: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10.0, left: 4),
+                                    child: Container(
+                                        height: 20,
+                                        width: 20,
+                                        child: Image.asset(
+                                          "assets/location.png",
+                                          color: appPrimaryMaterialColor,
+                                        )),
+                                  ),
+                                  title: Text(
+                                    'drw_manage_address'.tr().toString(),
                                   ),
                                 ),
                               ),
@@ -244,27 +211,20 @@ class _UserProfileScreen1State extends State<UserProfileScreen1> {
                                   Navigator.of(context)
                                       .pushNamed('/HistoryScreen');
                                 },
-                                child: Showcase(
-                                  key: _four,
-                                  description:
-                                      'Tap_to_see_your_ordered_product_history'
-                                          .tr()
-                                          .toString(),
-                                  child: ListTile(
-                                    leading: Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 10.0, left: 4),
-                                      child: Container(
-                                          height: 20,
-                                          width: 20,
-                                          child: Image.asset(
-                                            "assets/history.png",
-                                            color: appPrimaryMaterialColor,
-                                          )),
-                                    ),
-                                    title: Text(
-                                      'drw_order_history'.tr().toString(),
-                                    ),
+                                child: ListTile(
+                                  leading: Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10.0, left: 4),
+                                    child: Container(
+                                        height: 20,
+                                        width: 20,
+                                        child: Image.asset(
+                                          "assets/history.png",
+                                          color: appPrimaryMaterialColor,
+                                        )),
+                                  ),
+                                  title: Text(
+                                    'drw_order_history'.tr().toString(),
                                   ),
                                 ),
                               ),

@@ -13,53 +13,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcase.dart';
 import 'package:showcaseview/showcase_widget.dart';
 
-class FAQScreen extends StatelessWidget {
+class FAQScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ShowCaseWidget(
-        onStart: (index, key) {
-          log('onStart: $index, $key');
-        },
-        onComplete: (index, key) {
-          log('onComplete: $index, $key');
-        },
-        builder: Builder(builder: (context) => FAQScreen11()),
-        autoPlay: true,
-        autoPlayDelay: Duration(seconds: 3),
-      ),
-    );
-  }
+  _FAQScreenState createState() => _FAQScreenState();
 }
 
-class FAQScreen11 extends StatefulWidget {
-  @override
-  _FAQScreen11State createState() => _FAQScreen11State();
-}
-
-class _FAQScreen11State extends State<FAQScreen11> {
-  GlobalKey _one = GlobalKey();
-  GlobalKey _two = GlobalKey();
+class _FAQScreenState extends State<FAQScreen> {
   bool isLoading = false;
   List listfaq = [];
   String isShowcase = "false";
 
-  showShowCase() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    isShowcase = prefs.getString(showSession.showCasefaq);
-
-    if (isShowcase == null || isShowcase == "false") {
-      WidgetsBinding.instance.addPostFrameCallback(
-          (_) => ShowCaseWidget.of(context).startShowCase([_one, _two]));
-      prefs.setString(showSession.showCasefaq, "true");
-    }
-    ;
-  }
-
   @override
   void initState() {
     _getFAQ();
-    showShowCase();
   }
 
   @override
@@ -80,65 +46,57 @@ class _FAQScreen11State extends State<FAQScreen11> {
                 )),
           ),
           actions: [
-            Showcase(
-              key: _one,
-              description: 'Tap_to_move_towards_home'.tr().toString(),
-              child: GestureDetector(
-                onTap: () {
-                  // Navigator.of(context).pushReplacementNamed('/HomePage');
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, '/HomePage', (route) => false);
-                },
-                child: Container(
-                    height: 20,
-                    width: 20,
-                    child: Image.asset(
-                      "assets/home.png",
-                      color: appPrimaryMaterialColor,
-                    )),
-              ),
+            GestureDetector(
+              onTap: () {
+                // Navigator.of(context).pushReplacementNamed('/HomePage');
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/HomePage', (route) => false);
+              },
+              child: Container(
+                  height: 20,
+                  width: 20,
+                  child: Image.asset(
+                    "assets/home.png",
+                    color: appPrimaryMaterialColor,
+                  )),
             ),
-            Showcase(
-              key: _two,
-              description: 'Tap_to_see_your_cart_products'.tr().toString(),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushNamed('/CartScreen');
-                },
-                child: Stack(
-                  alignment: Alignment.topRight,
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(right: 15.0, left: 10, top: 18),
-                      child: Container(
-                          height: 20,
-                          width: 20,
-                          child: Image.asset(
-                            "assets/shopping-cart.png",
-                            color: appPrimaryMaterialColor,
-                          )),
-                    ),
-                    provider.cartCount > 0
-                        ? Padding(
-                            padding: const EdgeInsets.only(
-                                left: 1.0, top: 13, right: 10),
-                            child: CircleAvatar(
-                              radius: 7.0,
-                              backgroundColor: Colors.red,
-                              foregroundColor: Colors.white,
-                              child: Text(
-                                provider.cartCount.toString(),
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 9.0,
-                                ),
+            GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/CartScreen');
+              },
+              child: Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(right: 15.0, left: 10, top: 18),
+                    child: Container(
+                        height: 20,
+                        width: 20,
+                        child: Image.asset(
+                          "assets/shopping-cart.png",
+                          color: appPrimaryMaterialColor,
+                        )),
+                  ),
+                  provider.cartCount > 0
+                      ? Padding(
+                          padding: const EdgeInsets.only(
+                              left: 1.0, top: 13, right: 10),
+                          child: CircleAvatar(
+                            radius: 7.0,
+                            backgroundColor: Colors.red,
+                            foregroundColor: Colors.white,
+                            child: Text(
+                              provider.cartCount.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 9.0,
                               ),
                             ),
-                          )
-                        : Container()
-                  ],
-                ),
+                          ),
+                        )
+                      : Container()
+                ],
               ),
             )
           ],
