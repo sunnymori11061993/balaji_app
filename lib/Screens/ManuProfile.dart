@@ -595,15 +595,29 @@ class _ManuProfileState extends State<ManuProfile> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 15.0),
-                            child: Text(
-                              'GST_Number'.tr().toString(),
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600),
-                            ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15.0),
+                                child: Text(
+                                  'GST_Number'.tr().toString(),
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15.0),
+                                child: Text(
+                                  " (" + 'Optional'.tr().toString() + ")",
+                                  style: TextStyle(
+                                      fontSize: 11,
+                                      color: appPrimaryMaterialColor,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                            ],
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 5.0),
@@ -612,12 +626,12 @@ class _ManuProfileState extends State<ManuProfile> {
                               keyboardType: TextInputType.text,
                               style: TextStyle(fontSize: 15),
                               cursorColor: Colors.black,
-                              validator: (name) {
-                                if (name.length == 0) {
-                                  return 'Please enter gst number';
-                                }
-                                return null;
-                              },
+                              // validator: (name) {
+                              //   if (name.length == 0) {
+                              //     return 'Please enter gst number';
+                              //   }
+                              //   return null;
+                              // },
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.all(15),
                                 prefixIcon: Padding(
