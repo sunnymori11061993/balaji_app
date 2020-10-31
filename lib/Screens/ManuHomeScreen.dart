@@ -24,7 +24,15 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
   List termsConList = [];
   List contactList = [];
   String txtName = "";
+  String manufactureId = "";
   Completer<WebViewController> _webView = Completer<WebViewController>();
+
+  getLocadata() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      manufactureId = prefs.getString(Session.ManufacturerId);
+    });
+  }
 
   Icon actionIcon = Icon(
     Icons.search,
@@ -56,7 +64,7 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
           Padding(
               padding: const EdgeInsets.only(top: 10),
               child: WebView(
-                initialUrl: "https://webnappmaker.in/Balaji/",
+                initialUrl: "https://webnappmaker.in/Balaji/$manufactureId",
                 javascriptMode: JavascriptMode.unrestricted,
                 onPageFinished: (finish) {
                   setState(() {
