@@ -1,16 +1,11 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Providers/CartProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:showcaseview/showcase.dart';
-import 'package:showcaseview/showcase_widget.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class AboutUsScreen extends StatefulWidget {
   var aboutData;
@@ -45,7 +40,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
     );
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
+        /*appBar: AppBar(
           leading: Padding(
             padding: const EdgeInsets.only(top: 8.0, left: 5, bottom: 8),
             child: GestureDetector(
@@ -117,20 +112,23 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
               ),
             ),
           ],
-        ),
+        ),*/
         body: Stack(
           children: [
-            WebView(
-              initialUrl: "${widget.aboutData}",
-              javascriptMode: JavascriptMode.unrestricted,
-              onPageFinished: (finish) {
-                setState(() {
-                  isLoading = false;
-                });
-              },
-              onWebViewCreated: (WebViewController webViewController) {
-                _webView.complete(webViewController);
-              },
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0),
+              child: WebView(
+                initialUrl: "${widget.aboutData}",
+                javascriptMode: JavascriptMode.unrestricted,
+                onPageFinished: (finish) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                },
+                onWebViewCreated: (WebViewController webViewController) {
+                  _webView.complete(webViewController);
+                },
+              ),
             ),
             isLoading
                 ? Center(

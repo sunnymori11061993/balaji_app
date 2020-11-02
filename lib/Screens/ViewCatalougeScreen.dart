@@ -213,9 +213,7 @@ class _ViewCatalougeScreenState extends State<ViewCatalougeScreen> {
         actions: [
           GestureDetector(
             onTap: () {
-              _permissionReady == true
-                  ? _requestDownload()
-                  : _showDialog(context);
+              _requestDownload();
             },
             child: Padding(
               padding: const EdgeInsets.only(
