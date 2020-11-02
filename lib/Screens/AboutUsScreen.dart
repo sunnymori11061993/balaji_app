@@ -34,13 +34,14 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
   Widget build(BuildContext context) {
     CartProvider provider = Provider.of<CartProvider>(context);
     Widget appBarTitle = Text(
-      'About_Us'.tr().toString(),
+      "",
+      //'About_Us'.tr().toString(),
       //"About Us",
-      style: TextStyle(
+      /* style: TextStyle(
           color: appPrimaryMaterialColor,
           //fontFamily: 'RobotoSlab',
-          // color: Colors.black,
-          fontSize: 17),
+          // coor: Colors.black,
+          fontSize: 17),*/
     );
     return Scaffold(
         backgroundColor: Colors.white,
