@@ -136,8 +136,11 @@ class _CartScreenState extends State<CartScreen> {
                               child: Row(
                                 children: [
                                   Text(
-                                    // "Total:₹ " + "${res}",
-                                    'Total'.tr().toString() + "$mainTotal",
+                                    "Total".tr().toString() +
+                                        " : " +
+                                        " ₹ " +
+                                        "${mainTotal}",
+                                    // 'Total'.tr().toString() + " $mainTotal ",
                                     //"${res}",
                                     style: TextStyle(
                                         fontSize: 18,
@@ -154,7 +157,7 @@ class _CartScreenState extends State<CartScreen> {
                                   _settingModalBottomSheet(context);
                                 },
                                 child: Container(
-                                  width: 170,
+                                  width: 160,
                                   height: 40,
                                   // color: appPrimaryMaterialColor,
                                   decoration: BoxDecoration(
@@ -1355,7 +1358,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
 //                                    Icon(Icons.add_shopping_cart,
 //                                        color: Colors.white),
                                     Text(
-                                      'Place_Order'.tr().toString(),
+                                      'Confirm'.tr().toString(),
                                       style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.white,

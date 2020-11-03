@@ -38,65 +38,84 @@ class _ManuSettingState extends State<ManuSetting> {
 
   @override
   Widget build(BuildContext context) {
-    Widget appBarTitle = Text(
+    Widget appBarTitle = Container(
+        child: Image.asset(
+      "assets/BWD-white.png",
+      fit: BoxFit.cover,
+      height: 55,
+    ));
+    /* Text(
       'Settings'.tr().toString(),
       style: TextStyle(
           color: appPrimaryMaterialColor,
           //fontFamily: 'RobotoSlab',
           // color: Colors.black,
           fontSize: 17),
-    );
+    );*/
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Padding(
-            padding: const EdgeInsets.only(left: 15.0),
-            child: appBarTitle,
-          ),
-          backgroundColor: Colors.white,
-          elevation: 1,
-          iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
-          actions: <Widget>[
-            // GestureDetector(
-            //   onTap: () {
-            //     Navigator.of(context).pushNamed('/CartScreen');
-            //   },
-            //   child: Stack(
-            //     alignment: Alignment.topRight,
-            //     children: [
-            //       Padding(
-            //         padding:
-            //         const EdgeInsets.only(right: 15.0, left: 8, top: 18),
-            //         child: Container(
-            //             height: 20,
-            //             width: 20,
-            //             child: Image.asset(
-            //               "assets/shopping-cart.png",
-            //               color: appPrimaryMaterialColor,
-            //             )),
-            //       ),
-            //       provider.cartCount > 0
-            //           ? Padding(
-            //         padding: const EdgeInsets.only(
-            //             left: 1.0, top: 13, right: 10),
-            //         child: CircleAvatar(
-            //           radius: 7.0,
-            //           backgroundColor: Colors.red,
-            //           foregroundColor: Colors.white,
-            //           child: Text(
-            //             provider.cartCount.toString(),
-            //             style: TextStyle(
-            //               fontWeight: FontWeight.bold,
-            //               fontSize: 9.0,
-            //             ),
-            //           ),
-            //         ),
-            //       )
-            //           : Container()
-            //     ],
-            //   ),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0),
+          child: AppBar(
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/backchange.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            title: appBarTitle,
+            centerTitle: true,
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 15.0),
+            //   child: appBarTitle,
             // ),
-          ],
+            // backgroundColor: Colors.white,
+            // elevation: 1,
+            // iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
+            actions: <Widget>[
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.of(context).pushNamed('/CartScreen');
+              //   },
+              //   child: Stack(
+              //     alignment: Alignment.topRight,
+              //     children: [
+              //       Padding(
+              //         padding:
+              //         const EdgeInsets.only(right: 15.0, left: 8, top: 18),
+              //         child: Container(
+              //             height: 20,
+              //             width: 20,
+              //             child: Image.asset(
+              //               "assets/shopping-cart.png",
+              //               color: appPrimaryMaterialColor,
+              //             )),
+              //       ),
+              //       provider.cartCount > 0
+              //           ? Padding(
+              //         padding: const EdgeInsets.only(
+              //             left: 1.0, top: 13, right: 10),
+              //         child: CircleAvatar(
+              //           radius: 7.0,
+              //           backgroundColor: Colors.red,
+              //           foregroundColor: Colors.white,
+              //           child: Text(
+              //             provider.cartCount.toString(),
+              //             style: TextStyle(
+              //               fontWeight: FontWeight.bold,
+              //               fontSize: 9.0,
+              //             ),
+              //           ),
+              //         ),
+              //       )
+              //           : Container()
+              //     ],
+              //   ),
+              // ),
+            ],
+          ),
         ),
         body: isTermLoading == true
             ? LoadingComponent()
@@ -104,30 +123,30 @@ class _ManuSettingState extends State<ManuSetting> {
                 physics: BouncingScrollPhysics(),
                 child: Column(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/backchange.png"),
-                              fit: BoxFit.cover)),
-                      // / color: appPrimaryMaterialColor,
-                      height: 150,
-                      width: MediaQuery.of(context).size.width,
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20.0, right: 20, top: 20, bottom: 20),
-                          child: Image.asset(
-                            "assets/BWD-white.png",
-
-                            // color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //       image: DecorationImage(
+                    //           image: AssetImage("assets/backchange.png"),
+                    //           fit: BoxFit.cover)),
+                    //   // / color: appPrimaryMaterialColor,
+                    //   height: 150,
+                    //   width: MediaQuery.of(context).size.width,
+                    //   child: Center(
+                    //     child: Padding(
+                    //       padding: const EdgeInsets.only(
+                    //           left: 20.0, right: 20, top: 20, bottom: 20),
+                    //       child: Image.asset(
+                    //         "assets/BWD-white.png",
+                    //
+                    //         // color: Colors.white,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     Align(
                       alignment: AlignmentDirectional.bottomEnd,
                       child: Container(
-                        padding: const EdgeInsets.only(top: 20.0),
+                        padding: const EdgeInsets.only(top: 30.0),
                         color: Colors.white,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

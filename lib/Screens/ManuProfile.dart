@@ -151,34 +151,53 @@ class _ManuProfileState extends State<ManuProfile> {
 
   @override
   Widget build(BuildContext context) {
+    Widget appBarTitle = Container(
+        child: Image.asset(
+      "assets/BWD-white.png",
+      fit: BoxFit.cover,
+      height: 55,
+    ));
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          actions: [
-            // GestureDetector(
-            //   onTap: () {
-            //     Navigator.pushNamedAndRemoveUntil(
-            //         context, '/ManuHomePage', (route) => false);
-            //   },
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(right: 15.0),
-            //     child: Container(
-            //         height: 20,
-            //         width: 20,
-            //         child: Image.asset(
-            //           "assets/home.png",
-            //           color: appPrimaryMaterialColor,
-            //         )),
-            //   ),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0),
+          child: AppBar(
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/backchange.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            title: appBarTitle,
+            centerTitle: true,
+            actions: [
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.pushNamedAndRemoveUntil(
+              //         context, '/ManuHomePage', (route) => false);
+              //   },
+              //   child: Padding(
+              //     padding: const EdgeInsets.only(right: 15.0),
+              //     child: Container(
+              //         height: 20,
+              //         width: 20,
+              //         child: Image.asset(
+              //           "assets/home.png",
+              //           color: appPrimaryMaterialColor,
+              //         )),
+              //   ),
+              // ),
+            ],
+
+            //backgroundColor: Colors.white,
+            //iconTheme: new IconThemeData(color: Colors.grey),
+            // title: Text(
+            //   'Profile'.tr().toString(),
+            //   //"Edit Profile",
+            //   style: TextStyle(color: appPrimaryMaterialColor, fontSize: 17),
             // ),
-          ],
-          elevation: 1,
-          backgroundColor: Colors.white,
-          iconTheme: new IconThemeData(color: Colors.grey),
-          title: Text(
-            'Profile'.tr().toString(),
-            //"Edit Profile",
-            style: TextStyle(color: appPrimaryMaterialColor, fontSize: 17),
           ),
         ),
         body: isProfileLoading

@@ -187,18 +187,18 @@ class _SettingScreenState extends State<SettingScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 10.0, bottom: 20),
-                              child: Text(
-                                'Settings_And_Help'.tr().toString(),
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: appPrimaryMaterialColor,
-                                  //fontWeight: FontWeight.w600
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding:
+                            //       const EdgeInsets.only(left: 10.0, bottom: 20),
+                            //   child: Text(
+                            //     'Settings_And_Help'.tr().toString(),
+                            //     style: TextStyle(
+                            //       fontSize: 18,
+                            //       color: appPrimaryMaterialColor,
+                            //       //fontWeight: FontWeight.w600
+                            //     ),
+                            //   ),
+                            // ),
                             //Divider(),
                             GestureDetector(
                               onTap: () {
@@ -284,40 +284,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                   const EdgeInsets.only(left: 15, right: 15),
                               child: Divider(),
                             ),
-                            GestureDetector(
-                              onTap: () async {
-                                SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                setState(() {
-                                  prefs.setString(
-                                      showSession.showCaseHome, "false");
 
-                                  prefs.setString(
-                                      showSession.showCaseSubCat, "false");
-                                });
-                              },
-                              child: ListTile(
-                                leading: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 10.0, left: 4),
-                                  child: Container(
-                                      height: 20,
-                                      width: 20,
-                                      child: Image.asset(
-                                        "assets/f.png",
-                                        color: appPrimaryMaterialColor,
-                                      )),
-                                ),
-                                title: Text(
-                                  'Help'.tr().toString(),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 15, right: 15),
-                              child: Divider(),
-                            ),
                             GestureDetector(
                               onTap: () {
                                 // Navigator.of(context).pop();
@@ -409,6 +376,42 @@ class _SettingScreenState extends State<SettingScreen> {
                                 ),
                               ),
                             ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              child: Divider(),
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                Navigator.of(context).pushNamed("/HomePage");
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                setState(() {
+                                  prefs.setString(
+                                      showSession.showCaseHome, "false");
+
+                                  prefs.setString(
+                                      showSession.showCaseSubCat, "false");
+                                });
+                              },
+                              child: ListTile(
+                                leading: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 10.0, left: 4),
+                                  child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      child: Image.asset(
+                                        "assets/f.png",
+                                        color: appPrimaryMaterialColor,
+                                      )),
+                                ),
+                                title: Text(
+                                  'How The App Works'.tr().toString(),
+                                ),
+                              ),
+                            ),
+
                             Padding(
                               padding:
                                   const EdgeInsets.only(left: 15, right: 15),

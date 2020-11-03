@@ -1,4 +1,5 @@
 import 'package:balaji/Screens/Home.dart';
+import 'package:balaji/Screens/SubCategory.dart';
 import 'package:flutter/material.dart';
 
 class BottomBar extends StatefulWidget {
@@ -11,8 +12,7 @@ class _BottomBarState extends State<BottomBar> {
 
   List<Widget> widgetOptions = <Widget>[
     Home(),
-//    SubCategoryScreen(),
-
+    //SubCategory(),
   ];
 
   @override

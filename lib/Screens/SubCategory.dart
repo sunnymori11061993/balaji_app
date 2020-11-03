@@ -37,7 +37,7 @@ class SubCategory extends StatelessWidget {
                   catId: catId,
                 )),
         autoPlay: true,
-        autoPlayDelay: Duration(seconds: 3),
+        autoPlayDelay: Duration(seconds: 2),
       ),
     );
   }

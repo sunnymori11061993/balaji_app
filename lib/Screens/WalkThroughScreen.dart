@@ -46,8 +46,9 @@ class _WalkThroughScreenState extends State<WalkThroughScreen>
 
   _slide() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    lang1 = await prefs.getString(Session.langauge);
+    setState(() {
+      lang1 = prefs.getString(Session.langauge);
+    });
   }
 
   @override

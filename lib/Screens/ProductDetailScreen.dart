@@ -586,79 +586,86 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                               ),
                                             ],
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 5.0,
-                                                top: 5,
-                                                bottom: 8,
-                                                right: 8),
-                                            child: SizedBox(
-                                              height: 30,
-                                              width: 150,
-                                              child: FlatButton(
-                                                //color: appPrimaryMaterialColor,
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5),
-                                                    side: BorderSide(
-                                                        color:
-                                                            Colors.grey[300])),
-                                                onPressed: () async {
-                                                  // print(productList);
-                                                  log(productList[
-                                                      "ProductCatlogPDF"]);
-                                                  if (productList[
-                                                          "ProductCatlogPDF"] !=
-                                                      "") {
-                                                    await createFileOfPdfUrl(
-                                                            Image_URL +
-                                                                productList[
-                                                                    "ProductCatlogPDF"])
-                                                        .then((f) {
-                                                      log(f.path);
-                                                      Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                          builder: (BuildContext
-                                                                  context) =>
-                                                              new ViewCatalougeScreen(
-                                                            path: f.path,
-                                                            catData: productList[
-                                                                "ProductCatlogPDF"],
-                                                          ),
-                                                        ),
-                                                      );
-                                                    });
-                                                  } else
-                                                    Fluttertoast.showToast(
-                                                        msg:
-                                                            "Catalogue not found");
-                                                },
-                                                child: isCatlogLoading
-                                                    ? Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child:
-                                                            LoadingComponent(),
-                                                      )
-                                                    : Text(
-                                                        'View_Catalogue'
-                                                            .tr()
-                                                            .toString(),
-                                                        style: TextStyle(
-                                                          fontSize: 14,
-                                                          //color: Colors.white,
-                                                          color:
-                                                              Colors.grey[700],
+                                          productList["ProductCatlogPDF"] == ""
+                                              ? Container()
+                                              : Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 5.0,
+                                                          top: 5,
+                                                          bottom: 8,
+                                                          right: 8),
+                                                  child: SizedBox(
+                                                    height: 30,
+                                                    width: 150,
+                                                    child: FlatButton(
+                                                      //color: appPrimaryMaterialColor,
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5),
+                                                              side: BorderSide(
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      300])),
+                                                      onPressed: () async {
+                                                        // print(productList);
+                                                        log(productList[
+                                                            "ProductCatlogPDF"]);
+                                                        if (productList[
+                                                                "ProductCatlogPDF"] !=
+                                                            "") {
+                                                          await createFileOfPdfUrl(
+                                                                  Image_URL +
+                                                                      productList[
+                                                                          "ProductCatlogPDF"])
+                                                              .then((f) {
+                                                            log(f.path);
+                                                            Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    new ViewCatalougeScreen(
+                                                                  path: f.path,
+                                                                  catData:
+                                                                      productList[
+                                                                          "ProductCatlogPDF"],
+                                                                ),
+                                                              ),
+                                                            );
+                                                          });
+                                                        } else
+                                                          Fluttertoast.showToast(
+                                                              msg:
+                                                                  "Catalogue not found");
+                                                      },
+                                                      child: isCatlogLoading
+                                                          ? Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(8.0),
+                                                              child:
+                                                                  LoadingComponent(),
+                                                            )
+                                                          : Text(
+                                                              'View_Catalogue'
+                                                                  .tr()
+                                                                  .toString(),
+                                                              style: TextStyle(
+                                                                fontSize: 14,
+                                                                //color: Colors.white,
+                                                                color: Colors
+                                                                    .grey[700],
 //                                                          fontWeight:
 //                                                              FontWeight.bold
-                                                        ),
-                                                      ),
-                                              ),
-                                            ),
-                                          )
+                                                              ),
+                                                            ),
+                                                    ),
+                                                  ),
+                                                )
                                         ],
                                       ),
                                     ],

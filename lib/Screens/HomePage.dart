@@ -6,8 +6,6 @@ import 'package:balaji/Screens/SettingScreen.dart';
 import 'package:balaji/Screens/UserProfileScreen.dart';
 import 'package:balaji/Screens/Whishlist.dart';
 import 'package:flutter/material.dart';
-import 'package:showcaseview/showcase.dart';
-import 'package:showcaseview/showcase_widget.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -47,15 +45,15 @@ class _HomePageState extends State<HomePage> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Padding(
-                padding: const EdgeInsets.only(top: 10.0),
+                padding: const EdgeInsets.only(top: 3.0),
                 child: Container(
-                  height: 20,
-                  width: 20,
+                  height: 35,
+                  width: 35,
                   child: Image.asset(
                     _selectedIndex == 0
-                        ? "assets/012-house.png"
-                        : "assets/home.png",
-                    color: Colors.white,
+                        ? "assets/homefill.png"
+                        : "assets/homeunfill2.png",
+                    //color: Colors.white,
                   ),
                 ),
               ),

@@ -1,11 +1,12 @@
 import 'dart:async';
-import 'dart:developer';
 
+import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Providers/CartProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AboutUsScreen extends StatefulWidget {
   var aboutData;
@@ -29,18 +30,17 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
   Widget build(BuildContext context) {
     CartProvider provider = Provider.of<CartProvider>(context);
     Widget appBarTitle = Text(
-      "",
-      //'About_Us'.tr().toString(),
+      'About_Us'.tr().toString(),
       //"About Us",
-      /* style: TextStyle(
+      style: TextStyle(
           color: appPrimaryMaterialColor,
           //fontFamily: 'RobotoSlab',
           // coor: Colors.black,
-          fontSize: 17),*/
+          fontSize: 17),
     );
     return Scaffold(
         backgroundColor: Colors.white,
-        /*appBar: AppBar(
+        appBar: AppBar(
           leading: Padding(
             padding: const EdgeInsets.only(top: 8.0, left: 5, bottom: 8),
             child: GestureDetector(
@@ -112,7 +112,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
               ),
             ),
           ],
-        ),*/
+        ),
         body: Stack(
           children: [
             Padding(

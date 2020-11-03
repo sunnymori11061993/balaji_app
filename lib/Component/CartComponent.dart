@@ -148,7 +148,7 @@ class _CartComponentState extends State<CartComponent> {
                 Expanded(
                   child: Padding(
                     padding:
-                        const EdgeInsets.only(top: 7.0, left: 15, right: 6.0),
+                        const EdgeInsets.only(top: 7.0, left: 35, right: 6.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
@@ -160,26 +160,33 @@ class _CartComponentState extends State<CartComponent> {
                               color: Colors.black,
                               fontWeight: FontWeight.w600),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0, right: 4),
-                          child: Text(
-                            "${widget.getCartData["ProductDescription"]}",
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(top: 8.0, right: 4),
+                        //   child: Text(
+                        //     "${widget.getCartData["ProductDescription"]}",
+                        //     overflow: TextOverflow.ellipsis,
+                        //     style: TextStyle(
+                        //         fontSize: 13,
+                        //         color: Colors.grey,
+                        //         fontWeight: FontWeight.w400),
+                        //   ),
+                        // ),
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Row(
                             children: <Widget>[
-                              Text("₹" + "${widget.getCartData["ProductSrp"]}",
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 15)),
+                              Row(
+                                children: [
+                                  Text(" ₹ ",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 15)),
+                                  Text("${widget.getCartData["ProductSrp"]}",
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 15)),
+                                ],
+                              ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 4.0),
+                                padding: const EdgeInsets.only(left: 6.0),
                                 child: Text(
                                     "₹" + "${widget.getCartData["ProductMrp"]}",
 
@@ -191,7 +198,7 @@ class _CartComponentState extends State<CartComponent> {
                                             TextDecoration.lineThrough)),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 5.0),
+                                padding: const EdgeInsets.only(left: 8.0),
                                 child: Text(
                                   // "${widget.relatedProductData["ProductSrp"]}",
                                   "(${percentResult.toStringAsFixed(0)}% OFF)",
@@ -205,44 +212,119 @@ class _CartComponentState extends State<CartComponent> {
                             ],
                           ),
                         ),
-                        Row(
-                          children: <Widget>[
-                            Text(
-                              "Set :",
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w400),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Container(
+                            height: 40,
+                            child: Row(
+                              children: <Widget>[
+                                Text(
+                                  "Sets  :",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                /*IconButton(
+                                  icon: Icon(
+                                    Icons.remove_circle,
+                                    size: 20,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      minus();
+                                    });
+                                  },
+                                  color: appPrimaryMaterialColor,
+                                ),*/
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      minus();
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 18, right: 11),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey[300],
+                                              blurRadius: 2.0,
+                                            ),
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                          border: Border.all(
+                                              width: 1.4,
+                                              color: appPrimaryMaterialColor)),
+                                      width: 25,
+                                      height: 25,
+                                      child: Center(
+                                        child: Icon(Icons.remove,
+                                            color: appPrimaryMaterialColor,
+                                            size: 16),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 5.0, right: 5),
+                                  //child: Text("${widget.getCartData["CartQuantity"]}"),
+                                  child: Text(
+                                    '$_m',
+                                    style: TextStyle(fontSize: 15),
+                                  ),
+                                ),
+                                // IconButton(
+                                //   icon: Icon(
+                                //     Icons.add_circle,
+                                //     size: 20,
+                                //   ),
+                                //   onPressed: () {
+                                //     add();
+                                //   },
+                                //   color: appPrimaryMaterialColor,
+                                // ),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      add();
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 11, right: 12),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey[300],
+                                              blurRadius: 2.0,
+                                            ),
+                                          ],
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                          border: Border.all(
+                                              width: 1.4,
+                                              color: appPrimaryMaterialColor)),
+                                      width: 25,
+                                      height: 25,
+                                      child: Center(
+                                        child: Icon(Icons.add,
+                                            color: appPrimaryMaterialColor,
+                                            size: 16),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.remove_circle,
-                                size: 20,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  minus();
-                                });
-                              },
-                              color: appPrimaryMaterialColor,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 5.0, right: 5),
-                              //child: Text("${widget.getCartData["CartQuantity"]}"),
-                              child: Text('$_m'),
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.add_circle,
-                                size: 20,
-                              ),
-                              onPressed: () {
-                                add();
-                              },
-                              color: appPrimaryMaterialColor,
-                            ),
-                          ],
+                          ),
                         ),
                       ],
                     ),
@@ -254,85 +336,94 @@ class _CartComponentState extends State<CartComponent> {
             //   padding: const EdgeInsets.only(left:20.0,right: 20),
             //   child: Divider(),
             // ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: SizedBox(
-                    height: 45,
-                    width: 150,
-                    child: FlatButton(
-                      // color: appPrimaryMaterialColor,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
-                          side: BorderSide(color: Colors.grey[300])),
+            Padding(
+              padding: const EdgeInsets.only(top: 7.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: SizedBox(
+                      height: 45,
+                      width: 150,
+                      child: FlatButton(
+                        // color: appPrimaryMaterialColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            side: BorderSide(color: Colors.grey[300])),
 
-                      onPressed: () {
-                        _showDialog(context);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
+                        onPressed: () {
+                          _showDialog(context);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
 //                          Icon(
 //                            Icons.delete_forever,
 //                            //color: Colors.white),
 //                            color: Colors.grey[700],
 //                          ),
-                          Text(
-                            'Remove'.tr().toString(),
-                            style: TextStyle(
-                                fontSize: 16,
-                                // color: Colors.white,
-                                color: Colors.grey[700],
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
+                            Text(
+                              'Remove'.tr().toString(),
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  // color: Colors.white,
+                                  color: Colors.grey[700],
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  width: 1,
-                  height: 40,
-                  color: Colors.grey[300],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 20.0),
-                  child: SizedBox(
-                    width: 150,
-                    height: 45,
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: Colors.grey[300])),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Total'.tr().toString(),
-                            style: TextStyle(
-                                fontSize: 16,
-                                //color: Colors.white,
-                                color: Colors.grey[700],
-                                fontWeight: FontWeight.w400),
-                          ),
-                          Text(
-                            "${res}",
-                            style: TextStyle(
-                                fontSize: 16,
-                                // color: Colors.white,
-                                color: Colors.grey[700],
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
+                  Container(
+                    width: 1,
+                    height: 40,
+                    color: Colors.grey[300],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20.0),
+                    child: SizedBox(
+                      width: 150,
+                      height: 45,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: Colors.grey[300])),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5.0),
+                              child: Text(
+                                'Amount'.tr().toString(),
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    //color: Colors.white,
+                                    color: Colors.grey[700],
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 5.0),
+                              child: Text(
+                                ": " + "${res}",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    // color: Colors.white,
+                                    color: Colors.grey[700],
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             )
           ],
         ),

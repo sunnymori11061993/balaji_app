@@ -19,6 +19,7 @@ class ManuHomeScreen extends StatefulWidget {
 }
 
 class _ManuHomeScreenState extends State<ManuHomeScreen> {
+  TextEditingController txtSearch = TextEditingController();
   bool isLoading = true;
   bool isTermLoading = false;
   List termsConList = [];
@@ -38,26 +39,41 @@ class _ManuHomeScreenState extends State<ManuHomeScreen> {
     Icons.search,
     //color: Colors.white,
   );
-  Widget appBarTitle = Text(
-    'Dashboard'.tr().toString(),
-    style: TextStyle(
-        color: appPrimaryMaterialColor,
-        //fontFamily: 'RobotoSlab',
-        // color: Colors.black,
-        fontSize: 17),
-  );
-  TextEditingController txtSearch = TextEditingController();
+
+  //   // 'Dashboard'.tr().toString(),
+  //   style: TextStyle(
+  //       color: appPrimaryMaterialColor,
+  //       //fontFamily: 'RobotoSlab',
+  //       // color: Colors.black,
+  //       fontSize: 17),
 
   @override
   Widget build(BuildContext context) {
+    Widget appBarTitle = Container(
+        child: Image.asset(
+      "assets/BWD-white.png",
+      fit: BoxFit.cover,
+      height: 55,
+    ));
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: appBarTitle,
-        backgroundColor: Colors.white,
-        elevation: 1,
-        iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
-        actions: <Widget>[],
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(60.0),
+        child: AppBar(
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/backchange.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          title: appBarTitle,
+          centerTitle: true,
+          // backgroundColor: Colors.white,
+          // iconTheme: new IconThemeData(color: appPrimaryMaterialColor),
+          actions: <Widget>[],
+        ),
       ),
       body: Stack(
         children: [

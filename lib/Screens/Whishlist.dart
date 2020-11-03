@@ -205,7 +205,6 @@ class _WhishlistState extends State<Whishlist> {
             setState(() {
               isLoading = false;
             });
-            Fluttertoast.showToast(msg: "Data Not Found");
             //show "data not found" in dialog
           }
         }, onError: (e) {

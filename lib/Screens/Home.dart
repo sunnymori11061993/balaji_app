@@ -12,7 +12,6 @@ import 'package:balaji/Screens/Address%20Screen.dart';
 import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/NotificationScreen.dart';
 import 'package:balaji/Screens/SearchingScreen.dart';
-import 'package:balaji/Screens/TermsAndCondition.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
@@ -1093,7 +1092,6 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
               termsConList = responseList;
               msg = responseList[0]["SettingWhatsAppMessage"];
               whatsapp = "+91" + responseList[0]["SettingWhatsAppNumber"];
-
               //set "data" here to your variable
             });
           } else {
@@ -1142,7 +1140,7 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
             setState(() {
               isNotiLoading = false;
             });
-            Fluttertoast.showToast(msg: "Data Not Found");
+            // Fluttertoast.showToast(msg: "Data Not Foundddd");
             //show "data not found" in dialog
           }
         }, onError: (e) {
