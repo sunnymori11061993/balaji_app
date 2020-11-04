@@ -1398,7 +1398,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
           if (responseList.IsSuccess == true && responseList.Data == "1") {
             widget.onOrder();
             Navigator.of(context).pop();
-            Provider.of<CartProvider>(context, listen: false).decrementCart();
+            Provider.of<CartProvider>(context, listen: false).decrementCart(1);
             Fluttertoast.showToast(msg: "Order Placed Successfully!!!");
             Navigator.of(context).pushNamed('/ThankYouScreen');
           } else {

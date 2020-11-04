@@ -489,7 +489,8 @@ class _CartComponentState extends State<CartComponent> {
             if (updateType == "Add")
               Provider.of<CartProvider>(context, listen: false).increaseCart(1);
             else
-              Provider.of<CartProvider>(context, listen: false).decrementCart();
+              Provider.of<CartProvider>(context, listen: false)
+                  .decrementCart(1);
             total();
           } else {
             setState(() {
