@@ -54,7 +54,6 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       txtname = prefs.getString(Session.CustomerName);
       img = prefs.getString(Session.CustomerImage);
     });
-    print("-------------------" + img);
   }
 
   @override

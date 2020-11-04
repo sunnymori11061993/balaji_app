@@ -21,13 +21,14 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void increaseCart() {
-    cartCount++;
+  void increaseCart(int qty) {
+    cartCount = cartCount + qty;
     notifyListeners();
   }
 
-  void decrementCart() {
-    cartCount--;
+  void decrementCart(int qty) {
+    cartCount = cartCount - qty;
+    log("count -> $cartCount");
     notifyListeners();
   }
 
@@ -41,9 +42,13 @@ class CartProvider extends ChangeNotifier {
             {"customerId": pref.getString(Session.CustomerId)});
         Services.PostForList(api_name: 'get_data_where/tblcart', body: body)
             .then((responseList) async {
+          int tempCount = 0;
           if (responseList.length > 0) {
-            log(responseList.length.toString());
-            setCartCount(responseList.length);
+            for (int i = 0; i < responseList.length; i++) {
+              tempCount =
+                  tempCount + int.parse(responseList[i]["CartQuantity"]);
+              setCartCount(tempCount);
+            }
           } else {
             return 0;
             //show "data not found" in dialog

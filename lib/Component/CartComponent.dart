@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
@@ -50,7 +51,7 @@ class _CartComponentState extends State<CartComponent> {
     setState(() {
       _m++;
     });
-    _updateCart();
+    _updateCart("Add");
     widget.onAdd(int.parse(widget.getCartData["ProductSrp"]));
   }
 
@@ -60,7 +61,7 @@ class _CartComponentState extends State<CartComponent> {
         _m--;
       });
       widget.onMinus(int.parse(widget.getCartData["ProductSrp"]));
-      _updateCart();
+      _updateCart("Remove");
     }
   }
 
@@ -449,8 +450,9 @@ class _CartComponentState extends State<CartComponent> {
             isCartLoading = false;
           });
           if (responseList.IsSuccess == true && responseList.Data == "1") {
+            Provider.of<CartProvider>(context, listen: false).decrementCart(_m);
+            log("donee");
             widget.onRemove(res);
-            Provider.of<CartProvider>(context, listen: false).decrementCart();
             total();
           } else {
             Fluttertoast.showToast(msg: "Data Not Found");
@@ -469,7 +471,7 @@ class _CartComponentState extends State<CartComponent> {
     }
   }
 
-  _updateCart() async {
+  _updateCart(String updateType) async {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -484,6 +486,10 @@ class _CartComponentState extends State<CartComponent> {
             setState(() {
               isLoading = false;
             });
+            if (updateType == "Add")
+              Provider.of<CartProvider>(context, listen: false).increaseCart(1);
+            else
+              Provider.of<CartProvider>(context, listen: false).decrementCart();
             total();
           } else {
             setState(() {

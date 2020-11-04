@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
+import 'package:balaji/Screens/Home.dart';
 import 'package:balaji/Screens/TermsAndCondition.dart';
 import 'package:balaji/Screens/VerificationScreen.dart';
 import 'package:dio/dio.dart';
@@ -52,6 +53,16 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       print("FCM Token : $fcmToken");
     });
+  }
+
+  saveDataToSession(var data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString(Session.CustomerId, data["CustomerId"].toString());
+//            prefs.setString(Session.addressId,responselist[0]["addressId"]);
+    await prefs.setString(Session.CustomerName, data["CustomerName"]);
+    await prefs.setString(Session.CustomerEmailId, data["CustomerEmailId"]);
+    await prefs.setString(Session.CustomerPhoneNo, data["CustomerPhoneNo"]);
+    Navigator.pushNamedAndRemoveUntil(context, '/HomePage', (route) => false);
   }
 
   void launchwhatsapp({
@@ -503,6 +514,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     mobile: txtLogin.text,
                     // loginType: toggle.toLowerCase(),
                     loginData: responseList[0],
+                    onLoginSuccess: () {
+                      saveDataToSession(responseList[0]);
+                    },
                     //loginType: responseList[0]["Type"],
                   ),
                 ),

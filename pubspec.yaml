@@ -54,6 +54,8 @@ dependencies:
   permission_handler: ^5.0.1+1
   showcaseview: ^0.1.6
   firebase_messaging: ^7.0.3
+  firebase_auth: ^0.18.1+2
+  firebase_core: ^0.5.1
 
 
 dev_dependencies:

@@ -4,8 +4,10 @@ import 'dart:math';
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
+import 'package:balaji/Screens/RegistrationScreen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
@@ -13,8 +15,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class VerificationScreen extends StatefulWidget {
   var mobile, loginData;
+  Function onLoginSuccess;
 
-  VerificationScreen({this.mobile, this.loginData});
+  VerificationScreen({this.mobile, this.loginData, this.onLoginSuccess});
 
   @override
   _VerificationScreenState createState() => _VerificationScreenState();
@@ -24,10 +27,90 @@ class _VerificationScreenState extends State<VerificationScreen> {
   bool isLoading = false;
   String rndNumber;
   TextEditingController txtOTP = new TextEditingController();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  String _verificationId;
 
   @override
   void initState() {
-    _sendOTP();
+    _onVerifyCode();
+  }
+
+  void _onVerifyCode() async {
+    final PhoneVerificationCompleted verificationCompleted =
+        (AuthCredential phoneAuthCredential) {
+      _firebaseAuth
+          .signInWithCredential(phoneAuthCredential)
+          .then((UserCredential value) {
+        if (value.user != null) {
+          print(value.user);
+          if (widget.loginData != null) {
+            saveDataToSession();
+          } else {
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (BuildContext context) => RegistrationScreen(
+                          Mobile: widget.mobile,
+                        )),
+                (route) => false);
+          }
+        } else {
+          Fluttertoast.showToast(msg: "Error validating OTP, try again");
+        }
+      }).catchError((error) {
+        Fluttertoast.showToast(msg: " $error");
+      });
+    };
+    final PhoneVerificationFailed verificationFailed =
+        (FirebaseAuthException authException) {
+      Fluttertoast.showToast(msg: authException.message);
+    };
+    final PhoneCodeSent codeSent =
+        (String verificationId, [int forceResendingToken]) async {
+      _verificationId = verificationId;
+      setState(() {
+        _verificationId = verificationId;
+      });
+    };
+    final PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout =
+        (String verificationId) {
+      _verificationId = verificationId;
+      setState(() {
+        _verificationId = verificationId;
+      });
+    };
+
+    // TODO: Change country code
+
+    await _firebaseAuth.verifyPhoneNumber(
+        phoneNumber: "+91${widget.mobile}",
+        timeout: const Duration(seconds: 60),
+        verificationCompleted: verificationCompleted,
+        verificationFailed: verificationFailed,
+        codeSent: codeSent,
+        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
+  }
+
+  void _onFormSubmitted() async {
+    setState(() {
+      isLoading = true;
+    });
+    AuthCredential _authCredential = PhoneAuthProvider.credential(
+        verificationId: _verificationId, smsCode: txtOTP.text);
+    _firebaseAuth
+        .signInWithCredential(_authCredential)
+        .then((UserCredential value) {
+      setState(() {
+        isLoading = false;
+      });
+      if (value.user != null) {
+        print(value.user);
+        saveDataToSession();
+      } else {
+        Fluttertoast.showToast(msg: "Invalid OTP");
+      }
+    }).catchError((error) {
+      Fluttertoast.showToast(msg: "$error Something went wrong");
+    });
   }
 
   saveDataToSession() async {
@@ -144,17 +227,17 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       autofocus: false,
                       wrapAlignment: WrapAlignment.center,
                       highlight: true,
-                      pinBoxHeight: 50,
-                      pinBoxWidth: 50,
+                      pinBoxHeight: 38,
+                      pinBoxWidth: 38,
                       highlightColor: Colors.white,
                       defaultBorderColor: Colors.white,
                       pinBoxRadius: 5,
                       hasTextBorderColor: Color(0xFF9f782d),
-                      maxLength: 4,
+                      maxLength: 6,
                       pinBoxDecoration:
                           ProvidedPinBoxDecoration.defaultPinBoxDecoration,
                       pinTextStyle:
-                          TextStyle(fontSize: 20, color: Color(0xFF9f782d)),
+                          TextStyle(fontSize: 17, color: Color(0xFF9f782d)),
                     ),
                   ),
                   Padding(
@@ -179,9 +262,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         onPressed: () {
-                          rndNumber == txtOTP.text
-                              ? saveDataToSession()
-                              : Fluttertoast.showToast(msg: "OTP is wrong");
+                          if (txtOTP.text.length == 6) {
+                            _onFormSubmitted();
+                          } else {
+                            Fluttertoast.showToast(msg: "OTP is wrong");
+                          }
                         },
                         child: Text(
                           'VERIFY'.tr().toString(),
@@ -195,7 +280,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _sendOTP();
+                      _onVerifyCode();
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(top: 35.0),
@@ -217,48 +302,48 @@ class _VerificationScreenState extends State<VerificationScreen> {
     );
   }
 
-  _sendOTP() async {
-    var rnd = new Random();
-    setState(() {
-      rndNumber = "";
-    });
-
-    for (var i = 0; i < 4; i++) {
-      rndNumber = rndNumber + rnd.nextInt(9).toString();
-    }
-    print(rndNumber);
-
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        setState(() {
-          isLoading = true;
-        });
-        FormData body = FormData.fromMap({
-          "PhoneNo": "${widget.mobile}",
-          "OTP": "$rndNumber",
-        }); //"key":"value"
-        Services.postForSave(apiname: 'SMS_API', body: body).then(
-            (response) async {
-          if (response.IsSuccess == true && response.Data == "1") {
-            Fluttertoast.showToast(
-                msg: "OTP send successfully", gravity: ToastGravity.BOTTOM);
-          }
-
-          setState(() {
-            isLoading = false;
-          });
-        }, onError: (e) {
-          setState(() {
-            isLoading = false;
-          });
-          print("error on call -> ${e.message}");
-          Fluttertoast.showToast(msg: "Something Went Wrong");
-          //showMsg("something went wrong");
-        });
-      }
-    } on SocketException catch (_) {
-      Fluttertoast.showToast(msg: "No Internet Connection.");
-    }
-  }
+  // _sendOTP() async {
+  //   var rnd = new Random();
+  //   setState(() {
+  //     rndNumber = "";
+  //   });
+  //
+  //   for (var i = 0; i < 4; i++) {
+  //     rndNumber = rndNumber + rnd.nextInt(9).toString();
+  //   }
+  //   print(rndNumber);
+  //
+  //   try {
+  //     final result = await InternetAddress.lookup('google.com');
+  //     if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+  //       setState(() {
+  //         isLoading = true;
+  //       });
+  //       FormData body = FormData.fromMap({
+  //         "PhoneNo": "${widget.mobile}",
+  //         "OTP": "$rndNumber",
+  //       }); //"key":"value"
+  //       Services.postForSave(apiname: 'SMS_API', body: body).then(
+  //           (response) async {
+  //         if (response.IsSuccess == true && response.Data == "1") {
+  //           Fluttertoast.showToast(
+  //               msg: "OTP send successfully", gravity: ToastGravity.BOTTOM);
+  //         }
+  //
+  //         setState(() {
+  //           isLoading = false;
+  //         });
+  //       }, onError: (e) {
+  //         setState(() {
+  //           isLoading = false;
+  //         });
+  //         print("error on call -> ${e.message}");
+  //         Fluttertoast.showToast(msg: "Something Went Wrong");
+  //         //showMsg("something went wrong");
+  //       });
+  //     }
+  //   } on SocketException catch (_) {
+  //     Fluttertoast.showToast(msg: "No Internet Connection.");
+  //   }
+  // }
 }

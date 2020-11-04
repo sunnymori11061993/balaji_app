@@ -405,7 +405,6 @@ class _AlertAddState extends State<AlertAdd> {
       ),
       content: SingleChildScrollView(
         child: Container(
-          //height: 200,
           child: Form(
             key: _formkey,
             child: Column(
@@ -1111,8 +1110,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
                 child: Text(
                   'Select_Address'.tr().toString(),
                   style: TextStyle(
-                    fontSize: 22,
-                    color: appPrimaryMaterialColor,
+                    fontSize: 19, color: appPrimaryMaterialColor,
                     //fontWeight: FontWeight.bold
                   ),
                 ),

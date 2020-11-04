@@ -332,7 +332,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
             isCartLoading = false;
           });
           if (responseList.IsSuccess == true && responseList.Data == "1") {
-            Provider.of<CartProvider>(context, listen: false).increaseCart();
+            Provider.of<CartProvider>(context, listen: false).increaseCart(1);
             Fluttertoast.showToast(msg: "Added in Cart");
             _removeFromWishlist();
           } else {

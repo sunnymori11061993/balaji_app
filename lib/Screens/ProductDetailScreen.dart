@@ -258,7 +258,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             children: [
                               Text(
                                 // "Total:₹ " + "${res}",
-                                'Total'.tr().toString() + "${res}",
+                                "Total".tr().toString() +
+                                    " : " +
+                                    " ₹ " +
+                                    "${res}",
                                 style: TextStyle(
                                     fontSize: 18,
                                     color: Colors.black,
@@ -547,8 +550,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 15.0),
+                                        padding: const EdgeInsets.only(
+                                            top: 15.0, bottom: 8),
                                         child: Text(
                                           'Select_Quantity'.tr().toString(),
                                           style: TextStyle(
@@ -565,24 +568,101 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: <Widget>[
-                                              IconButton(
-                                                icon: Icon(Icons.remove_circle),
-                                                onPressed: () {
-                                                  minus();
+                                              GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    minus();
+                                                  });
                                                 },
-                                                color: appPrimaryMaterialColor,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 18, right: 11),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                            color: Colors
+                                                                .grey[300],
+                                                            blurRadius: 2.0,
+                                                          ),
+                                                        ],
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(4.0),
+                                                        border: Border.all(
+                                                            width: 1.4,
+                                                            color:
+                                                                appPrimaryMaterialColor)),
+                                                    width: 25,
+                                                    height: 25,
+                                                    child: Center(
+                                                      child: Icon(Icons.remove,
+                                                          color:
+                                                              appPrimaryMaterialColor,
+                                                          size: 16),
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                               Padding(
                                                 padding: const EdgeInsets.only(
-                                                    left: 8.0, right: 8),
-                                                child: Text('$_m'),
+                                                    left: 5.0, right: 5),
+                                                //child: Text("${widget.getCartData["CartQuantity"]}"),
+                                                child: Text(
+                                                  '$_m',
+                                                  style:
+                                                      TextStyle(fontSize: 15),
+                                                ),
                                               ),
-                                              IconButton(
-                                                icon: Icon(Icons.add_circle),
-                                                onPressed: () {
-                                                  add();
+                                              // IconButton(
+                                              //   icon: Icon(
+                                              //     Icons.add_circle,
+                                              //     size: 20,
+                                              //   ),
+                                              //   onPressed: () {
+                                              //     add();
+                                              //   },
+                                              //   color: appPrimaryMaterialColor,
+                                              // ),
+                                              GestureDetector(
+                                                onTap: () {
+                                                  setState(() {
+                                                    add();
+                                                  });
                                                 },
-                                                color: appPrimaryMaterialColor,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 11, right: 12),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                            color: Colors
+                                                                .grey[300],
+                                                            blurRadius: 2.0,
+                                                          ),
+                                                        ],
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(4.0),
+                                                        border: Border.all(
+                                                            width: 1.4,
+                                                            color:
+                                                                appPrimaryMaterialColor)),
+                                                    width: 25,
+                                                    height: 25,
+                                                    child: Center(
+                                                      child: Icon(Icons.add,
+                                                          color:
+                                                              appPrimaryMaterialColor,
+                                                          size: 16),
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -675,9 +755,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ),
                           ],
                         ),
-                        Container(
-                          height: 20,
-                          color: Colors.grey[100],
+                        Padding(
+                          padding: const EdgeInsets.only(top: 12.0),
+                          child: Container(
+                            height: 20,
+                            color: Colors.grey[100],
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
@@ -1262,7 +1345,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               isCartLoading = false;
               isCartList = !isCartList;
             });
-            Provider.of<CartProvider>(context, listen: false).increaseCart();
+            Provider.of<CartProvider>(context, listen: false).increaseCart(_m);
             if (isCartList == true) {
               Fluttertoast.showToast(msg: "Added to Cart");
             } else {

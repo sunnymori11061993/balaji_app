@@ -39,7 +39,7 @@ class Home extends StatelessWidget {
         },
         builder: Builder(builder: (context) => Home1()),
         autoPlay: true,
-        autoPlayDelay: Duration(seconds: 3),
+        autoPlayDelay: Duration(seconds: 2),
       ),
     );
   }
