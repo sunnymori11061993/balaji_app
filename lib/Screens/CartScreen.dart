@@ -1115,161 +1115,247 @@ class _showBottomSheetState extends State<showBottomSheet> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0, bottom: 10),
-                child: SizedBox(
-                  height: 35,
-                  width: 140,
-                  child: FlatButton(
-                    //olor: appPrimaryMaterialColor,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        side: BorderSide(color: Colors.grey[300])),
-                    onPressed: () {
-                      _showDialogSelect(context);
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20.0, bottom: 10),
+                    child: SizedBox(
+                      height: 35,
+                      width: 130,
+                      child: FlatButton(
+                        //olor: appPrimaryMaterialColor,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5),
+                            side: BorderSide(color: Colors.grey[300])),
+                        onPressed: () {
+                          _showDialogSelect(context);
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.my_location,
+                              size: 18,
+                              //color: Colors.white),
+                              color: Colors.grey[700],
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 3.0),
+                              child: Text(
+                                'Select'.tr().toString(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  //color: Colors.white,
+                                  color: Colors.grey[700],
+                                  //fontWeight: FontWeight.bold
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      _showDialog(context);
                     },
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Icon(
-                          Icons.my_location,
-                          size: 18,
-                          //color: Colors.white),
-                          color: Colors.grey[700],
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.only(bottom: 15),
+                        //   child: Icon(
+                        //     Icons.add,
+                        //     color: Colors.grey[700],
+                        //     size: 20,
+                        //   ),
+                        // ),
+                        // Padding(
+                        //   padding:
+                        //       const EdgeInsets.only(right: 25.0, bottom: 15),
+                        //   child: Text(
+                        //     'Add_Address'.tr().toString(),
+                        //     style: TextStyle(
+                        //         fontSize: 13,
+                        //         color: Colors.grey[700],
+                        //         fontWeight: FontWeight.w600),
+                        //   ),
+                        // ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 3.0),
-                          child: Text(
-                            'Select'.tr().toString(),
-                            style: TextStyle(
-                              fontSize: 16,
-                              //color: Colors.white,
-                              color: Colors.grey[700],
-                              //fontWeight: FontWeight.bold
+                          padding:
+                              const EdgeInsets.only(left: 20.0, bottom: 10),
+                          child: SizedBox(
+                            height: 35,
+                            width: 150,
+                            child: FlatButton(
+                              //olor: appPrimaryMaterialColor,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
+                                  side: BorderSide(color: Colors.grey[300])),
+                              onPressed: () {
+                                _showDialog(context);
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.add,
+                                    size: 18,
+                                    //color: Colors.white),
+                                    color: Colors.grey[700],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 3.0),
+                                    child: Text(
+                                      'Add_Address'.tr().toString(),
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        //color: Colors.white,
+                                        color: Colors.grey[700],
+                                        //fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                ),
+                ],
               ),
-              selectedAddress != null
-                  ? Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20.0, right: 20, bottom: 5),
-                      child: Container(
-                          height: 75,
-                          width: MediaQuery.of(context).size.width,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.grey[300],
-                              ),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Column(
+              if (selectedAddress != null)
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 20.0, right: 20, bottom: 12, top: 8),
+                  child: Container(
+                      height: 75,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.grey[300],
+                          ),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0, top: 5),
+                            child: Row(
+                              children: [
+                                Text(
+                                    "${selectedAddress["AddressHouseNo"]}" +
+                                        ",",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                    )),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5.0),
+                                  child:
+                                      Text("${selectedAddress["AddressName"]}",
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                          )),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                    "${selectedAddress["AddressLandmark"]}" +
+                                        " -",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                    )),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5.0),
+                                  child: Text(
+                                      "${selectedAddress["AddressPincode"]}",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Row(
+                              children: [
+                                Text("${selectedAddress["CityName"]}" + " ,",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                    )),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5.0),
+                                  child: Text("${selectedAddress["StateName"]}",
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )),
+                )
+              else
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 8.0, right: 20, left: 20, bottom: 12),
+                  child: GestureDetector(
+                    onTap: () {
+                      _showDialog(context);
+                    },
+                    child: Container(
+                        height: 75,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey[300],
+                            ),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 8.0, top: 5),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                        "${selectedAddress["AddressHouseNo"]}" +
-                                            ",",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                        )),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 5.0),
-                                      child: Text(
-                                          "${selectedAddress["AddressName"]}",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                          )),
-                                    ),
-                                  ],
-                                ),
+                              Icon(
+                                Icons.add,
+                                size: 18,
+                                //color: Colors.white),
+                                color: Colors.grey[500],
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                        "${selectedAddress["AddressLandmark"]}" +
-                                            " -",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                        )),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 5.0),
-                                      child: Text(
-                                          "${selectedAddress["AddressPincode"]}",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                          )),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                        "${selectedAddress["CityName"]}" + " ,",
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 16,
-                                        )),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 5.0),
-                                      child: Text(
-                                          "${selectedAddress["StateName"]}",
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 16,
-                                          )),
-                                    ),
-                                  ],
+                                padding: const EdgeInsets.only(left: 3.0),
+                                child: Text(
+                                  'Add_Address'.tr().toString(),
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    //color: Colors.white,
+                                    color: Colors.grey[500],
+                                    //fontWeight: FontWeight.bold
+                                  ),
                                 ),
                               ),
                             ],
-                          )),
-                    )
-                  : Container(),
-              GestureDetector(
-                onTap: () {
-                  _showDialog(context);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 15),
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.grey[700],
-                        size: 20,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 25.0, bottom: 15),
-                      child: Text(
-                        'Add_Address'.tr().toString(),
-                        style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey[700],
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ],
+                          ),
+                        )),
+                  ),
                 ),
-              ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 25.0),
                 child: Row(
@@ -1398,7 +1484,7 @@ class _showBottomSheetState extends State<showBottomSheet> {
           if (responseList.IsSuccess == true && responseList.Data == "1") {
             widget.onOrder();
             Navigator.of(context).pop();
-            Provider.of<CartProvider>(context, listen: false).decrementCart(1);
+            Provider.of<CartProvider>(context, listen: false).removeCart();
             Fluttertoast.showToast(msg: "Order Placed Successfully!!!");
             Navigator.of(context).pushNamed('/ThankYouScreen');
           } else {

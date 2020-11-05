@@ -32,6 +32,11 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeCart() {
+    cartCount = 0;
+    notifyListeners();
+  }
+
   Future<int> getCart() async {
     try {
       final result = await InternetAddress.lookup('google.com');

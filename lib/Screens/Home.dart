@@ -826,7 +826,7 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
                         //bottom: 10,
                       ),
                       child: Container(
-                        height: MediaQuery.of(context).size.height / 2.5,
+                        height: MediaQuery.of(context).size.height / 2.2,
                         child: ListView.builder(
                             physics: BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
