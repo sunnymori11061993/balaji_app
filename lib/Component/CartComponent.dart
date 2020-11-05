@@ -396,21 +396,21 @@ class _CartComponentState extends State<CartComponent> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5.0),
-                              child: Text(
-                                'Amount'.tr().toString(),
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    //color: Colors.white,
-                                    color: Colors.grey[700],
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(top: 5.0),
+                            //   child: Text(
+                            //     'Amount'.tr().toString(),
+                            //     style: TextStyle(
+                            //         fontSize: 16,
+                            //         //color: Colors.white,
+                            //         color: Colors.grey[700],
+                            //         fontWeight: FontWeight.w400),
+                            //   ),
+                            // ),
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Text(
-                                ": " + "${res}",
+                                Inr_Rupee + " ${res}",
                                 style: TextStyle(
                                     fontSize: 16,
                                     // color: Colors.white,

@@ -407,7 +407,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                       )),
                                 ),
                                 title: Text(
-                                  'How The App Works'.tr().toString(),
+                                  'How This App Works'.tr().toString(),
                                 ),
                               ),
                             ),
