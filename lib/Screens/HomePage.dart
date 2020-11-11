@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Padding(
-                padding: const EdgeInsets.only(top: 3.0),
+                padding: const EdgeInsets.only(top: 3.0, left: 4),
                 child: Container(
                   height: 35,
                   width: 35,

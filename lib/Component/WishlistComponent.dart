@@ -166,14 +166,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
                                         fontWeight: FontWeight.w600),
                                   ),
                                   Text(
-                                    "₹",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                  Text(
-                                    "${widget.wishListData["ProductSrp"]}",
+                                    "₹ ${widget.wishListData["ProductSrp"]}",
                                     style: TextStyle(
                                         // color: Colors.grey[600],
                                         color: Colors.black,
@@ -183,8 +176,7 @@ class _WishlistComponentState extends State<WishlistComponent> {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 4.0),
                                     child: Text(
-                                      "₹" +
-                                          "${widget.wishListData["ProductMrp"]}",
+                                      "₹ ${widget.wishListData["ProductMrp"]}",
                                       style: TextStyle(
                                           fontWeight: FontWeight.w600,
                                           color: Colors.grey,

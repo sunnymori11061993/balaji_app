@@ -8,8 +8,6 @@ import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Component/TrendingProductComponent.dart';
 import 'package:balaji/Providers/CartProvider.dart';
 import 'package:balaji/Screens/AboutUsScreen.dart';
-import 'package:balaji/Screens/Address%20Screen.dart';
-import 'package:balaji/Screens/FAQScreen.dart';
 import 'package:balaji/Screens/NotificationScreen.dart';
 import 'package:balaji/Screens/SearchingScreen.dart';
 import 'package:dio/dio.dart';

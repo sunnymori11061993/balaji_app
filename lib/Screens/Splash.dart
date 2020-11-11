@@ -32,10 +32,11 @@ class _SplashState extends State<Splash> {
     Timer(Duration(seconds: 3), () async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String MobileNumber = prefs.getString(Session.CustomerPhoneNo);
+      String ManufactureMobileNo = prefs.getString(Session.ManufacturerPhoneNo);
       String Type = prefs.getString(Session.type);
       print(Type);
-      print(MobileNumber);
-      if (MobileNumber == null) {
+      print(ManufactureMobileNo);
+      if (MobileNumber == null || ManufactureMobileNo == null) {
         // Navigator.pushReplacementNamed(context, '/WalkThroughScreen');
         Navigator.pushReplacementNamed(context, '/ChangeLanguage');
       } else {

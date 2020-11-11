@@ -39,81 +39,88 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
           fontSize: 17),
     );
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        leading: Padding(
+          padding: const EdgeInsets.only(top: 8.0, left: 5, bottom: 8),
+          child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop("pop");
+              },
+              child: Image.asset(
+                "assets/backarrow.png",
+                //color: appPrimaryMaterialColor,
+              )),
+        ),
+        elevation: 1,
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          leading: Padding(
-            padding: const EdgeInsets.only(top: 8.0, left: 5, bottom: 8),
-            child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop("pop");
-                },
+        iconTheme: new IconThemeData(
+          color: appPrimaryMaterialColor,
+        ),
+        title: appBarTitle,
+        actions: <Widget>[
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/HomePage', (route) => false);
+            },
+            child: Container(
+                height: 20,
+                width: 20,
                 child: Image.asset(
-                  "assets/backarrow.png",
-                  //color: appPrimaryMaterialColor,
+                  "assets/home.png",
+                  color: appPrimaryMaterialColor,
                 )),
           ),
-          elevation: 1,
-          backgroundColor: Colors.white,
-          iconTheme: new IconThemeData(
-            color: appPrimaryMaterialColor,
-          ),
-          title: appBarTitle,
-          actions: <Widget>[
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, '/HomePage', (route) => false);
-              },
-              child: Container(
-                  height: 20,
-                  width: 20,
-                  child: Image.asset(
-                    "assets/home.png",
-                    color: appPrimaryMaterialColor,
-                  )),
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.of(context).pushNamed('/CartScreen');
-              },
-              child: Stack(
-                alignment: Alignment.topRight,
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(right: 15.0, left: 10, top: 18),
-                    child: Container(
-                        height: 20,
-                        width: 20,
-                        child: Image.asset(
-                          "assets/shopping-cart.png",
-                          color: appPrimaryMaterialColor,
-                        )),
-                  ),
-                  provider.cartCount > 0
-                      ? Padding(
-                          padding: const EdgeInsets.only(
-                              left: 2.0, top: 13, right: 10),
-                          child: CircleAvatar(
-                            radius: 7.0,
-                            backgroundColor: Colors.red,
-                            foregroundColor: Colors.white,
-                            child: Text(
-                              provider.cartCount.toString(),
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 9.0,
-                              ),
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed('/CartScreen');
+            },
+            child: Stack(
+              alignment: Alignment.topRight,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.only(right: 15.0, left: 10, top: 18),
+                  child: Container(
+                      height: 20,
+                      width: 20,
+                      child: Image.asset(
+                        "assets/shopping-cart.png",
+                        color: appPrimaryMaterialColor,
+                      )),
+                ),
+                provider.cartCount > 0
+                    ? Padding(
+                        padding: const EdgeInsets.only(
+                            left: 2.0, top: 13, right: 10),
+                        child: CircleAvatar(
+                          radius: 7.0,
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          child: Text(
+                            provider.cartCount.toString(),
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 9.0,
                             ),
                           ),
-                        )
-                      : Container()
-                ],
-              ),
+                        ),
+                      )
+                    : Container()
+              ],
             ),
-          ],
-        ),
-        body: Stack(
+          ),
+        ],
+      ),
+      body: Column(
+        children: [Image.asset("assets/")],
+      ),
+    );
+  }
+}
+
+/*Stack(
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 10.0),
@@ -136,6 +143,4 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                   )
                 : Stack(),
           ],
-        ));
-  }
-}
+        ));*/

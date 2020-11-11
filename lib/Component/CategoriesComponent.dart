@@ -44,7 +44,7 @@ class _CategoriesComponentState extends State<CategoriesComponent> {
               child: Text(
                 "${widget.catData["CategoryName"]}",
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.grey[600], fontSize: 10),
+                style: TextStyle(color: Colors.grey[600], fontSize: 13),
               ),
             ),
           ],
