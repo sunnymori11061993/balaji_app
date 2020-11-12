@@ -3,7 +3,10 @@ import 'dart:async';
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Providers/CartProvider.dart';
+import 'package:carousel_pro/carousel_pro.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_slider/image_slider.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -20,6 +23,9 @@ class AboutUsScreen extends StatefulWidget {
 class _AboutUsScreenState extends State<AboutUsScreen> {
   Completer<WebViewController> _webView = Completer<WebViewController>();
   bool isLoading = true;
+  TabController tabController;
+  List imgList = [];
+  List _bannerList = [];
 
   String isShowcase = "false";
 
@@ -113,14 +119,57 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [Image.asset("assets/")],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0, left: 5, right: 5),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Image.asset(
+                  "assets/about_banner.png",
+                  fit: BoxFit.fill,
+                  height: 200,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 17.0, left: 10, right: 10),
+              child: Text(
+                "Balaji Wholesale Bazaar is very well known in wholesaling textile products to retailers. We get all the quality products at lower prices from good manufacturers from all across India and sell them with very low margins which benefit retailers. We have a wide range of sarees, handloom products, hosiery, readymade products and menswear. Providing retailers with all quality products under one roof. We are located in Raigarh (Chhattisgarh).",
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 170.0,
+              width: MediaQuery.of(context).size.width,
+              child: Carousel(
+                boxFit: BoxFit.cover,
+                autoplay: true,
+                animationCurve: Curves.fastOutSlowIn,
+                animationDuration: Duration(milliseconds: 1000),
+                dotSize: 4.0,
+                dotIncreasedColor: Colors.black54,
+                dotBgColor: Colors.transparent,
+                dotPosition: DotPosition.bottomCenter,
+                dotVerticalPadding: 10.0,
+                showIndicator: true,
+                indicatorBgPadding: 7.0,
+                images: _bannerList
+                    .map((item) => GestureDetector(
+                          onTap: () {},
+                          child: Container(
+                              child: Image.asset("assets/Gallery_1 (2).jpg")),
+                        ))
+                    .toList(),
+              ),
+            ),
+          ],
+        ),
       ),
-    );
-  }
-}
-
-/*Stack(
+      /*  Stack(
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 10.0),
@@ -143,4 +192,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                   )
                 : Stack(),
           ],
-        ));*/
+        )*/
+    );
+  }
+}
