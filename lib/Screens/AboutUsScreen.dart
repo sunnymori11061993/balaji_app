@@ -25,7 +25,13 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
   bool isLoading = true;
   TabController tabController;
   List imgList = [];
-  List _bannerList = [];
+  List _bannerList = [
+    "assets/Gallery_1.jpg",
+    "assets/Gallery_2.jpg",
+    "assets/Gallery_3.jpg",
+    "assets/Gallery_4.jpg",
+    "assets/Gallery_5.jpg",
+  ];
 
   String isShowcase = "false";
 
@@ -136,14 +142,14 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 17.0, left: 10, right: 10),
               child: Text(
-                "Balaji Wholesale Bazaar is very well known in wholesaling textile products to retailers. We get all the quality products at lower prices from good manufacturers from all across India and sell them with very low margins which benefit retailers. We have a wide range of sarees, handloom products, hosiery, readymade products and menswear. Providing retailers with all quality products under one roof. We are located in Raigarh (Chhattisgarh).",
+                'AboutUs'.tr().toString(),
                 style: TextStyle(
                   fontSize: 16,
                 ),
               ),
             ),
             SizedBox(
-              height: 170.0,
+              height: 250.0,
               width: MediaQuery.of(context).size.width,
               child: Carousel(
                 boxFit: BoxFit.cover,
@@ -158,11 +164,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                 showIndicator: true,
                 indicatorBgPadding: 7.0,
                 images: _bannerList
-                    .map((item) => GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                              child: Image.asset("assets/Gallery_1 (2).jpg")),
-                        ))
+                    .map((item) => Container(child: Image.asset(item)))
                     .toList(),
               ),
             ),

@@ -137,6 +137,11 @@ flutter:
     - assets/left-arrow.png
     - assets/4.png
     - assets/5.png
+    - assets/Gallery_1.jpg
+    - assets/Gallery_2.jpg
+    - assets/Gallery_3.jpg
+    - assets/Gallery_4.jpg
+    - assets/Gallery_5.jpg
     - assets/locale/
     - assets/
   #   - images/a_dot_ham.jpeg
