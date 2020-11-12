@@ -35,17 +35,18 @@ class _SplashState extends State<Splash> {
       String ManufactureMobileNo = prefs.getString(Session.ManufacturerPhoneNo);
       String Type = prefs.getString(Session.type);
       print(Type);
-      print(ManufactureMobileNo);
-      if (MobileNumber == null || ManufactureMobileNo == null) {
-        // Navigator.pushReplacementNamed(context, '/WalkThroughScreen');
-        Navigator.pushReplacementNamed(context, '/ChangeLanguage');
-      } else {
-        //Navigator.pushReplacementNamed(context, '/Home');
-        if (Type == "retailer") {
+      print("Id-----------------$ManufactureMobileNo");
+
+      if (Type == "retailer") {
+        if (MobileNumber == null)
+          Navigator.pushReplacementNamed(context, '/ChangeLanguage');
+        else
           Navigator.pushReplacementNamed(context, '/HomePage');
-        } else {
+      } else {
+        if (ManufactureMobileNo == null)
+          Navigator.pushReplacementNamed(context, '/ChangeLanguage');
+        else
           Navigator.pushReplacementNamed(context, '/ManuHomePage');
-        }
       }
     });
   }
