@@ -1,4 +1,4 @@
-package com.example.balaji
+package com.balajiwholesellerbazar
 
 import io.flutter.embedding.android.FlutterActivity
 

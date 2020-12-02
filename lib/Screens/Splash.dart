@@ -29,7 +29,7 @@ class _SplashState extends State<Splash> {
 
   @override
   void initState() {
-    /* Timer(Duration(seconds: 3), () async {
+    Timer(Duration(seconds: 3), () async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String MobileNumber = prefs.getString(Session.CustomerPhoneNo);
       String ManufactureMobileNo = prefs.getString(Session.ManufacturerPhoneNo);
@@ -48,6 +48,6 @@ class _SplashState extends State<Splash> {
         else
           Navigator.pushReplacementNamed(context, '/ManuHomePage');
       }
-    });*/
+    });
   }
 }

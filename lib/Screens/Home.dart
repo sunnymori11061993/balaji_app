@@ -321,13 +321,6 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
                       : Container()
                 ],
               ),
-
-              // Image.asset(
-              //   "assets/bell_icon.png",
-              //   color: appPrimaryMaterialColor,
-              //   height: 17,
-              //   width: 17,
-              // ),
             ),
           ),
           Showcase(
@@ -824,7 +817,7 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
                         //bottom: 10,
                       ),
                       child: Container(
-                        height: MediaQuery.of(context).size.height / 2.2,
+                        height: 330,
                         child: ListView.builder(
                             physics: BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,

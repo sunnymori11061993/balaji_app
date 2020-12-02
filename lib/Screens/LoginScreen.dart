@@ -508,6 +508,7 @@ class _LoginScreenState extends State<LoginScreen> {
               isLoading = false;
             });
             if (responseList.length > 0) {
+              // saveDataToSession(responseList[0]);
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (BuildContext context) => new VerificationScreen(

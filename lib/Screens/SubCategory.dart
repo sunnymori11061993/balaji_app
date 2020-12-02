@@ -382,82 +382,87 @@ class _SubCategory11State extends State<SubCategory11>
       ),
       body: isLoadingCat
           ? LoadingComponent()
-          : Row(
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: Container(
-                          height: 40,
-                          width: MediaQuery.of(context).size.width,
-                          child: TabBar(
-                            isScrollable: true,
-                            controller: _tabController,
-                            unselectedLabelColor: appPrimaryMaterialColor[700],
-                            labelColor: Colors.white,
-                            indicatorColor: appPrimaryMaterialColor,
-                            indicator: new BubbleTabIndicator(
-                              indicatorHeight: 35.0,
-                              indicatorColor: appPrimaryMaterialColor,
-                              tabBarIndicatorSize: TabBarIndicatorSize.tab,
-                            ),
-                            onTap: (index) {
-                              _subCategory(
-                                  subCategoriesTab[index]["SubcategoryId"]);
-                            },
-                            tabs: List<Widget>.generate(subCategoriesTab.length,
-                                (int index) {
-                              return Tab(
-                                child: Text(
-                                  subCategoriesTab[index]["SubcategoryName"],
-                                  style: TextStyle(
-                                      // fontWeight: FontWeight.bold,
-                                      fontSize: 14.0),
+          : subCategoriesList.length > 0
+              ? Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Container(
+                              height: 40,
+                              width: MediaQuery.of(context).size.width,
+                              child: TabBar(
+                                isScrollable: true,
+                                controller: _tabController,
+                                unselectedLabelColor:
+                                    appPrimaryMaterialColor[700],
+                                labelColor: Colors.white,
+                                indicatorColor: appPrimaryMaterialColor,
+                                indicator: new BubbleTabIndicator(
+                                  indicatorHeight: 35.0,
+                                  indicatorColor: appPrimaryMaterialColor,
+                                  tabBarIndicatorSize: TabBarIndicatorSize.tab,
                                 ),
-                              );
-                            }),
+                                onTap: (index) {
+                                  _subCategory(
+                                      subCategoriesTab[index]["SubcategoryId"]);
+                                },
+                                tabs: List<Widget>.generate(
+                                    subCategoriesTab.length, (int index) {
+                                  return Tab(
+                                    child: Text(
+                                      subCategoriesTab[index]
+                                          ["SubcategoryName"],
+                                      style: TextStyle(
+                                          // fontWeight: FontWeight.bold,
+                                          fontSize: 14.0),
+                                    ),
+                                  );
+                                }),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      Divider(),
-                      Flexible(
-                        child: TabBarView(
-                            physics: BouncingScrollPhysics(),
-                            controller: _tabController,
-                            children: List<Widget>.generate(
-                                subCategoriesTab.length, (int index) {
-                              return isLoadingPro
-                                  ? Center(
-                                      child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                          appPrimaryMaterialColor),
-                                    ))
-                                  : GridView.builder(
-                                      physics: BouncingScrollPhysics(),
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              childAspectRatio: 0.56,
-                                              //widthScreen / heightScreen,
-                                              crossAxisSpacing: 2.0,
-                                              mainAxisSpacing: 2.0),
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return SubCategoriesComponent(
-                                          subCat: subCategoriesList[index],
+                          Divider(),
+                          Flexible(
+                            child: TabBarView(
+                                physics: BouncingScrollPhysics(),
+                                controller: _tabController,
+                                children: List<Widget>.generate(
+                                    subCategoriesTab.length, (int index) {
+                                  return isLoadingPro
+                                      ? Center(
+                                          child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  appPrimaryMaterialColor),
+                                        ))
+                                      : GridView.builder(
+                                          physics: BouncingScrollPhysics(),
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 2,
+                                                  //childAspectRatio: 0.80,
+                                                  //widthScreen / heightScreen,
+                                                  crossAxisSpacing: 2.0,
+                                                  mainAxisSpacing: 2.0),
+                                          itemBuilder: (BuildContext context,
+                                              int index) {
+                                            return SubCategoriesComponent(
+                                              subCat: subCategoriesList[index],
+                                            );
+                                          },
+                                          itemCount: subCategoriesList.length,
                                         );
-                                      },
-                                      itemCount: subCategoriesList.length,
-                                    );
-                            })),
+                                })),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+                    ),
+                  ],
+                )
+              : Center(child: Text("No Product Found")),
     );
   }
 
@@ -485,6 +490,7 @@ class _SubCategory11State extends State<SubCategory11>
           if (subCatResponseList.length > 0) {
             setState(() {
               subCategoriesList = subCatResponseList;
+
               //set "data" here to your variable
             });
           } else {

@@ -143,6 +143,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
               padding: const EdgeInsets.only(top: 17.0, left: 17, right: 17),
               child: Text(
                 'AboutUs'.tr().toString(),
+                textAlign: TextAlign.justify,
                 style: TextStyle(
                   fontSize: 16,
                 ),

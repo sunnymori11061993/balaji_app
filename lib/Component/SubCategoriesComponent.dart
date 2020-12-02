@@ -72,10 +72,10 @@ class _SubCategoriesComponentState extends State<SubCategoriesComponent> {
                 children: <Widget>[
                   Container(
                       width: MediaQuery.of(context).size.width,
-                      height: 237,
+                      height: 130,
                       child: Image.network(
                           Image_URL + "${widget.subCat["ProductImages"]}",
-                          fit: BoxFit.fill)),
+                          fit: BoxFit.contain)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

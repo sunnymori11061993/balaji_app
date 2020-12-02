@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:596186990144:android:e4fe9bc764beda029641a5",
+        "mobilesdk_app_id": "1:596186990144:android:399d71a78d03d9d69641a5",
         "android_client_info": {
-          "package_name": "com.example.balaji"
+          "package_name": "com.balajiwholesellerbazar"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "596186990144-780ka94fedqcrr2cp6mao2perscarnue.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.balajiwholesellerbazar",
+            "certificate_hash": "17caeea06fd73de328e9a2c2baa9357b6d63e10d"
+          }
+        },
         {
           "client_id": "596186990144-brb79jj722g2e9ho2pct2svsi9lvt8n0.apps.googleusercontent.com",
           "client_type": 3
