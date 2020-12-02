@@ -727,9 +727,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                               padding:
                                                                   const EdgeInsets
                                                                       .all(8.0),
-                                                              child:
-                                                                  LoadingComponent(),
-                                                            )
+                                                              child: Center(
+                                                                child: SizedBox(
+                                                                  height: 15,
+                                                                  width: 25,
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                                    valueColor:
+                                                                        new AlwaysStoppedAnimation<Color>(
+                                                                            appPrimaryMaterialColor),
+                                                                  ),
+                                                                ),
+                                                              ))
                                                           : Text(
                                                               'View_Catalogue'
                                                                   .tr()

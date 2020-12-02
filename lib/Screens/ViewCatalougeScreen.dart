@@ -234,7 +234,6 @@ class _ViewCatalougeScreenState extends State<ViewCatalougeScreen> {
       body: PDFView(
         filePath: widget.path,
         enableSwipe: true,
-        swipeHorizontal: true,
         autoSpacing: false,
         pageFling: false,
         onRender: (_pages) {

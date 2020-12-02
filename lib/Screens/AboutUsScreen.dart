@@ -140,7 +140,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 17.0, left: 10, right: 10),
+              padding: const EdgeInsets.only(top: 17.0, left: 17, right: 17),
               child: Text(
                 'AboutUs'.tr().toString(),
                 style: TextStyle(
