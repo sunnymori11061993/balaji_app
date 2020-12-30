@@ -357,6 +357,7 @@ class _SubCategory11State extends State<SubCategory11>
                         //if(filterList[i]["Title"])
                       }
                     }
+                    print("==================================");
                     print(map);
                     if (map.isEmpty) {
                       Fluttertoast.showToast(msg: "Please select any one");

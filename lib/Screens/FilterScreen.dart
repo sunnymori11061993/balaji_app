@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
+import 'package:balaji/Component/SetFilterComponent.dart';
 import 'package:balaji/Component/SubCategoriesComponent.dart';
 import 'package:balaji/Providers/CartProvider.dart';
 import 'package:dio/dio.dart';
@@ -120,7 +121,7 @@ class _FilterScreenState extends State<FilterScreen> {
           )
         ],
       ),
-      body: isFilterLoading
+      body: isFilterLoading == true
           ? LoadingComponent()
           : Padding(
               padding: const EdgeInsets.only(top: 15.0),
@@ -149,8 +150,15 @@ class _FilterScreenState extends State<FilterScreen> {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print(
+            "================================" + widget.filterData.toString());
         FormData body = FormData.fromMap(widget.filterData);
-        Services.PostForList(api_name: 'search', body: body).then(
+        print(
+            "================================" + widget.filterData.toString());
+        setState(() {
+          isFilterLoading = true;
+        });
+        Services.PostForList(api_name: 'setFilter', body: body).then(
             (responseList) async {
           setState(() {
             isFilterLoading = false;
