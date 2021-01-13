@@ -230,6 +230,51 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                           ],
                                         ),
                                       ),
+                                      // Padding(
+                                      //   padding:
+                                      //       const EdgeInsets.only(top: 8.0),
+                                      //   child: Row(
+                                      //     children: <Widget>[
+                                      //       Text(
+                                      //         'GST'.tr().toString() + " : ",
+                                      //         style: TextStyle(
+                                      //             fontSize: 15,
+                                      //             color: Colors.black,
+                                      //             fontWeight: FontWeight.w600),
+                                      //       ),
+                                      //       Text(
+                                      //         "${widget.OrderData["OrderGST"]}",
+                                      //         style: TextStyle(
+                                      //             color: Colors.grey,
+                                      //             fontSize: 15,
+                                      //             fontWeight: FontWeight.w600),
+                                      //       ),
+                                      //     ],
+                                      //   ),
+                                      // ),
+                                      // Padding(
+                                      //   padding:
+                                      //       const EdgeInsets.only(top: 8.0),
+                                      //   child: Row(
+                                      //     children: <Widget>[
+                                      //       Text(
+                                      //         'Sub-Total'.tr().toString() +
+                                      //             " : ",
+                                      //         style: TextStyle(
+                                      //             fontSize: 15,
+                                      //             color: Colors.black,
+                                      //             fontWeight: FontWeight.w600),
+                                      //       ),
+                                      //       Text(
+                                      //         "${widget.OrderData["OrderSubTotal"]}",
+                                      //         style: TextStyle(
+                                      //             color: Colors.grey,
+                                      //             fontSize: 15,
+                                      //             fontWeight: FontWeight.w600),
+                                      //       ),
+                                      //     ],
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
                                 ),
@@ -272,7 +317,122 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen>
                                             CrossAxisAlignment.center,
                                         children: [
                                           Text(
-                                            'Total'.tr().toString(),
+                                            'Sub-Total'.tr().toString() + " : ",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                //color: Colors.white,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                            "${widget.OrderData["OrderSubTotal"]}",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                // color: Colors.white,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width: 1,
+                                  height: 40,
+                                  color: Colors.grey[300],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 20.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/backchange.png"),
+                                          fit: BoxFit.cover),
+                                      // border: Border.all(color: Colors.grey[300]),
+                                      //    color: appPrimaryMaterialColor
+                                    ),
+                                    width: 150,
+                                    height: 45,
+                                    child: FlatButton(
+                                      // color: appPrimaryMaterialColor,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          side: BorderSide(
+                                              color: Colors.grey[300])),
+                                      onPressed: () {
+                                        // _showDialogRate(context, index);
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'GST'.tr().toString() + " : ",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                //color: Colors.white,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                          Text(
+                                            "${widget.OrderData["OrderGST"]}",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                // color: Colors.white,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w400),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 20.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              "assets/backchange.png"),
+                                          fit: BoxFit.cover),
+                                      // border: Border.all(color: Colors.grey[300]),
+                                      //    color: appPrimaryMaterialColor
+                                    ),
+                                    height: 45,
+                                    width: 150,
+                                    child: FlatButton(
+                                      // color: appPrimaryMaterialColor,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          side: BorderSide(
+                                              color: Colors.grey[300])),
+                                      onPressed: () {
+                                        //_showDialog(context);
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Total'.tr().toString() + " : ",
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 //color: Colors.white,

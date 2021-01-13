@@ -705,40 +705,92 @@ class _AlertAddState extends State<AlertAdd> {
                         fontWeight: FontWeight.w600),
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 45,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey,
+                Padding(
+                  padding: const EdgeInsets.only(top: 5.0, bottom: 3),
+                  child: TextFormField(
+                    controller: txtState,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(fontSize: 15),
+                    cursorColor: Colors.black,
+                    validator: (pincode) {
+                      // Pattern pattern = r'(^(?:[+0]9)?[0-9]{10,}$)';
+                      // RegExp regExp = new RegExp(pattern);
+                      if (pincode.length == 0) {
+                        return 'Please enter your state';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.all(5),
+                      hintText: 'State',
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Container(
+                          width: 43,
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  right: BorderSide(
+                                      width: 2, color: Colors.grey))),
+                          child: Icon(
+                            Icons.account_balance_outlined,
+                            color: appPrimaryMaterialColor,
+                          ),
+                        ),
                       ),
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: DropdownButtonHideUnderline(
-                      child: isStateLoading
-                          ? LoadingComponent()
-                          : DropdownButton<StateClass>(
-                              value: selectedState,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedState = value;
-                                  _getCity(selectedState.stateId);
-                                });
-                              },
-                              items: stateList.map(
-                                (StateClass state) {
-                                  log(state.stateName);
-                                  return DropdownMenuItem<StateClass>(
-                                    child: Text(state.stateName),
-                                    value: state,
-                                  );
-                                },
-                              ).toList(),
-                            ),
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
                     ),
                   ),
                 ),
+                // Container(
+                //   width: MediaQuery.of(context).size.width,
+                //   height: 45,
+                //   decoration: BoxDecoration(
+                //       border: Border.all(
+                //         color: Colors.grey,
+                //       ),
+                //       borderRadius: BorderRadius.circular(5)),
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(left: 8.0),
+                //     child: DropdownButtonHideUnderline(
+                //       child: isStateLoading
+                //           ? LoadingComponent()
+                //           : DropdownButton<StateClass>(
+                //               value: selectedState,
+                //               onChanged: (value) {
+                //                 setState(() {
+                //                   selectedState = value;
+                //                   _getCity(selectedState.stateId);
+                //                 });
+                //               },
+                //               items: stateList.map(
+                //                 (StateClass state) {
+                //                   log(state.stateName);
+                //                   return DropdownMenuItem<StateClass>(
+                //                     child: Text(state.stateName),
+                //                     value: state,
+                //                   );
+                //                 },
+                //               ).toList(),
+                //             ),
+                //     ),
+                //   ),
+                // ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0, bottom: 5),
                   child: Text(
@@ -749,39 +801,91 @@ class _AlertAddState extends State<AlertAdd> {
                         fontWeight: FontWeight.w600),
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 45,
-                  decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.grey,
+                Padding(
+                  padding: const EdgeInsets.only(top: 5.0, bottom: 3),
+                  child: TextFormField(
+                    controller: txtCity,
+                    keyboardType: TextInputType.text,
+                    style: TextStyle(fontSize: 15),
+                    cursorColor: Colors.black,
+                    validator: (pincode) {
+                      // Pattern pattern = r'(^(?:[+0]9)?[0-9]{10,}$)';
+                      // RegExp regExp = new RegExp(pattern);
+                      if (pincode.length == 0) {
+                        return 'Please enter your city';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.all(5),
+                      hintText: 'City',
+                      prefixIcon: Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Container(
+                          width: 43,
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  right: BorderSide(
+                                      width: 2, color: Colors.grey))),
+                          child: Icon(
+                            Icons.account_balance_outlined,
+                            color: appPrimaryMaterialColor,
+                          ),
+                        ),
                       ),
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: DropdownButtonHideUnderline(
-                      child: isCityLoading
-                          ? LoadingComponent()
-                          : DropdownButton<CityClass>(
-                              value: selectedCity,
-                              onChanged: (value) {
-                                setState(() {
-                                  selectedCity = value;
-                                });
-                              },
-                              items: cityList.map(
-                                (CityClass city) {
-                                  log(city.cityName);
-                                  return DropdownMenuItem<CityClass>(
-                                    child: Text(city.cityName),
-                                    value: city,
-                                  );
-                                },
-                              ).toList(),
-                            ),
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.red),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
                     ),
                   ),
                 ),
+                // Container(
+                //   width: MediaQuery.of(context).size.width,
+                //   height: 45,
+                //   decoration: BoxDecoration(
+                //       border: Border.all(
+                //         color: Colors.grey,
+                //       ),
+                //       borderRadius: BorderRadius.circular(5)),
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(left: 8.0),
+                //     child: DropdownButtonHideUnderline(
+                //       child: isCityLoading
+                //           ? LoadingComponent()
+                //           : DropdownButton<CityClass>(
+                //               value: selectedCity,
+                //               onChanged: (value) {
+                //                 setState(() {
+                //                   selectedCity = value;
+                //                 });
+                //               },
+                //               items: cityList.map(
+                //                 (CityClass city) {
+                //                   log(city.cityName);
+                //                   return DropdownMenuItem<CityClass>(
+                //                     child: Text(city.cityName),
+                //                     value: city,
+                //                   );
+                //                 },
+                //               ).toList(),
+                //             ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -832,8 +936,10 @@ class _AlertAddState extends State<AlertAdd> {
             "AddressPincode": txtPincode.text,
             "AddressName": txtFullAddress.text,
             "AddressHouseNo": txtHouseNo.text,
-            "StateId": selectedState.stateId,
-            "CityId": selectedCity.cityId,
+            "StateName": txtState.text,
+            "CityName": txtCity.text,
+            // "StateId": selectedState.stateId,
+            // "CityId": selectedCity.cityId,
             "AddressLandmark": txtLandmark.text,
           }); //"key":"value"
 

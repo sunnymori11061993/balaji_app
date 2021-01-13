@@ -24,6 +24,7 @@ class _AddressComponentState extends State<AddressComponent> {
   TextEditingController txtHouseNo = TextEditingController();
   TextEditingController txtFullAddress = TextEditingController();
   TextEditingController txtCity = TextEditingController();
+  TextEditingController txtState = TextEditingController();
   TextEditingController txtPincode = TextEditingController();
   TextEditingController txtLandmark = TextEditingController();
   String dropdownvalue = 'Gujarat';
@@ -171,6 +172,8 @@ class _AddressComponentState extends State<AddressComponent> {
       txtFullAddress.text = widget.addressData["AddressName"];
       txtLandmark.text = widget.addressData["AddressLandmark"];
       txtPincode.text = widget.addressData["AddressPincode"];
+      txtState.text = widget.addressData["StateName"];
+      txtCity.text = widget.addressData["CityName"];
     });
   }
 
@@ -479,40 +482,85 @@ class _AddressComponentState extends State<AddressComponent> {
                             padding: const EdgeInsets.only(top: 5.0),
                             child: Container(
                               width: MediaQuery.of(context).size.width / 2.3,
-                              height: 45,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.grey,
+                              height: 40,
+                              child: TextFormField(
+                                keyboardType: TextInputType.text,
+                                controller: txtState,
+                                validator: (pincode) {
+                                  // Pattern pattern = r'(^(?:[+0]9)?[0-9]{10,}$)';
+                                  // RegExp regExp = new RegExp(pattern);
+                                  if (pincode.length == 0) {
+                                    return 'Please enter your state';
+                                  }
+                                  return null;
+                                },
+                                style: TextStyle(fontSize: 15),
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.all(5),
+                                  hintText: 'State ',
+                                  fillColor: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                    borderSide: BorderSide(color: Colors.grey),
                                   ),
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: DropdownButtonHideUnderline(
-                                  child: isStateLoading
-                                      ? LoadingComponent()
-                                      : DropdownButton<StateClass>(
-                                          value: selectedState,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              selectedState = value;
-                                              selectedCity = null;
-                                              _getCity(selectedState.stateId);
-                                            });
-                                          },
-                                          items: stateList.map(
-                                            (StateClass state) {
-                                              return DropdownMenuItem<
-                                                  StateClass>(
-                                                child: Text(state.stateName),
-                                                value: state,
-                                              );
-                                            },
-                                          ).toList(),
-                                        ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                    borderSide: BorderSide(color: Colors.red),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                    borderSide: BorderSide(color: Colors.red),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(top: 5.0),
+                          //   child: Container(
+                          //     width: MediaQuery.of(context).size.width / 2.3,
+                          //     height: 45,
+                          //     decoration: BoxDecoration(
+                          //         border: Border.all(
+                          //           color: Colors.grey,
+                          //         ),
+                          //         borderRadius: BorderRadius.circular(5)),
+                          //     child: Padding(
+                          //       padding: const EdgeInsets.only(left: 8.0),
+                          //       child: DropdownButtonHideUnderline(
+                          //         child: isStateLoading
+                          //             ? LoadingComponent()
+                          //             : DropdownButton<StateClass>(
+                          //                 value: selectedState,
+                          //                 onChanged: (value) {
+                          //                   setState(() {
+                          //                     selectedState = value;
+                          //                     selectedCity = null;
+                          //                     _getCity(selectedState.stateId);
+                          //                   });
+                          //                 },
+                          //                 items: stateList.map(
+                          //                   (StateClass state) {
+                          //                     return DropdownMenuItem<
+                          //                         StateClass>(
+                          //                       child: Text(state.stateName),
+                          //                       value: state,
+                          //                     );
+                          //                   },
+                          //                 ).toList(),
+                          //               ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                       Column(
@@ -529,40 +577,85 @@ class _AddressComponentState extends State<AddressComponent> {
                             padding: const EdgeInsets.only(top: 5.0),
                             child: Container(
                               width: MediaQuery.of(context).size.width / 2.3,
-                              height: 45,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.grey,
+                              height: 40,
+                              child: TextFormField(
+                                keyboardType: TextInputType.text,
+                                controller: txtCity,
+                                validator: (pincode) {
+                                  // Pattern pattern = r'(^(?:[+0]9)?[0-9]{10,}$)';
+                                  // RegExp regExp = new RegExp(pattern);
+                                  if (pincode.length == 0) {
+                                    return 'Please enter your city';
+                                  }
+                                  return null;
+                                },
+                                style: TextStyle(fontSize: 15),
+                                decoration: InputDecoration(
+                                  contentPadding: const EdgeInsets.all(5),
+                                  hintText: 'City ',
+                                  fillColor: Colors.white,
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                    borderSide: BorderSide(color: Colors.grey),
                                   ),
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: DropdownButtonHideUnderline(
-                                  child: isCityLoading
-                                      ? LoadingComponent()
-                                      : DropdownButton<CityClass>(
-                                          value: selectedCity,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              selectedCity = value;
-                                            });
-                                          },
-                                          hint: Text("Select City"
-                                              ""),
-                                          items: cityList.map(
-                                            (CityClass city) {
-                                              return DropdownMenuItem<
-                                                  CityClass>(
-                                                child: Text(city.cityName),
-                                                value: city,
-                                              );
-                                            },
-                                          ).toList(),
-                                        ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                    borderSide: BorderSide(color: Colors.red),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                    borderSide: BorderSide(color: Colors.red),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5.0)),
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(top: 5.0),
+                          //   child: Container(
+                          //     width: MediaQuery.of(context).size.width / 2.3,
+                          //     height: 45,
+                          //     decoration: BoxDecoration(
+                          //         border: Border.all(
+                          //           color: Colors.grey,
+                          //         ),
+                          //         borderRadius: BorderRadius.circular(5)),
+                          //     child: Padding(
+                          //       padding: const EdgeInsets.only(left: 8.0),
+                          //       child: DropdownButtonHideUnderline(
+                          //         child: isCityLoading
+                          //             ? LoadingComponent()
+                          //             : DropdownButton<CityClass>(
+                          //                 value: selectedCity,
+                          //                 onChanged: (value) {
+                          //                   setState(() {
+                          //                     selectedCity = value;
+                          //                   });
+                          //                 },
+                          //                 hint: Text("Select City"
+                          //                     ""),
+                          //                 items: cityList.map(
+                          //                   (CityClass city) {
+                          //                     return DropdownMenuItem<
+                          //                         CityClass>(
+                          //                       child: Text(city.cityName),
+                          //                       value: city,
+                          //                     );
+                          //                   },
+                          //                 ).toList(),
+                          //               ),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ],
@@ -751,8 +844,10 @@ class _AddressComponentState extends State<AddressComponent> {
             "AddressName": txtFullAddress.text,
             "AddressHouseNo": txtHouseNo.text,
             "AddressLandmark": txtLandmark.text,
-            "StateId": selectedState.stateId,
-            "CityId": selectedCity.cityId,
+            "StateName": txtState.text,
+            "CityName": txtCity.text,
+            // "StateId": selectedState.stateId,
+            // "CityId": selectedCity.cityId,
           }); //"key":"value"
 
           Services.postForSave(apiname: 'updateAddress', body: body).then(
