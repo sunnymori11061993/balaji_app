@@ -46,6 +46,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   bool isCartLoading = false;
   bool isCatlogLoading = false;
   bool isRelatedProductLoading = true;
+
   bool isWishList = false;
   bool isCartList = false;
   bool isRateLoading = true;
@@ -549,6 +550,22 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 15.0, bottom: 5),
+                                        child: Text(
+                                          //  productList["ProductLowstockMessage"],
+
+                                          "${productList["ProductLowstock"]}" ==
+                                                  ""
+                                              ? ""
+                                              : "Only ${productList["ProductLowstock"]} left in stock. Hurry!",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
                                       Padding(
                                         padding: const EdgeInsets.only(
                                             top: 15.0, bottom: 8),

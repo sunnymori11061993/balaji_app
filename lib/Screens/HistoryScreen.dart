@@ -153,6 +153,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         FormData body = FormData.fromMap(
             {"CustomerId": prefs.getString(Session.CustomerId)});
+        print("================>${prefs.getString(Session.CustomerId)}");
         // var body = {"CustomerId": prefs.getString(Session.CustomerId)};
         print(prefs.getString(Session.CustomerId));
         Services.PostForList(api_name: 'orderHistory', body: body).then(

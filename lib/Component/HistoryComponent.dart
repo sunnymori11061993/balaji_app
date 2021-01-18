@@ -73,6 +73,52 @@ class _HistoryComponentState extends State<HistoryComponent> {
     );
   }
 
+  _showDialog1(BuildContext context) {
+    //show alert dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text(
+            "Cannot Cancel Order",
+            style: TextStyle(
+              fontSize: 22,
+              color: appPrimaryMaterialColor,
+              //fontWeight: FontWeight.bold
+            ),
+          ),
+          content: new Text(
+            "${widget.orderData["OrderMessage"]}",
+            style: TextStyle(
+                fontSize: 14, color: Colors.black, fontWeight: FontWeight.w600),
+          ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+
+            new FlatButton(
+                child: Text(
+                  "Ok",
+                  style:
+                      TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }
+
+                // else {
+                //   Fluttertoast.showToast(
+                //       msg: "Your order is already cancelled");
+                //   Navigator.of(context).pop();
+                // }
+
+                ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -122,6 +168,56 @@ class _HistoryComponentState extends State<HistoryComponent> {
                         fontSize: 15,
                         color: Colors.grey[700],
                         //fontWeight: FontWeight.w400
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 2.0),
+              child: Row(
+                children: [
+                  Text(
+                    'GST'.tr().toString() + "                 :",
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      "${widget.orderData["OrderGST"]}",
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey[700],
+                        // fontWeight: FontWeight.w400
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 2.0),
+              child: Row(
+                children: [
+                  Text(
+                    'Sub-Total'.tr().toString() + "       :",
+                    style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      "${widget.orderData["OrderSubTotal"]}",
+                      style: TextStyle(
+                        fontSize: 15,
+                        color: Colors.grey[700],
+                        // fontWeight: FontWeight.w400
                       ),
                     ),
                   ),
@@ -208,58 +304,95 @@ class _HistoryComponentState extends State<HistoryComponent> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 0.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        image: DecorationImage(
-                            image: AssetImage("assets/backchange.png"),
-                            fit: BoxFit.cover),
-                        // border: Border.all(color: Colors.grey[300]),
-                        //    color: appPrimaryMaterialColor
-                      ),
-                      height: 45,
-                      width: 150,
-                      child: FlatButton(
-                        //  color: appPrimaryMaterialColor,
-                        shape: RoundedRectangleBorder(
+                  widget.orderData["OrderKey"] == "0"
+                      ? Container(
+                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5),
-                            side: BorderSide(color: Colors.grey[300])),
-                        onPressed: () {
-                          if (widget.orderData["OrderStageDropDown"] !=
-                              "Cancel") {
-                            _showDialog(context);
-                          }
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
+                            image: DecorationImage(
+                                image: AssetImage("assets/backchange.png"),
+                                fit: BoxFit.cover),
+                            // border: Border.all(color: Colors.grey[300]),
+                            //    color: appPrimaryMaterialColor
+                          ),
+                          height: 45,
+                          width: 150,
+                          child: FlatButton(
+                            //  color: appPrimaryMaterialColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                side: BorderSide(color: Colors.grey[300])),
+                            onPressed: () {
+                              if (widget.orderData["OrderStageDropDown"] !=
+                                  "Cancel") {
+                                _showDialog(context);
+                              }
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
 //                            Icon(Icons.delete_forever, color: Colors.white),
-                            // color: Colors.grey[700],),
-                            widget.orderData["OrderStageDropDown"] != "Cancel"
-                                ? Text(
-                                    'Cancel_Order'.tr().toString(),
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.white,
-                                        // color: Colors.grey[700],
-                                        fontWeight: FontWeight.w400),
-                                  )
-                                : Text(
-                                    'Cancelled'.tr().toString(),
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.white,
-                                        // color: Colors.grey[700],
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                          ],
+                                // color: Colors.grey[700],),
+                                widget.orderData["OrderStageDropDown"] !=
+                                        "Cancel"
+                                    ? Text(
+                                        'Cancel_Order'.tr().toString(),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            // color: Colors.grey[700],
+                                            fontWeight: FontWeight.w400),
+                                      )
+                                    : Text(
+                                        'Cancelled'.tr().toString(),
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: Colors.white,
+                                            // color: Colors.grey[700],
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                              ],
+                            ),
+                          ),
+                        )
+                      : Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            image: DecorationImage(
+                                image: AssetImage("assets/backchange.png"),
+                                fit: BoxFit.cover),
+                            // border: Border.all(color: Colors.grey[300]),
+                            //    color: appPrimaryMaterialColor
+                          ),
+                          height: 45,
+                          width: 150,
+                          child: FlatButton(
+                            //  color: appPrimaryMaterialColor,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(5),
+                                side: BorderSide(color: Colors.grey[300])),
+                            onPressed: () {
+                              _showDialog1(context);
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+//                            Icon(Icons.delete_forever, color: Colors.white),
+                                // color: Colors.grey[700],),
+                                Text(
+                                  'CannotCancel'.tr().toString(),
+                                  //'Cannot Cancel',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                      // color: Colors.grey[700],
+                                      fontWeight: FontWeight.w400),
+                                )
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
                   Container(
                     width: 1,
                     height: 40,
