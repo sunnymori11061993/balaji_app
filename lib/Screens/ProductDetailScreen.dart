@@ -105,12 +105,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   void total() {
     setState(() {
-      res = int.parse(productList["ProductSrp"]) * _m;
+      res = int.parse(productList["ProductSrp"]) *
+          _m *
+          int.parse(productList["ProductSet"]);
     });
   }
 
   String isShowcase = "false";
-
   @override
   void initState() {
     //total();

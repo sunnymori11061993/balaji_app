@@ -52,7 +52,8 @@ class _CartComponentState extends State<CartComponent> {
       _m++;
     });
     _updateCart("Add");
-    widget.onAdd(int.parse(widget.getCartData["ProductSrp"]));
+    widget.onAdd(int.parse(widget.getCartData["ProductSrp"]) *
+        int.parse(widget.getCartData["ProductSet"]));
   }
 
   void minus() {
@@ -60,14 +61,17 @@ class _CartComponentState extends State<CartComponent> {
       setState(() {
         _m--;
       });
-      widget.onMinus(int.parse(widget.getCartData["ProductSrp"]));
+      widget.onMinus(int.parse(widget.getCartData["ProductSrp"]) *
+          int.parse(widget.getCartData["ProductSet"]));
       _updateCart("Remove");
     }
   }
 
   void total() {
     setState(() {
-      res = int.parse("${widget.getCartData["ProductSrp"]}") * _m;
+      res = int.parse("${widget.getCartData["ProductSrp"]}") *
+          _m *
+          int.parse("${widget.getCartData["ProductSet"]}");
     });
   }
 

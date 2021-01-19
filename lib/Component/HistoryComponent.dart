@@ -372,7 +372,9 @@ class _HistoryComponentState extends State<HistoryComponent> {
                                 borderRadius: BorderRadius.circular(5),
                                 side: BorderSide(color: Colors.grey[300])),
                             onPressed: () {
-                              _showDialog1(context);
+                              // _showDialog1(context);
+                              Fluttertoast.showToast(
+                                  msg: "${widget.orderData["OrderMessage"]}");
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,

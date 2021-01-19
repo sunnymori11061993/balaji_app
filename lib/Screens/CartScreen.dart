@@ -278,6 +278,7 @@ class _CartScreenState extends State<CartScreen> {
               setState(() {
                 mainTotal = mainTotal +
                     int.parse(responseList[i]["ProductSrp"]) *
+                        int.parse(responseList[i]["ProductSet"]) *
                         int.parse(responseList[i]["CartQuantity"]);
               });
             }
