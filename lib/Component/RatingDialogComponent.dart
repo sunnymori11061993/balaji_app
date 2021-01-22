@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:easy_localization/easy_localization.dart' as easy;
 
 class RatingDialog extends StatefulWidget {
   var viewDetailProductId;
@@ -44,7 +43,7 @@ class _RatingDialogState extends State<RatingDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: new Text(
-        'Add_Rating_&_Review'.tr().toString(),
+        'Add_Rating_&_Review'.trim().toString(),
         style: TextStyle(
           fontSize: 22,
           color: appPrimaryMaterialColor,
@@ -97,7 +96,7 @@ class _RatingDialogState extends State<RatingDialog> {
                 decoration: InputDecoration(
                     contentPadding:
                         EdgeInsets.only(left: 10, top: 18, right: 10),
-                    hintText: 'Write_Review'.tr().toString(),
+                    hintText: 'Write_Review'.trim().toString(),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(5)),
                         borderSide: BorderSide(color: Colors.grey)),
@@ -117,7 +116,7 @@ class _RatingDialogState extends State<RatingDialog> {
         // usually buttons at the bottom of the dialog
         FlatButton(
           child: new Text(
-            'Not_Now'.tr().toString(),
+            'Not_Now'.trim().toString(),
             style: TextStyle(color: appPrimaryMaterialColor, fontSize: 18),
           ),
           onPressed: () {
@@ -193,10 +192,10 @@ class _RatingDialogState extends State<RatingDialog> {
       itemCount: 5,
       itemSize: 30.0,
       itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-      itemBuilder: (context, _) => Icon(
-        _selectedIcon ?? Icons.star,
-        color: appPrimaryMaterialColor,
-      ),
+      // itemBuilder: (context, _) => Icon(
+      //   _selectedIcon ?? Icons.star,
+      //   color: appPrimaryMaterialColor,
+      // ),
       onRatingUpdate: (rating) {
         setState(() {
           _rating = rating;

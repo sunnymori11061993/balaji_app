@@ -1,12 +1,7 @@
-import 'dart:io';
-import 'dart:math';
-
 import 'package:balaji/Common/Constants.dart';
-import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Screens/RegistrationScreen.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -25,6 +20,7 @@ class VerificationScreen extends StatefulWidget {
 
 class _VerificationScreenState extends State<VerificationScreen> {
   bool isLoading = false;
+  bool isVerifyLoading = false;
   String rndNumber;
   TextEditingController txtOTP = new TextEditingController();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -38,11 +34,18 @@ class _VerificationScreenState extends State<VerificationScreen> {
   void _onVerifyCode() async {
     final PhoneVerificationCompleted verificationCompleted =
         (AuthCredential phoneAuthCredential) {
+      setState(() {
+        isVerifyLoading = true;
+      });
       _firebaseAuth
           .signInWithCredential(phoneAuthCredential)
           .then((UserCredential value) {
+        setState(() {
+          isVerifyLoading = false;
+        });
         if (value.user != null) {
           print(value.user);
+
           if (widget.loginData != null) {
             saveDataToSession();
           } else {
@@ -284,7 +287,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(top: 35.0),
-                      child: isLoading == true
+                      child: isVerifyLoading == true
                           ? LoadingComponent()
                           : Text('Resend_OTP'.tr().toString(),
                               style: TextStyle(

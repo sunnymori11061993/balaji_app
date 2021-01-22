@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Screens/Home.dart';
 import 'package:balaji/Screens/SettingScreen.dart';
 import 'package:balaji/Screens/UserProfileScreen.dart';
@@ -38,7 +35,7 @@ class _HomePageState extends State<HomePage> {
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/backchange.png"), fit: BoxFit.cover)),
-        height: 70,
+        height: MediaQuery.of(context).size.height * 0.1,
         child: BottomNavigationBar(
           backgroundColor: Colors.transparent,
           type: BottomNavigationBarType.fixed,
@@ -46,14 +43,16 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
               icon: Padding(
                 padding: const EdgeInsets.only(top: 3.0, left: 4),
-                child: Container(
-                  height: 35,
-                  width: 35,
-                  child: Image.asset(
-                    _selectedIndex == 0
-                        ? "assets/homefill.png"
-                        : "assets/homeunfill2.png",
-                    //color: Colors.white,
+                child: FittedBox(
+                  child: Container(
+                    height: 27,
+                    width: 27,
+                    child: Image.asset(
+                      _selectedIndex == 0
+                          ? "assets/homefill.png"
+                          : "assets/homeunfill2.png",
+                      //color: Colors.white,
+                    ),
                   ),
                 ),
               ),

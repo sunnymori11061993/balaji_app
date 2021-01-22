@@ -76,7 +76,7 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
                     child: Column(
                       children: <Widget>[
                         Container(
-                          height: 40,
+                          height: 43,
                           child: RadioListTile(
                             activeColor: Colors.white,
                             groupValue: lang,
@@ -106,7 +106,7 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
                         Padding(
                           padding: const EdgeInsets.only(top: 35.0),
                           child: Container(
-                            height: 40,
+                            height: 45,
                             child: RadioListTile(
                               activeColor: Colors.white,
                               groupValue: lang,

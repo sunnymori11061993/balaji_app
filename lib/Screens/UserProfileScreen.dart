@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:balaji/Common/Constants.dart';
@@ -6,16 +5,13 @@ import 'package:balaji/Common/Services.dart';
 import 'package:balaji/Component/LoadingComponent.dart';
 import 'package:balaji/Providers/CartProvider.dart';
 import 'package:balaji/Screens/Address%20Screen.dart';
-import 'package:balaji/Screens/SearchingScreen.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:showcaseview/showcase.dart';
-import 'package:showcaseview/showcase_widget.dart';
 
 // class UserProfileScreen extends StatelessWidget {
 //   @override
@@ -54,6 +50,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
       txtname = prefs.getString(Session.CustomerName);
       img = prefs.getString(Session.CustomerImage);
     });
+    print(img);
   }
 
   @override
@@ -257,7 +254,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           // crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            img != ""
+                            img != null
                                 ? Container(
                                     height: 180.0,
                                     width: 150.0,
