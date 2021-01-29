@@ -40,7 +40,6 @@ class _AddressComponentState extends State<AddressComponent> {
 
   List<CityClass> cityList = [];
   CityClass selectedCity;
-
   _getState() async {
     try {
       final result = await InternetAddress.lookup('google.com');

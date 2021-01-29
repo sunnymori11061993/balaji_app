@@ -859,8 +859,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                           padding: const EdgeInsets.only(
                                               top: 5.0, bottom: 0),
                                           child: Text(
-                                            productList["ProductAttributes"][0]
-                                                ["Size"],
+                                            "${productList["ProductAttributes"][0]["Size"]}",
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 color: Colors.grey,
@@ -883,8 +882,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                               top: 5.0, bottom: 0),
                                           child: Expanded(
                                             child: Text(
-                                              productList["ProductAttributes"]
-                                                  [0]["Brand Name"],
+                                              "${productList["ProductAttributes"][0]["Brand Name"]}",
                                               style: TextStyle(
                                                   fontSize: 13,
                                                   color: Colors.grey,
@@ -918,8 +916,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                           padding: const EdgeInsets.only(
                                               top: 5.0, bottom: 0),
                                           child: Text(
-                                            productList["ProductAttributes"][0]
-                                                ["Material"],
+                                            "${productList["ProductAttributes"][0]["Material"]}",
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 color: Colors.grey,
@@ -941,8 +938,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                           padding: const EdgeInsets.only(
                                               top: 5.0, bottom: 0),
                                           child: Text(
-                                            productList["ProductAttributes"][0]
-                                                ["Color"],
+                                            "${productList["ProductAttributes"][0]["Color"]}",
                                             style: TextStyle(
                                                 fontSize: 13,
                                                 color: Colors.grey,
@@ -969,7 +965,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 padding:
                                     const EdgeInsets.only(top: 5.0, bottom: 0),
                                 child: Text(
-                                  productList["ProductSKU"],
+                                  "${productList["ProductSKU"]}",
                                   style: TextStyle(
                                       fontSize: 13,
                                       color: Colors.grey,
