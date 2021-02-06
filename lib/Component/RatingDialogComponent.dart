@@ -192,10 +192,6 @@ class _RatingDialogState extends State<RatingDialog> {
       itemCount: 5,
       itemSize: 30.0,
       itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-      // itemBuilder: (context, _) => Icon(
-      //   _selectedIcon ?? Icons.star,
-      //   color: appPrimaryMaterialColor,
-      // ),
       onRatingUpdate: (rating) {
         setState(() {
           _rating = rating;
