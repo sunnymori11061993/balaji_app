@@ -188,6 +188,7 @@ class _RatingDialogState extends State<RatingDialog> {
       minRating: 1,
       direction: _isVertical ? Axis.vertical : Axis.horizontal,
       allowHalfRating: true,
+
       unratedColor: appPrimaryMaterialColor.withAlpha(50),
       itemCount: 5,
       itemSize: 30.0,
@@ -196,6 +197,11 @@ class _RatingDialogState extends State<RatingDialog> {
       //   _selectedIcon ?? Icons.star,
       //   color: appPrimaryMaterialColor,
       // ),
+      ratingWidget: RatingWidget(
+        full: Icon(Icons.star),
+        half: Icon(Icons.star_half_outlined),
+        empty: Icon(Icons.star_border),
+      ),
       onRatingUpdate: (rating) {
         setState(() {
           _rating = rating;

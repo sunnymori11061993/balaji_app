@@ -6,7 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //const String SOAP_API_URL = "http://pmc.studyfield.com/Service.asmx/";
 
-const String API_URL = "https://webnappmaker.in/Balaji/Admin/Ajax/";
+//const String API_URL = "https://webnappmaker.in/Balaji/Admin/Ajax/";
+const String API_URL = "http://balaji.idnmserver.com/Admin/Ajax/";
 const String Image_URL = "https://webnappmaker.in/Balaji/resources/images/";
 
 const Inr_Rupee = "₹";

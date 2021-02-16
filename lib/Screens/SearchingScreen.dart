@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:balaji/Common/Constants.dart';
 import 'package:balaji/Common/Services.dart';
@@ -138,7 +139,11 @@ class _SearchingScreenState extends State<SearchingScreen> {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        FormData body = FormData.fromMap({"ProductName": widget.searchData});
+        FormData body = FormData.fromMap({
+          "ProductName": widget.searchData,
+          // "SubcategoryId": widget.searchData["SubcategoryId"]
+        });
+
         Services.PostForList(api_name: 'search', body: body).then(
             (responseList) async {
           setState(() {
@@ -148,6 +153,7 @@ class _SearchingScreenState extends State<SearchingScreen> {
             setState(() {
               searchList = responseList; //set "data" here to your variable
             });
+            log("body==========${body}");
           } else {
             Fluttertoast.showToast(msg: "Data Not Found");
             //show "data not found" in dialog

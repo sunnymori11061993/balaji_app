@@ -58,7 +58,7 @@ class _SubCategory11State extends State<SubCategory11>
   GlobalKey _one = GlobalKey();
   GlobalKey _two = GlobalKey();
   GlobalKey _three = GlobalKey();
-
+  var subId;
   String isShowcase = "false";
 
   showShowCase() async {
@@ -357,7 +357,9 @@ class _SubCategory11State extends State<SubCategory11>
                         //if(filterList[i]["Title"])
                       }
                     }
-                    print("==================================");
+                    print("==================================map");
+                    map.addAll({"SubcategoryId": subId});
+
                     print(map);
                     if (map.isEmpty) {
                       Fluttertoast.showToast(msg: "Please select any one");
@@ -409,6 +411,11 @@ class _SubCategory11State extends State<SubCategory11>
                                 onTap: (index) {
                                   _subCategory(
                                       subCategoriesTab[index]["SubcategoryId"]);
+                                  setState(() {
+                                    subId = subCategoriesTab[index]
+                                        ["SubcategoryId"];
+                                  });
+                                  log("+subid  ${subId}");
                                 },
                                 tabs: List<Widget>.generate(
                                     subCategoriesTab.length, (int index) {
@@ -533,11 +540,16 @@ class _SubCategory11State extends State<SubCategory11>
             print("anirudh");
             setState(() {
               subCategoriesTab = tabResponseList;
+              subId = tabResponseList[0]["SubcategoryId"];
               //set "data" here to your variable
             });
 
             _subCategory(tabResponseList[0]["SubcategoryId"]);
             _tabCon();
+            // setState(() {
+            //   subId = tabResponseList[0]["SubcategoryId"];
+            // });
+            log("+subid  ${subId}");
           } else {
             setState(() {
               isLoadingCat = false;

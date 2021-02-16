@@ -448,7 +448,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                               CrossAxisAlignment.start,
                                           children: <Widget>[
                                             Text(
-                                              productList["ProductName"],
+                                              "${productList["ProductName"]}",
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
@@ -463,8 +463,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                 children: <Widget>[
                                                   Text(
                                                       "₹" +
-                                                          productList[
-                                                              "ProductSrp"],
+                                                          "${productList["ProductSrp"]}",
                                                       // "${widget.productDetail["ProductSrp"]}",
                                                       style: TextStyle(
                                                           color: Colors.black,
@@ -475,8 +474,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                                             left: 4.0),
                                                     child: Text(
                                                         "₹" +
-                                                            productList[
-                                                                "ProductMrp"],
+                                                            "${productList["ProductMrp"]}",
 
                                                         //  "${widget.productDetail["ProductMrp"]}",
                                                         style: TextStyle(
@@ -804,7 +802,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 padding: const EdgeInsets.only(
                                     top: 15.0, bottom: 10),
                                 child: Text(
-                                  productList["ProductDescription"],
+                                  "${productList["ProductDescription"]}",
                                   //  "${widget.productDetail["ProductDescription"]}",
                                   style: TextStyle(
                                     fontSize: 13,
@@ -880,14 +878,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                         Padding(
                                           padding: const EdgeInsets.only(
                                               top: 5.0, bottom: 0),
-                                          child: Expanded(
-                                            child: Text(
-                                              "${productList["ProductAttributes"][0]["Brand Name"]}",
-                                              style: TextStyle(
-                                                  fontSize: 13,
-                                                  color: Colors.grey,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
+                                          child: Text(
+                                            "${productList["ProductAttributes"][0]["Brand Name"]}",
+                                            style: TextStyle(
+                                                fontSize: 13,
+                                                color: Colors.grey,
+                                                fontWeight: FontWeight.w600),
                                           ),
                                         ),
                                       ],
