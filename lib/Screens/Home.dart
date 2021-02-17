@@ -158,9 +158,9 @@ class _Home1State extends State<Home1> with SingleTickerProviderStateMixin {
                   cursorColor: Colors.black,
                   keyboardType: TextInputType.text,
                   textInputAction: TextInputAction.done,
-                  onFieldSubmitted: (aa) {
+                  onFieldSubmitted: (aa) async {
                     //  _getSearching();
-                    Navigator.push(
+                    await Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (BuildContext context) =>

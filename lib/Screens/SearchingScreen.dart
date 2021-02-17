@@ -30,6 +30,7 @@ class _SearchingScreenState extends State<SearchingScreen> {
   void initState() {
     // TODO: implement initState
     _getSearching();
+    print("======searchData :${widget.searchData}");
   }
 
   @override
