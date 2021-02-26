@@ -45,12 +45,26 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Balaji needs microphone permission.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Balaji needs Calendar permission.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Balaji uses camera for profile picture selection</string>
+	<string>Balaji needs camera permission for profile picture selection</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Balaji needs Contacts permission for share app to other users.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Balaji needs Location permission.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Balaji needs Location permission.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Balaji uses microphone</string>
+	<string>Balaji needs microphone permission.</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Balaji needs Motion permission.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Balaji uses gallery for profile picture selection</string>
+	<string>Balaji needs gallery permission for profile picture selection</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Balaji needs microphone permission.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
