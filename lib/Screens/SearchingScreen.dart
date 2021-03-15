@@ -154,7 +154,7 @@ class _SearchingScreenState extends State<SearchingScreen> {
             setState(() {
               searchList = responseList; //set "data" here to your variable
             });
-            log("body==========${body}");
+            log("body==========${responseList}");
           } else {
             Fluttertoast.showToast(msg: "Data Not Found");
             //show "data not found" in dialog
