@@ -7,9 +7,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 //const String SOAP_API_URL = "http://pmc.studyfield.com/Service.asmx/";
 
 //const String API_URL = "https://webnappmaker.in/Balaji/Admin/Ajax/";
-const String API_URL = "http://balajinew.idnmserver.com/Admin/Ajax/";
+//const String API_URL = "http://balajinew.idnmserver.com/Admin/Ajax/";
+const String API_URL = "http://balajiwholesalebazaar.com/AdminSide/Admin/Ajax";
 //const String Image_URL = "https://webnappmaker.in/Balaji/resources/images/";
-const String Image_URL = "http://balaji.idnmserver.com/resources/images/";
+//const String Image_URL = "http://balaji.idnmserver.com/resources/images/";
+const String Image_URL =
+    "http://balajiwholesalebazaar.com/AdminSide/resources/images/";
 
 const Inr_Rupee = "₹";
 const Color appcolor = Color.fromRGBO(0, 171, 199, 1);
